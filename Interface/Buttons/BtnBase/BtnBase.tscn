@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Interface/Themes/NotHeroTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.cs" type="Script" id=2]
+
+[node name="BtnBase" type="Button"]
+margin_left = 435.126
+margin_top = 250.127
+margin_right = 573.126
+margin_bottom = 308.127
+focus_mode = 0
+theme = ExtResource( 1 )
+enabled_focus_mode = 0
+text = "TEXT HERE"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="mouse_entered" from="." to="." method="OnBtnMouseEntered"]
+[connection signal="pressed" from="." to="." method="OnBtnPressed"]

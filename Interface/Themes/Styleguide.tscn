@@ -1,0 +1,282 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Interface/Themes/NotHeroTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Interface/Themes/TitleLabel_NotHero.tres" type="StyleBox" id=2]
+
+[node name="Styleguide" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -540.0
+margin_right = -960.0
+margin_bottom = -540.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_right = 600.0
+margin_bottom = 430.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Column" type="VBoxContainer" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -243.5
+margin_top = -181.0
+margin_right = 243.5
+margin_bottom = 181.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title2" type="Label" parent="Panel/Column"]
+margin_top = 5.0
+margin_right = 487.0
+margin_bottom = 42.0
+custom_styles/normal = ExtResource( 2 )
+text = "VISUAL REFERENCE"
+
+[node name="Label2" type="Label" parent="Panel/Column"]
+margin_top = 52.0
+margin_right = 487.0
+margin_bottom = 135.0
+text = "Normal paragraph text. Normal paragraph text. Normal paragraph text. Normal paragraph text."
+autowrap = true
+
+[node name="Row" type="HBoxContainer" parent="Panel/Column"]
+margin_top = 145.0
+margin_right = 487.0
+margin_bottom = 174.0
+
+[node name="Button" type="Button" parent="Panel/Column/Row"]
+margin_right = 150.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+text = "Button"
+
+[node name="Button2" type="Button" parent="Panel/Column/Row"]
+margin_left = 168.0
+margin_right = 318.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+text = "Button"
+
+[node name="Button3" type="Button" parent="Panel/Column/Row"]
+margin_left = 336.0
+margin_right = 487.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+text = "Button"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/Column"]
+margin_top = 184.0
+margin_right = 487.0
+margin_bottom = 188.0
+
+[node name="Title3" type="Label" parent="Panel/Column"]
+margin_top = 198.0
+margin_right = 487.0
+margin_bottom = 235.0
+custom_styles/normal = ExtResource( 2 )
+text = "COLOUR PALETTE"
+valign = 1
+
+[node name="Label3" type="Label" parent="Panel/Column"]
+margin_top = 245.0
+margin_right = 487.0
+margin_bottom = 272.0
+text = "Background"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Row2" type="HBoxContainer" parent="Panel/Column"]
+margin_top = 282.0
+margin_right = 487.0
+margin_bottom = 311.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker" type="ColorPickerButton" parent="Panel/Column/Row2"]
+margin_right = 234.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Dark: 1d0c31"
+color = Color( 0.113725, 0.0470588, 0.192157, 1 )
+
+[node name="Label" type="Label" parent="Panel/Column/Row2/ColorPicker"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -67.5
+margin_top = -17.0
+margin_right = 67.5
+margin_bottom = 17.0
+size_flags_vertical = 1
+text = "Dark: 1d0c31"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker2" type="ColorPickerButton" parent="Panel/Column/Row2"]
+margin_left = 252.0
+margin_right = 487.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Light"
+color = Color( 0.584314, 0.360784, 0.847059, 1 )
+
+[node name="Label2" type="Label" parent="Panel/Column/Row2/ColorPicker2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -70.0
+margin_top = -17.0
+margin_right = 70.0
+margin_bottom = 17.0
+text = "Light: 955CD8"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator2" type="HSeparator" parent="Panel/Column"]
+margin_top = 321.0
+margin_right = 487.0
+margin_bottom = 325.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Palette" type="Label" parent="Panel/Column"]
+margin_top = 335.0
+margin_right = 487.0
+margin_bottom = 362.0
+text = "Palette"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Row3" type="HBoxContainer" parent="Panel/Column"]
+margin_top = 372.0
+margin_right = 487.0
+margin_bottom = 401.0
+alignment = 1
+
+[node name="ColorPicker" type="ColorPickerButton" parent="Panel/Column/Row3"]
+margin_right = 108.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Dark"
+color = Color( 0.32549, 0.513726, 0.847059, 1 )
+
+[node name="Label" type="Label" parent="Panel/Column/Row3/ColorPicker"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.0
+margin_top = -17.0
+margin_right = 37.0
+margin_bottom = 17.0
+size_flags_vertical = 1
+text = "5383D8"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker2" type="ColorPickerButton" parent="Panel/Column/Row3"]
+margin_left = 126.0
+margin_right = 234.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Light"
+color = Color( 0.247059, 0.921569, 0.427451, 1 )
+
+[node name="Label2" type="Label" parent="Panel/Column/Row3/ColorPicker2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.0
+margin_top = -17.0
+margin_right = 37.0
+margin_bottom = 17.0
+text = "3FEB6D"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker3" type="ColorPickerButton" parent="Panel/Column/Row3"]
+margin_left = 252.0
+margin_right = 360.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Light"
+color = Color( 0.909804, 0.662745, 0.317647, 1 )
+
+[node name="Label2" type="Label" parent="Panel/Column/Row3/ColorPicker3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.0
+margin_top = -17.0
+margin_right = 37.0
+margin_bottom = 17.0
+text = "E8A951"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorPicker4" type="ColorPickerButton" parent="Panel/Column/Row3"]
+margin_left = 378.0
+margin_right = 487.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "D84A46"
+color = Color( 0.847059, 0.290196, 0.27451, 1 )
+
+[node name="Label2" type="Label" parent="Panel/Column/Row3/ColorPicker4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.0
+margin_top = -17.0
+margin_right = 37.0
+margin_bottom = 17.0
+text = "D84A46"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

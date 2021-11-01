@@ -1,0 +1,153 @@
+{
+	"textures": [
+		{
+			"image": "nebula.png",
+			"size": {
+				"w": 1620,
+				"h": 1620
+			},
+			"sprites": [
+				{
+					"filename": "Potion_bottle_v0.6_ORANGE.png",
+					"region": {
+						"x": 20,
+						"y": 20,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.6__purple.png",
+					"region": {
+						"x": 560,
+						"y": 20,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.6_blue.png",
+					"region": {
+						"x": 20,
+						"y": 560,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.6_brown.png",
+					"region": {
+						"x": 560,
+						"y": 560,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.6_empty.png",
+					"region": {
+						"x": 1100,
+						"y": 20,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.6_green.png",
+					"region": {
+						"x": 1100,
+						"y": 560,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.6_sillywette.png",
+					"region": {
+						"x": 20,
+						"y": 1100,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.7_RED.png",
+					"region": {
+						"x": 560,
+						"y": 1100,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "Potion_bottle_v0.8_yellow.png",
+					"region": {
+						"x": 1100,
+						"y": 1100,
+						"w": 500,
+						"h": 500
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7",
+		"format": "RGBA8888",
+	}
+}

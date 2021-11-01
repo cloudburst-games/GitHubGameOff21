@@ -1,0 +1,320 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Systems/ScoreManagerMono/leaderboard.gd" type="Script" id=2]
+[ext_resource path="res://Interface/Decoration/loading_sprite.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Systems/ScoreManagerMono/ScoreManagerMono.cs" type="Script" id=4]
+[ext_resource path="res://Systems/ScoreManagerMono/score_saver.gd" type="Script" id=5]
+[ext_resource path="res://Systems/ScoreManagerMono/score_manager.gd" type="Script" id=6]
+[ext_resource path="res://Systems/ScoreManagerMono/PnlTimeout.tscn" type="PackedScene" id=7]
+[ext_resource path="res://icon.png" type="Texture" id=8]
+[ext_resource path="res://Systems/ScoreManagerMono/score_init.gd" type="Script" id=10]
+[ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=12]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 0.627451, 0.184314, 1 )
+
+[sub_resource type="Animation" id=3]
+length = 1.2
+loop = true
+
+[sub_resource type="Animation" id=4]
+resource_name = "Loading"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("loading_sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=5]
+loop = true
+
+[node name="ScoreManagerMono" type="Node"]
+pause_mode = 2
+script = ExtResource( 4 )
+
+[node name="score_manager" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="score_init" type="Node" parent="score_manager"]
+script = ExtResource( 10 )
+
+[node name="leaderboard" type="Panel" parent="score_manager"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -813.5
+margin_top = -517.0
+margin_right = 813.5
+margin_bottom = 517.0
+theme = ExtResource( 12 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lbl_title" type="Label" parent="score_manager/leaderboard"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -810.0
+margin_top = 10.6787
+margin_right = 810.0
+margin_bottom = 82.6787
+theme = ExtResource( 12 )
+custom_fonts/font = ExtResource( 1 )
+text = "LEADERBOARD"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pnl_scores" type="Panel" parent="score_manager/leaderboard"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -764.5
+margin_top = -398.5
+margin_right = 764.5
+margin_bottom = 376.5
+theme = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_close" type="Button" parent="score_manager/leaderboard"]
+anchor_left = 0.97
+anchor_top = 0.987
+anchor_right = 0.97
+anchor_bottom = 0.987
+margin_left = -648.236
+margin_top = -70.7112
+margin_right = -3.23633
+margin_bottom = 1.28882
+theme = ExtResource( 12 )
+custom_fonts/font = ExtResource( 1 )
+text = "Close"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_refresh" type="Button" parent="score_manager/leaderboard"]
+margin_left = 51.5874
+margin_top = 949.847
+margin_right = 696.587
+margin_bottom = 1021.85
+theme = ExtResource( 12 )
+custom_fonts/font = ExtResource( 1 )
+text = "Refresh"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="loading_sprite" parent="score_manager/leaderboard" instance=ExtResource( 3 )]
+position = Vector2( 794.682, 493.558 )
+
+[node name="anim" type="AnimationPlayer" parent="score_manager/leaderboard"]
+anims/Loading = SubResource( 3 )
+
+[node name="PnlTimeout" parent="score_manager/leaderboard" instance=ExtResource( 7 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -523.5
+margin_top = -268.5
+margin_right = 523.5
+margin_bottom = 268.5
+theme = null
+
+[node name="Control" type="Control" parent="score_manager/leaderboard"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score_saver" type="Panel" parent="score_manager"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -519.0
+margin_top = -236.0
+margin_right = 519.0
+margin_bottom = 236.0
+theme = ExtResource( 12 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="cnt_highscore" type="Control" parent="score_manager/score_saver"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lbl_title" type="Label" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 1036.0
+margin_bottom = 82.0
+theme = ExtResource( 12 )
+custom_fonts/font = ExtResource( 1 )
+text = "Congratulations, you have achieved a high score of "
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lbl_name" type="Label" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = -22.6219
+margin_top = 111.945
+margin_right = 310.378
+margin_bottom = 140.945
+custom_fonts/font = ExtResource( 1 )
+text = "Name:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lbl_status" type="Label" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = 38.0
+margin_top = 330.0
+margin_right = 996.0
+margin_bottom = 359.0
+custom_fonts/font = ExtResource( 1 )
+text = "Status"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="led_name" type="LineEdit" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = 313.363
+margin_top = 109.945
+margin_right = 788.363
+margin_bottom = 149.945
+custom_fonts/font = ExtResource( 1 )
+text = "PLAYER NAME"
+align = 1
+max_length = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lbl_name2" type="Label" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = -26.6371
+margin_top = 149.945
+margin_right = 306.363
+margin_bottom = 178.945
+custom_fonts/font = ExtResource( 1 )
+text = "Player 2 Name:"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="led_name2" type="LineEdit" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = 313.363
+margin_top = 149.945
+margin_right = 788.363
+margin_bottom = 189.945
+custom_fonts/font = ExtResource( 1 )
+text = "PLAYER NAME"
+align = 1
+max_length = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="btn_submit" type="Button" parent="score_manager/score_saver/cnt_highscore"]
+margin_left = 423.396
+margin_top = 381.178
+margin_right = 617.396
+margin_bottom = 449.178
+custom_fonts/font = ExtResource( 1 )
+text = "SUBMIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="loading_sprite" type="Sprite" parent="score_manager/score_saver/cnt_highscore"]
+position = Vector2( 523.848, 256.579 )
+scale = Vector2( 0.362756, 0.362756 )
+texture = ExtResource( 8 )
+hframes = 2
+
+[node name="anim" type="AnimationPlayer" parent="score_manager/score_saver/cnt_highscore"]
+playback_speed = 2.5
+anims/Loading = SubResource( 4 )
+
+[node name="cnt_checking" type="Control" parent="score_manager/score_saver"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="loading_sprite" parent="score_manager/score_saver/cnt_checking" instance=ExtResource( 3 )]
+position = Vector2( 494.836, 248.194 )
+scale = Vector2( 0.316538, 0.316538 )
+
+[node name="anim" type="AnimationPlayer" parent="score_manager/score_saver/cnt_checking"]
+anims/Loading = SubResource( 5 )
+
+[node name="lbl_title" type="Label" parent="score_manager/score_saver/cnt_checking"]
+margin_left = 14.0
+margin_top = 56.4364
+margin_right = 1011.0
+margin_bottom = 111.436
+custom_fonts/font = ExtResource( 1 )
+text = "Checking leaderboard..."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlTimeout" parent="score_manager/score_saver" instance=ExtResource( 7 )]
+visible = false
+margin_left = 129.164
+margin_top = 104.0
+margin_right = -174.836
+margin_bottom = -100.0
+theme = null
+
+[connection signal="pressed" from="score_manager/leaderboard/btn_close" to="score_manager/leaderboard" method="_on_btn_close_pressed"]
+[connection signal="pressed" from="score_manager/leaderboard/btn_refresh" to="score_manager/leaderboard" method="_on_btn_refresh_pressed"]
+[connection signal="pressed" from="score_manager/score_saver/cnt_highscore/btn_submit" to="score_manager/score_saver" method="_on_BtnSubmit_pressed"]

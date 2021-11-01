@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/SkillUp1.wav-0a8ff576254b53f62c06b46a85a1cef1.sample"
+
+[deps]
+
+source_file="res://Systems/SettingsManager/Audio/SkillUp1.wav"
+dest_files=[ "res://.import/SkillUp1.wav-0a8ff576254b53f62c06b46a85a1cef1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

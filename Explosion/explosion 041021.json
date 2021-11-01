@@ -1,0 +1,265 @@
+{
+  "frames": [
+    {
+      "filename": "explosion v0.11 scaled0001.png",
+      "frame": {
+        "x": 20,
+        "y": 20,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0003.png",
+      "frame": {
+        "x": 2940,
+        "y": 20,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0005.png",
+      "frame": {
+        "x": 5860,
+        "y": 20,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0007.png",
+      "frame": {
+        "x": 20,
+        "y": 1680,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0009.png",
+      "frame": {
+        "x": 2940,
+        "y": 1680,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0013.png",
+      "frame": {
+        "x": 5860,
+        "y": 1680,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0015.png",
+      "frame": {
+        "x": 20,
+        "y": 3340,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0016.png",
+      "frame": {
+        "x": 2940,
+        "y": 3340,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0017.png",
+      "frame": {
+        "x": 5860,
+        "y": 3340,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "explosion v0.11 scaled0018.png",
+      "frame": {
+        "x": 20,
+        "y": 5000,
+        "w": 2880,
+        "h": 1620
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 2880,
+        "h": 1620
+      },
+      "sourceSize": {
+        "w": 2880,
+        "h": 1620
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  ],
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "explosion 041021.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 8760,
+      "h": 6640
+    },
+    "scale": 1
+  }
+}

@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Systems/SettingsManager/Controls/BtnRemap.cs" type="Script" id=1]
+
+[node name="BtnRemap" type="Button"]
+margin_left = 153.0
+margin_right = 287.0
+margin_bottom = 46.0
+focus_mode = 0
+size_flags_horizontal = 3
+toggle_mode = true
+enabled_focus_mode = 0
+clip_text = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

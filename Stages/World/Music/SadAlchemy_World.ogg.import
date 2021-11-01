@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SadAlchemy_World.ogg-e28ce9c2f3531c2ddd938feff41e9697.oggstr"
+
+[deps]
+
+source_file="res://Stages/World/Music/SadAlchemy_World.ogg"
+dest_files=[ "res://.import/SadAlchemy_World.ogg-e28ce9c2f3531c2ddd938feff41e9697.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

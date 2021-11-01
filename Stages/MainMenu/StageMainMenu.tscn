@@ -1,0 +1,276 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Stages/MainMenu/StageMainMenu.cs" type="Script" id=1]
+[ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Stages/MainMenu/BG.png" type="Texture" id=3]
+[ext_resource path="res://Stages/MainMenu/Music/UnderTheBridge_Menu.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Interface/Fonts/oldenburgbutton.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Systems/SettingsManager/PnlSettings.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Stages/MainMenu/bg/BackgroundImage.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://Interface/PictureStory/PictureStory.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Interface/Fonts/PANELSTYLEBOX.tres" type="StyleBox" id=11]
+[ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+size = 104
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 65
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 9 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 27
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 9 )
+
+[node name="StageMainMenu" type="Node"]
+script = ExtResource( 1 )
+
+[node name="BackgroundImageWithLight" parent="." instance=ExtResource( 8 )]
+
+[node name="BtnTexBackground" type="TextureButton" parent="."]
+visible = false
+modulate = Color( 10, 10, 10, 1 )
+margin_right = 7679.0
+margin_bottom = 4320.0
+rect_scale = Vector2( 0.25, 0.25 )
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="placeholder" type="Control" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -20.0
+margin_right = 20.0
+margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="placeholder"]
+scale = Vector2( 0.356984, 0.356984 )
+
+[node name="LblMainMenu" type="Label" parent="."]
+anchor_right = 1.001
+anchor_bottom = 0.231
+margin_top = 9.0
+margin_right = 0.0799561
+margin_bottom = 0.519989
+theme = ExtResource( 14 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.996078, 0.968627, 0.92549, 1 )
+text = "Github Gameoff 21"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnPlay" parent="." instance=ExtResource( 2 )]
+margin_left = 48.0
+margin_top = 922.0
+margin_right = 466.0
+margin_bottom = 1007.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 14 )
+custom_fonts/font = SubResource( 2 )
+text = "PLAY"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 476.0
+margin_top = 929.058
+margin_right = 1856.0
+margin_bottom = 1001.06
+theme = ExtResource( 14 )
+custom_constants/separation = 12
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnSettings" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 452.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = null
+custom_fonts/font = ExtResource( 5 )
+text = "SETTINGS"
+
+[node name="BtnAbout" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 464.0
+margin_top = 0.0
+margin_right = 916.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = null
+custom_fonts/font = ExtResource( 5 )
+text = "ABOUT"
+
+[node name="BtnQuit1" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 928.0
+margin_top = 0.0
+margin_right = 1380.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = null
+custom_fonts/font = ExtResource( 5 )
+text = "QUIT"
+
+[node name="BtnToggleMute" parent="HBoxContainer" instance=ExtResource( 2 )]
+visible = false
+margin_left = 499.0
+margin_top = 0.0
+margin_right = 829.0
+margin_bottom = 93.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = null
+custom_fonts/font = ExtResource( 5 )
+text = "MUTE"
+
+[node name="PopAbout" type="Panel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -386.0
+margin_top = -212.0
+margin_right = 386.0
+margin_bottom = 212.0
+theme = ExtResource( 14 )
+custom_styles/panel = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblAbout" type="Label" parent="PopAbout"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -329.0
+margin_top = -164.0
+margin_right = 329.0
+margin_bottom = 17.0
+theme = ExtResource( 14 )
+custom_fonts/font = SubResource( 3 )
+custom_constants/line_spacing = 10
+text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Bosca Ceoli, Strofe, Audacity, jfxr.
+"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblAbout2" type="Label" parent="PopAbout"]
+anchor_left = 0.5
+anchor_top = 0.552
+anchor_right = 0.5
+anchor_bottom = 0.552
+margin_left = -519.0
+margin_top = -80.048
+margin_right = 519.0
+margin_bottom = 79.952
+custom_fonts/font = SubResource( 3 )
+custom_constants/line_spacing = 10
+text = "On discord we are:
+SarahSage7#9089,
+Sophiablabla#7563
+hnuqweasd#3731."
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameLinkButton" type="LinkButton" parent="PopAbout"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -192.0
+margin_top = 131.0
+margin_right = 208.0
+margin_bottom = 176.0
+custom_fonts/font = SubResource( 4 )
+text = "PLAY OUR GAMES!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnBack1" parent="PopAbout" instance=ExtResource( 2 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -42.0
+margin_top = 1.0
+margin_right = -3.0
+margin_bottom = 48.0
+theme = null
+custom_fonts/font = SubResource( 5 )
+text = "X"
+
+[node name="PnlSettings" parent="." instance=ExtResource( 7 )]
+visible = false
+
+[node name="PictureStory" parent="." instance=ExtResource( 10 )]
+visible = false
+
+[node name="LblText" parent="PictureStory/Prev" index="2"]
+custom_fonts/font = ExtResource( 5 )
+
+[node name="AudioData" parent="." instance=ExtResource( 6 )]
+VolumeDb = -10.0
+StartPlaying = true
+Streams = [ ExtResource( 4 ) ]
+Bus = 2
+SoundType = 3
+
+[connection signal="pressed" from="BtnTexBackground" to="." method="OnBtnTexBackgroundPressed"]
+[connection signal="pressed" from="BtnPlay" to="." method="OnBtnNewPressed"]
+[connection signal="pressed" from="HBoxContainer/BtnSettings" to="." method="OnBtnSettingsPressed"]
+[connection signal="pressed" from="HBoxContainer/BtnAbout" to="." method="OnBtnAboutPressed"]
+[connection signal="pressed" from="HBoxContainer/BtnQuit1" to="." method="_on_BtnQuit_pressed"]
+[connection signal="pressed" from="HBoxContainer/BtnToggleMute" to="." method="ToggleMute"]
+[connection signal="pressed" from="PopAbout/GameLinkButton" to="." method="OnGameLinkButtonPressed"]
+[connection signal="pressed" from="PopAbout/BtnBack1" to="." method="OnBtnBackPressed"]
+
+[editable path="PictureStory"]

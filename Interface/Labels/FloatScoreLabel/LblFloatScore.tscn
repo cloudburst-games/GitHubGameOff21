@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Interface/Labels/FloatScoreLabel/LblFloatScore.cs" type="Script" id=1]
+[ext_resource path="res://Interface/Fonts/from the internet/new_dynamicfo2nt.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Interface/Themes/LabelThemeGWJ35.tres" type="Theme" id=3]
+
+[node name="LblFloatScore" type="Label"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 382.0
+margin_right = -1484.0
+margin_bottom = -640.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 2 )
+text = "+1 Maximum Health"
+align = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_fadeSpeed = 0.25

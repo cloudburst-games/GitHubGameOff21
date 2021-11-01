@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ButtonHoverSciFi.wav-42bdc543d9a3ed6051fda5bd7d707fd6.sample"
+
+[deps]
+
+source_file="res://Interface/Buttons/BtnBase/ButtonHoverSciFi.wav"
+dest_files=[ "res://.import/ButtonHoverSciFi.wav-42bdc543d9a3ed6051fda5bd7d707fd6.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

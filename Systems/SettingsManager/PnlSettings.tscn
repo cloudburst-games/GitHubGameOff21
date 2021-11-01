@@ -1,0 +1,715 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://Systems/SettingsManager/CntPanels.cs" type="Script" id=1]
+[ext_resource path="res://Systems/SettingsManager/PnlSettings.cs" type="Script" id=2]
+[ext_resource path="res://Systems/SettingsManager/Controls/PnlControls.cs" type="Script" id=3]
+[ext_resource path="res://Systems/SettingsManager/Controls/BtnRemap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Systems/SettingsManager/Audio/PnlAudio.cs" type="Script" id=5]
+[ext_resource path="res://Systems/SettingsManager/Graphics/PnlGraphics.cs" type="Script" id=6]
+[ext_resource path="res://Systems/SettingsManager/Audio/Laser3.wav" type="AudioStream" id=7]
+[ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=8]
+[ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Interface/Fonts/oldenburgbutton.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Interface/Fonts/PANELSTYLEBOX.tres" type="StyleBox" id=12]
+[ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Systems/SettingsManager/Audio/HighScore.wav" type="AudioStream" id=17]
+[ext_resource path="res://Systems/SettingsManager/Audio/SkillUp1.wav" type="AudioStream" id=18]
+
+[sub_resource type="DynamicFont" id=9]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 6
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 5
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 6
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 1
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 30
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 4
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 25
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[node name="PnlSettings" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -529.0
+margin_top = -305.5
+margin_right = 529.0
+margin_bottom = 305.5
+theme = ExtResource( 8 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="."]
+anchor_left = 0.566
+anchor_right = 0.566
+anchor_bottom = 0.008
+margin_left = -359.022
+margin_top = 4.0
+margin_right = 358.978
+margin_bottom = 65.928
+theme = ExtResource( 8 )
+custom_fonts/font = ExtResource( 11 )
+text = "SETTINGS"
+align = 1
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CntPanels" type="Control" parent="."]
+margin_left = 159.0
+margin_top = 107.0
+margin_right = 890.0
+margin_bottom = 428.0
+theme = ExtResource( 8 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlAudio" type="Panel" parent="CntPanels"]
+margin_left = 30.0
+margin_top = -32.0
+margin_right = 853.0
+margin_bottom = 438.0
+custom_styles/panel = ExtResource( 12 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_voiceSample = ExtResource( 17 )
+_effectsSample = ExtResource( 7 )
+_musicSample = ExtResource( 18 )
+
+[node name="SoundPlayer" type="AudioStreamPlayer" parent="CntPanels/PnlAudio"]
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlAudio"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -359.5
+margin_right = 359.5
+margin_bottom = 63.0
+theme = ExtResource( 8 )
+custom_fonts/font = ExtResource( 11 )
+text = "Audio"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlidVoice" type="HSlider" parent="CntPanels/PnlAudio"]
+anchor_left = 0.224036
+anchor_top = 0.208333
+anchor_right = 0.725425
+anchor_bottom = 0.305556
+margin_left = 53.8491
+margin_top = 0.000160217
+margin_right = 53.8491
+margin_bottom = 0.000167847
+max_value = 1.0
+step = 0.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidVoice"]
+margin_left = -160.0
+margin_top = 4.0
+margin_right = -37.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 9 )
+text = "Voice"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl0" type="Label" parent="CntPanels/PnlAudio/HSlidVoice"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -8.49487
+margin_top = 5.10398
+margin_right = 24.5051
+margin_bottom = 33.104
+custom_fonts/font = SubResource( 9 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl50" type="Label" parent="CntPanels/PnlAudio/HSlidVoice"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.5
+margin_top = 5.10398
+margin_right = 16.5
+margin_bottom = 33.104
+custom_fonts/font = SubResource( 9 )
+text = "50"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl100" type="Label" parent="CntPanels/PnlAudio/HSlidVoice"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -33.0
+margin_top = 5.10398
+margin_bottom = 33.104
+custom_fonts/font = SubResource( 9 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlidEffects" type="HSlider" parent="CntPanels/PnlAudio"]
+anchor_left = 0.224036
+anchor_top = 0.375264
+anchor_right = 0.725425
+anchor_bottom = 0.472486
+margin_left = 53.8491
+margin_top = -1.52588e-05
+margin_right = 53.8491
+margin_bottom = -1.52588e-05
+max_value = 1.0
+step = 0.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidEffects"]
+margin_left = -157.269
+margin_top = 3.81891
+margin_right = -14.2693
+margin_bottom = 35.8189
+custom_fonts/font = SubResource( 10 )
+text = "Effects"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl0" type="Label" parent="CntPanels/PnlAudio/HSlidEffects"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -8.49487
+margin_top = 5.10423
+margin_right = 24.5051
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 10 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl50" type="Label" parent="CntPanels/PnlAudio/HSlidEffects"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.5
+margin_top = 5.10423
+margin_right = 16.5
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 10 )
+text = "50"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl100" type="Label" parent="CntPanels/PnlAudio/HSlidEffects"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -33.0
+margin_top = 5.10423
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 10 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlidMusic" type="HSlider" parent="CntPanels/PnlAudio"]
+anchor_left = 0.224036
+anchor_top = 0.540775
+anchor_right = 0.725425
+anchor_bottom = 0.637997
+margin_left = 53.8491
+margin_top = -1.52588e-05
+margin_right = 53.8491
+margin_bottom = -3.05176e-05
+max_value = 1.0
+step = 0.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidMusic"]
+margin_left = -157.269
+margin_top = 3.81891
+margin_right = -37.2697
+margin_bottom = 35.8189
+custom_fonts/font = SubResource( 11 )
+text = "Music"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl0" type="Label" parent="CntPanels/PnlAudio/HSlidMusic"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -8.49487
+margin_top = 5.10423
+margin_right = 24.5051
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 11 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl50" type="Label" parent="CntPanels/PnlAudio/HSlidMusic"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.5
+margin_top = 5.10423
+margin_right = 16.5
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 11 )
+text = "50"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl100" type="Label" parent="CntPanels/PnlAudio/HSlidMusic"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -33.0
+margin_top = 5.10423
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 11 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlidMaster" type="HSlider" parent="CntPanels/PnlAudio"]
+anchor_left = 0.224036
+anchor_top = 0.703092
+anchor_right = 0.725425
+anchor_bottom = 0.800314
+margin_left = 53.8491
+margin_right = 53.8491
+max_value = 1.0
+step = 0.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidMaster"]
+margin_left = -157.269
+margin_top = 3.81891
+margin_right = -18.2693
+margin_bottom = 35.8189
+custom_fonts/font = SubResource( 12 )
+text = "Master"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl0" type="Label" parent="CntPanels/PnlAudio/HSlidMaster"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = -8.49487
+margin_top = 5.1042
+margin_right = 24.5051
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 12 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl50" type="Label" parent="CntPanels/PnlAudio/HSlidMaster"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -16.5
+margin_top = 5.1042
+margin_right = 16.5
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 12 )
+text = "50"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lbl100" type="Label" parent="CntPanels/PnlAudio/HSlidMaster"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -33.0
+margin_top = 5.1042
+margin_bottom = 33.1042
+custom_fonts/font = SubResource( 12 )
+text = "100"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlGraphics" type="Panel" parent="CntPanels"]
+margin_left = 30.0
+margin_top = -32.0
+margin_right = 853.0
+margin_bottom = 438.0
+custom_styles/panel = ExtResource( 12 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlGraphics"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -364.5
+margin_right = 353.5
+margin_bottom = 63.0
+custom_fonts/font = SubResource( 3 )
+text = "Graphics"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CBoxFullScreen" type="CheckBox" parent="CntPanels/PnlGraphics"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -316.5
+margin_top = -130.0
+margin_right = -73.5
+margin_bottom = -87.0
+custom_fonts/font = SubResource( 4 )
+text = "FullScreen"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlControls" type="Panel" parent="CntPanels"]
+visible = false
+margin_left = 38.0
+margin_top = -25.0
+margin_right = 853.0
+margin_bottom = 435.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxActions2" type="VBoxContainer" parent="CntPanels/PnlControls"]
+visible = false
+margin_left = 264.0
+margin_top = 71.0
+margin_right = 808.0
+margin_bottom = 414.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxActions" type="VBoxContainer" parent="CntPanels/PnlControls"]
+anchor_bottom = 1.0
+margin_left = -151.0
+margin_top = 71.0
+margin_right = 577.0
+margin_bottom = -57.0
+theme = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxActionRow6" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
+margin_right = 728.0
+margin_bottom = 332.0
+size_flags_vertical = 3
+theme = ExtResource( 8 )
+custom_constants/separation = 20
+
+[node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow6"]
+margin_top = 143.0
+margin_right = 404.0
+margin_bottom = 188.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 11 )
+text = "Pause"
+align = 2
+
+[node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow6" instance=ExtResource( 4 )]
+margin_left = 424.0
+margin_right = 728.0
+margin_bottom = 332.0
+size_flags_stretch_ratio = 0.75
+custom_fonts/font = ExtResource( 11 )
+Action = "Pause"
+
+[node name="LblTitle" type="Label" parent="CntPanels/PnlControls"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -359.0
+margin_right = 359.0
+margin_bottom = 63.0
+custom_fonts/font = SubResource( 5 )
+text = "Controls"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblInfo" type="Label" parent="CntPanels/PnlControls"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -346.5
+margin_top = -37.9089
+margin_right = 346.5
+margin_bottom = -8.90894
+custom_fonts/font = SubResource( 6 )
+text = "test"
+align = 1
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxBtns" type="VBoxContainer" parent="."]
+margin_left = 6.0
+margin_top = 75.0
+margin_right = 191.0
+margin_bottom = 272.0
+theme = ExtResource( 8 )
+custom_constants/separation = -1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnControls" type="Button" parent="VBoxBtns"]
+visible = false
+margin_right = 185.0
+margin_bottom = 67.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 8 )
+custom_fonts/font = SubResource( 7 )
+text = "Controls"
+
+[node name="BtnAudio" type="Button" parent="VBoxBtns"]
+margin_right = 185.0
+margin_bottom = 99.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 7 )
+text = "Audio"
+
+[node name="BtnGraphics" type="Button" parent="VBoxBtns"]
+margin_top = 98.0
+margin_right = 185.0
+margin_bottom = 197.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 7 )
+text = "Graphics"
+
+[node name="BtnClose" parent="." instance=ExtResource( 14 )]
+margin_left = 741.0
+margin_top = 551.0
+margin_right = 884.0
+margin_bottom = 609.0
+theme = null
+custom_fonts/font = SubResource( 8 )
+text = "Close"
+
+[node name="BtnApply" parent="." instance=ExtResource( 14 )]
+margin_left = 881.0
+margin_top = 551.0
+margin_right = 1016.0
+margin_bottom = 609.0
+theme = null
+custom_fonts/font = SubResource( 8 )
+text = "Apply"
+
+[node name="PnlConfirmExit" type="Panel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -359.0
+margin_top = -83.0
+margin_right = 359.0
+margin_bottom = 83.0
+theme = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblConfirm" type="Label" parent="PnlConfirmExit"]
+margin_left = 24.0
+margin_top = 22.0
+margin_right = 696.0
+margin_bottom = 81.0
+custom_fonts/font = ExtResource( 9 )
+text = "You have unsaved changes.
+Are you sure you want to exit?"
+align = 1
+
+[node name="BtnConfirmClose" parent="PnlConfirmExit" instance=ExtResource( 14 )]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -260.0
+margin_top = -54.0
+margin_right = -15.0
+margin_bottom = -15.0
+theme = null
+custom_fonts/font = ExtResource( 9 )
+text = "Close"
+
+[node name="BtnCancel" parent="PnlConfirmExit" instance=ExtResource( 14 )]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = -54.0
+margin_right = 261.0
+margin_bottom = -8.0
+theme = null
+custom_fonts/font = SubResource( 13 )
+text = "Cancel"
+
+[connection signal="pressed" from="VBoxBtns/BtnControls" to="." method="OnBtnControlsPressed"]
+[connection signal="pressed" from="VBoxBtns/BtnAudio" to="." method="OnBtnAudioPressed"]
+[connection signal="pressed" from="VBoxBtns/BtnGraphics" to="." method="OnBtnGraphicsPressed"]
+[connection signal="pressed" from="BtnClose" to="." method="OnBtnClosePressed"]
+[connection signal="pressed" from="BtnApply" to="." method="OnBtnApplyPressed"]
+[connection signal="pressed" from="PnlConfirmExit/BtnConfirmClose" to="." method="OnBtnConfirmClosePressed"]
+[connection signal="pressed" from="PnlConfirmExit/BtnCancel" to="." method="OnBtnCancelPressed"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://Interface/Buttons/BtnSprite/SpriteButton.cs" type="Script" id=3]
+[ext_resource path="res://Interface/Panels/InfoPanel.tscn" type="PackedScene" id=4]
+
+
+[node name="BtnSprite" type="TextureButton"]
+margin_right = 60.0
+margin_bottom = 27.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+_infoText = "test"
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 60, 27 )
+
+[node name="InfoPanel" parent="." instance=ExtResource( 4 )]
+[connection signal="gui_input" from="." to="." method="OnBtnSpriteGuiInput"]
+[connection signal="mouse_entered" from="." to="." method="OnMouseEntered"]
+[connection signal="mouse_exited" from="." to="." method="OnMouseExited"]
