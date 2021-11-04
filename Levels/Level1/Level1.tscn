@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Unit.cs" type="Script" id=2]
+[ext_resource path="res://Actors/Player/Player.tscn" type="PackedScene" id=3]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Terrain" parent="." instance=ExtResource( 1 )]
+
+[node name="All" type="YSort" parent="."]
+
+[node name="Units" type="YSort" parent="All"]
+
+[node name="Player" type="KinematicBody2D" parent="All/Units" instance=ExtResource( 3 )]
+position = Vector2( -60.975, 942.325 )
+script = ExtResource( 2 )
+_controlState = 0
+
+[node name="Camera2D" type="Camera2D" parent="All/Units/Player"]
+current = true

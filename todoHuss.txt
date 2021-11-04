@@ -1,21 +1,17 @@
-TODO ludumdare49
+Minimum targets
+Thurs
+- Player and player movement DONE
+- Adventure map DONE
 
-Saturday:
-- StageWorld scene
-- Intro animation and game start.
-- herbs and potions: empty, mixing and mixed, tooltips, label underneath each potion, timer label and timer for each potion, potion shaking after random number of seconds (5-10) then exploding after further random number of seconds (5-10) -> instance and run explosion (explosion.start()) -> game over
-- dragging final potion to silhouette.
-- after each potion moves to the next riddle (riddles in random order).
-- Victory after 3 riddles answered
-- Defeat
+Fri
+- Levels and level transitions (working for both interiors and exteriors)
+- Save and load system - and being able to track the state of every 'changeable' object, e.g. NPC states, quest states, monster states
 
-
-Sunday:
-- Finalise all code-related and sound-related assets (game should be playable and fun from start to end, using placeholder art). Publish web build and announce testing from 4pm.
-
-Monday:
-- Integrate all art by the afternoon (~5pm). If any outstanding art, then find and use and credit free-use art.
-- Push the project by 6pm.
+Sat
+- Enemies in the adventure map (idle, patrolling, with indicator of how many)
+- Battle map and transition between adventure and battle maps
+- Readjust weekly targets as per progress
 
 
-
+If time post all to-do:
+- Redo animations for Unit.tscn / (Player) - see AnimationTree tutorial

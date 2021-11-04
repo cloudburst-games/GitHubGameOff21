@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Utils/LevelBuilder/Grid.cs" type="Script" id=1]
+
+[node name="Grid" type="TileMap"]
+mode = 1
+cell_size = Vector2( 128, 64 )
+centered_textures = true
+format = 1
+script = ExtResource( 1 )
