@@ -389,3 +389,6 @@ anims/WalkDownRight = SubResource( 9 )
 anims/WalkRight = SubResource( 10 )
 anims/WalkUp = SubResource( 11 )
 anims/WalkUpRight = SubResource( 12 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true

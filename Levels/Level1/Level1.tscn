@@ -1,10 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Unit.cs" type="Script" id=2]
-[ext_resource path="res://Actors/Player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
 
 [node name="Level1" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="Terrain" parent="." instance=ExtResource( 1 )]
 
@@ -12,10 +14,20 @@
 
 [node name="Units" type="YSort" parent="All"]
 
-[node name="Player" type="KinematicBody2D" parent="All/Units" instance=ExtResource( 3 )]
-position = Vector2( -60.975, 942.325 )
-script = ExtResource( 2 )
-_controlState = 0
+[node name="TransitionMarkers" type="YSort" parent="All"]
 
-[node name="Camera2D" type="Camera2D" parent="All/Units/Player"]
-current = true
+[node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 2 )]
+position = Vector2( 716.197, 817.906 )
+ButtonLabel = "To Level2"
+DestinationLevel = 1
+
+[node name="PositionMarkers" type="YSort" parent="All"]
+
+[node name="PlayerPositionMarker" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 589.062, 847.571 )
+
+[node name="AutosaveAreas" type="YSort" parent="All"]
+
+[node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 3 )]
+position = Vector2( -523.375, 913.257 )
+_oneShot = false

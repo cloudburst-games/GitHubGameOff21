@@ -4,8 +4,9 @@ Thurs
 - Adventure map DONE
 
 Fri
-- Levels and level transitions (working for both interiors and exteriors)
-- Save and load system - and being able to track the state of every 'changeable' object, e.g. NPC states, quest states, monster states
+- Levels and level transitions . there are no interiors. DONE
+- Save and load system - and being able to track the state of every 'changeable' object, e.g. NPC states, quest states, monster states. Use a Data object for each entity, each implementing a common interface "IStoreable" or similar. Coordinate with Sarah to use the same system. DONE
+- Autosaves DONE
 
 Sat
 - Enemies in the adventure map (idle, patrolling, with indicator of how many)
@@ -15,3 +16,6 @@ Sat
 
 If time post all to-do:
 - Redo animations for Unit.tscn / (Player) - see AnimationTree tutorial
+- Water shader
+- Enter filename by script when saving files...
+- Make a less buggy FileDialog (only if plenty of time)

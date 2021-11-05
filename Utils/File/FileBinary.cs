@@ -11,12 +11,11 @@ public static class FileBinary
     public static void SaveToFile(string filename, DataBinary dataBinary)
     {
         // Create folder
-        string absolutePath = Godot.OS.GetUserDataDir() + "/" + filename;
-        string dir = new System.IO.FileInfo(absolutePath).Directory.FullName;
-        System.IO.Directory.CreateDirectory(dir);
+		string dir = new System.IO.FileInfo(filename).Directory.FullName;
+		System.IO.Directory.CreateDirectory(dir);
 
         // Open a new stream in write/create mode
-        Stream stream = System.IO.File.Open (absolutePath, FileMode.Create);
+        Stream stream = System.IO.File.Open (filename, FileMode.Create);
 
         // Create new binaryformatter
         BinaryFormatter bf = new BinaryFormatter ();
@@ -30,12 +29,12 @@ public static class FileBinary
 
     public static DataBinary LoadFromFile(string filename)
     {
-        string absolutePath = Godot.OS.GetUserDataDir() + "/" + filename;
-        if (! System.IO.File.Exists(absolutePath))
+        // string absolutePath = Godot.OS.GetUserDataDir() + "/" + filename;
+        if (! System.IO.File.Exists(filename))
             return null;
 
         // assign the file to our stream
-        Stream stream = System.IO.File.Open (absolutePath, FileMode.Open);
+        Stream stream = System.IO.File.Open (filename, FileMode.Open);
 
         // new bf
         BinaryFormatter bf = new BinaryFormatter ();

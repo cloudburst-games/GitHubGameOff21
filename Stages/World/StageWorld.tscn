@@ -1,10 +1,86 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
-[ext_resource path="res://Levels/Level1/Level1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
+[ext_resource path="res://Levels/Common/LevelManager/LevelManager.cs" type="Script" id=3]
+[ext_resource path="res://Stages/World/HUD/HUD.cs" type="Script" id=4]
+[ext_resource path="res://Shaders/icon.png" type="Texture" id=5]
+[ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=6]
 [ext_resource path="res://Stages/World/Music/UnstableAlchemy_World.ogg" type="AudioStream" id=11]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Stages/World/Music/SadAlchemy_World.ogg" type="AudioStream" id=16]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Load"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "LogEntry"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 1.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
 
 [node name="StageWorld" type="Node"]
 script = ExtResource( 1 )
@@ -16,6 +92,177 @@ Streams = [ ExtResource( 16 ), ExtResource( 11 ) ]
 Bus = 2
 SoundType = 3
 
-[node name="LevelHolder" type="Node2D" parent="."]
+[node name="LevelManager" type="Node2D" parent="."]
+script = ExtResource( 3 )
 
-[node name="Level1" parent="LevelHolder" instance=ExtResource( 2 )]
+[node name="HUD" type="CanvasLayer" parent="."]
+pause_mode = 2
+script = ExtResource( 4 )
+
+[node name="CtrlTheme" type="Control" parent="HUD"]
+theme = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlUIBar" type="Panel" parent="HUD/CtrlTheme"]
+margin_right = 1920.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxBtns" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar"]
+margin_left = 1634.31
+margin_top = 0.793701
+margin_right = 1908.31
+margin_bottom = 41.7937
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnMenu" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
+margin_right = 274.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+text = "Menu"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0, 0, 0, 0.670588 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 796.5
+margin_top = 349.5
+margin_right = 1123.5
+margin_bottom = 730.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxBtns" type="VBoxContainer" parent="HUD/CtrlTheme/PnlMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -142.0
+margin_top = -165.0
+margin_right = 142.0
+margin_bottom = 165.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnResume" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
+margin_right = 284.0
+margin_bottom = 79.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Resume"
+
+[node name="BtnSave" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
+margin_top = 83.0
+margin_right = 284.0
+margin_bottom = 163.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Save"
+
+[node name="BtnLoad" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
+margin_top = 167.0
+margin_right = 284.0
+margin_bottom = 246.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Load"
+
+[node name="BtnExit" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
+margin_top = 250.0
+margin_right = 284.0
+margin_bottom = 330.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Exit"
+
+[node name="FileDialog" type="FileDialog" parent="HUD/CtrlTheme"]
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 383.745
+margin_top = 171.918
+margin_right = 1527.75
+margin_bottom = 863.918
+access = 1
+filters = PoolStringArray( "*.ksav; KSAV Files" )
+show_hidden_files = true
+current_dir = "user://Saves"
+current_file = "1.ksav"
+current_path = "user://Saves/1.ksav"
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressAnim" type="TextureRect" parent="HUD/CtrlTheme"]
+visible = false
+margin_left = 1808.52
+margin_top = 969.298
+margin_right = 1872.52
+margin_bottom = 1033.3
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/ProgressAnim"]
+anims/Load = SubResource( 1 )
+
+[node name="LblProgress" type="Label" parent="HUD/CtrlTheme/ProgressAnim"]
+margin_left = -21.3816
+margin_top = 67.7083
+margin_right = 99.6184
+margin_bottom = 102.708
+text = "Progress..."
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblLog" type="Label" parent="HUD/CtrlTheme"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 1632.13
+margin_top = 1031.66
+margin_right = 1897.13
+margin_bottom = 1066.66
+text = "Save Complete"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblLog"]
+autoplay = "default"
+anims/LogEntry = SubResource( 2 )
+anims/default = SubResource( 3 )
+
+[connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnMenu" to="HUD" method="OnBtnMenuPressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnResume" to="HUD" method="OnBtnResumePressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnSave" to="HUD" method="OnBtnSavePressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnLoad" to="HUD" method="OnBtnLoadPressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnExit" to="." method="OnBtnExitPressed"]
+[connection signal="file_selected" from="HUD/CtrlTheme/FileDialog" to="." method="OnFileDialogConfirmed"]
