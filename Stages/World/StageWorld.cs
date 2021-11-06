@@ -11,6 +11,7 @@ public class StageWorld : Stage
     {
         base._Ready();
         ConnectSignals();
+        // GetNode<Control>("CntBattle").Visible = false;
         
         //testing:
         NewWorldGen();
@@ -19,14 +20,18 @@ public class StageWorld : Stage
     public void ConnectSignals()
     {
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.AutosaveAreaEntered), this, nameof(OnAutosaveTriggered));
+        GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.Announced), GetNode<HUD>("HUD"), nameof(HUD.LogEntry));
+        GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCRightClicked), GetNode<HUD>("HUD"), nameof(HUD.OnNPCRightClicked));
+        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
+        // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
     }
 
     private void OnAutosaveTriggered()
     {
         FileInfo[] files = new DirectoryInfo(ProjectSettings.GlobalizePath("user://Saves"))
-                        .GetFiles("AUTOSAVE*.ksav")
-                        .OrderBy(f => f.LastWriteTime)
-                        .ToArray();
+            .GetFiles("AUTOSAVE*.ksav")
+            .OrderBy(f => f.LastWriteTime)
+            .ToArray();
 
         int count = files.Count();
         if (count >=3)
@@ -39,14 +44,63 @@ public class StageWorld : Stage
         }
     }
 
-    public void NewWorldGen()
+    public void OnDialogueStarted(Unit target)
     {
-        GetNode<LevelManager>("LevelManager").InitialiseLevel(
-            LevelManager.Level.Level1,
-            (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance());
+        GetNode<HUD>("HUD").StartDialogue(target.CurrentUnitData);
+    }
+    public async void OnBattleStarted(Unit target)
+    {
+        GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData.MainCombatant.Combatant);
+        GetNode<HUD>("HUD").PauseCommon(true);
+
+        await ToSignal(GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle"), nameof(PnlPreBattle.BattleConfirmed));
+
+        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Start(
+            playerData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.MainCombatant,
+            enemyCommanderData:target.CurrentUnitData.MainCombatant,
+            friendliesData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions,
+            hostilesData:target.CurrentUnitData.Minions
+        );
+
+        // tmeporary - remove when battle done and enemy dies
+        target.CurrentUnitData.Hostile = false;
     }
 
-    public async void LoadWorldGen()
+    public void OnBattleEnded()
+    {
+        GetNode<HUD>("HUD").PauseCommon(false);
+        GetNode<Control>("HUD/CtrlTheme/CntBattle").Visible = false;
+    }
+
+    public void NewWorldGen()
+    {
+        Unit player = CommonPlayerGen();
+        player.CurrentUnitData = new UnitData() {
+            Player = true
+        };
+        GetNode<LevelManager>("LevelManager").InitialiseLevel(
+            LevelManager.Level.Level1,
+            player);
+    }
+
+    private Unit CommonPlayerGen()
+    {
+        Unit player = (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance();
+        // player.SetControlState(Unit.ControlState.Player);
+        // if (player.CurrentControlState is PlayerUnitControlState playerUnitControlState)
+        // {
+        player.Connect(nameof(Unit.DialogueStarted), this, nameof(OnDialogueStarted));
+        player.Connect(nameof(Unit.BattleStarted), this, nameof(OnBattleStarted));
+        // }
+        return player;
+    }
+    /*
+
+            (IStoreable)dataBinary.Data["LevelManagerData"],
+            (IStoreable)dataBinary.Data["PlayerData"]
+    */
+
+    public async void LoadWorldGen(Dictionary<string, IStoreable> unpackedData)
     {
         // fade to black or do loading screen
         LoadingScreen loadingScreen = (LoadingScreen) GD.Load<PackedScene>("res://Interface/Transitions/LoadingScreen.tscn").Instance();
@@ -58,14 +112,18 @@ public class StageWorld : Stage
         GetNode<LevelManager>("LevelManager").FreeCurrentLevel();
 
         // load new level
+        GetNode<LevelManager>("LevelManager").UnpackAllData((LevelManagerData) unpackedData["LevelManagerData"]);
+
+        Unit player = CommonPlayerGen();
+        player.CurrentUnitData = (UnitData) unpackedData["PlayerData"];
         // when we save player data we will not make a new player rather load player data into this variable?
         GetNode<LevelManager>("LevelManager").InitialiseLevel(
             GetNode<LevelManager>("LevelManager").CurrentLevel,
-            (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance());
+            player);
 
         // fade out
         loadingScreen.FadeOut();        
-        GetNode<HUD>("HUD").TogglePause(false);
+        GetNode<HUD>("HUD").TogglePauseMenu(false);
     }
 
     public void CommonWorldGen()
@@ -107,25 +165,30 @@ public class StageWorld : Stage
     // ******************
     private Dictionary<string, object> PackDataPreSave()
     {
-        return new Dictionary<string, object>() {
+        return new Dictionary<string, object>() 
+        {
             {"LevelManagerData", GetNode<LevelManager>("LevelManager").PackAndGetData()},
-
+            {"PlayerData", GetNode<LevelManager>("LevelManager").GetPlayerInTree().PackAndGetData()}
         };
     }
 
     // ******************
     // **UNPACK DATA HERE**
     // ******************
-    private void UnpackDataOnLoad(DataBinary dataBinary)
+    private Dictionary<string, IStoreable> UnpackDataOnLoad(DataBinary dataBinary)
     {
-        GetNode<LevelManager>("LevelManager").UnpackAllData((LevelManagerData) dataBinary.Data["LevelManagerData"]);
+        // GetNode<LevelManager>("LevelManager").UnpackAllData((LevelManagerData) dataBinary.Data["LevelManagerData"]);
+        return new Dictionary<string, IStoreable>() {
+            {"LevelManagerData", (IStoreable)dataBinary.Data["LevelManagerData"]},
+            {"PlayerData", (IStoreable)dataBinary.Data["PlayerData"]}
+        };
     }
    
     public void OnLoadConfirmed(string path)
     {
         DataBinary dataBinary = FileBinary.LoadFromFile(ProjectSettings.GlobalizePath(path));
-        UnpackDataOnLoad(dataBinary);
-        LoadWorldGen();
+        Dictionary<string, IStoreable> unpackedData = UnpackDataOnLoad(dataBinary);
+        LoadWorldGen(unpackedData);
     }
 
     public void OnBtnExitPressed()

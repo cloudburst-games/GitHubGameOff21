@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Level2/TerrainLevel2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
+[ext_resource path="res://icon.png" type="Texture" id=8]
+[ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=9]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( -1514.87, 1278.19, -1919.59, 1076.9, -1775.5, 1015.45, -124.856, 890.43, -59.1689, 926.452, -148.164, 968.83, -474.479, 379.769, -366.413, 439.099, -510.5, 509.023, -567.711, 396.72, -1807.28, 949.76, -1415.28, 763.294, -1400.45, 1227.34, -502.025, 566.234, -959.713, 528.094, -972.426, 487.834, -745.701, 394.601, -658.825, 386.125, -124.856, 1034.52, -637.636, 1276.07, -703.323, 1254.89, -1192.79, 657.348, -1315.69, 1284.55, -1415.28, 710.321, -1245.77, 644.635, -1213.98, 1259.12, -116.38, 759.057, -874.956, 1335.4, -1063.54, 1335.4 )
+polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 3, 4, 5 ), PoolIntArray( 6, 7, 8, 9 ), PoolIntArray( 0, 2, 10, 11, 12 ), PoolIntArray( 8, 13, 14, 15, 16, 17, 9 ), PoolIntArray( 13, 5, 18, 19, 20, 21, 14 ), PoolIntArray( 22, 12, 11, 23, 24, 21, 25 ), PoolIntArray( 13, 26, 3, 5 ), PoolIntArray( 27, 28, 25, 21, 20 ) ]
+outlines = [ PoolVector2Array( -658.825, 386.125, -567.711, 396.72, -474.479, 379.769, -366.413, 439.099, -510.5, 509.023, -502.025, 566.234, -116.38, 759.057, -124.856, 890.43, -59.1689, 926.452, -148.164, 968.83, -124.856, 1034.52, -637.636, 1276.07, -703.323, 1254.89, -874.956, 1335.4, -1063.54, 1335.4, -1213.98, 1259.12, -1315.69, 1284.55, -1400.45, 1227.34, -1514.87, 1278.19, -1919.59, 1076.9, -1775.5, 1015.45, -1807.28, 949.76, -1415.28, 763.294, -1415.28, 710.321, -1245.77, 644.635, -1192.79, 657.348, -959.713, 528.094, -972.426, 487.834, -745.701, 394.601 ) ]
 
 [node name="Level2" type="Node2D"]
 script = ExtResource( 4 )
@@ -13,6 +22,19 @@ script = ExtResource( 4 )
 [node name="All" type="YSort" parent="."]
 
 [node name="Units" type="YSort" parent="All"]
+
+[node name="LevelNPCManager" type="YSort" parent="All/Units"]
+script = ExtResource( 3 )
+
+[node name="NeutralAnna" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -1593.61, 1122.85 )
+
+[node name="EnemyKaren" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -983.199, 1217.35 )
+_startingBools = {
+"Companion": false,
+"Hostile": true
+}
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -25,7 +47,39 @@ ButtonLabel = "To Level 1!"
 [node name="PlayerPositionMarker" type="Position2D" parent="All/PositionMarkers"]
 position = Vector2( -809.43, 567.872 )
 
+[node name="CompanionPositionMarker1" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( -678.557, 603.233 )
+
+[node name="CompanionPositionMarker2" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( -743.337, 668.775 )
+
+[node name="CompanionPositionMarker3" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( -867.196, 694.481 )
+
+[node name="CompanionPositionMarker4" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( -972.871, 639.688 )
+
 [node name="AutosaveAreas" type="YSort" parent="All"]
 
 [node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 5 )]
 position = Vector2( -1250.17, 784.003 )
+
+[node name="Obstacles" type="YSort" parent="All"]
+
+[node name="TestObstacle" type="StaticBody2D" parent="All/Obstacles"]
+position = Vector2( -851.809, 898.425 )
+
+[node name="Sprite" type="Sprite" parent="All/Obstacles/TestObstacle"]
+scale = Vector2( 5, 5 )
+texture = ExtResource( 8 )
+
+[node name="Shape" type="CollisionPolygon2D" parent="All/Obstacles/TestObstacle"]
+position = Vector2( 0, 18.5406 )
+rotation = 1.58042
+polygon = PoolVector2Array( 25.9429, -11.5033, 24.1505, 22.4183, 52.0418, 58.1733, 95.2331, 32.3293, 101.284, 0.485779, 93.4906, -38.6412, 62.6146, -54.2367, 40.3364, -57.2008 )
+
+[node name="WorldNavigation" type="Navigation2D" parent="."]
+script = ExtResource( 9 )
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="WorldNavigation"]
+navpoly = SubResource( 1 )

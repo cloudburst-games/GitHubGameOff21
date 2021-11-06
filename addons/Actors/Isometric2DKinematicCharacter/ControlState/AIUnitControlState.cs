@@ -9,13 +9,17 @@ public class AIUnitControlState : UnitControlState
 	private CollisionShape2D _shape;
 	public List<Vector2> CurrentPath = new List<Vector2>();
 	
-	public enum AIBehaviour { Wander }
+	public enum AIBehaviour { Wander, Follow, Patrol, Stationary }
 	public AIBehaviourState _currentAIBehaviourState;
 	public Vector2 StartPosition {get; set;}
 	public bool IsAvoiding {get; set;} = false;
 
 	[Signal]
 	public delegate void PathRequested(AIUnitControlState aIUnitControlState, Vector2 worldPosition);
+	[Signal]
+	public delegate void PathToPlayerRequested(AIUnitControlState aIUnitControlState);
+	[Signal]
+	public delegate void FollowPathRequested(AIUnitControlState aIUnitControlState);
 
 	public AIUnitControlState(Unit unit)
 	{
@@ -28,7 +32,8 @@ public class AIUnitControlState : UnitControlState
 		Steering = new Steering(maximumForce:75f, maximumSpeed:this.Unit.Speed, extents:((RectangleShape2D) _shape.Shape).Extents, separationFactor:2f);
 
 		// Set default state here:
-		SetAIBehaviourState(AIBehaviour.Wander);
+		// SetAIBehaviourState(AIBehaviour.Wander);
+        SetAIBehaviourState(this.Unit.CurrentUnitData.Behaviour);
 	}
 	public AIUnitControlState()
 	{
@@ -47,12 +52,25 @@ public class AIUnitControlState : UnitControlState
 			case AIBehaviour.Wander:
 				_currentAIBehaviourState = new WanderAIBehaviourState(this);
 				break;
+			case AIBehaviour.Follow:
+				_currentAIBehaviourState = new FollowAIBehaviourState(this);
+				break;
+			case AIBehaviour.Stationary:
+				_currentAIBehaviourState = new StationaryAIBehaviourState(this);
+				break;
+			case AIBehaviour.Patrol:
+				_currentAIBehaviourState = new PatrolAIBehaviourState(this);
+				break;
 			
 		}
 	}
 	
 	private void OnUnitDetectAreaEntered(PhysicsBody2D body)
 	{
+		if (! (body is StaticBody2D || body is KinematicBody2D || body is RigidBody2D))
+		{
+			return;
+		}
 		if (body is Unit unit)
 		{
 			if (!Steering.DetectedUnits.Contains(unit))
@@ -69,6 +87,10 @@ public class AIUnitControlState : UnitControlState
 
 	private void OnUnitDetectAreaExited(PhysicsBody2D body)
 	{
+		if (! (body is StaticBody2D || body is KinematicBody2D || body is RigidBody2D))
+		{
+			return;
+		}
 		if (body is Unit unit)
 		{
 			if (Steering.DetectedUnits.Contains(unit))
@@ -100,6 +122,10 @@ public class AIUnitControlState : UnitControlState
 		if (CurrentPath.Count == 0)
 		{
 			this.Unit.CurrentVelocity = new Vector2(0,0);
+            // if (_currentAIBehaviourState is PatrolAIBehaviourState)
+            // {
+            //     GD.Print(" test");
+            // }
 			return;
 		}
 		// GD.Print(CurrentPath.Count);
@@ -117,7 +143,7 @@ public class AIUnitControlState : UnitControlState
 		{
 			if (CurrentPath.Count > 1)
 			{
-				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[1]) < 7*areaExtents)
+				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[1]) < 25*areaExtents)
 				{
 					CurrentPath.RemoveAt(0);//(this.Unit.Position.DistanceSquaredTo(CurrentPath[0]));
 				}
@@ -128,7 +154,7 @@ public class AIUnitControlState : UnitControlState
 			if (CurrentPath.Count == 1)
 			{
 					// GD.Print("is it this2?");
-				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[0]) < 7*areaExtents)
+				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[0]) < 25*areaExtents)
 				{
 					// this.Unit.CurrentVelocity = new Vector2(0,0);
 					CurrentPath.RemoveAt(0);

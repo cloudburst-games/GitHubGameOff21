@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
+
+[node name="CntBattle" type="Control"]
+pause_mode = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_top = 48.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="BtnEndTest" type="Button" parent="Panel"]
+margin_left = 748.0
+margin_top = 925.0
+margin_right = 1187.0
+margin_bottom = 987.0
+text = "END BATTLE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Panel/BtnEndTest" to="." method="OnBtnEndTestPressed"]

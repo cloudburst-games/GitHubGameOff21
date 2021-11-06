@@ -1,4 +1,37 @@
 Minimum targets
+
+Mon:
+- Battle map grid
+- All units in the battle map
+
+Tues:
+- Battle system including movement and attack
+
+Weds:
+
+Thurs:
+- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack.
+- Animations that tween from A to B
+
+Fri:
+- Add spells to battle system. Complete battle system.
+- Experience system, stats, and levelling, and gaining new spells
+
+Sat:
+- Obstacles
+- Buildings including shop OR start shop from dialogue
+
+If time post all to-do:
+- Redo animations for Unit.tscn / (Player/NPC) - see AnimationTree tutorial
+- Water shader
+- Implement click to move controls
+- Enter filename by script when saving files...
+- Make a less buggy FileDialog (only if plenty of time)
+- Switch to AStar navigation?
+
+***OLD***
+**********
+
 Thurs
 - Player and player movement DONE
 - Adventure map DONE
@@ -9,13 +42,12 @@ Fri
 - Autosaves DONE
 
 Sat
-- Enemies in the adventure map (idle, patrolling, with indicator of how many)
-- Battle map and transition between adventure and battle maps
+NEXT: neutral NPC -> wander mode or stationary mode. dialogue on E DONE
+THEN: hostile NPC -> wander mode, stationary mode, or patrol mode. DONE
+THEN: all NPCs -> right-click: show information such as hostile, and minions. DONE
+THEN: hostile NPC - on area overlap -> BOX -> "dude and his minions attack!" -> Battle map DONE
+- NPCs in the adventure map (idle, patrolling, with indicator of how many) *So plan is to make an NPC scene that contains an NPCData object. Part of this will be a DialogueDict which will be where you will store all of your variables from your dialogue system Sarah. NPCData will also contain information about the fights that would start if the NPC became hostile. E.g. encounter in battlemap would initiate with 5 wasps 3 beetles etc. All the NPC data will be packed and unpacked every time save/load and also on level transition. DONE
+- NPCs have a toggleable companion flag, and if activated, follow the player. Join party, and save state on save and between levels DONE
+- you must gather your party before venturing forth DONE
+- Battle map and transition between adventure and battle maps DONE
 - Readjust weekly targets as per progress
-
-
-If time post all to-do:
-- Redo animations for Unit.tscn / (Player) - see AnimationTree tutorial
-- Water shader
-- Enter filename by script when saving files...
-- Make a less buggy FileDialog (only if plenty of time)

@@ -3,6 +3,7 @@ using System;
 
 public class PlayerUnitControlState : UnitControlState
 {
+
 	public PlayerUnitControlState(Unit unit)
 	{
 		this.Unit = unit;
@@ -28,5 +29,33 @@ public class PlayerUnitControlState : UnitControlState
 		this.Unit.CurrentVelocity = new Vector2( left ? -1 : (right ? 1 : 0), up ? -1 : (down ? 1 : 0)).Normalized();
 		this.Unit.CurrentVelocity *= this.Unit.Speed;
 		this.Unit.AnimRotation = TargetAnimRotation;
+
+        // Battle
+        foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())
+        {
+            if (n is Unit unit)
+            {
+                if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && unit.CurrentUnitData.Hostile)
+                {
+                    this.Unit.EmitSignal(nameof(Unit.BattleStarted), unit);
+                    return;
+                }
+            }
+        }
+        // Interaction
+        if (Input.IsActionPressed("Interact"))
+        {
+            foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())
+            {
+                if (n is Unit unit)
+                {
+                    if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && !unit.CurrentUnitData.Hostile)
+                    {
+                        this.Unit.EmitSignal(nameof(Unit.DialogueStarted), unit);
+                        return;
+                    }
+                }
+            }
+        }
     }
 }

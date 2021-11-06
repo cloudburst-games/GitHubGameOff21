@@ -6,6 +6,11 @@ public class LevelManager : Node2D
     [Signal]
     public delegate void AutosaveAreaEntered();
 
+    [Signal]
+    public delegate void Announced(string message);
+    [Signal]
+    public delegate void NPCRightClicked(Unit npc);
+
     public enum Level {
         Level1, Level2
     }
@@ -20,6 +25,7 @@ public class LevelManager : Node2D
 
     };
     public Level CurrentLevel;
+    private Random _rand = new Random();
 
     public override void _Ready()
     {
@@ -31,7 +37,7 @@ public class LevelManager : Node2D
     //     EmitSignal(nameof(CurrentLevelExitedTree));
     // }
 
-    public void InitialiseLevel(Level dest, Unit player)
+    public void InitialiseLevel(Level dest, Unit player) // this is called on transitioning, loading, and making new world
     {
         CurrentLevel = dest;
         LevelLocation newLevelLocation = (LevelLocation) _levelSceneDict[dest].Instance();
@@ -46,8 +52,33 @@ public class LevelManager : Node2D
         // player.GlobalPosition = newLevelLocation.GetNode<Position2D>("All/PositionMarkers/PlayerPositionMarker").GlobalPosition;
         UnpackLevelData(dest, player);
         newLevelLocation.GetNode("All/Units").AddChild(player);
-
+        GeneratePlayerCompanions(player);
+        // 
+        InitialiseNPCsAfterGen();
         ConnectLevelSignals(newLevelLocation);
+        SetNavigation();
+    }
+
+    private void InitialiseNPCsAfterGen()
+    {
+        GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager").InitNPCs();
+        foreach (Node n in GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager").GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                npc.Connect(nameof(Unit.RightClicked), this, nameof(OnNPCRightClicked));
+            }
+        }
+        
+    }
+
+    public void GeneratePlayerCompanions(Unit player)
+    {
+        for (int i = 0; i < player.CurrentUnitData.Companions.Count; i++)
+        {
+            player.CurrentUnitData.Companions[i].NPCPosition = GetLevelInTree().GetNode<Position2D>("All/PositionMarkers/CompanionPositionMarker" + (i+1)).GlobalPosition;
+            GenerateNPC(player.CurrentUnitData.Companions[i]);
+        }
     }
 
     private void ConnectLevelSignals(LevelLocation levelLocation)
@@ -85,10 +116,41 @@ public class LevelManager : Node2D
         oldLevel.QueueFree();
     }
 
+    private bool AreCompanionsWithPlayer()
+    {
+        int companionCount = 0;
+        foreach (Node n in GetNPCManagerInTree().GetChildren())
+        {
+            if (n is Unit unit)
+            {
+                if (unit.CurrentUnitData.Companion)
+                {
+                    companionCount += 1;
+                }
+            }
+        }
+        int overlappingCount = 0;
+        foreach (Node n in GetPlayerInTree().GetNode<Area2D>("NPCDetectArea").GetOverlappingBodies())
+        {
+            if (n is Unit unit)
+            {
+                if (unit.CurrentUnitData.Companion)
+                {
+                    overlappingCount += 1;
+                }
+            }
+        }
+        return overlappingCount == companionCount;
+    }
+
     public async void OnTriedToTransitionTo(Level dest)
     {
         // do any checks needed (i.e. are we allowed to transition?)
-        //
+        if (! AreCompanionsWithPlayer())
+        {
+            EmitSignal(nameof(Announced), "You must gather your party before venturing forth.");
+            return;
+        }
         
         // fade to black or do loading screen
         LoadingScreen loadingScreen = (LoadingScreen) GD.Load<PackedScene>("res://Interface/Transitions/LoadingScreen.tscn").Instance();
@@ -120,7 +182,7 @@ public class LevelManager : Node2D
         loadingScreen.FadeOut();        
     }
 
-    public LevelManagerData PackAndGetData()
+    public IStoreable PackAndGetData()
     {
         PackLevelData(GetPlayerInTree());
         return new LevelManagerData() {
@@ -135,9 +197,14 @@ public class LevelManager : Node2D
         CurrentLevel = data.CurrentLevel;
     }
 
-    private Unit GetPlayerInTree()
+    public Unit GetPlayerInTree()
     {
         return GetChild(0).GetNode<Unit>("All/Units/Player");
+    }
+
+    public LevelNPCManager GetNPCManagerInTree()
+    {
+        return GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager");
     }
 
     private LevelLocation GetLevelInTree()
@@ -154,15 +221,40 @@ public class LevelManager : Node2D
     {
         LevelData sourceLevelData = new LevelData() {
             PlayerPosition = player.GlobalPosition,
-            AutosaveAreas = new List<Tuple<Vector2, bool>>()
+            AutosaveAreaDatas = new List<Tuple<Vector2, bool>>()
         };
 
+        // pack NPC data
+        foreach (Node n in GetNPCManagerInTree().GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                // if (npc.GetControlState() == Unit.ControlState.Player)
+                // {
+                //     continue;
+                // }
+                if (npc.CurrentUnitData.Companion)
+                {
+                    if (!player.CurrentUnitData.Companions.Contains(npc.CurrentUnitData))
+                    {
+                        player.CurrentUnitData.Companions.Add((UnitData)npc.PackAndGetData());
+                    }
+                    sourceLevelData.NPCPositions[(UnitData)npc.PackAndGetData()] = npc.CurrentUnitData.NPCPosition;
+                }
+                else
+                {
+                    sourceLevelData.NPCDatas.Add((UnitData)npc.PackAndGetData());
+                }
+            }
+        }
+
         // pack autosave areas
+        // consider replacing tuple with a separate data class
         foreach (Node n in GetLevelInTree().GetNode("All/AutosaveAreas").GetChildren())
         {
             if (n is AutosaveArea area)
             {
-                sourceLevelData.AutosaveAreas.Add(new Tuple<Vector2, bool>(area.GlobalPosition, area.Active));
+                sourceLevelData.AutosaveAreaDatas.Add(new Tuple<Vector2, bool>(area.GlobalPosition, area.Active));
             }
         }
 
@@ -182,7 +274,7 @@ public class LevelManager : Node2D
         {
             n.QueueFree();
         }
-        foreach (Tuple<Vector2, bool> autosaveAreaData in CurrentLevelData[dest].AutosaveAreas)
+        foreach (Tuple<Vector2, bool> autosaveAreaData in CurrentLevelData[dest].AutosaveAreaDatas)
         {
             AutosaveArea newAutosaveArea = (AutosaveArea) GD.Load<PackedScene>("res://Systems/SaveSystem/AutosaveArea.tscn").Instance();
             newAutosaveArea.Active = autosaveAreaData.Item2;
@@ -190,10 +282,71 @@ public class LevelManager : Node2D
             GetLevelInTree().GetNode("All/AutosaveAreas").AddChild(newAutosaveArea);
 
         }
+        foreach (Node n in GetNPCManagerInTree().GetChildren())
+        {
+            n.QueueFree();
+        }
+        foreach (UnitData unitData in CurrentLevelData[dest].NPCDatas)
+        {
+            GenerateNPC(unitData);
+        }
+    }
+
+    private void GenerateNPC(UnitData unitData)
+    {
+        Unit npc = (Unit)GD.Load<PackedScene>("res://Actors/NPC/NPC.tscn").Instance();
+        GetNPCManagerInTree().AddChild(npc);
+        npc.CurrentUnitData = unitData;
+        npc.UpdateFromUnitData();
+        //Position
+        if (!CurrentLevelData.ContainsKey(CurrentLevel))
+        {
+            npc.GlobalPosition = unitData.NPCPosition;
+            return;
+        }
+        if (CurrentLevelData[CurrentLevel].NPCPositions.ContainsKey(unitData))
+        {
+            npc.GlobalPosition = CurrentLevelData[CurrentLevel].NPCPositions[unitData];
+        }
+        else
+        {
+            npc.GlobalPosition = unitData.NPCPosition;
+        }
+        //
+    }
+
+    public void OnNPCRightClicked(Unit npc)
+    {
+        EmitSignal(nameof(NPCRightClicked), npc);
     }
 
     private void SetLevelDefaults(Unit player)
     {        
         player.GlobalPosition = GetLevelInTree().GetNode<Position2D>("All/PositionMarkers/PlayerPositionMarker").GlobalPosition;
     }
+
+	private void SetNavigation()
+	{
+		foreach (Node n in GetLevelInTree().GetNode("All/Obstacles").GetChildren())
+		{
+			if (n is StaticBody2D body)
+			{
+				foreach (Node bodyChild in body.GetChildren())
+				{
+					if (bodyChild is CollisionPolygon2D poly)
+					{
+						GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").SingleUse(poly, CurrentLevel);
+					}
+				}
+			}
+		}
+		GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").Finalise();
+
+        GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager").Connect
+            (nameof(LevelNPCManager.AIPathRequested), GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation"), 
+            nameof(WorldNavigation.OnAIPathRequested));
+        GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager").Connect
+            (nameof(LevelNPCManager.AIPathToPlayerRequested), GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation"), 
+            nameof(WorldNavigation.OnAIPathToPlayerRequested), new Godot.Collections.Array {GetPlayerInTree()});
+	}
 }

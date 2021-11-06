@@ -4,7 +4,14 @@ using System.Collections.Generic;
 
 public class Unit : KinematicBody2D
 {
-	public float Speed {get; set;} = 200f;
+    [Signal]
+    public delegate void DialogueStarted(Unit target);
+    [Signal]
+    public delegate void BattleStarted(Unit target);
+    [Signal]
+    public delegate void RightClicked(Unit target);
+    
+    public float Speed {get; set;} = 200f;
 
 	private AnimationPlayer _actionAnim;
 	private Sprite _sprite;
@@ -21,6 +28,150 @@ public class Unit : KinematicBody2D
 			}			
 		}
 	}
+
+    ///
+
+    // public enum StartingBool { Companion, Hostile }
+    public enum StartingInt { }//
+
+    [Export]
+    private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
+        {"Companion", false},
+        {"Hostile", false},
+    };
+    [Export]
+    private AIUnitControlState.AIBehaviour _startingBehaviour = AIUnitControlState.AIBehaviour.Stationary;
+
+    // battle
+    [Export]
+    private BattleUnit.Combatant _mainCombatant = BattleUnit.Combatant.Beetle;
+    [Export]
+    private int _combatLevel = 1;
+    [Export] // minions are set to combat level -1. use all of the data to generate battleunits
+    private Dictionary<BattleUnit.Combatant, int> _minions = new Dictionary<BattleUnit.Combatant, int>() {
+        {BattleUnit.Combatant.Wasp, 1}
+    };
+    //
+
+    public UnitData CurrentUnitData {get; set;} = new UnitData();
+
+    public IStoreable PackAndGetData() // update any data before storing
+    {
+        CurrentUnitData.NPCPosition = GlobalPosition; // only used for NPCs, player position needs to be stored Level level
+        return CurrentUnitData;
+    }
+
+    private void SetStartingData()
+    {
+
+        CurrentUnitData.MainCombatant = new BattleUnitData() {
+            Combatant = _mainCombatant,
+            Level = _combatLevel
+        };
+        CurrentUnitData.Minions = new List<BattleUnitData>();
+        foreach (BattleUnit.Combatant combatant in _minions.Keys)
+        {
+            for (int i = 0; i < _minions[combatant]; i++)
+            {
+                CurrentUnitData.Minions.Add(new BattleUnitData()
+                {
+                    Combatant = combatant,
+                    Level = _combatLevel - 1
+                });
+            } 
+        }
+        CurrentUnitData.Hostile = _startingBools["Hostile"];
+        CurrentUnitData.Behaviour = _startingBehaviour;
+        CurrentUnitData.Companion = _startingBools["Companion"];
+        
+        foreach (Node n in GetChildren())
+        {
+            if (n is Position2D point)
+            {
+                // should add the point before the NPC moves - so the start point.
+                // only works if only stays in patrol state
+                CurrentUnitData.PatrolPoints.Add(point.GlobalPosition); 
+            }
+        }
+        if (CurrentUnitData.PatrolPoints.Count < 2 && CurrentUnitData.Behaviour == AIUnitControlState.AIBehaviour.Patrol)
+        {
+            CurrentUnitData.Behaviour = AIUnitControlState.AIBehaviour.Stationary;
+        }
+    }
+
+    private void OnNPCInteractAreaBodyEntered(Godot.Object body)
+    {
+        if (body is Unit unit)
+        {
+            if (unit.CurrentUnitData.Player)
+            {
+                if (CurrentUnitData.Hostile)
+                {
+                    GD.Print("initiate battle");
+                }
+                else if (! CurrentUnitData.Companion)
+                {
+                    GetNode<Panel>("PnlInfo").Visible = GetNode<Label>("PnlInfo/LblInteractInfo").Visible = true;
+                }
+            }
+        }
+    }
+    
+    private void OnNPCInteractAreaBodyExited(Godot.Object body)
+    {      
+        if (body is Unit unit)
+        {
+            if (unit.CurrentUnitData.Player)
+            {
+                if (CurrentUnitData.Hostile)
+                {
+                    // GD.Print("initiate battle");
+                }
+                else if (! CurrentUnitData.Companion)
+                {
+                    GetNode<Panel>("PnlInfo").Visible = false;
+                    foreach (Label l in GetNode<Panel>("PnlInfo").GetChildren())
+                    {
+                        l.Visible = false;
+                    }
+                }
+            }
+        }
+    }
+
+    public void UpdateFromUnitData()
+    {
+        if (CurrentControlState is AIUnitControlState aIUnitControlState)
+        {
+            aIUnitControlState.SetAIBehaviourState(CurrentUnitData.Behaviour);
+        }
+    }
+
+    public override void _UnhandledInput(InputEvent ev)
+    {
+        
+        if (ev is InputEventMouseButton btn)// && !(ev.IsEcho()))
+        {
+            if (btn.ButtonIndex == (int) ButtonList.Right)
+            {
+                if (btn.Pressed)
+                {
+                    Vector2 clickPos = GetViewport().GetMousePosition();
+                    Vector2 canvasPos = GetNode<Sprite>("Sprite").GetGlobalTransformWithCanvas().origin;
+                    Vector2 size = GetNode<Sprite>("Sprite").Texture.GetSize() * GetNode<Sprite>("Sprite").Scale;
+                    Vector2 topLeft = canvasPos - size / 2f;
+                    Rect2 area = new Rect2(topLeft, size);
+                    if (area.HasPoint(clickPos))
+                    {
+                        EmitSignal(nameof(RightClicked), this);
+                    }                    
+                }
+            }
+        }
+    }
+    ///
+
+
 	public enum ControlState { Player, AI }
 	public UnitControlState CurrentControlState;
 
@@ -70,6 +221,7 @@ public class Unit : KinematicBody2D
 	public override void _Ready()
 	{
 		base._Ready();
+        SetStartingData();
 		_actionAnim = GetNode<AnimationPlayer>("ActionAnim");
 		_sprite = GetNode<Sprite>("Sprite");
 		SetControlState(_controlState);

@@ -27,7 +27,6 @@ public class WanderAIBehaviourState : AIBehaviourState
 	public override void Update(float delta)
 	{
 		base.Update(delta);
-		// GD.Print("test");
 		if (AIControl.CurrentPath.Count <= 1 && _wanderTimer.TimeLeft == 0)
 		{
 			AIControl.EmitSignal(nameof(AIUnitControlState.PathRequested),AIControl,

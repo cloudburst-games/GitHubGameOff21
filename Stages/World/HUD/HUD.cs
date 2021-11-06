@@ -6,17 +6,19 @@ public class HUD : CanvasLayer
     public override void _Ready()
     {
         GetNode<Panel>("CtrlTheme/PnlMenu").Visible = GetNode<ColorRect>("CtrlTheme/PauseRect").Visible = 
-            GetNode<Control>("CtrlTheme/ProgressAnim").Visible = false;
+            GetNode<Control>("CtrlTheme/ProgressAnim").Visible = GetNode<Control>("CtrlTheme/DialogueControl").Visible = false;
+
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.DialogueEnded), this, nameof(OnDialogueEnded));
     }
 
     public void OnBtnResumePressed()
     {
-        TogglePause(false);
+        TogglePauseMenu(false);
     }
 
     public void OnBtnMenuPressed()
     {
-        TogglePause(true);
+        TogglePauseMenu(true);
     }
 
     public void PlayProgressAnim(string text)
@@ -38,22 +40,54 @@ public class HUD : CanvasLayer
         GetNode<AnimationPlayer>("CtrlTheme/LblLog/Anim").Play("LogEntry");
     }
 
-    public void TogglePause(bool pause)
+    public void TogglePauseMenu(bool pause)
+    {
+        GetNode<Panel>("CtrlTheme/PnlMenu").Visible = pause;
+        PauseCommon(pause);
+    }
+    
+    public void PauseCommon(bool pause)
     {
         GetTree().Paused = pause;
-        GetNode<Panel>("CtrlTheme/PnlMenu").Visible = GetNode<ColorRect>("CtrlTheme/PauseRect").Visible = pause;
+        GetNode<ColorRect>("CtrlTheme/PauseRect").Visible = pause;
         foreach (Button btn in GetNode("CtrlTheme/PnlUIBar/HBoxBtns").GetChildren())
         {
             btn.Disabled = pause;
         }
     }
 
-    public override void _Input(InputEvent @event)
+    public void StartDialogue(UnitData unitData)
     {
-        base._Input(@event);
+        PauseCommon(true);
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = true;
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Start(unitData);
+    }
+    public void OnNPCRightClicked(Unit npc)
+    {
+        GetNode<NPCInfoPanel>("CtrlTheme/NPCInfoPanel").Activate(npc.CurrentUnitData);
+    }
+    public void OnDialogueEnded()
+    {
+        PauseCommon(false);
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = false;
+    }
+
+    public override void _Input(InputEvent ev)
+    {
+        base._Input(ev);
         if (Input.IsActionJustPressed("Pause"))
         {
-            TogglePause(!GetTree().Paused);
+            TogglePauseMenu(!GetTree().Paused);
+        }
+        if (ev is InputEventMouseButton btn)// && !(ev.IsEcho()))
+        {
+            if (btn.ButtonIndex == (int) ButtonList.Right)
+            {
+                if (!btn.Pressed)
+                {
+                    GetNode<NPCInfoPanel>("CtrlTheme/NPCInfoPanel").Visible = false;
+                }
+            }
         }
     }
 

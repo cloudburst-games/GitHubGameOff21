@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=2]
+[gd_scene load_steps=96 format=2]
 
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30003.png" type="Texture" id=1]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20014.png" type="Texture" id=2]
@@ -358,6 +358,12 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
+[sub_resource type="CircleShape2D" id=13]
+radius = 341.435
+
+[sub_resource type="CircleShape2D" id=14]
+radius = 147.132
+
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 345.859, 194.344 )
 script = ExtResource( 52 )
@@ -392,3 +398,17 @@ anims/WalkUpRight = SubResource( 12 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+
+[node name="NPCDetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="NPCDetectArea"]
+shape = SubResource( 13 )
+
+[node name="NPCInteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="NPCInteractArea"]
+shape = SubResource( 14 )

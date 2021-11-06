@@ -1,9 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=6]
+[ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=8]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 669.739, 765.413, 773.566, 835.338, 640.073, 901.025, 551.079, 778.127, -654.591, 977.306, -732.991, 930.69, -656.71, 886.192, -16.7938, 1606.63, -209.616, 1498.56, -182.07, 1449.83, 140.007, 1475.25, 142.126, 1553.65, -527.455, 1413.8, -652.472, 1343.88, -660.948, 1276.07, -588.904, 1248.53, -444.817, 1388.38, -580.428, 1083.25, -669.423, 1026.04, -268.946, 644.634, 180.266, 655.229, -663.067, 831.1, -271.065, 561.996, -135.454, 506.904, 527.77, 1153.18, 532.008, 1212.51, 464.203, 1250.65, 269.261, 627.683, 457.846, 1314.22, -241.4, 1424.4, -332.514, 1454.06, 657.025, 994.257, 646.43, 1085.37 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6 ), PoolIntArray( 7, 8, 9, 10, 11 ), PoolIntArray( 12, 13, 14, 15, 16 ), PoolIntArray( 17, 18, 4, 19, 20 ), PoolIntArray( 6, 21, 19 ), PoolIntArray( 19, 22, 23, 20 ), PoolIntArray( 24, 25, 26, 20, 27 ), PoolIntArray( 4, 6, 19 ), PoolIntArray( 20, 26, 28, 10, 9, 29 ), PoolIntArray( 30, 16, 15, 17, 20, 29 ), PoolIntArray( 24, 27, 3, 2, 31, 32 ) ]
+outlines = [ PoolVector2Array( -135.454, 506.904, -271.065, 561.996, -268.946, 644.634, -663.067, 831.1, -656.71, 886.192, -732.991, 930.69, -654.591, 977.306, -669.423, 1026.04, -580.428, 1083.25, -588.904, 1248.53, -660.948, 1276.07, -652.472, 1343.88, -527.455, 1413.8, -444.817, 1388.38, -332.514, 1454.06, -241.4, 1424.4, -182.07, 1449.83, -209.616, 1498.56, -16.7938, 1606.63, 142.126, 1553.65, 140.007, 1475.25, 457.846, 1314.22, 464.203, 1250.65, 532.008, 1212.51, 527.77, 1153.18, 646.43, 1085.37, 657.025, 994.257, 640.073, 901.025, 773.566, 835.338, 669.739, 765.413, 551.079, 778.127, 269.261, 627.683, 180.266, 655.229 ) ]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 4 )
@@ -13,6 +22,53 @@ script = ExtResource( 4 )
 [node name="All" type="YSort" parent="."]
 
 [node name="Units" type="YSort" parent="All"]
+
+[node name="LevelNPCManager" type="YSort" parent="All/Units"]
+script = ExtResource( 8 )
+
+[node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -84.5477, 788.985 )
+_startingBools = {
+"Companion": true,
+"Hostile": false
+}
+_mainCombatant = 1
+_combatLevel = 2
+_minions = {
+0: 3,
+1: 1
+}
+
+[node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( 189.176, 1009.85 )
+_startingBools = {
+"Companion": true,
+"Hostile": false
+}
+
+[node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -218.578, 1189.19 )
+_startingBools = {
+"Companion": true,
+"Hostile": false
+}
+
+[node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -150.619, 588.884 )
+
+[node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -501.741, 1266.58 )
+_startingBools = {
+"Companion": false,
+"Hostile": true
+}
+_startingBehaviour = 2
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
+position = Vector2( 513.467, 239.744 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
+position = Vector2( 33.9792, 43.4178 )
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -26,8 +82,45 @@ DestinationLevel = 1
 [node name="PlayerPositionMarker" type="Position2D" parent="All/PositionMarkers"]
 position = Vector2( 589.062, 847.571 )
 
+[node name="CompanionPositionMarker1" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 543.756, 811.704 )
+
+[node name="CompanionPositionMarker2" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 532.43, 868.336 )
+
+[node name="CompanionPositionMarker3" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 579.623, 913.642 )
+
+[node name="CompanionPositionMarker4" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 538.093, 953.285 )
+
+[node name="CompanionPositionMarker5" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 477.685, 879.663 )
+
+[node name="CompanionPositionMarker6" type="Position2D" parent="All/PositionMarkers"]
+position = Vector2( 477.685, 802.265 )
+
 [node name="AutosaveAreas" type="YSort" parent="All"]
 
 [node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 3 )]
 position = Vector2( -523.375, 913.257 )
 _oneShot = false
+
+[node name="Obstacles" type="YSort" parent="All"]
+
+[node name="TestObstacle" type="StaticBody2D" parent="All/Obstacles"]
+position = Vector2( -63.5679, 981.063 )
+
+[node name="Sprite" type="Sprite" parent="All/Obstacles/TestObstacle"]
+texture = ExtResource( 5 )
+
+[node name="Shape" type="CollisionPolygon2D" parent="All/Obstacles/TestObstacle"]
+position = Vector2( 0, 18.5406 )
+rotation = 1.58042
+polygon = PoolVector2Array( -4.29034, 13.2973, -7.18268, 7.34029, -6.97382, -3.68654, -3.91522, -13.1658, 3.37146, -8.82607, 6.59082, -1.61219, 6.32141, 3.11534, 1.03674, 10.4111 )
+
+[node name="WorldNavigation" type="Navigation2D" parent="."]
+script = ExtResource( 6 )
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="WorldNavigation"]
+navpoly = SubResource( 1 )

@@ -79,6 +79,13 @@ public class Steering
 			if (distance < neighbourDistance)
 			{
 				Vector2 diff = (_position - body.Position).Rotated(rotateTo);
+                if ((body is Unit unit))
+                {
+                    if (unit.CurrentUnitData.Companion)
+                    {
+                        // diff *= 0.1f;
+                    }
+                }
 				count ++;
 				sum += diff;
 			}

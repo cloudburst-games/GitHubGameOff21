@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://Stages/World/HUD/HUD.cs" type="Script" id=4]
 [ext_resource path="res://Shaders/icon.png" type="Texture" id=5]
 [ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=6]
+[ext_resource path="res://Systems/DialogueSystem/DialogueControl.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Interface/Panels/NPCInfoPanel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Systems/BattleSystem/CntBattle.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Interface/Panels/PnlPreBattle.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Stages/World/Music/UnstableAlchemy_World.ogg" type="AudioStream" id=11]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Stages/World/Music/SadAlchemy_World.ogg" type="AudioStream" id=16]
@@ -100,14 +104,22 @@ pause_mode = 2
 script = ExtResource( 4 )
 
 [node name="CtrlTheme" type="Control" parent="HUD"]
+margin_left = 960.0
+margin_top = 540.0
+margin_right = 960.0
+margin_bottom = 540.0
 theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PnlUIBar" type="Panel" parent="HUD/CtrlTheme"]
-margin_right = 1920.0
-margin_bottom = 48.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -960.0
+margin_top = -540.0
+margin_right = 960.0
+margin_bottom = -492.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -132,22 +144,52 @@ __meta__ = {
 }
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
-margin_right = 1920.0
-margin_bottom = 1080.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -960.0
+margin_top = -540.0
+margin_right = 960.0
+margin_bottom = 540.0
 color = Color( 0, 0, 0, 0.670588 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="NPCInfoPanel" parent="HUD/CtrlTheme" instance=ExtResource( 8 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -245.0
+margin_top = -167.0
+margin_right = 245.0
+margin_bottom = 167.0
+
+[node name="PnlPreBattle" parent="HUD/CtrlTheme" instance=ExtResource( 10 )]
+
+[node name="CntBattle" parent="HUD/CtrlTheme" instance=ExtResource( 9 )]
+margin_left = -960.0
+margin_top = -540.0
+margin_right = -960.0
+margin_bottom = -540.0
+
+[node name="DialogueControl" parent="HUD/CtrlTheme" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 796.5
-margin_top = 349.5
-margin_right = 1123.5
-margin_bottom = 730.5
+margin_left = -163.5
+margin_top = -190.5
+margin_right = 163.5
+margin_bottom = 190.5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -202,16 +244,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 383.745
-margin_top = 171.918
-margin_right = 1527.75
-margin_bottom = 863.918
+margin_left = -572.003
+margin_top = -346.0
+margin_right = 572.003
+margin_bottom = 346.0
 access = 1
 filters = PoolStringArray( "*.ksav; KSAV Files" )
 show_hidden_files = true
 current_dir = "user://Saves"
-current_file = "1.ksav"
-current_path = "user://Saves/1.ksav"
+current_file = "AUTOSAVE1.ksav"
+current_path = "user://Saves/AUTOSAVE1.ksav"
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -219,10 +261,10 @@ __meta__ = {
 
 [node name="ProgressAnim" type="TextureRect" parent="HUD/CtrlTheme"]
 visible = false
-margin_left = 1808.52
-margin_top = 969.298
-margin_right = 1872.52
-margin_bottom = 1033.3
+margin_left = 758.933
+margin_top = 384.096
+margin_right = 822.933
+margin_bottom = 448.099
 texture = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -244,10 +286,15 @@ __meta__ = {
 
 [node name="LblLog" type="Label" parent="HUD/CtrlTheme"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 1632.13
-margin_top = 1031.66
-margin_right = 1897.13
-margin_bottom = 1066.66
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -733.0
+margin_top = -463.008
+margin_right = 733.0
+margin_bottom = -428.008
+rect_pivot_offset = Vector2( 733, 0 )
 text = "Save Complete"
 align = 1
 valign = 1

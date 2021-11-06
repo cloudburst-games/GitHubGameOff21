@@ -6,5 +6,7 @@ using System.Collections.Generic;
 public class LevelData : IStoreable
 {
     public Vector2 PlayerPosition {get; set;}
-    public List<Tuple<Vector2, bool>> AutosaveAreas;
+    public Dictionary<UnitData, Vector2> NPCPositions {get; set;} = new Dictionary<UnitData, Vector2>();
+    public List<Tuple<Vector2, bool>> AutosaveAreaDatas {get; set;}
+    public List<UnitData> NPCDatas {get; set;} = new List<UnitData>();
 }
