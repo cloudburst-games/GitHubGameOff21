@@ -23,8 +23,29 @@ public class Grid : TileMap
     public delegate void AtTerrainBorder(Vector2 worldPos);
 	public override void _Ready()
 	{
-
-		// GD.Print(MapToWorld(new Vector2(0,0)));
+        // GD.Print(GetUsedCellsById(0000));
+        // if (Name != "Level1")
+        // {
+        //     return;
+        // }
+        // foreach (Vector2 gridPos in GetUsedCellsById(0000))
+        // {
+        //     Vector2 worldPos = MapToWorld(gridPos);
+        //     // GD.Print(worldPos);
+        //     var newParticles = GD.Load<PackedScene>("res://Levels/Common/Water/WaterParticles.tscn").Instance();
+        //     ((CPUParticles2D)newParticles).Position = worldPos;
+        //     AddChild(newParticles);
+        // }
+        foreach (int id in TileSet.GetTilesIds())
+        {
+            if (TileSet.TileGetName(id) == "0000")
+            {
+                // GD.Print("water");
+                TileSet.TileSetMaterial(id, GD.Load<ShaderMaterial>("res://Shaders/topdownwater/new_shadermaterial.tres"));
+                
+            }
+        }
+        
 	}
 
     public void InitGrid(int[] gridSize)

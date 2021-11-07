@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Utils/LevelBuilder/TilesetGenerator.cs" type="Script" id=1]
+[ext_resource path="res://Utils/LevelBuilder/TilesheetWaterCut.png" type="Texture" id=2]
 
 [node name="TilesetGenerator" type="Node2D"]
 script = ExtResource( 1 )
+_tileAtlas = ExtResource( 2 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_left = 497.81

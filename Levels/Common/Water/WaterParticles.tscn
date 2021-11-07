@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Levels/Common/Water/SparkleParticle.png" type="Texture" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0, 0, 2.39024e-21, 1 )
+colors = PoolColorArray( 1, 1, 1, 0.462745, 0.584314, 0.627451, 1, 0.619608, 1, 1, 1, 0.0901961, 0.462745, 0.490196, 1, 0.788235, 1, 1, 1, 0.0392157 )
+
+[node name="WaterParticles" type="CPUParticles2D"]
+position = Vector2( 125.617, 182.634 )
+amount = 16
+lifetime = 0.25
+randomness = 1.0
+texture = ExtResource( 1 )
+emission_shape = 2
+emission_rect_extents = Vector2( 40, 25 )
+gravity = Vector2( 0, 0 )
+scale_amount = 0.05
+scale_amount_random = 0.1
+color_ramp = SubResource( 1 )

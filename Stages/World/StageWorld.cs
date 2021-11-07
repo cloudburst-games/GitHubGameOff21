@@ -69,7 +69,7 @@ public class StageWorld : Stage
     public void OnBattleEnded()
     {
         GetNode<HUD>("HUD").PauseCommon(false);
-        GetNode<Control>("HUD/CtrlTheme/CntBattle").Visible = false;
+        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Visible = false;
     }
 
     public void NewWorldGen()

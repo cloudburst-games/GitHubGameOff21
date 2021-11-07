@@ -1,0 +1,19 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[ext_resource path="res://Shaders/topdownwater/Water.gdshader" type="Shader" id=1]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+seamless = true
+noise = SubResource( 1 )
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/scale = Vector2( 149.354, 115.76 )
+shader_param/y_zoom = 0.264866
+shader_param/distortion_scale = Vector2( 1.2, 1.5 )
+shader_param/intensity = 0.75
+shader_param/speed = 1.0
+shader_param/water_color = Color( 0.219608, 0.67451, 1, 0.839216 )
+shader_param/noise = SubResource( 2 )

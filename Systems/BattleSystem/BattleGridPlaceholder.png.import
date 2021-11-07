@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-8e2a17bbcc6b2cd6b140931f27459a47.stex"
+path="res://.import/BattleGridPlaceholder.png-fe75b1660f0ba16684617f7cbd5c0d3b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shaders/topdownwater/icon.png"
-dest_files=[ "res://.import/icon.png-8e2a17bbcc6b2cd6b140931f27459a47.stex" ]
+source_file="res://Systems/BattleSystem/BattleGridPlaceholder.png"
+dest_files=[ "res://.import/BattleGridPlaceholder.png-fe75b1660f0ba16684617f7cbd5c0d3b.stex" ]
 
 [params]
 

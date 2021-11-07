@@ -6,7 +6,7 @@ public class GridVisualiser : Node2D
 {
 	private Vector2 _tileSize;
 	private Vector2 _gridSize;
-	private List<List<int>> _terrainData = new List<List<int>>();
+	// private List<List<int>> _terrainData = new List<List<int>>();
 	public override void _Ready()
 	{
 		
@@ -22,10 +22,10 @@ public class GridVisualiser : Node2D
 		Update();
 	}
 
-	public void SetTerrain(List<List<int>> terrainData)
-	{
-		_terrainData = terrainData;
-	}
+	// public void SetTerrain(List<List<int>> terrainData)
+	// {
+	// 	_terrainData = terrainData;
+	// }
 
 	public override void _Draw()
 	{

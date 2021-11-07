@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-8e2a17bbcc6b2cd6b140931f27459a47.stex"
+path="res://.import/Sprite_02.png-4c6c4f092357ccd551cf7cc7d8b0ee62.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shaders/topdownwater/icon.png"
-dest_files=[ "res://.import/icon.png-8e2a17bbcc6b2cd6b140931f27459a47.stex" ]
+source_file="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_02.png"
+dest_files=[ "res://.import/Sprite_02.png-4c6c4f092357ccd551cf7cc7d8b0ee62.stex" ]
 
 [params]
 

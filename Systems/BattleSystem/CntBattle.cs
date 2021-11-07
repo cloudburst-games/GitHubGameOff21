@@ -6,6 +6,15 @@ public class CntBattle : Control
 {
     [Signal]
     public delegate void BattleEnded();
+    public new bool Visible {
+        get {
+            return base.Visible;
+        }
+        set {
+            base.Visible = value;
+            GetNode<Control>("Panel/BattleHUD/CtrlTheme").Visible = value;
+        }
+    }
     private BattleUnitData _playerData;
     private BattleUnitData _enemyCommanderData;
     private List<BattleUnitData> _friendliesData;
@@ -13,7 +22,52 @@ public class CntBattle : Control
     public override void _Ready()
     {
         Visible = false;
+
+        //TEST
+        // Test();
     }
+
+    public void Test()
+    {
+        BattleUnitData playerData = new BattleUnitData() {
+            Combatant = BattleUnit.Combatant.Beetle,
+            Level = 3
+        };
+        BattleUnitData enemyCommanderData = new BattleUnitData() {
+            Combatant = BattleUnit.Combatant.Wasp,
+            Level = 3
+        };
+        List<BattleUnitData> friendliesData = new List<BattleUnitData>() {
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Noob,
+                Level = 1
+            },
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Noob,
+                Level = 2
+            },
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Noob,
+                Level = 1
+            }
+        };
+        List<BattleUnitData> hostilesData = new List<BattleUnitData>() {
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Wasp,
+                Level = 2
+            },
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Beetle,
+                Level = 1
+            },
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Noob,
+                Level = 1
+            }
+        };
+        Start(playerData, enemyCommanderData, friendliesData, hostilesData);
+    }
+
 
     public void Start(BattleUnitData playerData, BattleUnitData enemyCommanderData, List<BattleUnitData> friendliesData, List<BattleUnitData> hostilesData)
     {

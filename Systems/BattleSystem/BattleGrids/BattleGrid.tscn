@@ -1,0 +1,122 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_04.png" type="Texture" id=2]
+[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_01.png" type="Texture" id=3]
+[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_02.png" type="Texture" id=4]
+[ext_resource path="res://Systems/BattleSystem/BattleGrids/BattleGrid.cs" type="Script" id=5]
+[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_03.png" type="Texture" id=6]
+[ext_resource path="res://Systems/BattleSystem/GridCellTileset.tres" type="TileSet" id=7]
+[ext_resource path="res://Systems/BattleSystem/BattleGridPlaceholder.png" type="Texture" id=8]
+[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_05.png" type="Texture" id=9]
+
+[node name="BattleGrid" type="Control"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 1920.0
+margin_bottom = 984.0
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileMapAll" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 256, 128 )
+format = 1
+tile_data = PoolIntArray( -458745, 0, 0, -393210, 0, 0, -393209, 0, 0, -393208, 0, 0, -327675, 0, 0, -327674, 0, 0, -327673, 0, 0, -327672, 0, 0, -327671, 0, 0, -262140, 0, 0, -262139, 0, 0, -262138, 0, 0, -262137, 0, 0, -262136, 0, 0, -262135, 0, 0, -262134, 0, 0, -196605, 0, 0, -196604, 0, 0, -196603, 0, 0, -196602, 0, 0, -196601, 0, 0, -196600, 0, 0, -196599, 0, 0, -196598, 0, 0, -196597, 0, 0, -131070, 0, 0, -131069, 0, 0, -131068, 0, 0, -131067, 0, 0, -131066, 0, 0, -131065, 0, 0, -131064, 0, 0, -131063, 0, 0, -131062, 0, 0, -131061, 0, 0, -131060, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 1, 0, -65530, 0, 0, -65529, 0, 0, -65528, 0, 0, -65527, 0, 0, -65526, 1, 0, -65525, 0, 0, -65524, 0, 0, -65523, 0, 0, 1, 0, 0, 2, 0, 0, 3, 1, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 65538, 0, 0, 65539, 0, 0, 65540, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 1, 0, 65545, 0, 0, 65546, 0, 0, 65547, 0, 0, 65548, 0, 0, 65549, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 131084, 0, 0, 196612, 0, 0, 196613, 1, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 0, 0, 196619, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 393223, 0, 0, 393224, 0, 0 )
+
+[node name="TileMapGreenConsistencyDisplay" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 256, 128 )
+format = 1
+tile_data = PoolIntArray( -458745, 0, 0, -393210, 0, 0, -393208, 0, 0, -327675, 0, 0, -327671, 0, 0, -262140, 0, 0, -262134, 0, 0, -196605, 0, 0, -196597, 0, 0, -131070, 0, 0, -131060, 0, 0, -65535, 0, 0, -65523, 0, 0, 1, 0, 0, 14, 0, 0, 65538, 0, 0, 65549, 0, 0, 131075, 0, 0, 131084, 0, 0, 196612, 0, 0, 196619, 0, 0, 262149, 0, 0, 262154, 0, 0, 327686, 0, 0, 327689, 0, 0, 393223, 0, 0, 393224, 0, 0 )
+
+[node name="TileMapDisabledDisplay" type="TileMap" parent="."]
+mode = 1
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 256, 128 )
+format = 1
+tile_data = PoolIntArray( -65531, 1, 0, -65526, 1, 0, 3, 1, 0, 65544, 1, 0, 196613, 1, 0 )
+
+[node name="ObstacleSprites" type="YSort" parent="."]
+
+[node name="Sprite_01" type="Sprite" parent="ObstacleSprites"]
+position = Vector2( 338.302, 148.035 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="Sprite_02" type="Sprite" parent="ObstacleSprites"]
+position = Vector2( 880.831, 530.376 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 4 )
+
+[node name="Sprite_03" type="Sprite" parent="ObstacleSprites"]
+position = Vector2( 1373.91, 541.521 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 6 )
+
+[node name="Sprite_04" type="Sprite" parent="ObstacleSprites"]
+position = Vector2( 227.651, 467.909 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Sprite_05" type="Sprite" parent="ObstacleSprites"]
+position = Vector2( 721.744, 209.867 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 9 )
+
+[node name="StartPositions" type="Node2D" parent="."]
+
+[node name="AllyStartPositions" type="Node2D" parent="StartPositions"]
+
+[node name="Position2D" type="Position2D" parent="StartPositions/AllyStartPositions"]
+position = Vector2( 373.411, 768.228 )
+
+[node name="Position2D2" type="Position2D" parent="StartPositions/AllyStartPositions"]
+position = Vector2( 256.869, 704.011 )
+
+[node name="Position2D3" type="Position2D" parent="StartPositions/AllyStartPositions"]
+position = Vector2( 508.981, 827.689 )
+
+[node name="Position2D4" type="Position2D" parent="StartPositions/AllyStartPositions"]
+position = Vector2( 247.355, 827.689 )
+
+[node name="Position2D5" type="Position2D" parent="StartPositions/AllyStartPositions"]
+position = Vector2( 130.813, 768.228 )
+
+[node name="Position2D6" type="Position2D" parent="StartPositions/AllyStartPositions"]
+position = Vector2( 390.06, 903.798 )
+
+[node name="EnemyStartPositions" type="Node2D" parent="StartPositions"]
+
+[node name="Position2D7" type="Position2D" parent="StartPositions/EnemyStartPositions"]
+position = Vector2( 1650.62, 126.056 )
+
+[node name="Position2D8" type="Position2D" parent="StartPositions/EnemyStartPositions"]
+position = Vector2( 1534.08, 61.8388 )
+
+[node name="Position2D9" type="Position2D" parent="StartPositions/EnemyStartPositions"]
+position = Vector2( 1786.19, 185.516 )
+
+[node name="Position2D10" type="Position2D" parent="StartPositions/EnemyStartPositions"]
+position = Vector2( 1524.56, 185.516 )
+
+[node name="Position2D11" type="Position2D" parent="StartPositions/EnemyStartPositions"]
+position = Vector2( 1408.02, 126.056 )
+
+[node name="Position2D12" type="Position2D" parent="StartPositions/EnemyStartPositions"]
+position = Vector2( 1667.27, 261.626 )
+
+[node name="BattleGridUI" type="CanvasLayer" parent="."]
+
+[node name="MovePoints" type="Node2D" parent="BattleGridUI"]
+
+[node name="AttackAPPoints" type="Node2D" parent="BattleGridUI"]

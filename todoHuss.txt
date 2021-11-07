@@ -11,15 +11,17 @@ Weds:
 
 Thurs:
 - Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack.
-- Animations that tween from A to B
+- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation.
 
 Fri:
-- Add spells to battle system. Complete battle system.
+- Add spells to battle system. Complete battle system. Can use consumables in battle obviously.
 - Experience system, stats, and levelling, and gaining new spells
+- Make up to date art asset list
 
 Sat:
 - Obstacles
-- Buildings including shop OR start shop from dialogue
+- Shop building
+- Obelisks
 
 If time post all to-do:
 - Redo animations for Unit.tscn / (Player/NPC) - see AnimationTree tutorial
@@ -28,6 +30,79 @@ If time post all to-do:
 - Enter filename by script when saving files...
 - Make a less buggy FileDialog (only if plenty of time)
 - Switch to AStar navigation?
+
+****BATTLE DETAILS****
+**Battle: Attributes, stats, equipment, consumables**
+
+Attributes - give flat bonuses to derived stats:
+- Vigour: physical damage, health
+- Resilience: health regen, mana regen, magic resist (chance to reduce percentage of incoming damage or duration of incoming hostile effects)
+- Intellect: mana capacity, spell damage
+- Swiftness: dodge (chance to reduce incoming damage), speed (more movement in combat), initiative (get turn first in combat)
+- Charisma: leadership (bonus to nearby companions), also can be used in dialogue to unlock options (up to sarah)
+- Luck: critical hit, magic resist, dodge
+
+Equippable items (TBC - can just do small icons for this in inventory screen, wouldn't change sprites):
+- Armour (provides physical resist)
+- Weapon (provides bonus spell or physical damage depending on which weapon)
+
+Consumable items:
+- Enchanted food to restore health
+- Enchanted drink to restore mana
+- Potion of *attribute* e.g. Potion of Vigour, Potion of Resilience, etc. Improves stat by x.
+
+Derived stats:
+- Health
+- Mana
+- Health regeneration (health per turn)
+- Mana regeneration (mana per turn)
+- Magic resist (reduce magical damage by a flat % or hostile effect duration)
+- Physical resist (reduce physical damage by a flat %)
+- Dodge (chance to reduce any incoming damage)
+- Physical damage
+- Spell damage
+- Speed (movement points in battle)
+- Initiative (whether you act first each round in battle)
+- Leadership (nearby companions, e.g. within 3 squares, get small bonus to all their stats)
+- Critical hit (chance for a lucky hit, doing double damage)
+
+Other:
+- Experience -> leveling up
+- On level up, get *x=5 attribute points + y=Math.Floor(level/10)* to spend*, e.g. at level 1 get 5 attribute points, at level 10 get 6 attribute points, at level 20 get 7 attribute points. Can adjust for balance (increase x for more early power, increase y for more later power)
+ 
+hnuqweasd — Today at 10:16 AM
+**Battle: Abilities**
+- 4 possible companions, and 2 abilities each including protagonist = 10 abilities total
+- All companions get a 1 square range attack, e.g. stone mace.
+- Sarah needs to decide on names of spells
+*Khepri: sun theme. Average stats.*
+- "Solar Bolt": do x magical damage to target within 5 squares. Cheap
+- "Solar Blast": do x magical damage to group of targets at and around radius of 4 squares. Range 4. Friendly fire. Expensive.
+*Companion 1: helps allies in combat, and does mainly melee damage. High health but slow.*
+- "Coming Forth By Day": increase the Vigour of target ally by x. Cheap
+- "Preservation": increase the Resilience of target ally by x. Cheap
+*Companion 2: control specialist. Fast but does not do much damage.*
+- "Weighing of the Heart": reduce the Swiftness of target enemy by x. Cheap
+- "Gaze of the Dead": does x magical damage and target loses next turn. Expensive
+*Companion 3: trickery. Fast. Low physical damage and low health. High resilience.*
+- "Teleport": move target ally (including self) or enemy from square A to square B. Cheap.
+- "Lunar bolt": bolt that does x damage to enemy target, and restores health of nearby ally for half the damage. Expensive.
+*Companion 4: assassin. Fast. High damage. Low health and resilience.*
+- "Hymn of the underworld": increase self Vigour by large amount, and teleport behind target enemy and do melee attack. Short range. Cheap.
+- "Peril of Osiris": throw an enchanted poison dart at the opponent, doing x damage every round for 3 rounds. Medium range. Expensive.
+*
+Other battle details:
+- Isometric grid of 10x10 squares. Player and companions start on bottom left. Enemies start on top right.
+- Spend action points to move or attack. Action points are increased by the derived stat Speed. Attack/spell costs Math.Ceiling(0.5*total) action points. OR, costs 6 action points and you gain action points more slowly from speed (start with a base of 10 and increase by 1 every 2 speed) - so becomes more powerful at higher speed.
+- All spells to increasing damage at shorter ranges
+- Obstacles in line of sight reduce ranged damage by 50%. Obstacles will be randomly placed at the start of each fight at designated areas.
+- Enemies will have some of the companion spells as well, but in a more limited form (less powerful) as their stats will be lower generally. E.g. one enemy type may have a weaker solar bolt. Another may have a weaker gaze of the dead. They can also do melee attacks. We need to decide how many enemy types and how we will distribute abilities.
+- Battle is divided into rounds. At the beginning of each round, turn order is decided by initiative.
+- Can skip turn, increases the character's initiative by 50% the next turn.
+- Right click on creatures to see details about their stats
+- Battle ends when all of one team are dead. If your team dies you lose. If you win, you and your allies all revive at the end of combat if dead, but will start at 50% health at the start of next combat.
+
+********
 
 ***OLD***
 **********

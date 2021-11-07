@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-8e2a17bbcc6b2cd6b140931f27459a47.stex"
+path="res://.import/GridCellDisabled.png-f4837b7e1e120abb143fd46535d37e35.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shaders/topdownwater/icon.png"
-dest_files=[ "res://.import/icon.png-8e2a17bbcc6b2cd6b140931f27459a47.stex" ]
+source_file="res://Systems/BattleSystem/GridCellDisabled.png"
+dest_files=[ "res://.import/GridCellDisabled.png-f4837b7e1e120abb143fd46535d37e35.stex" ]
 
 [params]
 

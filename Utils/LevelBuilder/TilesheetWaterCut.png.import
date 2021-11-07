@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon.png-93d80911eeadf9fc47bfe2b09d109517.stex"
+path="res://.import/TilesheetWaterCut.png-85e735f9d923d0cdcba3e23f130451ec.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Shaders/icon.png"
-dest_files=[ "res://.import/icon.png-93d80911eeadf9fc47bfe2b09d109517.stex" ]
+source_file="res://Utils/LevelBuilder/TilesheetWaterCut.png"
+dest_files=[ "res://.import/TilesheetWaterCut.png-85e735f9d923d0cdcba3e23f130451ec.stex" ]
 
 [params]
 

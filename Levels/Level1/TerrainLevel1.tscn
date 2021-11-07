@@ -1,9 +1,34 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Levels/Common/Terrain/Placeholder.tres" type="TileSet" id=1]
 [ext_resource path="res://Utils/LevelBuilder/Grid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Shaders/topdownwater/Water.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Shaders/topdownwater/Water.gdshader" type="Shader" id=5]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+seamless = true
+noise = SubResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 5 )
+shader_param/scale = Vector2( 149.354, 115.76 )
+shader_param/y_zoom = 0.297302
+shader_param/distortion_scale = Vector2( 5, 6 )
+shader_param/intensity = 0.4
+shader_param/speed = 0.5
+shader_param/water_color = Color( 0.219608, 0.67451, 1, 0.839216 )
+shader_param/noise = SubResource( 2 )
 
 [node name="Terrain" type="Node2D"]
+
+[node name="Water" parent="." instance=ExtResource( 4 )]
+visible = false
+material = SubResource( 3 )
+position = Vector2( 7.49176, 826.694 )
+rotation = -0.00629541
+scale = Vector2( 700, 500 )
 
 [node name="Tilemaps" type="Node2D" parent="."]
 
