@@ -1,11 +1,12 @@
 Minimum targets
 
 Mon:
-- Battle map grid
-- All units in the battle map
+- Battle map grid DONE
+- All units in the battle map DONE
 
 Tues:
 - Battle system including movement and attack
+- Add skip turn
 
 Weds:
 
@@ -29,7 +30,9 @@ If time post all to-do:
 - Implement click to move controls
 - Enter filename by script when saving files...
 - Make a less buggy FileDialog (only if plenty of time)
+- Turn queue
 - Switch to AStar navigation?
+
 
 ****BATTLE DETAILS****
 **Battle: Attributes, stats, equipment, consumables**

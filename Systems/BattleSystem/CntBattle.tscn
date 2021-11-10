@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
 [ext_resource path="res://Systems/BattleSystem/BattleGrids/BattleGrid.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Systems/BattleSystem/BattleHUD.cs" type="Script" id=3]
+[ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=5]
 
 [node name="CntBattle" type="Control"]
 pause_mode = 2
@@ -14,11 +17,15 @@ __meta__ = {
 margin_top = 48.0
 margin_right = 1920.0
 margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="BattleGrid" parent="Panel" instance=ExtResource( 2 )]
 
 [node name="BattleHUD" type="CanvasLayer" parent="Panel"]
 layer = 2
+script = ExtResource( 3 )
 
 [node name="CtrlTheme" type="Control" parent="Panel/BattleHUD"]
 __meta__ = {
@@ -37,14 +44,41 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="LblLog" type="Label" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -547.0
+margin_top = -18.0
+margin_right = 548.0
+margin_bottom = 18.0
+custom_fonts/font = ExtResource( 4 )
+text = "This is where the log goes"
+align = 1
+valign = 1
+
+[node name="BtnEndTurn" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -125.0
+margin_top = -21.5
+margin_bottom = 21.5
+text = "End Turn"
+
 [node name="BtnEndTest" type="Button" parent="Panel/BattleHUD/CtrlTheme"]
 margin_left = 748.0
-margin_top = 1036.57
+margin_top = 8.89026
 margin_right = 1187.0
-margin_bottom = 1098.57
+margin_bottom = 70.8903
 text = "END BATTLE"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CursorControl" parent="Panel/BattleHUD" instance=ExtResource( 5 )]
+
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnEndTurn" to="." method="OnBtnEndTurnPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/BtnEndTest" to="." method="OnBtnEndTestPressed"]

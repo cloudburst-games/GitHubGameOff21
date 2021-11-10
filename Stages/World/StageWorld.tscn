@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Systems/BattleSystem/CntBattle.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Interface/Panels/PnlPreBattle.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Stages/World/Music/UnstableAlchemy_World.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Stages/World/Music/SadAlchemy_World.ogg" type="AudioStream" id=16]
 
@@ -306,6 +307,8 @@ __meta__ = {
 autoplay = "default"
 anims/LogEntry = SubResource( 2 )
 anims/default = SubResource( 3 )
+
+[node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnMenu" to="HUD" method="OnBtnMenuPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnResume" to="HUD" method="OnBtnResumePressed"]

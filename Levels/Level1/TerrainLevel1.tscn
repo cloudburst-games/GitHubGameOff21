@@ -14,7 +14,7 @@ noise = SubResource( 1 )
 [sub_resource type="ShaderMaterial" id=3]
 shader = ExtResource( 5 )
 shader_param/scale = Vector2( 149.354, 115.76 )
-shader_param/y_zoom = 0.297302
+shader_param/y_zoom = 0.5
 shader_param/distortion_scale = Vector2( 5, 6 )
 shader_param/intensity = 0.4
 shader_param/speed = 0.5

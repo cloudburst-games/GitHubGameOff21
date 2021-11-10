@@ -10,7 +10,8 @@ public class BattleGrid : Control
     private AStar2D _aStar = new AStar2D();
     private Vector2 _cellSize = new Vector2(256,128);
     private Vector2 _halfCellSize;
-    private Godot.Collections.Array _traversableCells;
+    public Godot.Collections.Array TraversableCells {get; set;}
+    public Godot.Collections.Array ObstacleCells {get; set;}
     // private Godot.Collections.Array _obstacles;
     // private Rect2 _usedRect;
     private Dictionary<Vector2, int> _pointIDs = new Dictionary<Vector2, int>();
@@ -31,7 +32,8 @@ public class BattleGrid : Control
     {
         _overallTileMap = GetNode<TileMap>("TileMapAll");
         _halfCellSize = _cellSize/2f;
-        _traversableCells = _overallTileMap.GetUsedCellsById(0);
+        TraversableCells = _overallTileMap.GetUsedCellsById(0);
+        ObstacleCells = _overallTileMap.GetUsedCellsById(1);
         // _obstacles = _overallTileMap.GetUsedCellsById(1);
         // _usedRect = _overallTileMap.GetUsedRect();
 
@@ -40,8 +42,12 @@ public class BattleGrid : Control
         ConnectCells();
     }
 
-    private Vector2[] CalculatePath(Vector2 mapStart, Vector2 mapEnd)
+    public Vector2[] CalculatePath(Vector2 mapStart, Vector2 mapEnd)
     {
+        if (!TraversableCells.Contains(mapStart) || ! TraversableCells.Contains(mapEnd))
+        {
+            return new Vector2[0];
+        }
         int startIndex = _pointIDs[mapStart];
         int endIndex = _pointIDs[mapEnd];
         return _aStar.GetPointPath(startIndex, endIndex);
@@ -50,7 +56,7 @@ public class BattleGrid : Control
     private void SetPointIDs()
     {
         int pIDCount = 0;
-        foreach (Vector2 point in _traversableCells)
+        foreach (Vector2 point in TraversableCells)
         {
             _pointIDs.Add(point, pIDCount);
             pIDCount += 1;
@@ -59,7 +65,7 @@ public class BattleGrid : Control
 
     private void AddCells()
     {
-        foreach (Vector2 point in _traversableCells)
+        foreach (Vector2 point in TraversableCells)
         {
             _aStar.AddPoint(_pointIDs[point], point);
         }
@@ -67,11 +73,11 @@ public class BattleGrid : Control
 
     private void ConnectCells()
     {
-        foreach (Vector2 point in _traversableCells)
+        foreach (Vector2 point in TraversableCells)
         {
             foreach (Vector2 neighbour in GetHorizontalNeighbours(point))
             {
-                if (!_traversableCells.Contains(neighbour))
+                if (!TraversableCells.Contains(neighbour))
                 {
                     continue;
                 }
@@ -92,6 +98,20 @@ public class BattleGrid : Control
             new Vector2(cell.x, cell.y + 1),
             // new Vector2(cell.x + 1, cell.y + 1)
         };
+    }   
+    
+    private List<Vector2> GetHexNeighbours(Vector2 cell) // commented out diagonal cells
+    {
+        return new List<Vector2>() {
+            new Vector2(cell.x, cell.y-1),
+            new Vector2(cell.x +1, cell.y),
+            new Vector2(cell.x + 1, cell.y +1),
+            new Vector2(cell.x, cell.y + 1),
+            new Vector2(cell.x - 1, cell.y + 1),
+            // new Vector2(cell.x - 1, cell.y + 1),
+            new Vector2(cell.x -1, cell.y ),
+            // new Vector2(cell.x + 1, cell.y + 1)
+        };
     }
     private List<Vector2> GetAllNeighbours(Vector2 cell)
     {
@@ -107,13 +127,23 @@ public class BattleGrid : Control
         };
     }
 
+    public bool IsTraversable(Vector2 mapPos)
+    {
+        if (TraversableCells.Contains(mapPos))
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void GenerateMovePointSprite(Vector2 mapPos, Vector2 nextmapPos)
     {
+        return;
         var sprite = new Sprite() {
             // Texture = _movePointTex
         };
         GetNode("BattleGridUI/MovePoints").AddChild(sprite);
-        sprite.Position = new Vector2(_overallTileMap.MapToWorld(mapPos).x,  _overallTileMap.MapToWorld(mapPos).y + _halfCellSize.y) ;
+        sprite.Position = new Vector2(_overallTileMap.MapToWorld(mapPos).x,  _overallTileMap.MapToWorld(mapPos).y + 1.5f*_halfCellSize.y) ;
         if (nextmapPos != mapPos)
         {
             float angle = mapPos.AngleToPoint(nextmapPos) - Mathf.Pi/2f;
@@ -151,7 +181,7 @@ public class BattleGrid : Control
         }
     }
 
-    private void DrawMovePoints(Vector2[] points)
+    public void DrawMovePoints(Vector2[] points)
     {
         ClearAllPointSprites();
         for (int i = 1; i < points.Count(); i++)
@@ -178,7 +208,7 @@ public class BattleGrid : Control
 
     public override void _Input(InputEvent ev)
     {
-        if (_traversableCells.Contains(_overallTileMap.WorldToMap(GetGlobalMousePosition())))
+        if (TraversableCells.Contains(_overallTileMap.WorldToMap(GetGlobalMousePosition())))
         {
             // DrawMovePoints(CalculatePath(new Vector2(7, 6), _overallTileMap.WorldToMap(GetGlobalMousePosition())));
         }
@@ -188,10 +218,29 @@ public class BattleGrid : Control
             {
                 if (ev.IsPressed() && !ev.IsEcho())
                 {
-                    
+                    // GD.Print(GetCorrectedGridPosition(GetGlobalMousePosition()));
                     // GD.Print(_overallTileMap.WorldToMap(GetGlobalMousePosition()));
                 }
             }
         }
+    }
+
+    public int GetDistanceToPoint(Vector2 gridStartPos, Vector2 gridEndPos)
+    {
+        return CalculatePath(gridStartPos, gridEndPos).Count()-1;
+    }
+
+    public Vector2 GetTileCentreFromPosition(Vector2 position)
+    {
+        return GetCorrectedWorldPosition(GetCorrectedGridPosition(position));// MapToWorld(_overallTileMap.WorldToMap(position)) + new Vector2(0, _halfCellSize.y);
+    }
+
+    public Vector2 GetCorrectedGridPosition(Vector2 position)
+    {
+        return _overallTileMap.WorldToMap(new Vector2(position.x-_overallTileMap.GlobalPosition.x, position.y-_overallTileMap.GlobalPosition.y));
+    }
+    public Vector2 GetCorrectedWorldPosition(Vector2 gridPosition)
+    {
+        return _overallTileMap.MapToWorld(new Vector2(gridPosition.x, gridPosition.y)) + _overallTileMap.GlobalPosition;
     }
 }
