@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [Serializable()]
 public class UnitData : IStoreable
 {
+    public string ID = "";
     public Vector2 NPCPosition {get; set;}
     private bool _companion = false;
     public bool Companion {

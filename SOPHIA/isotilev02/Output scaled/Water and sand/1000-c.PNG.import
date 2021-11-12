@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/1000-c.PNG-c9862c91b443d4f1ae2dc1f5a5d4453c.stex"
+path="res://.import/1000-c.PNG-c8616ad9c4332e4cd1abc9538cf6350f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Utils/LevelBuilder/isotilev02/Output scaled/Water and sand/1000-c.PNG"
-dest_files=[ "res://.import/1000-c.PNG-c9862c91b443d4f1ae2dc1f5a5d4453c.stex" ]
+source_file="res://SOPHIA/isotilev02/Output scaled/Water and sand/1000-c.PNG"
+dest_files=[ "res://.import/1000-c.PNG-c8616ad9c4332e4cd1abc9538cf6350f.stex" ]
 
 [params]
 
@@ -28,7 +28,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

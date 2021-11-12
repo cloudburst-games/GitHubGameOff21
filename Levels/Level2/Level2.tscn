@@ -28,9 +28,11 @@ script = ExtResource( 3 )
 
 [node name="NeutralAnna" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -1593.61, 1122.85 )
+ID = "anna1"
 
 [node name="EnemyKaren" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -983.199, 1217.35 )
+ID = "karen1"
 _startingBools = {
 "Companion": false,
 "Hostile": true

@@ -14,10 +14,18 @@ public class BattleUnit : Node2D
     private AnimationPlayer _actionAnim;
     private Sprite _sprite;
 
+    
+    [Signal]
+    public delegate void CurrentActionCompleted();
     public BattleUnitData CurrentBattleUnitData {get; set;}
 
     public enum DirectionFacingMode {UpRight, DownRight, DownLeft, UpLeft} // { 45, 135, 225, 315 }
     public DirectionFacingMode Direction {get; set;} = DirectionFacingMode.UpRight;
+
+    public List<Vector2> CurrentPath {get; set;}
+
+    [Signal]
+    public delegate void ReachedNextMovePoint();
     
     
 
@@ -125,7 +133,8 @@ public class BattleUnit : Node2D
 
     public void MoveAlongPoints(List<Vector2> worldPoints)
     {
-
+        CurrentPath = worldPoints;
+        SetActionState(ActionStateMode.Moving);
     }
 
     // public bool IsMouseOver()

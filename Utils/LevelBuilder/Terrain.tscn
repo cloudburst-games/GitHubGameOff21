@@ -4,7 +4,7 @@
 [ext_resource path="res://Utils/LevelBuilder/Grid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Utils/Node/Camera/Cam2DRTS.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Utils/LevelBuilder/Terrain.cs" type="Script" id=4]
-[ext_resource path="res://Levels/Common/Terrain/Placeholder.tres" type="TileSet" id=5]
+[ext_resource path="res://Utils/LevelBuilder/Tilesheet_sophia_1.tres" type="TileSet" id=5]
 
 [node name="Terrain" type="Node2D"]
 script = ExtResource( 4 )

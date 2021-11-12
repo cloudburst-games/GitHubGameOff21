@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/0330.PNG-dba7beee38a28859b8e2c216dac4a600.stex"
+path="res://.import/ghgon21Isotilev01.png-822a02c5b58df1b1f578b4afb69b307e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SOPHIA/isotilev02/Output scaled/Snow/0330.PNG"
-dest_files=[ "res://.import/0330.PNG-dba7beee38a28859b8e2c216dac4a600.stex" ]
+source_file="res://SOPHIA/Old/ghgon21Isotilev01.png"
+dest_files=[ "res://.import/ghgon21Isotilev01.png-822a02c5b58df1b1f578b4afb69b307e.stex" ]
 
 [params]
 

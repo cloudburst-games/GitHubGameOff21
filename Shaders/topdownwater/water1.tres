@@ -1,0 +1,51 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[sub_resource type="Shader" id=1]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform vec2 scale;
+uniform float y_zoom;
+
+uniform sampler2D noise;
+uniform vec2 distortion_scale;
+uniform float intensity;
+uniform float speed;
+
+
+uniform vec4 water_color : hint_color;
+
+void fragment(){
+	vec4 curr_color = texture(TEXTURE,UV); // Get current color of pixel
+	//if (curr_color.b > curr_color.r && curr_color.b > curr_color.g) {
+    //if (curr_color == vec4(0.18,0.56,0.83,1)){ //Color(0.184314, 0.564706, 0.831373)
+       // COLOR = vec4(1,0,0,1);
+    //COLOR = vec4(0,0,0,1);
+	float distortion = texture(noise, UV*scale*distortion_scale + TIME*speed).x;
+	distortion -= 0.5;
+	COLOR = texture(TEXTURE, UV);
+	COLOR.rgb = mix (vec4(distortion * intensity).rgb, water_color.rgb, water_color.a);
+//	}
+//	else{
+//        COLOR = curr_color;
+//    }
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+width = 3072
+height = 2304
+noise = SubResource( 2 )
+
+[resource]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/scale = Vector2( 149.354, 115.76 )
+shader_param/y_zoom = 0.445449
+shader_param/distortion_scale = Vector2( 0.4, 0.8 )
+shader_param/intensity = 100.0
+shader_param/speed = 2.0
+shader_param/water_color = Color( 0.196078, 0.647059, 0.870588, 0.94902 )
+shader_param/noise = SubResource( 3 )

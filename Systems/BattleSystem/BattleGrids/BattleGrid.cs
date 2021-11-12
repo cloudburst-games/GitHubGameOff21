@@ -32,14 +32,14 @@ public class BattleGrid : Control
     {
         _overallTileMap = GetNode<TileMap>("TileMapAll");
         _halfCellSize = _cellSize/2f;
-        TraversableCells = _overallTileMap.GetUsedCellsById(0);
-        ObstacleCells = _overallTileMap.GetUsedCellsById(1);
+        // TraversableCells = _overallTileMap.GetUsedCellsById(0);
+        // ObstacleCells = _overallTileMap.GetUsedCellsById(1);
         // _obstacles = _overallTileMap.GetUsedCellsById(1);
         // _usedRect = _overallTileMap.GetUsedRect();
 
-        SetPointIDs();
-        AddCells();
-        ConnectCells();
+        // SetPointIDs();
+        // AddCells();
+        // ConnectCells();
     }
 
     public Vector2[] CalculatePath(Vector2 mapStart, Vector2 mapEnd)
@@ -61,6 +61,28 @@ public class BattleGrid : Control
             _pointIDs.Add(point, pIDCount);
             pIDCount += 1;
         }
+    }
+
+    public void RecalculateAStarMap(List<Vector2> additionalObstacles)
+    {
+        _aStar.Clear();
+        _pointIDs.Clear();
+        TraversableCells = _overallTileMap.GetUsedCellsById(0);
+        ObstacleCells = _overallTileMap.GetUsedCellsById(1);
+        foreach (Vector2 obstaclePoint in additionalObstacles)
+        {
+            ObstacleCells.Add(obstaclePoint);
+        }
+        foreach (Vector2 point in ObstacleCells)
+        {
+            if (TraversableCells.Contains(point))
+            {
+                TraversableCells.Remove(point);
+            }
+        }
+        SetPointIDs();
+        AddCells();
+        ConnectCells();
     }
 
     private void AddCells()

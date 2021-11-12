@@ -15,6 +15,7 @@ public class Grid : TileMap
 
     // This is the terrain type assigned to this Grid
     public int GridTerrain {get; set;}
+    private Random _rand = new Random();
 
     // This signal is called when terrain is set at higher level Grids (e.g. earth, snow), and there is an empty border
     // This is so that we know to ask the Level1 Grid (water+shore) to set shore at those areas, otherwise there would be ..
@@ -36,13 +37,16 @@ public class Grid : TileMap
         //     ((CPUParticles2D)newParticles).Position = worldPos;
         //     AddChild(newParticles);
         // }
-        foreach (int id in TileSet.GetTilesIds())
+        if (TileSet != null)
         {
-            if (TileSet.TileGetName(id) == "0000")
+            foreach (int id in TileSet.GetTilesIds())
             {
-                // GD.Print("water");
-                TileSet.TileSetMaterial(id, GD.Load<ShaderMaterial>("res://Shaders/topdownwater/new_shadermaterial.tres"));
-                
+                if (TileSet.TileGetName(id) == "0000")
+                {
+                    // GD.Print("water");
+                    TileSet.TileSetMaterial(id, GD.Load<ShaderMaterial>("res://Shaders/topdownwater/water1.tres"));
+                    
+                }
             }
         }
         
@@ -440,7 +444,22 @@ public class Grid : TileMap
             SetCellv(gridPos, -1);
             return;
         }
-		SetCellv (gridPos, TileSet.FindTileByName (terrain));
+		
+        // GD.Print(TileSet.FindTileByName("sdf"));
+        List<string> tileNamesToSearch = new List<string>();
+        tileNamesToSearch.Add(terrain);
+        for (char c = 'a'; c <= 'z'; c++)
+        {
+            string terrainToCheck = String.Format("{0}-{1}", terrain, c);
+            if (TileSet.FindTileByName(terrainToCheck) != -1)
+            {
+                tileNamesToSearch.Add(terrainToCheck);
+            }
+            // GD.Print(c);
+
+        }
+        SetCellv (gridPos, TileSet.FindTileByName (tileNamesToSearch[_rand.Next(0, tileNamesToSearch.Count)]));
+        
         // PrintGrid();
 	}
 

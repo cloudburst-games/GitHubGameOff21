@@ -1,50 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Shaders/topdownwater/Water.cs" type="Script" id=2]
-
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-
-uniform vec2 scale;
-uniform float y_zoom;
-
-uniform sampler2D noise;
-uniform vec2 distortion_scale;
-uniform float intensity;
-uniform float speed;
-
-
-uniform vec4 water_color : hint_color;
-
-void fragment(){
-	float distortion = texture(noise, UV*scale*distortion_scale + TIME*speed).x;
-	distortion -= 0.5;
-	COLOR = texture(TEXTURE, UV);
-	COLOR.rgb = mix (vec4(distortion * intensity).rgb, water_color.rgb, water_color.a);
-}"
-
-[sub_resource type="OpenSimplexNoise" id=2]
-
-[sub_resource type="NoiseTexture" id=3]
-seamless = true
-noise = SubResource( 2 )
-
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 1 )
-shader_param/scale = Vector2( 70.9442, 42.0437 )
-shader_param/y_zoom = 0.840896
-shader_param/distortion_scale = Vector2( 0.6, 0.8 )
-shader_param/intensity = 0.2
-shader_param/speed = 0.25
-shader_param/water_color = Color( 0, 0.466667, 0.8, 0.627451 )
-shader_param/noise = SubResource( 3 )
+[ext_resource path="res://Shaders/topdownwater/water1.tres" type="Material" id=3]
 
 [node name="Water" type="Sprite"]
-material = SubResource( 4 )
+material = ExtResource( 3 )
 position = Vector2( 882.503, 622.924 )
 rotation = 43.976
 scale = Vector2( 70.9442, 42.0437 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
+
 [connection signal="item_rect_changed" from="." to="." method="OnWaterItemRectChanged"]

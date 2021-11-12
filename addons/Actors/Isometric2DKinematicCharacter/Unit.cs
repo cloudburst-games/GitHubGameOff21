@@ -10,6 +10,9 @@ public class Unit : KinematicBody2D
     public delegate void BattleStarted(Unit target);
     [Signal]
     public delegate void RightClicked(Unit target);
+
+    [Export]
+    public string ID = "";
     
     public float Speed {get; set;} = 200f;
 
@@ -30,9 +33,6 @@ public class Unit : KinematicBody2D
 	}
 
     ///
-
-    // public enum StartingBool { Companion, Hostile }
-    public enum StartingInt { }//
 
     [Export]
     private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
@@ -63,6 +63,7 @@ public class Unit : KinematicBody2D
 
     private void SetStartingData()
     {
+        CurrentUnitData.ID = this.ID;
 
         CurrentUnitData.MainCombatant = new BattleUnitData() {
             Combatant = _mainCombatant,

@@ -1,5 +1,6 @@
 // **TODO**
-// movement animation
+// refactor and split up code into subclasses
+
 // implement attack
 // implement take damage and get hit
 // implement die
@@ -14,7 +15,7 @@
 // *UI / ease of use polish:*
 // Show AP cost next to mouse cursor (e.g. 5 out of 8)
 // Show remaining AP somewhere at the bottom bar. Current turn: x. Remaining AP: y.
-// Separate flashtiles for move path tiles on mouseover
+// Sort out flashtile colours
 // Menu to disable input
 // refactor and comment
 
@@ -436,17 +437,38 @@ public class CntBattle : Control
 
     private void OnActiveBattleUnitTurnStart()
     {
+        RecalculateObstacles();
         GetActiveBattleUnit().SetOutlineShader(new float[3] {.8f, .7f, 0f});
         GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
         HighlightMoveableSquares();
     }
 
+    private void RecalculateObstacles()
+    {
+        List<Vector2> currentBattleUnitPositions = new List<Vector2>();
+        foreach (BattleUnit battleUnit in GetBattleUnits())
+        {
+            if (battleUnit == GetActiveBattleUnit())
+            {
+                continue;
+            }
+            Vector2 mapPos = _battleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+            currentBattleUnitPositions.Add(mapPos);
+        }
+        _battleGrid.RecalculateAStarMap(currentBattleUnitPositions);
+    }
+
     public override void _Input(InputEvent ev)
     {
+        if (_turnList.Count == 0)
+        {
+            return;
+        }
         if (ev is InputEventMouseMotion)
         {
             SetNonActiveBattleUnitOutlines();
             SetCursorOnMouseMotion();
+            HighlightPathSquaresOnMouseMotion();
 
 
 
@@ -468,8 +490,59 @@ public class CntBattle : Control
         }
     }
 
-    public void OnLeftClick()
+    private void HighlightPathSquaresOnMouseMotion()
     {
+
+        if (AreAllUnitsIdle())
+        {
+            _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear(); // consider making a new hex in krita
+            Vector2 startMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+            Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+            if (PermittedMove(startMapPos, mouseMapPos))
+            {
+                foreach (Vector2 point in _battleGrid.CalculatePath(startMapPos, mouseMapPos))
+                {   
+                    _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+                }
+            }
+        }
+    }
+
+    public override void _PhysicsProcess(float delta)
+    {
+        base._PhysicsProcess(delta);
+        if (!AreAllUnitsIdle())
+        {
+            _cursorControl.SetCursor(CursorControl.CursorMode.Invalid);
+            
+        }
+        GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlUI/BtnEndTurn").Disabled = !AreAllUnitsIdle();
+    }
+
+    // private void WhileUnitsIdle()
+    // {
+    //     GetNode
+    // }
+
+    private bool AreAllUnitsIdle()
+    {
+        foreach (BattleUnit unit in GetBattleUnits())
+        {
+            if (unit.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public async void OnLeftClick()
+    {
+        // don't allow actions if units are not idle
+        if (!AreAllUnitsIdle())
+        {
+            return;
+        }
         Vector2 startMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
         Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (PermittedMove(startMapPos, mouseMapPos))
@@ -479,8 +552,6 @@ public class CntBattle : Control
             foreach (Vector2 point in _battleGrid.CalculatePath(startMapPos, mouseMapPos))
             {
                 worldPoints.Add(_battleGrid.GetCorrectedWorldPosition(point));
-                GD.Print(_battleGrid.GetCorrectedWorldPosition(point));
-                GD.Print(point);
 
             }
             // subtract AP cost from total AP
@@ -489,13 +560,19 @@ public class CntBattle : Control
             
             // commence animation
 
+            _battleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
+            _battleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
+            GetActiveBattleUnit().MoveAlongPoints(worldPoints);
             // disable input until animation finishes
 
             // right click to speed up animation
 
             //
-            GetActiveBattleUnit().GlobalPosition = worldPoints[worldPoints.Count-1];
+            
+            await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.CurrentActionCompleted));
 
+            _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+            GD.Print(GetUnitAP(GetActiveBattleUnit()));
             if (GetUnitAP(GetActiveBattleUnit()) == 0)
             {
                 OnBtnEndTurnPressed();
@@ -508,13 +585,14 @@ public class CntBattle : Control
     }
     
     private void OnBtnEndTurnPressed()
-    {                    
+    {            
         EndTurn();
         OnActiveBattleUnitTurnStart();
     }
 
     private void SetCursorOnMouseMotion()
     {
+        
         Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (PermittedMove(_battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition),mouseMapPos))
         {

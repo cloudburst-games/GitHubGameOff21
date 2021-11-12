@@ -11,9 +11,9 @@ noise = SubResource( 1 )
 [resource]
 shader = ExtResource( 1 )
 shader_param/scale = Vector2( 149.354, 115.76 )
-shader_param/y_zoom = 0.264866
-shader_param/distortion_scale = Vector2( 0.5, 1 )
-shader_param/intensity = 0.75
-shader_param/speed = 1.5
-shader_param/water_color = Color( 0.219608, 0.67451, 1, 0.839216 )
+shader_param/y_zoom = 0.420448
+shader_param/distortion_scale = Vector2( 0.2, 0.4 )
+shader_param/intensity = 2.0
+shader_param/speed = 0.75
+shader_param/water_color = Color( 0.188235, 0.729412, 1, 0.8 )
 shader_param/noise = SubResource( 2 )
