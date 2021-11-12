@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Utils/LevelBuilder/Grid.cs" type="Script" id=1]
 [ext_resource path="res://Shaders/topdownwater/new_shadermaterial.tres" type="Material" id=2]
-[ext_resource path="res://Utils/LevelBuilder/Tilesheet_sophia_1.tres" type="TileSet" id=3]
+[ext_resource path="res://Utils/LevelBuilder/soph2/soph_isotiles_2.tres" type="TileSet" id=3]
 
 [node name="Grid" type="TileMap"]
 material = ExtResource( 2 )

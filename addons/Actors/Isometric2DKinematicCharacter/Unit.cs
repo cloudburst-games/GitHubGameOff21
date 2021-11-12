@@ -13,6 +13,8 @@ public class Unit : KinematicBody2D
 
     [Export]
     public string ID = "";
+    [Export]
+    public string UnitName = "";
     
     public float Speed {get; set;} = 200f;
 
@@ -64,10 +66,12 @@ public class Unit : KinematicBody2D
     private void SetStartingData()
     {
         CurrentUnitData.ID = this.ID;
+        CurrentUnitData.Name = this.Name;
 
         CurrentUnitData.MainCombatant = new BattleUnitData() {
             Combatant = _mainCombatant,
-            Level = _combatLevel
+            Level = _combatLevel,
+            Name = CurrentUnitData.Name
         };
         CurrentUnitData.Minions = new List<BattleUnitData>();
         foreach (BattleUnit.Combatant combatant in _minions.Keys)

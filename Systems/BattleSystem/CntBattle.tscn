@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
 [ext_resource path="res://Systems/BattleSystem/BattleGrids/BattleGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/BattleSystem/BattleHUD.cs" type="Script" id=3]
 [ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Interface/Cursors/Art/Spell.PNG" type="Texture" id=6]
+[ext_resource path="res://Interface/Cursors/Art/Attack.PNG" type="Texture" id=7]
+[ext_resource path="res://Interface/Cursors/Art/Move.PNG" type="Texture" id=8]
+[ext_resource path="res://Interface/Cursors/Art/Wait.PNG" type="Texture" id=9]
+[ext_resource path="res://Interface/Panels/BattleUnitInfoPanel.tscn" type="PackedScene" id=10]
 
 [node name="CntBattle" type="Control"]
 pause_mode = 2
@@ -58,15 +63,121 @@ text = "This is where the log goes"
 align = 1
 valign = 1
 
-[node name="BtnEndTurn" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -125.0
-margin_top = -21.5
-margin_bottom = 21.5
-text = "End Turn"
+[node name="HBoxActions" type="HBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+margin_top = 4.00903
+margin_right = 316.0
+margin_bottom = 44.009
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnMove" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
+margin_right = 60.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+
+[node name="Move" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMove"]
+position = Vector2( 30, 20 )
+texture = ExtResource( 8 )
+
+[node name="BtnMelee" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
+margin_left = 64.0
+margin_right = 124.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+
+[node name="Attack" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMelee"]
+position = Vector2( 29.389, 20 )
+texture = ExtResource( 7 )
+
+[node name="BtnSpell1" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
+margin_left = 128.0
+margin_right = 188.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+
+[node name="Spell" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell1"]
+position = Vector2( 30, 20 )
+texture = ExtResource( 6 )
+
+[node name="BtnSpell2" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
+margin_left = 192.0
+margin_right = 252.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+
+[node name="Spell2" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell2"]
+position = Vector2( 30, 20 )
+texture = ExtResource( 6 )
+
+[node name="BtnEndTurn" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
+margin_left = 256.0
+margin_right = 316.0
+margin_bottom = 39.0
+size_flags_horizontal = 3
+
+[node name="Wait" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn"]
+position = Vector2( 29, 20 )
+texture = ExtResource( 9 )
+
+[node name="HBoxAnimSpeed" type="HBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+margin_left = 1714.0
+margin_right = 1911.0
+margin_bottom = 44.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblSpeed" type="Label" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
+margin_top = 6.0
+margin_right = 66.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 12.0
+text = "Animation Speed:"
+align = 2
+valign = 1
+autowrap = true
+
+[node name="BtnSpeed1" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
+margin_left = 70.0
+margin_right = 92.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "1"
+
+[node name="BtnSpeed2" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
+margin_left = 96.0
+margin_right = 118.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "2"
+
+[node name="BtnSpeed3" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
+margin_left = 122.0
+margin_right = 144.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "3"
+
+[node name="BtnSpeed4" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
+margin_left = 148.0
+margin_right = 170.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "4"
+
+[node name="BtnSpeed5" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
+margin_left = 174.0
+margin_right = 197.0
+margin_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "5"
 
 [node name="BtnEndTest" type="Button" parent="Panel/BattleHUD/CtrlTheme"]
 margin_left = 748.0
@@ -78,7 +189,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BattleUnitInfoPanel" parent="Panel/BattleHUD/CtrlTheme" instance=ExtResource( 10 )]
+
 [node name="CursorControl" parent="Panel/BattleHUD" instance=ExtResource( 5 )]
 
-[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnEndTurn" to="." method="OnBtnEndTurnPressed"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn" to="." method="OnBtnEndTurnPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/BtnEndTest" to="." method="OnBtnEndTestPressed"]

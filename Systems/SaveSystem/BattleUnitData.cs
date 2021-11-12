@@ -6,11 +6,13 @@ using System.Collections.Generic;
 public class BattleUnitData : IStoreable
 {
     public BattleUnit.Combatant Combatant = BattleUnit.Combatant.Noob;
+    public string Name {get; set;} = "";
     public int Level {get; set;} = 1;
+    public bool PlayerFaction {get; set;} = false;
 
     public enum DerivedStat { Health, TotalHealth, Mana, TotalMana, HealthRegen, ManaRegen, MagicResist,
-        PhysicalResist, Dodge, PhysicalDamage, SpellDamage, Speed, Initiative, Leadership, CriticalChance, CurrentAP}
-    
+        PhysicalResist, Dodge, PhysicalDamage, PhysicalDamageRange, SpellDamage, Speed, Initiative, Leadership, CriticalChance, CurrentAP}
+
     public Dictionary<DerivedStat, float> Stats {get; set;} = new Dictionary<DerivedStat, float>()
     {
         {DerivedStat.Health, 10},
@@ -23,6 +25,7 @@ public class BattleUnitData : IStoreable
         {DerivedStat.PhysicalResist, 10},
         {DerivedStat.Dodge, 5},
         {DerivedStat.PhysicalDamage, 5},
+        {DerivedStat.PhysicalDamageRange, 3},
         {DerivedStat.SpellDamage, 10},
         {DerivedStat.Speed, 6},
         {DerivedStat.Initiative, 5},

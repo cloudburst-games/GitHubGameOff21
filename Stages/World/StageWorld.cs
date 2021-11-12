@@ -55,6 +55,8 @@ public class StageWorld : Stage
 
         await ToSignal(GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle"), nameof(PnlPreBattle.BattleConfirmed));
 
+        // GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.MainCombatant.PlayerFaction = true;
+
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Start(
             playerData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.MainCombatant,
             enemyCommanderData:target.CurrentUnitData.MainCombatant,
@@ -86,9 +88,12 @@ public class StageWorld : Stage
     private Unit CommonPlayerGen()
     {
         Unit player = (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance();
+        player.ID = "khepri";
+        player.UnitName = "Khepri";
         // player.SetControlState(Unit.ControlState.Player);
         // if (player.CurrentControlState is PlayerUnitControlState playerUnitControlState)
         // {
+        // player.CurrentUnitData.MainCombatant.PlayerFaction = true;
         player.Connect(nameof(Unit.DialogueStarted), this, nameof(OnDialogueStarted));
         player.Connect(nameof(Unit.BattleStarted), this, nameof(OnBattleStarted));
         // }

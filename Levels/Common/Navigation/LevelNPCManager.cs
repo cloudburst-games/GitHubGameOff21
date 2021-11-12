@@ -46,6 +46,10 @@ public class LevelNPCManager : YSort
                         aIUnitControlState.Connect(nameof(AIUnitControlState.FollowPathRequested), this, nameof(OnAIFollowPathRequested));
                     }
 			    }
+            // if (unit.CurrentUnitData.Hostile)
+            // {
+            //     unit.CurrentUnitData.MainCombatant.PlayerFaction = false;
+            // }
             // }
         }
     }

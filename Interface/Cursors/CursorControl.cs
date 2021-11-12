@@ -9,8 +9,9 @@ public class CursorControl : Node
         private Resource _spell = ResourceLoader.Load("res://Interface/Cursors/Art/Spell.PNG");
         private Resource _move = ResourceLoader.Load("res://Interface/Cursors/Art/Move.PNG");
         private Resource _invalid = ResourceLoader.Load("res://Interface/Cursors/Art/Invalid.PNG");
+        private Resource _wait = ResourceLoader.Load("res://Interface/Cursors/Art/Wait.PNG");
 
-        public enum CursorMode {Select, Attack, Spell, Move, Invalid}
+        public enum CursorMode {Select, Attack, Spell, Move, Invalid, Wait}
     public override void _Ready()
     {
         
@@ -37,6 +38,9 @@ public class CursorControl : Node
                 break;
             case CursorMode.Move:
                 Input.SetCustomMouseCursor(_move, hotspot: new Vector2(16,16));
+                break;
+            case CursorMode.Wait:
+                Input.SetCustomMouseCursor(_wait, hotspot: new Vector2(16,16));
                 break;
         }
     }

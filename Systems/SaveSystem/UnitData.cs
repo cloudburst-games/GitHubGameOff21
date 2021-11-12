@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class UnitData : IStoreable
 {
     public string ID = "";
+    public string Name = "";
     public Vector2 NPCPosition {get; set;}
     private bool _companion = false;
     public bool Companion {
@@ -20,7 +21,28 @@ public class UnitData : IStoreable
             }
         }
     }
+    
+    public enum Attribute { Vigour, Resilience, Intellect, Swiftness, Charisma, Luck}
+    
+    public Dictionary<Attribute, int> Attributes {get; set;} = new Dictionary<Attribute, int>()
+    {
+        {Attribute.Vigour, 10},
+        {Attribute.Resilience, 10},
+        {Attribute.Intellect, 10},
+        {Attribute.Swiftness, 10},
+        {Attribute.Charisma, 10},
+        {Attribute.Luck, 10}
+    };
     // public bool NPC {get; set;} = false;
+    // public Dictionary<BattleUnitData.Attribute, int> GetAttributes()
+    // {
+    //     return MainCombatant.Attributes;
+    // }
+    // public void SetAttribute(BattleUnitData.Attribute attribute, int num)
+    // {
+    //     MainCombatant.Attributes[attribute] = num;
+    // }
+
     public bool Hostile {get; set;} = false;
     public bool Player {get; set;} = false;
     public List<UnitData> Companions {get; set;} = new List<UnitData>();

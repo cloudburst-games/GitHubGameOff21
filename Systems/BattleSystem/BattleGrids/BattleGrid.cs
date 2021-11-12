@@ -108,7 +108,7 @@ public class BattleGrid : Control
         }
     }
 
-    private List<Vector2> GetHorizontalNeighbours(Vector2 cell) // commented out diagonal cells
+    public List<Vector2> GetHorizontalNeighbours(Vector2 cell) // commented out diagonal cells
     {
         return new List<Vector2>() {
             new Vector2(cell.x - 1, cell.y),
@@ -230,6 +230,11 @@ public class BattleGrid : Control
 
     public override void _Input(InputEvent ev)
     {
+        if (TraversableCells == null)
+        {
+            // RecalculateAStarMap(new List<Vector2>());
+            return;
+        }
         if (TraversableCells.Contains(_overallTileMap.WorldToMap(GetGlobalMousePosition())))
         {
             // DrawMovePoints(CalculatePath(new Vector2(7, 6), _overallTileMap.WorldToMap(GetGlobalMousePosition())));
@@ -252,7 +257,7 @@ public class BattleGrid : Control
         return CalculatePath(gridStartPos, gridEndPos).Count()-1;
     }
 
-    public Vector2 GetTileCentreFromPosition(Vector2 position)
+    public Vector2 GetCentredWorldPosFromWorldPos(Vector2 position)
     {
         return GetCorrectedWorldPosition(GetCorrectedGridPosition(position));// MapToWorld(_overallTileMap.WorldToMap(position)) + new Vector2(0, _halfCellSize.y);
     }

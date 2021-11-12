@@ -173,7 +173,7 @@ texture = ExtResource( 9 )
 [node name="AllyStartPositions" type="Node2D" parent="StartPositions"]
 
 [node name="Position2D" type="Position2D" parent="StartPositions/AllyStartPositions"]
-position = Vector2( 369.289, 761.833 )
+position = Vector2( 775.08, 436.132 )
 
 [node name="Position2D2" type="Position2D" parent="StartPositions/AllyStartPositions"]
 position = Vector2( 250.244, 703.972 )
@@ -193,7 +193,7 @@ position = Vector2( 118.224, 768.226 )
 [node name="EnemyStartPositions" type="Node2D" parent="StartPositions"]
 
 [node name="Position2D7" type="Position2D" parent="StartPositions/EnemyStartPositions"]
-position = Vector2( 1554.82, 315.955 )
+position = Vector2( 898.079, 377.358 )
 
 [node name="Position2D8" type="Position2D" parent="StartPositions/EnemyStartPositions"]
 position = Vector2( 1416.7, 253.857 )

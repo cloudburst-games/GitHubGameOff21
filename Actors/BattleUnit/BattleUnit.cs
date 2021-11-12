@@ -11,9 +11,11 @@ public class BattleUnit : Node2D
     private BattleUnitActionState _actionState;
 
     private ShaderMaterial _outlineShader = GD.Load<ShaderMaterial>("res://Shaders/Outline/OutlineShader.tres");
-    private AnimationPlayer _actionAnim;
+    public AnimationPlayer ActionAnim {get; set;}
     private Sprite _sprite;
+    public float AnimSpeed {get; set;} = 2f;
 
+    public bool Dead {get; set;} = false;
     
     [Signal]
     public delegate void CurrentActionCompleted();
@@ -23,6 +25,7 @@ public class BattleUnit : Node2D
     public DirectionFacingMode Direction {get; set;} = DirectionFacingMode.UpRight;
 
     public List<Vector2> CurrentPath {get; set;}
+    public Vector2 TargetWorldPos {get; set;}
 
     [Signal]
     public delegate void ReachedNextMovePoint();
@@ -31,9 +34,22 @@ public class BattleUnit : Node2D
 
     public override void _Ready()
     {
-         _actionAnim = GetNode<AnimationPlayer>("ActionAnim");
+         ActionAnim = GetNode<AnimationPlayer>("ActionAnim");
          _sprite = GetNode<Sprite>("Sprite");
         SetActionState(ActionStateMode.Idle);
+    }
+
+    public void UpdateHealthManaBars()
+    {
+        GetNode<PnlInfo>("PnlInfo").Update(CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health],
+                CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth],
+                CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana],
+                CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalMana]);
+    }
+
+    public void SetFactionPanel()
+    {
+        GetNode<PnlInfo>("PnlInfo").SetFaction(CurrentBattleUnitData.PlayerFaction);
     }
 
     // eventually swap out the sprites with this method
@@ -76,22 +92,34 @@ public class BattleUnit : Node2D
         }
     }
     
+    [Signal]
+    public delegate void ReachedHalfwayAnimation();
+
+    public bool DetectingHalfway {get; set;} = true;
+
     public override void _PhysicsProcess(float delta)
     {
         if (_actionState != null)
         {
             _actionState.Update(delta);
         }
+
+        if (ActionAnim.CurrentAnimationPosition >= ActionAnim.CurrentAnimationLength/2f && DetectingHalfway)
+        {
+            EmitSignal(nameof(ReachedHalfwayAnimation));
+            DetectingHalfway = false;
+        }
     }
 
-    public void PlayActionAnim(string animState)
+    public void PlayActionAnim(string animState)//, bool replay=false)
     {
         string anim = animState;
-        if (_actionAnim.IsPlaying() && _actionAnim.CurrentAnimation == anim)
+        if (ActionAnim.IsPlaying() && ActionAnim.CurrentAnimation == anim)// && !replay)
         {
             return;
         }
-
+        // if (!replay)
+        // {
         switch (Direction)
         {
             case DirectionFacingMode.UpRight:
@@ -111,8 +139,20 @@ public class BattleUnit : Node2D
                 _sprite.FlipH = true;
                 break;
         }
-        _actionAnim.Play(anim);
+        // }
+        // GD.Print(anim + ", flipped: " + _sprite.FlipH);
+        ActionAnim.Play(anim, customSpeed:AnimSpeed/2f);
 
+    }
+
+    public void SetAnimSpeed(float speed=2f)
+    {
+        AnimSpeed = speed;
+        // PlayActionAnim(ActionAnim.CurrentAnimation, true);
+        // if (CurrentActionStateMode == ActionStateMode.Moving)
+        // {
+        //     SetActionState(ActionStateMode.Moving);
+        // }
     }
 
     public void SetOutlineShader(float[] colour)
