@@ -1,7 +1,8 @@
 // **TODO**
-// implement attack
-// implement take damage and get hit
-// implement die
+// implement attack DONE
+// implement take damage and get hit DONE (for melee - can easily add take spell damage)
+// implement die DONE
+
 // implement cast spell: allied target, enemy target, enemy aoe, empty hex, is there more? check list
 
 // AI. Something simple. E.g. start with either helper personality, or aggressive personality
@@ -45,6 +46,7 @@ public class CntBattle : Control
     private BattleHUD _battleHUD;
     private CursorControl _cursorControl;
     private BattleInteractionHandler _battleInteractionHandler = new BattleInteractionHandler();
+    private SpellEffectManager _spellEffectManager;
     private BattleUnitData _playerData;
     private BattleUnitData _enemyCommanderData;
     private List<BattleUnitData> _friendliesData;
@@ -67,6 +69,8 @@ public class CntBattle : Control
         _battleUnitsContainer = _battleGrid.GetNode<YSort>("All/BattleUnits");
         _battleHUD = GetNode<BattleHUD>("Panel/BattleHUD");
         _cursorControl = GetNode<CursorControl>("Panel/BattleHUD/CursorControl");
+        _spellEffectManager = new SpellEffectManager(_battleInteractionHandler, _battleGrid.GetNode<Node2D>("SpellEffects"));
+        _spellEffectManager.Connect(nameof(SpellEffectManager.SpellEffectFinished), this, nameof(OnSpellEffectFinished));
         // _btnActionModes = new Dictionary<Button, ActionMode>() {
 
         // }
@@ -99,7 +103,7 @@ public class CntBattle : Control
         OnBtnAnimSpeedPressed(1);
 
         //TEST
-        Test();
+        // Test();
     }
 
     public void Test()
@@ -562,6 +566,12 @@ public class CntBattle : Control
     public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
+
+        if (_turnList.Count == 0)
+        {
+            return;
+        }
+        
         if (!AreAllUnitsIdle())
         {
             _cursorControl.SetCursor(CursorControl.CursorMode.Wait);
@@ -588,6 +598,7 @@ public class CntBattle : Control
         _battleHUD.SetDisableAllAnimSpeedButtons(false);
         _battleHUD.SetDisableSingleButton(GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed/BtnSpeed" + _currentSpeedSetting), true);
         SetAllBattleUnitSpeed(speedSetting*2);
+        _spellEffectManager.AnimSpeed = speedSetting*2;
     }
 
     // private void OnBtnActionPressed(A)
@@ -733,9 +744,95 @@ public class CntBattle : Control
             case ActionMode.Melee:
                 OnLeftClickMelee();
                 break;
+            case ActionMode.Spell1:
+                OnLeftClickSpell1();
+                break;
+            case ActionMode.Spell2:
+                OnLeftClickSpell2();
+                break;    
+        }
+
+    }
+
+    public void OnLeftClickSpell1()
+    {
+        Vector2 targetMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 startingMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        if (PermittedSpell(GetActiveBattleUnit().CurrentBattleUnitData.Spell1, targetMapPos))
+        {
+            _spellEffectManager.SpellMethods[GetActiveBattleUnit().CurrentBattleUnitData.Spell1]
+                (GetActiveBattleUnit(), GetBattleUnitAtGridPosition(targetMapPos));
+            
+            // await ToSignal(_spellEffectManager, nameof(SpellEffectManager.SpellEffectFinished));
             
         }
 
+        
+    }
+
+    public void OnLeftClickSpell2()
+    {
+        
+    }
+
+    private void OnSpellEffectFinished()
+    {
+            GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
+            OnBtnEndTurnPressed();
+            GD.Print("end turn..");
+    }
+
+    private bool PermittedSpell(SpellEffectManager.SpellMode spell, Vector2 targetMapPos)
+    {
+        Vector2 startingMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        SpellEffect spellEffect = _spellEffectManager.SpellEffects[spell];
+        
+        // check range
+        if (GetDistanceInSquares(startingMapPos, targetMapPos) > spellEffect.RangeSquares)
+        {
+            return false;
+        }
+
+        // check cost
+        if (spellEffect.ManaCost > GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana])
+        {
+            return false;
+        }
+
+        // check target meets target criteria
+        if (spellEffect.Target == SpellEffect.TargetMode.Hostile)
+        {
+            if (GetBattleUnitAtGridPosition(targetMapPos) == null)
+            {
+                return false;
+            }
+            if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction == GetBattleUnitAtGridPosition(targetMapPos).CurrentBattleUnitData.PlayerFaction)
+            {
+                return false;
+            }
+        }
+        else if (spellEffect.Target == SpellEffect.TargetMode.Ally)
+        {   
+            if (GetBattleUnitAtGridPosition(targetMapPos) == null)
+            {
+                return false;
+            }
+            if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction != GetBattleUnitAtGridPosition(targetMapPos).CurrentBattleUnitData.PlayerFaction)
+            {
+                return false;
+            }
+        }
+        else if (spellEffect.Target == SpellEffect.TargetMode.Area)
+        {
+            // any criteria?
+        }
+
+        return true;
+    }
+
+    private int GetDistanceInSquares(Vector2 originGridPos, Vector2 tarGridPos)
+    {
+        return Convert.ToInt32(Math.Abs(tarGridPos.x - originGridPos.x) + Math.Abs(tarGridPos.y - originGridPos.y));
     }
 
     public async void OnLeftClickMelee()

@@ -168,6 +168,8 @@ texture = ExtResource( 9 )
 
 [node name="BattleUnits" type="YSort" parent="All"]
 
+[node name="SpellEffects" type="Node2D" parent="."]
+
 [node name="StartPositions" type="Node2D" parent="."]
 
 [node name="AllyStartPositions" type="Node2D" parent="StartPositions"]

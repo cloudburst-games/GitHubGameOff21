@@ -34,4 +34,7 @@ public class BattleUnitData : IStoreable
         {DerivedStat.CurrentAP, 6},
     };
 
+    public SpellEffectManager.SpellMode Spell1 = SpellEffectManager.SpellMode.SolarBolt;
+    public SpellEffectManager.SpellMode Spell2 = SpellEffectManager.SpellMode.SolarBolt;
+
 }
