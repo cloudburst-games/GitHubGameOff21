@@ -279,25 +279,31 @@ everything in DialogueData will be saved between levels and on save/load*/
     // Started when press E next to non-companion, non-hostile NPC
     // Passes in the interlocutor data (modify variables inside here as needed - will be stored on save and load)
     // within this can access DialogueData. Modify variables as needed in class below.
-    public void Start(UnitData unitData)
+    public void Start(UnitData npcUnitData, UnitData khepriUnitData)
     {
         // Access one of your dialogue variables for this npc by doing unitData.CurrentDialogueData
-        bool test = unitData.CurrentDialogueData.Blah;
+        bool test = npcUnitData.CurrentDialogueData.Blah;
 
         GD.Print("testing dialogue editable variables: ", test);
 
-        string id = unitData.ID; // this is the unique string identifier of the unitData
+        string id = npcUnitData.ID; // this is the unique string identifier of the unitData
 
-        string name = unitData.Name; // this is the human readable name
+        string name = npcUnitData.Name; // this is the human readable name
 
-        // you can use the "charisma" stat if you want to determine whether a dialogue option should be visible
-        int charisma = unitData.Attributes[UnitData.Attribute.Charisma];
+        // if amulet found u can save it as found like so:
+        // khepriUnitData.CurrentDialogueData.AmuletFound = true;
+
+        // REMEMBER: khepriUnitData will always be there with the player (as it is khepri) and so u can store things to always be accessible there
+        // npcUnitData is the data for the guy khepri is talking to!
+
+        // you can use KHEPRI'S "charisma" stat if you want to determine whether a dialogue option should be visible
+        int charisma = khepriUnitData.Attributes[UnitData.Attribute.Charisma];
         if (charisma > 15)
         {
             // show special dialogue option
         }
         //ADDED
-        OnDialogueRefSignal(unitData.ID); //USE THIS WHEN INTEGRATED WITH STAGEWORLD
+        OnDialogueRefSignal(npcUnitData.ID); //USE THIS WHEN INTEGRATED WITH STAGEWORLD
 		//UpdateNameAndPortrait(unitData.Portrait, unitData.Name); //USE THIS WHEN INTEGRATED WITH STAGE WORLD (ADD PORTRAIT TO UNIT PATH)
     }
 
@@ -317,5 +323,5 @@ everything in DialogueData will be saved between levels and on save/load*/
 public class DialogueData : IStoreable
 {
     public bool Blah {get; set;} = false;
-    //public bool AmuletFound {get; set;} = false; 
+    public bool AmuletFound {get; set;} = false; 
 }

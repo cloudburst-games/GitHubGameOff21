@@ -62,7 +62,7 @@ public class StageWorld : Stage
 
     public void OnDialogueStarted(Unit target)
     {
-        GetNode<HUD>("HUD").StartDialogue(target.CurrentUnitData);
+        GetNode<HUD>("HUD").StartDialogue(target.CurrentUnitData, GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData);
     }
     public async void OnBattleStarted(Unit target)
     {

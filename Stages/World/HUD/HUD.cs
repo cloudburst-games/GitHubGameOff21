@@ -65,11 +65,11 @@ public class HUD : CanvasLayer
         GetNode<Panel>("CtrlTheme/PnlDefeat").Visible = true;
     }
 
-    public void StartDialogue(UnitData unitData)
+    public void StartDialogue(UnitData unitData, UnitData khepriUnitData)
     {
         PauseCommon(true);
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = true;
-        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Start(unitData);
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Start(unitData, khepriUnitData);
     }
     public void OnNPCRightClicked(Unit npc)
     {
