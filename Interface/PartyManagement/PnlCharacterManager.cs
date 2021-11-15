@@ -13,5 +13,8 @@ public class PnlCharacterManager : Panel
         
     }
 
-    
+    public void Start(UnitData unit)
+    {
+
+    }
 }

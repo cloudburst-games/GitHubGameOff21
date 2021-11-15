@@ -10,6 +10,7 @@ public class HBoxPortraits : Control
     private Vector2[] _pBtnPositions = new Vector2[3] { new Vector2(10,0), new Vector2(65,0), new Vector2(120,0) };
     private Button[] _pBtns;
     private int _indexMouseOver = -1;
+    private int _portraitSelected = -1;
     public override void _Ready()
     {
         _pBtns = new Button[3] {GetNode<Button>("PBtnPlayer"), GetNode<Button>("PBtnCompanion1"), GetNode<Button>("PBtnCompanion2")};
@@ -65,6 +66,7 @@ public class HBoxPortraits : Control
                     GetNode<PopupMenu>("PopupMenu").SetItemDisabled(2, _indexMouseOver == 0);
                     GetNode<PopupMenu>("PopupMenu").RectGlobalPosition = _pBtns[_indexMouseOver].RectGlobalPosition;
                     GetNode<PopupMenu>("PopupMenu").Popup_();
+                    _portraitSelected = _indexMouseOver;
                 }
             }
         }
@@ -83,6 +85,6 @@ public class HBoxPortraits : Control
 
     public void OnPopupMenuIDPressed(int id)
     {
-        EmitSignal(nameof(PopupPressed), id, _indexMouseOver);
+        EmitSignal(nameof(PopupPressed), id, _portraitSelected);
     }
 }

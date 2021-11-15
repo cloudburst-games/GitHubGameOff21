@@ -28,7 +28,7 @@ script = ExtResource( 8 )
 
 [node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -84.5477, 788.985 )
-ID = "jim1"
+ID = "NPC0"
 UnitName = "Jimmy"
 _startingBools = {
 "Companion": true,
@@ -43,7 +43,7 @@ _minions = {
 
 [node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 189.176, 1009.85 )
-ID = "bob1"
+ID = "NPC0"
 UnitName = "Bobz"
 _startingBools = {
 "Companion": true,

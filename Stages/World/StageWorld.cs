@@ -34,6 +34,19 @@ public class StageWorld : Stage
 
     public void OnPopupMenuIDPressed(int id, int portraitIndex)
     {
+        // 0 sheet // 1 inv // 2  talk
+
+        if (id == 2)
+        {
+            if (portraitIndex > 0)
+            {
+                GD.Print(portraitIndex + "indexy");
+                if (GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetPlayerCompanions().Count >= portraitIndex)
+                {
+                    OnDialogueStarted(GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetPlayerCompanions()[portraitIndex - 1]);
+                }
+            }
+        }
         
     }
 
