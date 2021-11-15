@@ -4,7 +4,7 @@
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
 
 [resource]
-size = 25
+size = 40
 outline_size = 1
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = SubResource( 1 )

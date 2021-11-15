@@ -36,17 +36,13 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/paulloz.ink/plugin.cfg" )
 
 [global]
 
 mask=false
 bootspl=false
 splash=false
-
-[ink]
-
-inklecate_path=""
 
 [input]
 

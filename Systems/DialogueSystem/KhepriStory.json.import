@@ -1,0 +1,15 @@
+[remap]
+
+importer="ink"
+type="Resource"
+path="res://.import/KhepriStory.json-143c0b30073839a9a1bf7d5d06f32274.res"
+
+[deps]
+
+source_file="res://Systems/DialogueSystem/KhepriStory.json"
+dest_files=[ "res://.import/KhepriStory.json-143c0b30073839a9a1bf7d5d06f32274.res" ]
+
+[params]
+
+is_master_file=true
+compress=true
