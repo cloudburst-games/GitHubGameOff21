@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public class Unit : KinematicBody2D
@@ -17,6 +18,7 @@ public class Unit : KinematicBody2D
     public string UnitName = "";
     
     public float Speed {get; set;} = 200f;
+    private Random _rand = new Random();
 
 	private AnimationPlayer _actionAnim;
 	private Sprite _sprite;
@@ -35,6 +37,7 @@ public class Unit : KinematicBody2D
 	}
 
     ///
+    private ExperienceManager _experienceManager = new ExperienceManager();
 
     [Export]
     private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
@@ -51,8 +54,18 @@ public class Unit : KinematicBody2D
     private int _combatLevel = 1;
     [Export] // minions are set to combat level -1. use all of the data to generate battleunits
     private Dictionary<BattleUnit.Combatant, int> _minions = new Dictionary<BattleUnit.Combatant, int>() {
-        {BattleUnit.Combatant.Wasp, 1}
+        {BattleUnit.Combatant.Beetle, 1}
     };
+    [Export]
+    private List<UnitData.Attribute> _favouredAttributes = new List<UnitData.Attribute>();
+    [Export]
+    private float _physicalDamageRange = 3f;
+    [Export]
+    private SpellEffectManager.SpellMode[] _spells = new SpellEffectManager.SpellMode[2] {
+        SpellEffectManager.SpellMode.Empty, SpellEffectManager.SpellMode.Empty
+    };
+    [Export]
+    private List<PotionEffect.PotionMode> _potions = new  List<PotionEffect.PotionMode>(); // max 9
     //
 
     public UnitData CurrentUnitData {get; set;} = new UnitData();
@@ -60,34 +73,57 @@ public class Unit : KinematicBody2D
     public IStoreable PackAndGetData() // update any data before storing
     {
         CurrentUnitData.NPCPosition = GlobalPosition; // only used for NPCs, player position needs to be stored Level level
+        CurrentUnitData.Modified = true;
         return CurrentUnitData;
     }
 
+    // public void UpdateBattleUnitData()
+    // {
+    //     // what can feasibly change is 
+    // }
+
     private void SetStartingData()
     {
+        if (CurrentUnitData.Modified)
+        {
+            return;
+        }
         CurrentUnitData.ID = this.ID;
-        CurrentUnitData.Name = this.Name;
+        CurrentUnitData.Name = this.UnitName;
+        CurrentUnitData.PhysicalDamageRange = this._physicalDamageRange;
 
-        CurrentUnitData.MainCombatant = new BattleUnitData() {
+        CurrentUnitData.CurrentBattleUnitData = new BattleUnitData() {
             Combatant = _mainCombatant,
             Level = _combatLevel,
-            Name = CurrentUnitData.Name
+            Name = CurrentUnitData.Name,
+            Potions = _potions,
+            Spell1 = _spells[0],
+            Spell2 = _spells[1]
         };
+        // ExperienceManager xpman = new ExperienceManager();
+
+        // GD.Print("level: " + CurrentUnitData.CurrentBattleUnitData.Level + ", xp: " + xpman.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level));
+
+        CurrentUnitData.CurrentBattleUnitData.Experience = _experienceManager.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level);
         CurrentUnitData.Minions = new List<BattleUnitData>();
         foreach (BattleUnit.Combatant combatant in _minions.Keys)
         {
             for (int i = 0; i < _minions[combatant]; i++)
             {
-                CurrentUnitData.Minions.Add(new BattleUnitData()
-                {
-                    Combatant = combatant,
-                    Level = _combatLevel - 1
-                });
+                UnitData minionUnitData = new UnitData();
+                minionUnitData.CurrentBattleUnitData = new BattleUnitData();
+                minionUnitData.CurrentBattleUnitData.Combatant = combatant;
+                minionUnitData.CurrentBattleUnitData.Level = CurrentUnitData.CurrentBattleUnitData.Level - 1;
+                SetAttributesByLevel(minionUnitData);
+                UpdateDerivedStatsFromAttributes(minionUnitData);
+                CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
             } 
         }
         CurrentUnitData.Hostile = _startingBools["Hostile"];
         CurrentUnitData.Behaviour = _startingBehaviour;
         CurrentUnitData.Companion = _startingBools["Companion"];
+        
+        SetAttributesByLevel(CurrentUnitData);
         
         foreach (Node n in GetChildren())
         {
@@ -102,6 +138,117 @@ public class Unit : KinematicBody2D
         {
             CurrentUnitData.Behaviour = AIUnitControlState.AIBehaviour.Stationary;
         }
+    }
+
+
+    public void SetAttributesByLevel(UnitData unitData)
+    {
+        int pool = 60;// CurrentUnitData.CurrentBattleUnitData.Level * 60;
+        if (unitData.CurrentBattleUnitData.Level >= 2)
+        {
+            for (int i = 2; i <= unitData.CurrentBattleUnitData.Level; i++)
+            {
+                pool += 5 + Convert.ToInt32(Math.Floor(i/10f));
+            }
+        }
+        // GD.Print("\nsetting attributes for " + unitData.Name + "from pool of " + pool + " who is level " + unitData.CurrentBattleUnitData.Level);
+        while (pool > 0)
+        {
+            List<UnitData.Attribute> atts = unitData.Attributes.Keys.ToList();
+            for (int i = 0; i < atts.Count; i++)
+            {
+                UnitData.Attribute att = atts[_rand.Next(0, atts.Count)];
+                int numToAllocate = Math.Min(pool, _rand.Next(0, _favouredAttributes.Contains(att) ? 4 : 2));
+                unitData.Attributes[att] += numToAllocate;
+                pool -= numToAllocate;
+                atts.Remove(att);
+            }
+
+        }
+        // foreach (UnitData.Attribute att in unitData.Attributes.Keys)
+        // {
+        //     GD.Print(att + ": " + unitData.Attributes[att]);
+        // }
+
+        UpdateDerivedStatsFromAttributes(unitData);
+    }
+
+    // NEEDS BALANCING
+    public void UpdateDerivedStatsFromAttributes(UnitData unitData) // called pre-battle as well
+    {
+    // public Dictionary<DerivedStat, float> Stats {get; set;} = new Dictionary<DerivedStat, float>()
+    // {
+    //     {DerivedStat.Health, 10},
+    //     {DerivedStat.TotalHealth, 10},
+    //     {DerivedStat.Mana, 10},
+    //     {DerivedStat.TotalMana, 10},
+    //     {DerivedStat.HealthRegen, 1},
+    //     {DerivedStat.ManaRegen, 1},
+    //     {DerivedStat.MagicResist, 10},
+    //     {DerivedStat.PhysicalResist, 10},
+    //     {DerivedStat.Dodge, 5},
+    //     {DerivedStat.PhysicalDamage, 5},
+    //     {DerivedStat.PhysicalDamageRange, 3},
+    //     {DerivedStat.SpellDamage, 5},
+    //     {DerivedStat.Speed, 6},
+    //     {DerivedStat.Initiative, 5},
+    //     {DerivedStat.Leadership, 1},
+    //     {DerivedStat.CriticalChance, 1},
+    //     {DerivedStat.CurrentAP, 6},
+    // };
+
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth]
+            = unitData.Attributes[UnitData.Attribute.Vigour] * 1.5f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalDamage]
+            = (unitData.Attributes[UnitData.Attribute.Vigour] / 5f) + GetWeaponDamage();
+
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalMana]
+            = unitData.Attributes[UnitData.Attribute.Intellect] * 1.5f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.ManaRegen]
+            = unitData.Attributes[UnitData.Attribute.Intellect] / 6f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]
+            = unitData.Attributes[UnitData.Attribute.Intellect] / 2f;
+        
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Dodge]
+            = unitData.Attributes[UnitData.Attribute.Swiftness] / 8f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP]
+            = (float)Math.Floor(unitData.Attributes[UnitData.Attribute.Swiftness] / 2f);
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Initiative]
+            = unitData.Attributes[UnitData.Attribute.Swiftness] / 1.75f;
+
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Leadership]
+            = unitData.Attributes[UnitData.Attribute.Charisma];
+
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CriticalChance]
+            = unitData.Attributes[UnitData.Attribute.Luck] / 4f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.MagicResist]
+            = unitData.Attributes[UnitData.Attribute.Luck] / 10f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Dodge]
+            *= Math.Max(1,unitData.Attributes[UnitData.Attribute.Luck] / 5f);
+
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.HealthRegen]
+            = unitData.Attributes[UnitData.Attribute.Resilience] / 10f;
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.ManaRegen]
+            *= Math.Max(1,unitData.Attributes[UnitData.Attribute.Resilience] / 4f);
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.MagicResist]
+            *= Math.Max(1,unitData.Attributes[UnitData.Attribute.Resilience] / 10f);
+
+        // GD.Print("\n" + unitData.Name + ": ");
+        // foreach (BattleUnitData.DerivedStat stat in unitData.CurrentBattleUnitData.Stats.Keys)
+        // {
+        //     GD.Print(stat + ": " + unitData.CurrentBattleUnitData.Stats[stat]);
+        // }
+    }
+
+    private float GetWeaponDamage()
+    {
+        return 0f;
+    }
+
+    public void UpdateArmourEffects(BattleUnitData battleUnitData, float armourValue)
+    {
+        // y=\frac{\left(x\cdot2\right)}{\left(1+\left(x\cdot0.05\right)\right)} // https://www.desmos.com/calculator/3fisjexbvp
+        battleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalResist] = armourValue*2 / (1 + (armourValue * 0.05f));
     }
 
     private void OnNPCInteractAreaBodyEntered(Godot.Object body)

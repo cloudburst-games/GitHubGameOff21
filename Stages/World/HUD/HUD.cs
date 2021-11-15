@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 public class HUD : CanvasLayer
 {
+    public bool Pausable {get; set;} = true;
     public override void _Ready()
     {
         GetNode<Panel>("CtrlTheme/PnlMenu").Visible = GetNode<ColorRect>("CtrlTheme/PauseRect").Visible = 
-            GetNode<Control>("CtrlTheme/ProgressAnim").Visible = GetNode<Control>("CtrlTheme/DialogueControl").Visible = false;
+            GetNode<Control>("CtrlTheme/ProgressAnim").Visible = GetNode<Control>("CtrlTheme/DialogueControl").Visible =
+            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible = false;
 
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.DialogueEnded), this, nameof(OnDialogueEnded));
     }
@@ -57,6 +59,12 @@ public class HUD : CanvasLayer
         }
     }
 
+    public void ShowDefeatMenu()
+    {
+        PauseCommon(true);
+        GetNode<Panel>("CtrlTheme/PnlDefeat").Visible = true;
+    }
+
     public void StartDialogue(UnitData unitData)
     {
         PauseCommon(true);
@@ -76,7 +84,7 @@ public class HUD : CanvasLayer
     public override void _Input(InputEvent ev)
     {
         base._Input(ev);
-        if (Input.IsActionJustPressed("Pause"))
+        if (Input.IsActionJustPressed("Pause") && Pausable)
         {
             TogglePauseMenu(!GetTree().Paused);
         }

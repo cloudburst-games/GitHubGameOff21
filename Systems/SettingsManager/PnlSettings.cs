@@ -93,6 +93,12 @@ public class PnlSettings : Panel
 	}
 
 
+    public bool CursorInsidePanel()
+    {
+        return GetGlobalMousePosition().x > RectGlobalPosition.x && GetGlobalMousePosition().x < RectGlobalPosition.x + RectSize.x
+            && GetGlobalMousePosition().y > RectGlobalPosition.y && GetGlobalMousePosition().y < RectGlobalPosition.y + RectSize.y;
+    }
+    
 	private void OnBtnGraphicsPressed()
 	{
 		EnableSingleSettingsPanel(GetNode<Panel>("CntPanels/PnlGraphics"));

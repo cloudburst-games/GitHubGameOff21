@@ -29,6 +29,7 @@ script = ExtResource( 8 )
 [node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -84.5477, 788.985 )
 ID = "jim1"
+UnitName = "Jimmy"
 _startingBools = {
 "Companion": true,
 "Hostile": false
@@ -36,38 +37,55 @@ _startingBools = {
 _mainCombatant = 1
 _combatLevel = 2
 _minions = {
-0: 3,
-1: 1
+0: 0,
+1: 0
 }
 
 [node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 189.176, 1009.85 )
 ID = "bob1"
+UnitName = "Bobz"
 _startingBools = {
 "Companion": true,
 "Hostile": false
+}
+_minions = {
+1: 0
 }
 
 [node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -218.578, 1189.19 )
 ID = "james1"
+UnitName = "James Reginald"
 _startingBools = {
-"Companion": true,
+"Companion": false,
 "Hostile": false
+}
+_minions = {
+1: 0
 }
 
 [node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 108.628, 786.293 )
 ID = "neutralbill1"
+UnitName = "Bill Take-No-Sides"
+_startingBools = {
+"Companion": false,
+"Hostile": false
+}
 
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -513.633, 1057.28 )
 ID = "enemyjill1"
+UnitName = "Evil Jill"
 _startingBools = {
 "Companion": false,
 "Hostile": true
 }
 _startingBehaviour = 2
+_combatLevel = 3
+_favouredAttributes = PoolIntArray( 0, 3 )
+_physicalDamageRange = 5.0
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
 position = Vector2( 311.302, 327.745 )

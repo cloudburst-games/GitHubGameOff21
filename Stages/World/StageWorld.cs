@@ -7,9 +7,12 @@ using System.Linq;
 public class StageWorld : Stage
 {
 
+
     public override void _Ready()
     {
         base._Ready();
+        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").PnlSettings = GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings");
+        GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Visible = false;
         ConnectSignals();
         // GetNode<Control>("CntBattle").Visible = false;
         
@@ -23,7 +26,14 @@ public class StageWorld : Stage
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.Announced), GetNode<HUD>("HUD"), nameof(HUD.LogEntry));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCRightClicked), GetNode<HUD>("HUD"), nameof(HUD.OnNPCRightClicked));
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
+        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlMenu/VBox/BtnSettings").Connect("pressed", this, nameof(OnBtnSettingsPressed));
+        GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.RequestedPause), this, nameof(OnPauseRequested));
         // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
+    }
+
+    public void OnBtnSettingsPressed()
+    {
+        GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Visible = true;
     }
 
     private void OnAutosaveTriggered()
@@ -50,53 +60,118 @@ public class StageWorld : Stage
     }
     public async void OnBattleStarted(Unit target)
     {
-        GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData.MainCombatant.Combatant);
+        GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData);
         GetNode<HUD>("HUD").PauseCommon(true);
-
+        GetNode<HUD>("HUD").Pausable = false;
         await ToSignal(GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle"), nameof(PnlPreBattle.BattleConfirmed));
 
-        // GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.MainCombatant.PlayerFaction = true;
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().UpdateDerivedStatsFromAttributes(
+                GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData
+        );
+        UpdatePlayerBattleCompanions();
 
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Start(
-            playerData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.MainCombatant,
-            enemyCommanderData:target.CurrentUnitData.MainCombatant,
+            playerData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData,
+            enemyCommanderData:target.CurrentUnitData.CurrentBattleUnitData,
             friendliesData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions,
             hostilesData:target.CurrentUnitData.Minions
         );
-
-        // tmeporary - remove when battle done and enemy dies
-        target.CurrentUnitData.Hostile = false;
     }
 
-    public void OnBattleEnded()
+    private void UpdatePlayerBattleCompanions()
     {
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions.Clear();
+        foreach (Unit unit in GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetPlayerCompanions())
+        {
+            unit.UpdateDerivedStatsFromAttributes(unit.CurrentUnitData);
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions.Add(unit.CurrentUnitData.CurrentBattleUnitData);
+        }
+    }
+
+    public void OnBattleEnded(bool quitToMainMenu, bool victory, BattleUnitDataSignalWrapper wrappedEnemyCommanderData)
+    {
+        if (quitToMainMenu)
+        {
+            OnBtnExitPressed();
+            return;
+        }
         GetNode<HUD>("HUD").PauseCommon(false);
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Visible = false;
+
+        BattleUnitData enemyCommanderData = wrappedEnemyCommanderData.CurrentBattleUnitData;
+        Unit enemyNPC = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromBattleUnitData(enemyCommanderData);
+
+        if (victory)
+        {
+            OnBattleVictory(enemyNPC);
+        }
+        else
+        {
+            OnDefeat();
+        }
+    }
+
+    public void OnPauseRequested(bool pauseEnable)
+    {
+        GetNode<HUD>("HUD").Pausable = !pauseEnable ? true : GetNode<HUD>("HUD").Pausable;
+        GetNode<HUD>("HUD").PauseCommon(pauseEnable);
+    }
+
+    public void OnBattleVictory(Unit enemyDefeated)
+    {
+        // GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory");
+        // do victory stuff
+        // GD.Print(enemyDefeated.CurrentUnitData.Name);
+        GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Start(enemyDefeated);
+    }
+
+    public void OnDefeat()
+    {
+        GetNode<HUD>("HUD").ShowDefeatMenu();
+    }
+
+    public void OnPortraitBtnPressed(int index)
+    {
+        GD.Print(index);
     }
 
     public void NewWorldGen()
     {
         Unit player = CommonPlayerGen();
-        player.CurrentUnitData = new UnitData() {
-            Player = true
-        };
-        GetNode<LevelManager>("LevelManager").InitialiseLevel(
+        GetNode<LevelManager>("LevelManager").InitialiseLevel( // PLAYER IS ADDED AS CHILD HERE
             LevelManager.Level.Level1,
             player);
+        
+        // STARTING PLAYER DATA HERE
+        player.CurrentUnitData = new UnitData() {
+            Player = true,
+            Name = "Khepri",
+            ID = "khepri",
+            PhysicalDamageRange = 1f, // ideally this would change depending on weapon equipped
+            Modified = true
+            
+        };
+        // set starting attributes
+        foreach (UnitData.Attribute att in player.CurrentUnitData.Attributes.Keys.ToList())
+        {
+            player.CurrentUnitData.Attributes[att] = 10;
+        }
+        player.UpdateDerivedStatsFromAttributes(player.CurrentUnitData);
+        // set starting spells
+        player.CurrentUnitData.CurrentBattleUnitData.Spell1 = SpellEffectManager.SpellMode.SolarBolt;
+        player.CurrentUnitData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
     }
 
     private Unit CommonPlayerGen()
     {
         Unit player = (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance();
+        // AND STARTING PLAYER DATA HERE
         player.ID = "khepri";
         player.UnitName = "Khepri";
-        // player.SetControlState(Unit.ControlState.Player);
-        // if (player.CurrentControlState is PlayerUnitControlState playerUnitControlState)
-        // {
-        // player.CurrentUnitData.MainCombatant.PlayerFaction = true;
+        //
         player.Connect(nameof(Unit.DialogueStarted), this, nameof(OnDialogueStarted));
         player.Connect(nameof(Unit.BattleStarted), this, nameof(OnBattleStarted));
-        // }
+        
         return player;
     }
     /*
@@ -191,6 +266,7 @@ public class StageWorld : Stage
    
     public void OnLoadConfirmed(string path)
     {
+        GetNode<Panel>("HUD/CtrlTheme/PnlDefeat").Visible = false;
         DataBinary dataBinary = FileBinary.LoadFromFile(ProjectSettings.GlobalizePath(path));
         Dictionary<string, IStoreable> unpackedData = UnpackDataOnLoad(dataBinary);
         LoadWorldGen(unpackedData);
@@ -199,6 +275,7 @@ public class StageWorld : Stage
     public void OnBtnExitPressed()
     {
         // ?show a warning re unsaved data
+        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Die();
         SceneManager.SimpleChangeScene(SceneData.Stage.MainMenu);
     }
 }

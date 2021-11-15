@@ -33,13 +33,15 @@ public class NPCInfoPanel : Panel
         // var enumDisplayStatus = (EnumDisplayStatus)value;
         // string stringValue = enumDisplayStatus.ToString();
 
-        GetNode<Label>("VBoxLabels/LblMainCombatant").Text = "Leader: " + Enum.GetName(typeof(BattleUnit.Combatant), unitData.MainCombatant.Combatant);
+        GetNode<Label>("VBoxLabels/LblMainCombatant").Text = unitData.Name;// Enum.GetName(typeof(BattleUnit.Combatant), unitData.MainCombatant.Combatant);
         GetNode<Label>("VBoxLabels/LblMinions").Text = unitData.Minions.Count == 0 ? "" : "Minions:";
+        GetNode<Label>("VBoxLabels/LblMinions").Visible = !(unitData.Minions.Count == 0);
+        GetNode<Label>("VBoxLabels/LblLevel").Text = "Level: " + unitData.CurrentBattleUnitData.Level;
 
         var combatantNumbers = new Dictionary<BattleUnit.Combatant, int>() {
             {BattleUnit.Combatant.Beetle, 0},
-            {BattleUnit.Combatant.Noob, 0},
-            {BattleUnit.Combatant.Wasp, 0}
+            // {BattleUnit.Combatant.Noob, 0},
+            // {BattleUnit.Combatant.Wasp, 0}
         };
         foreach (BattleUnitData battleUnitData in unitData.Minions)
         {
@@ -48,7 +50,10 @@ public class NPCInfoPanel : Panel
 
         foreach (BattleUnit.Combatant minion in combatantNumbers.Keys)
         {
-            GetNode<Label>("VBoxLabels/LblMinions").Text += GetFormattedCombatants(minion,combatantNumbers[minion]);
+            if (combatantNumbers[minion] != 0)
+            {
+                GetNode<Label>("VBoxLabels/LblMinions").Text += GetFormattedCombatants(minion,combatantNumbers[minion]);
+            }
         }
         GetNode<Label>("VBoxLabels/LblHostileStatus").Text = String.Format(unitData.Hostile? "Status: Hostile" : "Status: Friendly");
         GetNode<Label>("VBoxLabels/LblHostileStatus").AddColorOverride("font_color", unitData.Hostile? new Color(1,0,0) : new Color(0,1,0));

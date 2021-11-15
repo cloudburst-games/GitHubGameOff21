@@ -10,18 +10,21 @@ public class CursorControl : Node
         private Resource _move = ResourceLoader.Load("res://Interface/Cursors/Art/Move.PNG");
         private Resource _invalid = ResourceLoader.Load("res://Interface/Cursors/Art/Invalid.PNG");
         private Resource _wait = ResourceLoader.Load("res://Interface/Cursors/Art/Wait.PNG");
+        private Resource _hint = ResourceLoader.Load("res://Interface/Cursors/Art/Hint.PNG");
+        private CursorMode _currentCursorMode = CursorMode.Select;
 
-        public enum CursorMode {Select, Attack, Spell, Move, Invalid, Wait}
+        public enum CursorMode {Select, Attack, Spell, Move, Invalid, Wait, Hint}
     public override void _Ready()
     {
         
-        SetCursor(CursorMode.Move);
+        SetCursor(CursorMode.Select);
         // Changes a specific shape of the cursor (here, the I-beam shape).
         // Input.SetCustomMouseCursor(beam, Input.CursorShape.);
     }
 
     public void SetCursor(CursorMode cursorMode)
     {
+        _currentCursorMode = cursorMode;
         switch (cursorMode)
         {
             case CursorMode.Select:
@@ -42,6 +45,14 @@ public class CursorControl : Node
             case CursorMode.Wait:
                 Input.SetCustomMouseCursor(_wait, hotspot: new Vector2(16,16));
                 break;
+            case CursorMode.Hint:
+                Input.SetCustomMouseCursor(_hint, hotspot: new Vector2(16,16));
+                break;
         }
+    }
+
+    public CursorMode GetCursor()
+    {
+        return _currentCursorMode;
     }
 }

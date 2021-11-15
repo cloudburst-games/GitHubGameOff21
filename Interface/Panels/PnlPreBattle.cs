@@ -11,13 +11,13 @@ public class PnlPreBattle : Panel
         Visible = false;
     }
 
-    public void Start(BattleUnit.Combatant combatant)
+    public void Start(UnitData unitData)// BattleUnit.Combatant combatant)
     {
         // GD.Print("start");
         Visible = true;
         GetNode<Label>("LblAttackMsg").Text = String.Format(
-            "Look! A {0}!\n\nThey and their minions challenge you! This insult will not go unanswered.\n\nTo battle!",
-            Enum.GetName(typeof(BattleUnit.Combatant), combatant));
+            "{0} attacks!\n\nPrepare for battle...",
+            unitData.Name == "" ? "A " + Enum.GetName(typeof(BattleUnit.Combatant), unitData.CurrentBattleUnitData.Combatant) : unitData.Name);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

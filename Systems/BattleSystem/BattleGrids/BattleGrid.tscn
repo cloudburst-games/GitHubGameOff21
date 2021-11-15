@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Shaders/Flash/FlashShader.tres" type="Material" id=1]
 [ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_04.png" type="Texture" id=2]
@@ -30,7 +30,7 @@ void fragment()
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/speed = 6.0
-shader_param/flash_colour_original = Color( 0.2, 0.4, 0.6, 1 )
+shader_param/flash_colour_original = Color( 0, 1, 0.670588, 1 )
 shader_param/flash_depth = 1.0
 
 [sub_resource type="Shader" id=3]
@@ -53,8 +53,14 @@ void fragment()
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
 shader_param/speed = 9.0
-shader_param/flash_colour_original = Color( 0.141176, 0.603922, 0.117647, 0.403922 )
+shader_param/flash_colour_original = Color( 1, 0, 0, 0.403922 )
 shader_param/flash_depth = 2.0
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 3 )
+shader_param/speed = 15.0
+shader_param/flash_colour_original = Color( 1, 0.960784, 0, 0.403922 )
+shader_param/flash_depth = 2.5
 
 [node name="BattleGrid" type="Control"]
 script = ExtResource( 5 )
@@ -64,10 +70,9 @@ __meta__ = {
 
 [node name="Background" type="TextureRect" parent="."]
 margin_right = 1920.0
-margin_bottom = 984.0
+margin_bottom = 1032.0
 texture = ExtResource( 8 )
 expand = true
-stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -94,7 +99,15 @@ mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
 format = 1
-tile_data = PoolIntArray( -196601, 5, 0, -196600, 5, 0, -131064, 5, 0, -131063, 5, 0, -65527, 5, 0 )
+tile_data = PoolIntArray( -196601, 6, 0, -196600, 6, 0, -196599, 6, 0, -131064, 6, 0, -131063, 6, 0, -65530, 6, 0, -65529, 6, 0, -65528, 6, 0, -65527, 6, 0 )
+
+[node name="TileMapShadedTilesAOE" type="TileMap" parent="."]
+material = SubResource( 5 )
+mode = 1
+tile_set = ExtResource( 7 )
+cell_size = Vector2( 256, 128 )
+format = 1
+tile_data = PoolIntArray( -196601, 5, 0, -196600, 5, 0, -131064, 5, 0, -131063, 5, 0, -65527, 5, 0, -65524, 6, 0, 12, 6, 0, 65547, 6, 0, 65548, 6, 0 )
 
 [node name="TileMapAll" type="TileMap" parent="."]
 mode = 1
@@ -175,7 +188,7 @@ texture = ExtResource( 9 )
 [node name="AllyStartPositions" type="Node2D" parent="StartPositions"]
 
 [node name="Position2D" type="Position2D" parent="StartPositions/AllyStartPositions"]
-position = Vector2( 775.08, 436.132 )
+position = Vector2( 381.969, 758.19 )
 
 [node name="Position2D2" type="Position2D" parent="StartPositions/AllyStartPositions"]
 position = Vector2( 250.244, 703.972 )
@@ -195,7 +208,7 @@ position = Vector2( 118.224, 768.226 )
 [node name="EnemyStartPositions" type="Node2D" parent="StartPositions"]
 
 [node name="Position2D7" type="Position2D" parent="StartPositions/EnemyStartPositions"]
-position = Vector2( 898.079, 377.358 )
+position = Vector2( 1542.35, 311.433 )
 
 [node name="Position2D8" type="Position2D" parent="StartPositions/EnemyStartPositions"]
 position = Vector2( 1416.7, 253.857 )

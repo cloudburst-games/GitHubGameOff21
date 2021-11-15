@@ -10,12 +10,13 @@ Tues:
 Weds:
 
 Thurs:
-- Battle system including movement and attack
-- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack.
-- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation.
+- Battle system including movement and attack DONE
+- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack. DONE
+- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation. DONE
 
 Fri:
-- Add spells to battle system. Complete battle system. Can use consumables in battle obviously.
+- Add spells to battle system. Complete battle system. Can use consumables in battle obviously. DONE
+- NEXT: on battle defeat -> show a DEFEATED message and menu (with resume and save disabled or hidden) DONE
 - Experience system, stats, and levelling, and gaining new spells
 - Make up to date art asset list
 
@@ -25,12 +26,14 @@ Sat:
 - Obelisks
 
 If time post all to-do:
-- Redo animations for Unit.tscn / (Player/NPC) - see AnimationTree tutorial
-- Water shader
+Polish:
+- Animate start and end of battle
 - Implement click to move controls
 - Enter filename by script when saving files...
 - Make a less buggy FileDialog (only if plenty of time)
-- Turn queue
+- Redo animations for Unit.tscn / (Player/NPC) - see AnimationTree tutorial
+- Water shader
+- Visual Turn Queue
 - Switch to AStar navigation?
 
 

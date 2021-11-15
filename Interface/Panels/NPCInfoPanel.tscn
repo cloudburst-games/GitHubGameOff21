@@ -27,25 +27,32 @@ __meta__ = {
 
 [node name="LblMainCombatant" type="Label" parent="VBoxLabels"]
 margin_right = 461.0
-margin_bottom = 95.0
+margin_bottom = 71.0
 size_flags_vertical = 7
 text = "Test text Wasp"
 align = 1
 valign = 1
 
-[node name="LblMinions" type="Label" parent="VBoxLabels"]
-margin_top = 99.0
+[node name="LblLevel" type="Label" parent="VBoxLabels"]
+margin_top = 75.0
 margin_right = 461.0
-margin_bottom = 198.0
+margin_bottom = 147.0
 size_flags_vertical = 7
-text = "Test 6 Beetles
-4 Wasps
-1 Noob"
+text = "Level 5"
+align = 1
+valign = 1
+
+[node name="LblMinions" type="Label" parent="VBoxLabels"]
+margin_top = 151.0
+margin_right = 461.0
+margin_bottom = 222.0
+size_flags_vertical = 7
+text = "Test 6 Beetles"
 align = 1
 valign = 1
 
 [node name="LblHostileStatus" type="Label" parent="VBoxLabels"]
-margin_top = 202.0
+margin_top = 226.0
 margin_right = 461.0
 margin_bottom = 298.0
 size_flags_vertical = 7

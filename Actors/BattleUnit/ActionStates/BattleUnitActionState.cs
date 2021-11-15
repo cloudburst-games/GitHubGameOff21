@@ -29,6 +29,10 @@ public class BattleUnitActionState : Reference
     }
     public void CalculateDirection(Vector2 worldPos)
     {
+        if (worldPos == BattleUnit.GlobalPosition)
+        {
+            return;
+        }
         // GD.Print(BattleUnit.GlobalPosition.AngleToPoint(worldPos));
         if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 2.5f)
         {

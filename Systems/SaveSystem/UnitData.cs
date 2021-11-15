@@ -6,7 +6,16 @@ using System.Collections.Generic;
 public class UnitData : IStoreable
 {
     public string ID = "";
-    public string Name = "";
+    private string _name = "";
+    public string Name {
+        get {
+            return _name;
+        }
+        set{
+            _name = value;
+            CurrentBattleUnitData.Name = value;
+        }
+    }
     public Vector2 NPCPosition {get; set;}
     private bool _companion = false;
     public bool Companion {
@@ -21,17 +30,19 @@ public class UnitData : IStoreable
             }
         }
     }
+    public bool Modified {get; set;} = false;
+    public float PhysicalDamageRange {get; set;} = 3f;
     
     public enum Attribute { Vigour, Resilience, Intellect, Swiftness, Charisma, Luck}
     
     public Dictionary<Attribute, int> Attributes {get; set;} = new Dictionary<Attribute, int>()
     {
-        {Attribute.Vigour, 10},
-        {Attribute.Resilience, 10},
-        {Attribute.Intellect, 10},
-        {Attribute.Swiftness, 10},
-        {Attribute.Charisma, 10},
-        {Attribute.Luck, 10}
+        {Attribute.Vigour, 0},
+        {Attribute.Resilience, 0},
+        {Attribute.Intellect, 0},
+        {Attribute.Swiftness, 0},
+        {Attribute.Charisma, 0},
+        {Attribute.Luck, 0}
     };
     // public bool NPC {get; set;} = false;
     // public Dictionary<BattleUnitData.Attribute, int> GetAttributes()
@@ -50,7 +61,7 @@ public class UnitData : IStoreable
     public List<Vector2> PatrolPoints {get; set;} = new List<Vector2>();
 
     // change to battle unit Data
-    public BattleUnitData MainCombatant {get; set;} = new BattleUnitData();
+    public BattleUnitData CurrentBattleUnitData {get; set;} = new BattleUnitData();
     public List<BattleUnitData> Minions {get; set;} = new List<BattleUnitData>();
     // public Dictionary<BattleUnitData, int> Minions {get; set;} = new Dictionary<BattleUnitData, int>();
 

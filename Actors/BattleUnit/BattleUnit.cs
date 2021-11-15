@@ -4,7 +4,7 @@ using System;
 
 public class BattleUnit : Node2D
 {
-    public enum Combatant { Beetle, Wasp, Noob }
+    public enum Combatant { Beetle } // change the name to whatever we are calling generic fighters
     
     public enum ActionStateMode { Idle, Moving, Casting, Hit, Dying}
     public ActionStateMode CurrentActionStateMode {get; set;}
@@ -41,6 +41,7 @@ public class BattleUnit : Node2D
 
     public void UpdateHealthManaBars()
     {
+        // GD.Print("mana ", CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana]);
         GetNode<PnlInfo>("PnlInfo").Update(CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health],
                 CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth],
                 CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana],
@@ -60,12 +61,12 @@ public class BattleUnit : Node2D
             case Combatant.Beetle:
                 // Modulate = new Color(1,1,1);
                 break;
-            case Combatant.Wasp:
-                // Modulate = new Color (1,0,0);
-                break;
-            case Combatant.Noob:
-                // Modulate = new Color(0,0,1);
-                break;
+            // case Combatant.Wasp:
+            //     // Modulate = new Color (1,0,0);
+            //     break;
+            // case Combatant.Noob:
+            //     // Modulate = new Color(0,0,1);
+            //     break;
         }
     }
 

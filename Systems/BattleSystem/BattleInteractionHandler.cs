@@ -37,6 +37,7 @@ public class BattleInteractionHandler : Reference
         float damage = aggressor.Stats[BattleUnitData.DerivedStat.PhysicalDamage] + 
             _rng.RandfRange(-aggressor.Stats[BattleUnitData.DerivedStat.PhysicalDamageRange], 
             aggressor.Stats[BattleUnitData.DerivedStat.PhysicalDamageRange]);
+        damage = Math.Max(damage, 0); // dont do negative damage
         // apply critical chance for double damage
         int critical = _rng.RandiRange(0,100) < aggressor.Stats[BattleUnitData.DerivedStat.CriticalChance] ? 2 : 1;
         damage *= critical;
@@ -50,6 +51,30 @@ public class BattleInteractionHandler : Reference
         // reduce health by final damage
         defender.Stats[BattleUnitData.DerivedStat.Health] -= damage;
 
+        return new float[3] {critical, dodge, damage};
+    }
+
+
+    public float[] CalculateSpell(SpellEffect spellEffect, BattleUnitData aggressor, BattleUnitData defender)
+    {
+        // randomise
+        _rng.Randomize();
+        // get spell damage
+        float damage = spellEffect.Magnitude + aggressor.Stats[BattleUnitData.DerivedStat.SpellDamage];
+        // apply critical chance for double damage
+        int critical = _rng.RandiRange(0,100) < aggressor.Stats[BattleUnitData.DerivedStat.CriticalChance] ? 2 : 1;
+        damage *= critical;
+        // apply dodge reduction
+        int dodge = _rng.RandiRange(1,100) < defender.Stats[BattleUnitData.DerivedStat.Dodge] ? 2 : 1;
+        damage /= dodge;
+        // apply flat reduction by magic resist
+        float reductionMultiplier = 1 - defender.Stats[BattleUnitData.DerivedStat.MagicResist] / 100;
+        damage *= reductionMultiplier;
+        // reduce health by final damage
+        defender.Stats[BattleUnitData.DerivedStat.Health] -= damage;
+        // // reduce mana by mana cost
+        // aggressor.Stats[BattleUnitData.DerivedStat.Mana] -= spellEffect.ManaCost;
+        // GD.Print(damage);
         return new float[3] {critical, dodge, damage};
     }
 }

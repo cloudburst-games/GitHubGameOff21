@@ -5,9 +5,10 @@ using System.Collections.Generic;
 [Serializable()]
 public class BattleUnitData : IStoreable
 {
-    public BattleUnit.Combatant Combatant = BattleUnit.Combatant.Noob;
+    public BattleUnit.Combatant Combatant = BattleUnit.Combatant.Beetle;
     public string Name {get; set;} = "";
     public int Level {get; set;} = 1;
+    public float Experience {get; set;} = 0;
     public bool PlayerFaction {get; set;} = false;
 
     public enum DerivedStat { Health, TotalHealth, Mana, TotalMana, HealthRegen, ManaRegen, MagicResist,
@@ -22,11 +23,11 @@ public class BattleUnitData : IStoreable
         {DerivedStat.HealthRegen, 1},
         {DerivedStat.ManaRegen, 1},
         {DerivedStat.MagicResist, 10},
-        {DerivedStat.PhysicalResist, 10},
+        {DerivedStat.PhysicalResist, 0},
         {DerivedStat.Dodge, 5},
         {DerivedStat.PhysicalDamage, 5},
-        {DerivedStat.PhysicalDamageRange, 3},
-        {DerivedStat.SpellDamage, 10},
+        {DerivedStat.PhysicalDamageRange, 1},
+        {DerivedStat.SpellDamage, 5},
         {DerivedStat.Speed, 6},
         {DerivedStat.Initiative, 5},
         {DerivedStat.Leadership, 1},
@@ -34,7 +35,17 @@ public class BattleUnitData : IStoreable
         {DerivedStat.CurrentAP, 6},
     };
 
-    public SpellEffectManager.SpellMode Spell1 = SpellEffectManager.SpellMode.SolarBolt;
-    public SpellEffectManager.SpellMode Spell2 = SpellEffectManager.SpellMode.SolarBolt;
+    public List<PotionEffect.PotionMode> Potions = new List<PotionEffect.PotionMode>() {
+        PotionEffect.PotionMode.Health, PotionEffect.PotionMode.Mana, PotionEffect.PotionMode.Resilience,
+        PotionEffect.PotionMode.Charisma, PotionEffect.PotionMode.Vigour, PotionEffect.PotionMode.Swiftness
+    };
+
+    public AITurnHandler.AITurnStateMode CurrentAITurnStateMode = AITurnHandler.AITurnStateMode.Aggressive;
+
+    // durationLeft, magnitude
+    public Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>> CurrentStatusEffects = new Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>>();
+
+    public SpellEffectManager.SpellMode Spell1 = SpellEffectManager.SpellMode.Empty;
+    public SpellEffectManager.SpellMode Spell2 = SpellEffectManager.SpellMode.Empty;
 
 }

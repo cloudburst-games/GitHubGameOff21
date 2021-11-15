@@ -53,6 +53,37 @@ public class LevelNPCManager : YSort
             // }
         }
     }
+    
+    public List<Unit> GetPlayerCompanions()
+    {
+        List<Unit> result = new List<Unit>();
+        foreach (Node n in GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                if (npc.CurrentUnitData.Companion)
+                {
+                    result.Add(npc);
+                }
+            }
+        }
+        return result;
+    }
+
+    public Unit GetNPCFromBattleUnitData(BattleUnitData battleUnitData)
+    {
+        foreach (Node n in GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                if (npc.CurrentUnitData.CurrentBattleUnitData == battleUnitData)
+                {
+                    return npc;
+                }
+            }
+        }
+        return null;
+    }
 
 
     public void OnAIPathRequested(AIUnitControlState aIUnitControlState, Vector2 worldPos)

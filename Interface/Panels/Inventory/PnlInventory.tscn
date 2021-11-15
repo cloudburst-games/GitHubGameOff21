@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Interface/Panels/Inventory/PnlInventory.cs" type="Script" id=1]
+[ext_resource path="res://Interface/Fonts/Bangers68.tres" type="DynamicFont" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 25.0
+expand_margin_right = 25.0
+expand_margin_top = 25.0
+expand_margin_bottom = 25.0
+
+[node name="PnlInventory" type="Panel"]
+margin_left = 240.0
+margin_top = 200.0
+margin_right = 1758.0
+margin_bottom = 1088.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = -160.0
+margin_top = -159.0
+margin_right = 1499.0
+margin_bottom = -51.0
+custom_fonts/font = ExtResource( 2 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

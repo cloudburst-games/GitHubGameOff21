@@ -1,4 +1,3 @@
-// DataBinary: serializable data container class for data to be saved in a binary format. This is required for the Serializable attribute.
 using System;
 using System.Collections.Generic;
 

@@ -2,23 +2,42 @@
 // implement attack DONE
 // implement take damage and get hit DONE (for melee - can easily add take spell damage)
 // implement die DONE
+// implement cast spell: allied target, enemy target, enemy aoe, empty hex, is there more? check list DONE
+// implement consumables: health food, mana water, potion of attribute
+// probably utilise spelleffectmanager as this is simply the buff spell
+// and make a separate potion class, from which multiple potions inherit
+// click potion button -> bring up a grid of all potions unit possess (make a generic inventory grid that can be re-used)
+// -> click potion -> spelleffectmanager to apply the effect (pass in the potioneffect) ALL DONE
+// show status fx on right click DONE
+// path hints for spells depending on the spell[0] target e.g. empty, area, self. DONE
+// symbols and tooltips for each spell button DONE
 
-// implement cast spell: allied target, enemy target, enemy aoe, empty hex, is there more? check list
-
-// AI. Something simple. E.g. start with either helper personality, or aggressive personality
+// AI. Something simple. E.g. start with either helper personality, or aggressive personality DONE
 // If not in range to attack/aggressive spell, if aggressive then move in range.
 // // if not aggressive, then move away max AP and cast helper spell if available. otherwise move in range.
 // If in range to attack and aggressive, then cast spell or attack if no mana.
 // // if in range to attack but not aggressive, move away max AP then cast helper spell.
 
+// Detect Defeat and Victory and end the battle, passing results onto the signal DONE
+// Defeat - if all playerfaction units die
+// Victory - if only playerfaction units remain
+
 // *UI / ease of use polish:*
-// Each unit health, mana, and faction UI
-// Right click units. Probably need a ? over units that aren't attackable/targetable with the current action. Brings up info.
-// Show AP cost next to mouse cursor (e.g. 5 out of 8)
-// Show remaining AP somewhere at the bottom bar. Current turn: x. Remaining AP: y.
-// Sort out flashtile colours
-// Menu -> disable input when it is open
-// refactor and comment
+// UI - show current effects on right click DONE
+// Right click units. Probably need a ? over units that aren't attackable/targetable with the current action. Brings up info. DONE
+// Show AP cost next to mouse cursor (e.g. 5 out of 8) NO NEED
+// Show remaining AP somewhere at the bottom bar. Current turn: x. Remaining AP: y. NO NEED
+// Sort out flashtile colours - wait for sophia's battle grid background
+// Menu -> disable input when it is open DONE
+
+// refactor and comment.. uuhh ill just rewrite it if we continue.. use state pattern and divide battle into:
+// // UnitInputState -> PlayerUnitInputState / AIUnitInputState
+// // UnitAnimationState
+// // RoundTransitionState
+// and separate logic into components, e.g. GridHighlightController which is managed in UnitInputState...
+// and maybe use builder pattern to construct multiple spells from basic effects
+// and to construct potions from basic effects (decide colour by highest magnitude effect)
+// and use hexes instead of squares...
 
 using Godot;
 using System;
@@ -28,7 +47,9 @@ using System.Linq;
 public class CntBattle : Control
 {
     [Signal]
-    public delegate void BattleEnded();
+    public delegate void BattleEnded(bool quitToMainMenu, bool victory, BattleUnitDataSignalWrapper wrappedEnemyCombatant); // does battleunitdata persist on end?
+    // if it is not updated, we may need to pass it to this signal. e.g. to update the list of potions after battle.
+
     public new bool Visible {
         get {
             return base.Visible;
@@ -38,39 +59,51 @@ public class CntBattle : Control
             GetNode<Control>("Panel/BattleHUD/CtrlTheme").Visible = value;
         }
     }
-    // private ShaderMaterial _flashShader = GD.Load<ShaderMaterial>("res://Shaders/Outline/OutlineShader.tres");
-    // private ShaderMaterial _flashShaderBlue;
-    // private ShaderMaterial _flashShaderRed;
     private PackedScene _battleUnitScn = GD.Load<PackedScene>("res://Actors/BattleUnit/BattleUnit.tscn");
-    private BattleGrid _battleGrid;
+    public BattleGrid BattleGrid {get; set;}
     private BattleHUD _battleHUD;
+    private PnlPotion _pnlPotion;
+    private PnlLog _pnlLog;
+    private BattleHUDPnlMenu _pnlMenu;
+    public PnlSettings PnlSettings {get; set;}
     private CursorControl _cursorControl;
     private BattleInteractionHandler _battleInteractionHandler = new BattleInteractionHandler();
-    private SpellEffectManager _spellEffectManager;
+    public SpellEffectManager CurrentSpellEffectManager {get; set;}
+    private AITurnHandler _aiTurnHandler = new AITurnHandler();
     private BattleUnitData _playerData;
     private BattleUnitData _enemyCommanderData;
     private List<BattleUnitData> _friendliesData;
     private List<BattleUnitData> _hostilesData;
     private YSort _battleUnitsContainer;
     private enum StartPositionMode {Ally1, Ally2, Ally3, Ally4, Ally5, Ally6, Enemy1, Enemy2, Enemy3, Enemy4, Enemy5, Enemy6}
-    public enum ActionMode { Move, Melee, Spell1, Spell2, Wait}
+    public enum ActionMode { Move, Melee, Spell1, Spell2, Wait, Potion}
     private Dictionary<StartPositionMode, Vector2> _startPositions;
     // private Dictionary<Button, ActionMode> _btnActionModes;
     
     private List<BattleUnit> _turnList = new List<BattleUnit>();
     private ActionMode _currentSelectedAction = ActionMode.Move;
+    private ActionMode _previousSelectedAction;
     private float _currentSpeedSetting = 1f;
     private int _round = 0;
+    private bool _endTurnEffectsInProgress = false;
+
     public override void _Ready()
     {
         Visible = false;
-        
-        _battleGrid = GetNode<BattleGrid>("Panel/BattleGrid");
-        _battleUnitsContainer = _battleGrid.GetNode<YSort>("All/BattleUnits");
+        SetPhysicsProcess(false);
+        SetProcessInput(false);
+        BattleGrid = GetNode<BattleGrid>("Panel/BattleGrid");
+        _battleUnitsContainer = BattleGrid.GetNode<YSort>("All/BattleUnits");
         _battleHUD = GetNode<BattleHUD>("Panel/BattleHUD");
         _cursorControl = GetNode<CursorControl>("Panel/BattleHUD/CursorControl");
-        _spellEffectManager = new SpellEffectManager(_battleInteractionHandler, _battleGrid.GetNode<Node2D>("SpellEffects"));
-        _spellEffectManager.Connect(nameof(SpellEffectManager.SpellEffectFinished), this, nameof(OnSpellEffectFinished));
+        _pnlPotion = GetNode<PnlPotion>("Panel/BattleHUD/CtrlTheme/PnlPotion");
+        _pnlLog = GetNode<PnlLog>("Panel/BattleHUD/CtrlTheme/PnlLog");
+        _pnlMenu = GetNode<BattleHUDPnlMenu>("Panel/BattleHUD/CtrlTheme/PnlMenu");
+        CurrentSpellEffectManager = new SpellEffectManager(_battleInteractionHandler, BattleGrid.GetNode<Node2D>("SpellEffects"));
+        CurrentSpellEffectManager.Connect(nameof(SpellEffectManager.SpellEffectFinished), this, nameof(OnSpellEffectFinished));
+        CurrentSpellEffectManager.Connect(nameof(SpellEffectManager.AnnouncingSpell), this, nameof(OnAnnouncingSpell));
+        // _pnlPotion.Connect(nameof(PnlPotion.PotionSelected), this, nameof(OnPnlPotionPotionSelected));
+        _pnlPotion.PotionSelected+=this.OnPnlPotionPotionSelected;
         // _btnActionModes = new Dictionary<Button, ActionMode>() {
 
         // }
@@ -78,21 +111,25 @@ public class CntBattle : Control
         {
             _battleHUD.ActionButtons.ElementAt(i).Value.Connect("pressed", this, nameof(SetSelectedAction), new Godot.Collections.Array{
                 _battleHUD.ActionButtons.ElementAt(i).Key});
+            _battleHUD.ActionButtons.ElementAt(i).Value.Connect("mouse_entered", _battleHUD, nameof(BattleHUD.OnMouseEnteredActionButton),
+                new Godot.Collections.Array{ _battleHUD.ActionButtons.ElementAt(i).Value});
+            _battleHUD.ActionButtons.ElementAt(i).Value.Connect("mouse_exited", _battleHUD, nameof(BattleHUD.OnMouseExitedActionButton),
+                new Godot.Collections.Array{ _battleHUD.ActionButtons.ElementAt(i).Value});
         }
 
         _startPositions = new Dictionary<StartPositionMode, Vector2>() {
-            {StartPositionMode.Ally1, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D").GlobalPosition)},
-            {StartPositionMode.Ally2, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D2").GlobalPosition)},
-            {StartPositionMode.Ally3, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D3").GlobalPosition)},
-            {StartPositionMode.Ally4, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D4").GlobalPosition)},
-            {StartPositionMode.Ally5, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D5").GlobalPosition)},
-            {StartPositionMode.Ally6, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D6").GlobalPosition)},
-            {StartPositionMode.Enemy1, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D7").GlobalPosition)},
-            {StartPositionMode.Enemy2, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D8").GlobalPosition)},
-            {StartPositionMode.Enemy3, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D9").GlobalPosition)},
-            {StartPositionMode.Enemy4, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D10").GlobalPosition)},
-            {StartPositionMode.Enemy5, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D11").GlobalPosition)},
-            {StartPositionMode.Enemy6, _battleGrid.GetCentredWorldPosFromWorldPos(_battleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D12").GlobalPosition)},
+            {StartPositionMode.Ally1, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D").GlobalPosition)},
+            {StartPositionMode.Ally2, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D2").GlobalPosition)},
+            {StartPositionMode.Ally3, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D3").GlobalPosition)},
+            {StartPositionMode.Ally4, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D4").GlobalPosition)},
+            {StartPositionMode.Ally5, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D5").GlobalPosition)},
+            {StartPositionMode.Ally6, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D6").GlobalPosition)},
+            {StartPositionMode.Enemy1, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D7").GlobalPosition)},
+            {StartPositionMode.Enemy2, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D8").GlobalPosition)},
+            {StartPositionMode.Enemy3, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D9").GlobalPosition)},
+            {StartPositionMode.Enemy4, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D10").GlobalPosition)},
+            {StartPositionMode.Enemy5, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D11").GlobalPosition)},
+            {StartPositionMode.Enemy6, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D12").GlobalPosition)},
         };
 
         for (int i = 1; i < GetNode("Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed").GetChildCount(); i++)
@@ -103,7 +140,10 @@ public class CntBattle : Control
         OnBtnAnimSpeedPressed(1);
 
         //TEST
-        // Test();
+        if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+        {
+            Test();
+        }
     }
 
     public void Test()
@@ -124,17 +164,19 @@ public class CntBattle : Control
                 {BattleUnitData.DerivedStat.Dodge, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                {BattleUnitData.DerivedStat.SpellDamage, 10},
+                {BattleUnitData.DerivedStat.SpellDamage, 5},
                 {BattleUnitData.DerivedStat.Speed, 6},
                 {BattleUnitData.DerivedStat.Initiative, 5},
                 {BattleUnitData.DerivedStat.Leadership, 1},
                 {BattleUnitData.DerivedStat.CriticalChance, 1},
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
-            }
+            },
+            Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+            Spell2 = SpellEffectManager.SpellMode.SolarBlast
         };
         BattleUnitData enemyCommanderData = new BattleUnitData() {
             Name = "Mr Commander",
-            Combatant = BattleUnit.Combatant.Wasp,
+            Combatant = BattleUnit.Combatant.Beetle,
             Level = 3,
             Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                 {BattleUnitData.DerivedStat.Health, 10},
@@ -148,19 +190,21 @@ public class CntBattle : Control
                 {BattleUnitData.DerivedStat.Dodge, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 2},
-                {BattleUnitData.DerivedStat.SpellDamage, 10},
+                {BattleUnitData.DerivedStat.SpellDamage, 5},
                 {BattleUnitData.DerivedStat.Speed, 6},
                 {BattleUnitData.DerivedStat.Initiative, 4},
-                {BattleUnitData.DerivedStat.Leadership, 1},
+                {BattleUnitData.DerivedStat.Leadership, 15},
                 {BattleUnitData.DerivedStat.CriticalChance, 1},
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
-            }
+            },
+            Spell1 = SpellEffectManager.SpellMode.PerilOfOsiris,
+            Spell2 = SpellEffectManager.SpellMode.Teleport
         };
         // GD.Print("fact: ", enemyCommanderData.PlayerFaction);
         enemyCommanderData.Stats[BattleUnitData.DerivedStat.Initiative] = 5;
         List<BattleUnitData> friendliesData = new List<BattleUnitData>() {
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Noob,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 1,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -174,16 +218,18 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 3},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.WeighingOfTheHeart,
+                Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
             },
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Noob,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 2,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -197,16 +243,18 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 3},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.Teleport,
+                Spell2 = SpellEffectManager.SpellMode.LunarBlast
             },
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Noob,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 1,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -219,19 +267,21 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.PhysicalResist, 10},
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 4},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.PhysicalDamageRange, 4},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 2},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
+                Spell2 = SpellEffectManager.SpellMode.PerilOfOsiris
             }
         };
         List<BattleUnitData> hostilesData = new List<BattleUnitData>() {
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Wasp,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 2,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -245,13 +295,15 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 1},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.GazeOfTheDead,
+                Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -268,16 +320,18 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 2},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.LunarBlast,
+                Spell2 = SpellEffectManager.SpellMode.WeighingOfTheHeart
             },
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Wasp,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 1,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -291,16 +345,18 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 3},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.ComingForthByDay,
+                Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
             },
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Noob,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 1,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -314,16 +370,18 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 1},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 3},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
+                Spell2 = SpellEffectManager.SpellMode.SolarBlast
             },
             new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Noob,
+                Combatant = BattleUnit.Combatant.Beetle,
                 Level = 1,
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
@@ -337,13 +395,15 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.Dodge, 5},
                     {BattleUnitData.DerivedStat.PhysicalDamage, 5},
                 {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 10},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
                     {BattleUnitData.DerivedStat.Speed, 6},
                     {BattleUnitData.DerivedStat.Initiative, 3},
                     {BattleUnitData.DerivedStat.Leadership, 1},
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
-                }
+                },
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.Teleport
             }
         };
         Start(playerData, enemyCommanderData, friendliesData, hostilesData);
@@ -361,6 +421,8 @@ public class CntBattle : Control
 
     public void Start(BattleUnitData playerData, BattleUnitData enemyCommanderData, List<BattleUnitData> friendliesData, List<BattleUnitData> hostilesData)
     {
+        SetPhysicsProcess(true);
+        SetProcessInput(true);
         Visible = true;
         // Save references locally
         _playerData = playerData;
@@ -387,8 +449,10 @@ public class CntBattle : Control
         
         // Initiate turns by initiative
         _round += 1;
+        _battleHUD.ClearLog();
         _battleHUD.LogEntry(String.Format("Round {0}!", _round));
         PopulateTurnListByInitiative();
+        ApplyLeadershipBonus();
         UpdateAllBattleUnitsHealthManaFactionBars();
         OnActiveBattleUnitTurnStart();
         // Battle loop
@@ -448,19 +512,29 @@ public class CntBattle : Control
     
     public void OnBtnEndTestPressed()
     {
-        OnBattleEnded();
+        OnBattleEnded(true);
     }
 
-    public void OnBattleEnded()
+    public void OnBattleEnded(bool victory)
     {
-        GD.Print("battle ended signal");
-        EmitSignal(nameof(BattleEnded));
+        // GD.Print("battle ended signal");        
+        
+        foreach (Node n in BattleGrid.GetNode("All/BattleUnits").GetChildren())
+        {
+            n.QueueFree();
+        }
+        _round = 0;
+        // set cursor to whatever is default
+        _cursorControl.SetCursor(CursorControl.CursorMode.Select);
+        SetPhysicsProcess(false);
+        SetProcessInput(false);
+        EmitSignal(nameof(BattleEnded), false, victory, new BattleUnitDataSignalWrapper() { CurrentBattleUnitData = _enemyCommanderData });
     }
 
-    private List<BattleUnit> GetBattleUnits()
+    public List<BattleUnit> GetBattleUnits()
     {
         List<BattleUnit> allBattleUnits = new List<BattleUnit>();
-        foreach (Node n in _battleGrid.GetNode("All/BattleUnits").GetChildren())
+        foreach (Node n in BattleGrid.GetNode("All/BattleUnits").GetChildren())
         {
             if (n is BattleUnit battleUnit)
             {
@@ -486,19 +560,66 @@ public class CntBattle : Control
         _turnList = GetBattleUnits().OrderByDescending(x => x.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Initiative]).ToList();
     }
 
-    private BattleUnit GetActiveBattleUnit()
+    public BattleUnit GetActiveBattleUnit()
     {
-        return _turnList[0];
+        if (_turnList.Count > 0)
+        {
+            return _turnList[0];
+        }
+        else
+        {
+            GD.Print("no units to get for next turn! we should probably end combat here or it will crash");
+            return null;
+        }
     }
 
-    private void OnActiveBattleUnitTurnStart()
-    {
+    private async void OnActiveBattleUnitTurnStart()
+    {        
+        if (GetActiveBattleUnit() == null)
+        {
+            GD.Print("start of the active battle unit turn but there is no active battle unit!");
+            //end combat here
+        }
+
+        // if (_roundEnd)
+        // {
+        //     await ToSignal(this, nameof(EndOfRoundEffectsFinished));
+        //     _roundEnd = false;
+        // }
+
+        if (GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed] <= 0)
+        {
+            OnBtnEndTurnPressed();
+        }
+
+        _battleHUD.SetSpellUI(
+            CurrentSpellEffectManager.SpellEffects[GetActiveBattleUnit().CurrentBattleUnitData.Spell1][0],
+            CurrentSpellEffectManager.SpellEffects[GetActiveBattleUnit().CurrentBattleUnitData.Spell2][0]);
+        
         RecalculateObstacles();
         GetActiveBattleUnit().SetOutlineShader(new float[3] {.8f, .7f, 0f});
-        GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
+        // GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
         HighlightMoveableSquares();
+
+        if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
+        {
+            // GD.Print("do AI stuff here");
+            
+            // don't allow click action if units are not idle or if mouse is over the UI
+            while (!AreAllUnitsIdle())
+            {
+                await ToSignal(GetTree(), "idle_frame");
+                // GD.Print("waiting");
+            }
+            // GD.Print("ok rdy");
+            _aiTurnHandler.SetAITurnState(GetActiveBattleUnit().CurrentBattleUnitData.CurrentAITurnStateMode);
+            _aiTurnHandler.OnAITurn(this);
+            return;
+        }
+
         SetSelectedAction(ActionMode.Move);
     }
+
 
     private void RecalculateObstacles()
     {
@@ -509,10 +630,10 @@ public class CntBattle : Control
             {
                 continue;
             }
-            Vector2 mapPos = _battleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+            Vector2 mapPos = BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
             currentBattleUnitPositions.Add(mapPos);
         }
-        _battleGrid.RecalculateAStarMap(currentBattleUnitPositions);
+        BattleGrid.RecalculateAStarMap(currentBattleUnitPositions);
     }
 
     public override void _Input(InputEvent ev)
@@ -521,6 +642,13 @@ public class CntBattle : Control
         {
             return;
         }
+
+        if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction == false)
+        {
+            // dont allow player to input whilst AI turn
+            return;
+        }
+
         if (ev is InputEventMouseMotion)
         {
             SetNonActiveBattleUnitOutlines();
@@ -539,6 +667,14 @@ public class CntBattle : Control
                 {
                     OnLeftClick();
 
+                    if (AreAllUnitsIdle())
+                    {
+                        if (_cursorControl.GetCursor() == CursorControl.CursorMode.Hint) // terrible
+                        {
+                            ShowUnitInfo();
+                        }
+                    }
+
                     //
 
                 }
@@ -546,21 +682,60 @@ public class CntBattle : Control
                 {
                     if (AreAllUnitsIdle())
                     {
-                        if (GetBattleUnitAtGridPosition(_battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())) == null)
+                        if (GetBattleUnitAtGridPosition(BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())) == null)
                         {
                             return;
                         }
-                        if (GetBattleUnitAtGridPosition(_battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).Dead)
+                        if (GetBattleUnitAtGridPosition(BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).Dead)
                         {
                             return;
                         }
-                        BattleUnitData battleUnitData = GetBattleUnitAtGridPosition(_battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).CurrentBattleUnitData;
-                        _battleHUD.UpdateAndShowUnitInfoPanel(battleUnitData.Name, battleUnitData.Stats);
+                        ShowUnitInfo();
                     }
                 }
             }
         }
+        if (ev.IsActionPressed("Pause") && (!ev.IsEcho()))
+        {
+            if (_battleHUD.GetNode<Panel>("CtrlTheme/PnlMenu").Visible)
+            {
+                OnBtnResumePressed();
+            }
+            else
+            {
+                OnBtnMenuPressed();
+            }
+        }
     }
+
+    private void ShowUnitInfo()
+    {
+        BattleUnitData battleUnitData = GetBattleUnitAtGridPosition(BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).CurrentBattleUnitData;
+        Dictionary<SpellEffectManager.SpellMode, string> spellNames = new Dictionary<SpellEffectManager.SpellMode, string>();
+        foreach (SpellEffectManager.SpellMode spell in CurrentSpellEffectManager.SpellEffects.Keys)
+        {
+            if (spell == SpellEffectManager.SpellMode.Empty)
+            {
+                continue;
+            }
+            spellNames.Add(spell, CurrentSpellEffectManager.SpellEffects[spell][0].Name);
+        }
+        List<string> spellNameList = new List<string>();
+        
+        if (battleUnitData.Spell1 != SpellEffectManager.SpellMode.Empty)
+        {
+            spellNameList.Add(spellNames[battleUnitData.Spell1]);
+        }
+        if (battleUnitData.Spell2 != SpellEffectManager.SpellMode.Empty)
+        {
+            spellNameList.Add(spellNames[battleUnitData.Spell2]);
+        }
+            
+            
+        _battleHUD.UpdateAndShowUnitInfoPanel(battleUnitData.Name, battleUnitData.Stats, battleUnitData.CurrentStatusEffects, 
+            spellNames, spellNameList);
+    }
+
 
 
     public override void _PhysicsProcess(float delta)
@@ -571,10 +746,24 @@ public class CntBattle : Control
         {
             return;
         }
-        
+
         if (!AreAllUnitsIdle())
         {
-            _cursorControl.SetCursor(CursorControl.CursorMode.Wait);
+            if (PnlSettings != null)
+            {
+                _cursorControl.SetCursor(!_pnlPotion.Visible && !_pnlMenu.Visible && !PnlSettings.Visible && !_pnlLog.Visible? CursorControl.CursorMode.Wait :
+                    (_pnlPotion.CursorInsidePanel() && _pnlPotion.Visible) || (_pnlMenu.CursorInsidePanel() && _pnlMenu.Visible) ||
+                    (PnlSettings.CursorInsidePanel() && PnlSettings.Visible) || (_pnlLog.CursorInsidePanel() && _pnlLog.Visible)
+                    ? CursorControl.CursorMode.Select : CursorControl.CursorMode.Invalid);
+            }
+            else
+            {
+            _cursorControl.SetCursor(!_pnlPotion.Visible && !_pnlMenu.Visible && !_pnlLog.Visible? CursorControl.CursorMode.Wait :
+                (_pnlPotion.CursorInsidePanel() && _pnlPotion.Visible) || (_pnlMenu.CursorInsidePanel() && _pnlMenu.Visible)  
+                || (_pnlLog.CursorInsidePanel() && _pnlLog.Visible)
+                ? CursorControl.CursorMode.Select : CursorControl.CursorMode.Invalid);
+            }
+            
             _battleHUD.SetDisableAllActionButtons(true);
             _battleHUD.SetDisableAllAnimSpeedButtons(true);
             
@@ -598,16 +787,95 @@ public class CntBattle : Control
         _battleHUD.SetDisableAllAnimSpeedButtons(false);
         _battleHUD.SetDisableSingleButton(GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed/BtnSpeed" + _currentSpeedSetting), true);
         SetAllBattleUnitSpeed(speedSetting*2);
-        _spellEffectManager.AnimSpeed = speedSetting*2;
+        CurrentSpellEffectManager.AnimSpeed = speedSetting*2;
     }
 
     // private void OnBtnActionPressed(A)
 
     private void SetSelectedAction(ActionMode actionMode)
     {
+        if (actionMode == ActionMode.Potion)
+        {
+            BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+            _pnlPotion.PopulateGrid(GetActiveBattleUnit().CurrentBattleUnitData.Potions);
+            _pnlPotion.Visible = true;
+            
+            
+            return;
+        }
+        
+
+        // UI - RELAYING INABILITY TO CAST SPELL TO PLAYER
+
+        // APPROACH 1 - DISABLE BUTTONS:
+
+        // _battleHUD.SetDisableAllActionButtons(false);
+        // foreach (SpellEffectManager.SpellMode spell in new SpellEffectManager.SpellMode[] 
+        //     {GetActiveBattleUnit().CurrentBattleUnitData.Spell1, GetActiveBattleUnit().CurrentBattleUnitData.Spell2})
+        // {
+        //     if (!SufficientManaToCastSpell(spell) || !AnyValidTargetsWithinRangeToCastSpell(spell))
+        //     {
+        //          _battleHUD.SetDisableSingleButton(_battleHUD.ActionButtons[
+        //              spell == GetActiveBattleUnit().CurrentBattleUnitData.Spell1 ? ActionMode.Spell1 : ActionMode.Spell2], true);//GD.Print("insufficient mana");
+        //     }
+        // }
+
+        // APPROACH 2 - WARN PLAYER WHEN CLICKING BUTTON -seems to be better
+
+        SpellEffectManager.SpellMode spellTryingToCast = actionMode == ActionMode.Spell1 
+            ? GetActiveBattleUnit().CurrentBattleUnitData.Spell1
+            : GetActiveBattleUnit().CurrentBattleUnitData.Spell2;
+        if (actionMode == ActionMode.Spell1 || actionMode == ActionMode.Spell2)
+        {
+            if (!SufficientManaToCastSpell(spellTryingToCast))
+            {
+                 LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
+                floatLabel.Text = "Insufficient mana";
+                 _battleHUD.ActionButtons[actionMode].AddChild(floatLabel);
+                 floatLabel.Start(_battleHUD.ActionButtons[actionMode].RectGlobalPosition + new Vector2(0, -50));
+                 return;
+
+            }
+            else if (!AnyValidTargetsWithinRangeToCastSpell(spellTryingToCast))
+            {
+                 LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
+                floatLabel.Text = "No valid targets in range";
+                 _battleHUD.ActionButtons[actionMode].AddChild(floatLabel);
+                 floatLabel.Start(_battleHUD.ActionButtons[actionMode].RectGlobalPosition + new Vector2(0, -50));
+                return;
+            }
+        }
         _battleHUD.SetDisableAllActionButtons(false);
+        //
+
+
+        if (GetActiveBattleUnit().CurrentBattleUnitData.Spell1 == SpellEffectManager.SpellMode.Empty)
+        {
+             _battleHUD.SetDisableSingleButton(_battleHUD.ActionButtons[ActionMode.Spell1], true);
+        }
+        if (GetActiveBattleUnit().CurrentBattleUnitData.Spell2 == SpellEffectManager.SpellMode.Empty)
+        {
+             _battleHUD.SetDisableSingleButton(_battleHUD.ActionButtons[ActionMode.Spell2], true);
+        }
         _battleHUD.SetDisableSingleButton(_battleHUD.ActionButtons[actionMode], true);
         _currentSelectedAction = actionMode;
+    }
+
+    public void OnPnlPotionPotionSelected(PotionEffect.PotionMode potionMode)
+    {
+        // GD.Print(potionEffect);
+        _pnlPotion.Visible = false;
+        // remove item from inventory
+        GetActiveBattleUnit().CurrentBattleUnitData.Potions.Remove(potionMode);
+        // use the spell code to apply the potion
+        CurrentSpellEffectManager.ApplyPotionEffect(GetActiveBattleUnit(), _pnlPotion.PotionBuilder.BuildPotion(potionMode));
+        // OnSpellEffectFinished is now called, ending the turn after LogEntry
+    }
+
+    public void OnPnlPotionBtnCancelPressed()
+    {
+        _pnlPotion.Visible = false;
+        SetSelectedAction(_currentSelectedAction);
     }
 
     private void OnMoveActionApRemaining()
@@ -623,10 +891,29 @@ public class CntBattle : Control
         // SetAllBattleUnitSpeed();
     }
 
-    // private void On
-
-    private bool AreAllUnitsIdle()
+    public void OnBtnMenuPressed()
     {
+        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        _battleHUD.GetNode<Panel>("CtrlTheme/PnlMenu").Visible = true;
+    }
+    public void OnBtnResumePressed()
+    {
+        _battleHUD.GetNode<Panel>("CtrlTheme/PnlMenu").Visible = false;
+        SetSelectedAction(_currentSelectedAction);
+    }
+
+    public void OnLogBtnClosePressed()
+    {
+        _pnlLog.Visible = false;
+        SetSelectedAction(_currentSelectedAction);
+    }
+
+    public bool AreAllUnitsIdle()
+    {
+        if (_pnlPotion.Visible || _pnlMenu.Visible || _pnlLog.Visible)
+        {
+            return false;
+        }
         foreach (BattleUnit unit in GetBattleUnits())
         {
             if (unit.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
@@ -648,6 +935,12 @@ public class CntBattle : Control
     private void HighlightPathSquares()
     {
 
+        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        BattleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
+        if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
+        {
+            return;
+        }
         if (AreAllUnitsIdle())
         {
             
@@ -659,29 +952,72 @@ public class CntBattle : Control
                 case ActionMode.Melee:
                     HighlightMeleeSquares();
                     break;
+                case ActionMode.Spell1:
+                    if (GetActiveBattleUnit().CurrentBattleUnitData.Spell1 == SpellEffectManager.SpellMode.Empty)
+                    {
+                        break;
+                    }
+                    HighlightSpellSquares(GetActiveBattleUnit().CurrentBattleUnitData.Spell1);
+                    break;
+                case ActionMode.Spell2:
+                    if (GetActiveBattleUnit().CurrentBattleUnitData.Spell2 == SpellEffectManager.SpellMode.Empty)
+                    {
+                        break;
+                    }
+                    HighlightSpellSquares(GetActiveBattleUnit().CurrentBattleUnitData.Spell2);
+                    break;
                 
+            }
+        }
+    }
+    
+    private void HighlightSpellSquares(SpellEffectManager.SpellMode spell)
+    {
+        // _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        // _battleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
+        // Vector2 targetMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        if (spell == SpellEffectManager.SpellMode.Empty)
+        {
+            return;
+        }
+        foreach (Vector2 point in BattleGrid.GetAllCells())
+        {
+            if (PermittedSpell(spell, point))
+            {
+                BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+            }
+        }
+        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        if (CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares > 0)
+        {
+            if (PermittedSpell(spell, mouseMapPos))
+            {
+                foreach (Vector2 point in GetCells(CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, mouseMapPos))
+                {
+                    BattleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").SetCellv(point, 4);
+                }
             }
         }
     }
 
     private void HighlightMeleeSquares()
     {
-        _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
-        Vector2 startMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        List<Vector2> neighbours = _battleGrid.GetHorizontalNeighbours(startMapPos);
+        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        List<Vector2> neighbours = BattleGrid.GetHorizontalNeighbours(startMapPos);
         foreach (Vector2 point in neighbours)
         {
             // if (PermittedAttack(point))
             // {
-            _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+            BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
             // }
         }
     }
 
     public bool PermittedAttack(Vector2 targetMapPos)
     {
-        Vector2 startMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        List<Vector2> neighbours = _battleGrid.GetHorizontalNeighbours(startMapPos);
+        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        List<Vector2> neighbours = BattleGrid.GetHorizontalNeighbours(startMapPos);
         if (!neighbours.Contains(targetMapPos))
         {
             return false;
@@ -701,11 +1037,11 @@ public class CntBattle : Control
 
     }
 
-    private BattleUnit GetBattleUnitAtGridPosition(Vector2 gridPos)
+    public BattleUnit GetBattleUnitAtGridPosition(Vector2 gridPos)
     {
         foreach (BattleUnit battleUnit in GetBattleUnits())
         {
-            if (_battleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == gridPos)
+            if (BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == gridPos)
             {
                 return battleUnit;
             }
@@ -715,14 +1051,14 @@ public class CntBattle : Control
 
     private void HighlightMoveSquares()
     {
-        _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear(); // consider making a new hex in krita
-        Vector2 startMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear(); // consider making a new hex in krita
+        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (PermittedMove(startMapPos, mouseMapPos))
         {
-            foreach (Vector2 point in _battleGrid.CalculatePath(startMapPos, mouseMapPos))
+            foreach (Vector2 point in BattleGrid.CalculatePath(startMapPos, mouseMapPos))
             {   
-                _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+                BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
             }
         }
     }
@@ -736,98 +1072,238 @@ public class CntBattle : Control
             return;
         }
 
+        // GD.Print(_currentSelectedAction);
+        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         switch (_currentSelectedAction)
         {
             case ActionMode.Move:
-                OnLeftClickMove();
+                OnLeftClickMove(mouseMapPos);
                 break;
             case ActionMode.Melee:
-                OnLeftClickMelee();
+                OnLeftClickMelee(mouseMapPos);
                 break;
             case ActionMode.Spell1:
-                OnLeftClickSpell1();
+                if (GetActiveBattleUnit().CurrentBattleUnitData.Spell1 == SpellEffectManager.SpellMode.Empty)
+                {
+                    break;
+                }
+                OnLeftClickSpell(GetActiveBattleUnit().CurrentBattleUnitData.Spell1);
                 break;
             case ActionMode.Spell2:
-                OnLeftClickSpell2();
+                if (GetActiveBattleUnit().CurrentBattleUnitData.Spell2 == SpellEffectManager.SpellMode.Empty)
+                {
+                    break;
+                }
+                OnLeftClickSpell(GetActiveBattleUnit().CurrentBattleUnitData.Spell2);
+                // GetBattleUnitsAtArea(1, _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition()));
                 break;    
         }
 
     }
 
-    public void OnLeftClickSpell1()
+    private void OnLeftClickSpell(SpellEffectManager.SpellMode spellMode)
     {
-        Vector2 targetMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
-        Vector2 startingMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        if (PermittedSpell(GetActiveBattleUnit().CurrentBattleUnitData.Spell1, targetMapPos))
+        Vector2 targetMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 startingMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+
+        if (spellMode == SpellEffectManager.SpellMode.Empty)
         {
-            _spellEffectManager.SpellMethods[GetActiveBattleUnit().CurrentBattleUnitData.Spell1]
-                (GetActiveBattleUnit(), GetBattleUnitAtGridPosition(targetMapPos));
-            
-            // await ToSignal(_spellEffectManager, nameof(SpellEffectManager.SpellEffectFinished));
-            
+            return;
         }
-
-        
-    }
-
-    public void OnLeftClickSpell2()
-    {
-        
-    }
-
-    private void OnSpellEffectFinished()
-    {
-            GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
-            OnBtnEndTurnPressed();
-            GD.Print("end turn..");
-    }
-
-    private bool PermittedSpell(SpellEffectManager.SpellMode spell, Vector2 targetMapPos)
-    {
-        Vector2 startingMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        SpellEffect spellEffect = _spellEffectManager.SpellEffects[spell];
-        
-        // check range
-        if (GetDistanceInSquares(startingMapPos, targetMapPos) > spellEffect.RangeSquares)
+        if (PermittedSpell(spellMode, targetMapPos))
         {
-            return false;
+            CurrentSpellEffectManager.SpellMethods[spellMode]
+                (GetActiveBattleUnit(),
+                GetBattleUnitAtGridPosition(targetMapPos),
+                GetBattleUnitsAtArea(CurrentSpellEffectManager.SpellEffects[spellMode][0].AreaSquares, targetMapPos),
+                BattleGrid.GetCorrectedWorldPosition(targetMapPos));            
+
+            // GD.Print(_spellEffectManager.SpellEffects[spellMode].RangeSquares);
+        }
+    }
+
+    public void OnAnnouncingSpell(string announceText)
+    {
+        _battleHUD.LogEntry(announceText);
+    }
+
+    private void OnSpellEffectFinished(string announceText, BattleUnit target, List<BattleUnit> unitsAtArea)
+    {
+        // _battleHUD.LogEntry(announceText);
+        if (target != null)
+        {
+            if (target.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f)
+            {
+                _turnList.Remove(target);
+            }
+        }
+        if (unitsAtArea != null)
+        {
+            foreach (BattleUnit tarBattleUnit in unitsAtArea)
+            {
+                if (tarBattleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f)
+                {
+                    _turnList.Remove(tarBattleUnit);
+                }
+            }
+        }
+        // if (GetActiveBattleUnit() != null)
+        // {
+        //     GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
+        // }
+        OnBtnEndTurnPressed();
+    }
+
+    public bool SufficientManaToCastSpell(SpellEffectManager.SpellMode spell)
+    {
+        float totalCost = 0;
+        foreach (SpellEffect spellEffect in CurrentSpellEffectManager.SpellEffects[spell])
+        {
+
+            totalCost += spellEffect.ManaCost;
         }
 
         // check cost
-        if (spellEffect.ManaCost > GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana])
+        if (totalCost > GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana])
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool AnyValidTargetsWithinRangeToCastSpell(SpellEffectManager.SpellMode spell) // also checks mana however
+    {
+        Vector2 startingMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        foreach (Vector2 point in BattleGrid.GetAllCells())
+        {
+            if (PermittedSpell(spell, point))
+            {
+                // GD.Print("insufficient range");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool PermittedSpell(SpellEffectManager.SpellMode spell, Vector2 targetMapPos)
+    {
+        if (spell == SpellEffectManager.SpellMode.Empty)
+        {
+            return false;
+        }
+        Vector2 startingMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        
+        float totalCost = 0;
+        foreach (SpellEffect spellEffect in CurrentSpellEffectManager.SpellEffects[spell])
+        {
+            // check range
+            if (GetDistanceInSquares(startingMapPos, targetMapPos) > spellEffect.RangeSquares)
+            {
+                // GD.Print("insufficient range");
+                return false;
+            }
+
+            // add cost
+            totalCost += spellEffect.ManaCost;
+
+            // check target meets target criteria
+            if (spellEffect.Target == SpellEffect.TargetMode.Hostile)
+            {
+                if (GetBattleUnitAtGridPosition(targetMapPos) == null)
+                {
+                    return false;
+                }
+                if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction == GetBattleUnitAtGridPosition(targetMapPos).CurrentBattleUnitData.PlayerFaction)
+                {
+                    return false;
+                }
+            }
+            else if (spellEffect.Target == SpellEffect.TargetMode.Ally)
+            {   
+                if (GetBattleUnitAtGridPosition(targetMapPos) == null)
+                {
+                    return false;
+                }
+                if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction != GetBattleUnitAtGridPosition(targetMapPos).CurrentBattleUnitData.PlayerFaction)
+                {
+                    return false;
+                }
+            }
+            else if (spellEffect.Target == SpellEffect.TargetMode.Area)
+            {
+                // any criteria?
+            }
+            else if (spellEffect.Target == SpellEffect.TargetMode.Empty)
+            {
+                if (BattleGrid.ObstacleCells.Contains(targetMapPos))
+                {
+                    return false;
+                }
+                if (!BattleGrid.TraversableCells.Contains(targetMapPos))
+                {
+                    return false;
+                }
+                if (GetBattleUnitAtGridPosition(targetMapPos) != null)
+                {
+                    return false;
+                }
+            }
+        }
+        // check cost
+        if (totalCost > GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana])
         {
             return false;
         }
 
-        // check target meets target criteria
-        if (spellEffect.Target == SpellEffect.TargetMode.Hostile)
-        {
-            if (GetBattleUnitAtGridPosition(targetMapPos) == null)
-            {
-                return false;
-            }
-            if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction == GetBattleUnitAtGridPosition(targetMapPos).CurrentBattleUnitData.PlayerFaction)
-            {
-                return false;
-            }
-        }
-        else if (spellEffect.Target == SpellEffect.TargetMode.Ally)
-        {   
-            if (GetBattleUnitAtGridPosition(targetMapPos) == null)
-            {
-                return false;
-            }
-            if (GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction != GetBattleUnitAtGridPosition(targetMapPos).CurrentBattleUnitData.PlayerFaction)
-            {
-                return false;
-            }
-        }
-        else if (spellEffect.Target == SpellEffect.TargetMode.Area)
-        {
-            // any criteria?
-        }
-
         return true;
+    }
+
+    public List<BattleUnit> GetBattleUnitsAtArea(int radius, Vector2 tarGridPos)
+    {
+        List<BattleUnit> result = new List<BattleUnit>();
+        for (float x = tarGridPos.x - radius; x <= tarGridPos.x + radius; x++)
+        {
+            for (float y = tarGridPos.y - radius; y <= tarGridPos.y + radius; y++)
+            {
+                Vector2 newGridPos = new Vector2(x, y);
+                if (GetBattleUnitAtGridPosition(newGridPos) != null)
+                {
+                    result.Add(GetBattleUnitAtGridPosition(newGridPos));
+                }
+            }
+        }
+        
+        return result;
+    }
+
+    public List<BattleUnit> GetNeighbouringBattleUnits(Vector2 tarGridPos) // within 1 square-melee strike distance
+    {
+        List<BattleUnit> result = new List<BattleUnit>();
+        foreach (Vector2 gridPos in BattleGrid.GetHorizontalNeighbours(tarGridPos))
+        {
+            if (GetBattleUnitAtGridPosition(gridPos) != null)
+            {
+                result.Add(GetBattleUnitAtGridPosition(gridPos));
+            }
+        }
+        return result;
+    }
+
+    private List<Vector2> GetCells(int radius, Vector2 tarGridPos)
+    {
+        List<Vector2> result = new List<Vector2>();
+        for (float x = tarGridPos.x - radius; x <= tarGridPos.x + radius; x++)
+        {
+            for (float y = tarGridPos.y - radius; y <= tarGridPos.y + radius; y++)
+            {
+                Vector2 cell = new Vector2(x, y);
+                if (BattleGrid.GetAllCells().Contains(cell))
+                {
+                    result.Add(cell);
+                }
+            }
+        }
+        return result;
     }
 
     private int GetDistanceInSquares(Vector2 originGridPos, Vector2 tarGridPos)
@@ -835,18 +1311,18 @@ public class CntBattle : Control
         return Convert.ToInt32(Math.Abs(tarGridPos.x - originGridPos.x) + Math.Abs(tarGridPos.y - originGridPos.y));
     }
 
-    public async void OnLeftClickMelee()
+    public async void OnLeftClickMelee(Vector2 targetGridPos)
     {
-        Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
-        if (PermittedAttack(mouseMapPos))
+        
+        if (PermittedAttack(targetGridPos))
         {
-            GetActiveBattleUnit().TargetWorldPos = _battleGrid.GetCorrectedWorldPosition(mouseMapPos);
+            GetActiveBattleUnit().TargetWorldPos = BattleGrid.GetCorrectedWorldPosition(targetGridPos);
             GetActiveBattleUnit().SetActionState(BattleUnit.ActionStateMode.Casting);
             GetActiveBattleUnit().DetectingHalfway = true;
             await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.ReachedHalfwayAnimation));
             // GD.Print("reached halfway through animation");
-            BattleUnit targetUnit = GetBattleUnitAtGridPosition(mouseMapPos);
-            targetUnit.TargetWorldPos = _battleGrid.GetCentredWorldPosFromWorldPos(GetActiveBattleUnit().GlobalPosition);
+            BattleUnit targetUnit = GetBattleUnitAtGridPosition(targetGridPos);
+            targetUnit.TargetWorldPos = BattleGrid.GetCentredWorldPosFromWorldPos(GetActiveBattleUnit().GlobalPosition);
             
             // do battle calculations
             float[] result = _battleInteractionHandler.CalculateMelee(GetActiveBattleUnit().CurrentBattleUnitData, targetUnit.CurrentBattleUnitData);
@@ -865,41 +1341,46 @@ public class CntBattle : Control
             {
                 await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.CurrentActionCompleted));
             }
-            GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
+            // GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
             OnBtnEndTurnPressed();
         }
         
     }
 
-    public async void OnLeftClickMove()
+    public async void OnLeftClickMove(Vector2 tarGridPos, bool finalMovement = false)
     {
-        Vector2 startMapPos = _battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
-        if (PermittedMove(startMapPos, mouseMapPos))
+        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        // Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        if (PermittedMove(startMapPos, tarGridPos))
         {
             // get the series of world positions to move
             List<Vector2> worldPoints = new List<Vector2>();
-            foreach (Vector2 point in _battleGrid.CalculatePath(startMapPos, mouseMapPos))
+            foreach (Vector2 point in BattleGrid.CalculatePath(startMapPos, tarGridPos))
             {
-                worldPoints.Add(_battleGrid.GetCorrectedWorldPosition(point));
+                worldPoints.Add(BattleGrid.GetCorrectedWorldPosition(point));
 
             }
             // subtract AP cost from total AP
-            float apCost = _battleGrid.GetDistanceToPoint(startMapPos, mouseMapPos);
+            float apCost = BattleGrid.GetDistanceToPoint(startMapPos, tarGridPos);
+            // GD.Print("distance is: ", apCost);
             GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] -=  apCost;
             
             // commence animation
 
-            _battleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
-            _battleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
+            BattleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
+            BattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
             GetActiveBattleUnit().MoveAlongPoints(worldPoints);
+
+            _battleHUD.LogEntry(String.Format("{0} moves {1} step{3}. {2} action points remaining.",
+                GetActiveBattleUnit().CurrentBattleUnitData.Name, apCost, GetUnitAP(GetActiveBattleUnit()), apCost > 1 ? "s" : ""));
             
             await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.CurrentActionCompleted));
 
-            _battleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
-            // GD.Print(GetUnitAP(GetActiveBattleUnit()));
-            if (GetUnitAP(GetActiveBattleUnit()) == 0)
+            BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+
+            if (GetUnitAP(GetActiveBattleUnit()) == 0 || finalMovement)
             {
+                // GD.Print("out of AP or ideaz if i am roobot.. so stopping turn");
                 OnBtnEndTurnPressed();
             }
             else
@@ -909,14 +1390,48 @@ public class CntBattle : Control
         }
         else //if (PermittedAttack(mouseMapPos))
         {
-            OnLeftClickMelee();
+            OnLeftClickMelee(tarGridPos);
         }
     }
     
-    private void OnBtnEndTurnPressed()
+    public void OnBtnEndTurnPressed()
     {            
+        GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
+
+        // _battleHUD.LogEntry(String.Format("{0}'s turn ends.", GetActiveBattleUnit().CurrentBattleUnitData.Name));
+
+        // victory and defeat checks
+        // defeat: no player units left
+        if (GetBattleUnits().FindAll(x => x.CurrentBattleUnitData.PlayerFaction).Count == 0)
+        {
+            if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename) //TEST
+            {
+                GD.Print("DEFEAT");
+                GetTree().Quit();
+            }
+            // EmitSignal(nameof(BattleEnded), false, false);
+            OnBattleEnded(false);
+            return;
+        }
+        // victory: no enemyuntis left AND at least 1 player unit left
+        else if (GetBattleUnits().FindAll(x => !x.CurrentBattleUnitData.PlayerFaction).Count == 0 &&
+            GetBattleUnits().FindAll(x => x.CurrentBattleUnitData.PlayerFaction).Count > 0)
+        {
+            if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+            {
+                GD.Print("VICTORY");
+                GetTree().Quit();
+            }
+            OnBattleEnded(true);
+            return;
+        }
+
+
         EndTurn();
-        OnActiveBattleUnitTurnStart();
+        if (!_endTurnEffectsInProgress)
+        {
+            OnActiveBattleUnitTurnStart();
+        }
     }
 
     private bool IsMouseCursorOverUIPanel()
@@ -927,14 +1442,14 @@ public class CntBattle : Control
     private void SetCursorByAction() // TODO: replace with state pattern
     {
         
-        Vector2 mouseMapPos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (IsMouseCursorOverUIPanel())
         {
             _cursorControl.SetCursor(CursorControl.CursorMode.Select);
         }
         else if (_currentSelectedAction == ActionMode.Move)
         {
-            if (PermittedMove(_battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition),mouseMapPos))
+            if (PermittedMove(BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition),mouseMapPos))
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Move);
             }
@@ -942,7 +1457,11 @@ public class CntBattle : Control
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Attack);
             }
-            else if (_battleGrid.TraversableCells.Contains(mouseMapPos) || IsObstacleAt(mouseMapPos))
+            else if (GetBattleUnitAtGridPosition(mouseMapPos) != null)
+            {
+                _cursorControl.SetCursor(CursorControl.CursorMode.Hint);//
+            }
+            else if (BattleGrid.TraversableCells.Contains(mouseMapPos) || IsObstacleAt(mouseMapPos))
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Invalid);
             }
@@ -955,12 +1474,34 @@ public class CntBattle : Control
             }
             else
             {
-                _cursorControl.SetCursor(CursorControl.CursorMode.Invalid);
+                if (GetBattleUnitAtGridPosition(mouseMapPos) != null)
+                {
+                    _cursorControl.SetCursor(CursorControl.CursorMode.Hint);//
+                }
+                else
+                {
+                    _cursorControl.SetCursor(CursorControl.CursorMode.Invalid);
+                }
             }
         }
         else if (_currentSelectedAction == ActionMode.Spell1 || _currentSelectedAction == ActionMode.Spell2)
         {
-            _cursorControl.SetCursor(CursorControl.CursorMode.Spell);
+            if (PermittedSpell(
+                _currentSelectedAction == ActionMode.Spell1 
+                    ? GetActiveBattleUnit().CurrentBattleUnitData.Spell1
+                    : GetActiveBattleUnit().CurrentBattleUnitData.Spell2,
+                mouseMapPos))
+            {
+                _cursorControl.SetCursor(CursorControl.CursorMode.Spell);
+            }
+            else if (GetBattleUnitAtGridPosition(mouseMapPos) != null)
+            {
+                _cursorControl.SetCursor(CursorControl.CursorMode.Hint);//
+            }
+            else
+            {
+                _cursorControl.SetCursor(CursorControl.CursorMode.Invalid);
+            }
         }
         else
         {
@@ -970,30 +1511,35 @@ public class CntBattle : Control
 
     private void HighlightMoveableSquares()
     {
-        _battleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
-        _battleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
-        foreach (Vector2 cell in _battleGrid.TraversableCells)
+        BattleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
+        BattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
+        
+        if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
         {
-            if (PermittedMove(_battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell))
+            return;
+        }
+        foreach (Vector2 cell in BattleGrid.TraversableCells)
+        {
+            if (PermittedMove(BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell))
             {
                 float abilAPCost = GetUnitSpeed(GetActiveBattleUnit())/2f;
 
-                if ( _battleGrid.GetDistanceToPoint(_battleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell)
+                if ( BattleGrid.GetDistanceToPoint(BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell)
                     > GetUnitAP(GetActiveBattleUnit()) - abilAPCost)
                 {
-                    _battleGrid.GetNode<TileMap>("TileMapShadedTilesLong").SetCellv(cell, 6);
+                    BattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").SetCellv(cell, 6);
                 }
                 else
                 {
-                    _battleGrid.GetNode<TileMap>("TileMapShadedTiles").SetCellv(cell, 4);
+                    BattleGrid.GetNode<TileMap>("TileMapShadedTiles").SetCellv(cell, 4);
                 }
             }
         }
     }
 
-    private bool PermittedMove(Vector2 originMapPos, Vector2 targetMapPos)
+    public bool PermittedMove(Vector2 originMapPos, Vector2 targetMapPos)
     {
-        int distance = _battleGrid.GetDistanceToPoint(originMapPos, targetMapPos);
+        int distance = BattleGrid.GetDistanceToPoint(originMapPos, targetMapPos);
         float currentAP = GetUnitAP(GetActiveBattleUnit());
         if (currentAP >= distance && distance > 0 && TargetWorldPosIsFree(targetMapPos))
         {
@@ -1004,14 +1550,14 @@ public class CntBattle : Control
 
     private bool IsObstacleAt(Vector2 targetMapPos)
     {
-        return _battleGrid.ObstacleCells.Contains(targetMapPos);
+        return BattleGrid.ObstacleCells.Contains(targetMapPos);
     }
 
-    private float GetUnitAP(BattleUnit battleUnit)
+    public float GetUnitAP(BattleUnit battleUnit)
     {
         return battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP];
     }
-    private float GetUnitSpeed(BattleUnit battleUnit)
+    public float GetUnitSpeed(BattleUnit battleUnit)
     {
         return battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
     }
@@ -1020,7 +1566,7 @@ public class CntBattle : Control
     {
         foreach (BattleUnit battleUnit in GetBattleUnits())
         {
-            if (_battleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == targetMapPos)
+            if (BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == targetMapPos)
             {
                 return false;
             }
@@ -1030,7 +1576,7 @@ public class CntBattle : Control
 
     private void SetNonActiveBattleUnitOutlines()
     {
-        Vector2 mouseCentrePos = _battleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 mouseCentrePos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         // GD.Print(mouseCentrePos);
         foreach (BattleUnit battleUnit in GetBattleUnits())
         {
@@ -1038,7 +1584,7 @@ public class CntBattle : Control
             {
                 continue;
             }
-            Vector2 battleUnitCentrePos = _battleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+            Vector2 battleUnitCentrePos = BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
             if (mouseCentrePos == battleUnitCentrePos)
             {
                 if (battleUnit.CurrentBattleUnitData == _playerData || _friendliesData.Contains(battleUnit.CurrentBattleUnitData))
@@ -1065,13 +1611,114 @@ public class CntBattle : Control
         // NEW ROUND
         if (_turnList.Count == 0)
         {
-            _round += 1;
-            _battleHUD.LogEntry(String.Format("Round {0}!", _round));
-            PopulateTurnListByInitiative();
-            UpdateAllBattleUnitsHealthManaFactionBars();
+            OnNewRound();
         }
     }
 
+    private void OnNewRound()
+    {
+        // _roundEnd = true;
+        _round += 1;
+        _battleHUD.LogEntry(String.Format("Round {0}!", _round));
+        UpdateSpellDurationsAndRegen();
+        PopulateTurnListByInitiative();
+        UpdateAllBattleUnitsHealthManaFactionBars();
+    }
+
+    private void ApplyLeadershipBonus()
+    {
+        foreach (BattleUnit battleUnit in GetBattleUnits())
+        {
+            float leadership = battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Leadership];
+            float bonus = leadership/10f;
+            
+            List<BattleUnit> surroundingBattleUnits = GetBattleUnitsAtArea(1, BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition));
+            foreach (BattleUnit surroundingUnit in surroundingBattleUnits)
+            {
+                if (surroundingUnit == battleUnit)
+                {
+                    continue;
+                }
+                if (surroundingUnit.CurrentBattleUnitData.PlayerFaction != battleUnit.CurrentBattleUnitData.PlayerFaction)
+                {
+                    continue;
+                }
+                
+                if (surroundingUnit.CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(SpellEffectManager.SpellMode.LeadershipBonus))
+                {
+                    continue;
+                }
+                foreach (BattleUnitData.DerivedStat stat in CurrentSpellEffectManager.SpellEffects[SpellEffectManager.SpellMode.LeadershipBonus][0].TargetStats)
+                {
+                    surroundingUnit.CurrentBattleUnitData.Stats[stat] = surroundingUnit.CurrentBattleUnitData.Stats[stat] + bonus;
+                }
+                surroundingUnit.CurrentBattleUnitData.CurrentStatusEffects.Add(SpellEffectManager.SpellMode.LeadershipBonus,
+                    new Tuple<int, float>(1, bonus));
+            }
+        }
+    }
+    
+    private async void UpdateSpellDurationsAndRegen()
+    {
+        foreach (BattleUnit battleUnit in GetBattleUnits())
+        {
+            foreach (SpellEffectManager.SpellMode spell in battleUnit.CurrentBattleUnitData.CurrentStatusEffects.Keys.ToList())
+            {
+                if (spell == SpellEffectManager.SpellMode.PerilOfOsiris) // this is bad but its the only dot in the game so...
+                {
+                    battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] += battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2;
+                    // i am here -- implement player death if health drop low
+                    if (battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f)
+                    {
+                        _turnList.Remove(battleUnit);
+                    }
+                    _endTurnEffectsInProgress = true;
+                    battleUnit.SetActionState(battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f 
+                        ? BattleUnit.ActionStateMode.Dying : BattleUnit.ActionStateMode.Hit);
+                    await ToSignal(battleUnit, nameof(BattleUnit.CurrentActionCompleted));
+                }
+                battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell] = new Tuple<int, float>(
+                    battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item1 - 1,
+                    battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2
+                );
+                if (battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item1 == 0)
+                {
+                    CurrentSpellEffectManager.ReverseEffect(battleUnit, spell, battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2);
+                    battleUnit.CurrentBattleUnitData.CurrentStatusEffects.Remove(spell);
+                }
+            }
+            if (!battleUnit.Dead)
+            {
+                battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana] = 
+                    Math.Min(battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana] + 
+                        battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.ManaRegen],
+                        battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalMana]);
+                battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] = 
+                    Math.Min(battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] + 
+                        battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.HealthRegen],
+                        battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth]);
+                battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
+            }
+        }
+        ApplyLeadershipBonus();
+        // if (!AreAllUnitsIdle())
+        // {
+        //     foreach (BattleUnit battleUnit in GetBattleUnits())
+        //     {
+        //         if (battleUnit.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
+        //         {
+        //             await ToSignal(battleUnit, nameof(BattleUnit.CurrentActionCompleted));
+        //         }
+        //     }
+        // }
+
+        if (_endTurnEffectsInProgress)
+        {
+            OnActiveBattleUnitTurnStart();
+            _endTurnEffectsInProgress = false;
+        }
+    }
+    
     private void UpdateAllBattleUnitsHealthManaFactionBars()
     {
         foreach (BattleUnit battleUnit in GetBattleUnits())
@@ -1081,21 +1728,15 @@ public class CntBattle : Control
         }
     }
 
-// currently testing
-    // public override void _Input(InputEvent ev)
-    // {
-    //     base._Input(ev);
+    public void OnBtnQuitPressed()
+    {
+        SetPhysicsProcess(false);
+        SetProcessInput(false);
+        EmitSignal(nameof(BattleEnded), true, false,  new BattleUnitDataSignalWrapper() { CurrentBattleUnitData = _enemyCommanderData });
+    }
 
-    //     if (ev is InputEventMouseButton btn)
-    //     {
-    //         if (btn.Pressed && !ev.IsEcho())
-    //         {
-    //             if (btn.ButtonIndex == (int)ButtonList.Left)
-    //             {
-    //                 EndTurn();
-    //                 OnActiveBattleUnitTurnStart();
-    //             }
-    //         }
-    //     }
-    // }
+    public void Die()    // MUST CALL THIS WHEN FREEING THE PARENT SCENE (E.G. QUITTING TO MENU)
+    {
+        _pnlPotion.Die();
+    }
 }

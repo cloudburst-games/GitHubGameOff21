@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
 [ext_resource path="res://Systems/BattleSystem/BattleGrids/BattleGrid.tscn" type="PackedScene" id=2]
@@ -10,6 +10,26 @@
 [ext_resource path="res://Interface/Cursors/Art/Move.PNG" type="Texture" id=8]
 [ext_resource path="res://Interface/Cursors/Art/Wait.PNG" type="Texture" id=9]
 [ext_resource path="res://Interface/Panels/BattleUnitInfoPanel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Interface/Icons/PotionAqua.png" type="Texture" id=11]
+[ext_resource path="res://Systems/BattleSystem/PnlPotion.cs" type="Script" id=12]
+[ext_resource path="res://Systems/BattleSystem/BattleHUDPnlMenu.cs" type="Script" id=13]
+[ext_resource path="res://Interface/Fonts/SayDo/SayDo36.tres" type="DynamicFont" id=14]
+[ext_resource path="res://Systems/BattleSystem/PnlLog.cs" type="Script" id=15]
+[ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=16]
+
+[sub_resource type="DynamicFont" id=2]
+size = 18
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 2
+extra_spacing_space = 5
+font_data = ExtResource( 16 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+expand_margin_left = 50.0
+expand_margin_right = 50.0
+expand_margin_top = 50.0
+expand_margin_bottom = 50.0
 
 [node name="CntBattle" type="Control"]
 pause_mode = 2
@@ -19,9 +39,8 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_top = 48.0
 margin_right = 1920.0
-margin_bottom = 1080.0
+margin_bottom = 1032.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -38,6 +57,7 @@ __meta__ = {
 }
 
 [node name="PnlUI" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -54,14 +74,46 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -547.0
-margin_top = -18.0
-margin_right = 548.0
-margin_bottom = 18.0
-custom_fonts/font = ExtResource( 4 )
-text = "This is where the log goes"
+margin_left = -633.0
+margin_top = -21.0
+margin_right = 557.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 2 )
+text = "This is where the log goesasdas asd as das das das das das das das as dsa dsa dfghdfrg drfrgdf gdf gdf gdf gdf gdfgdfgdf gdf gdfgdfgdf gdfgdfgdfgdfgdf gdfg dfg"
 align = 1
 valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnMenu" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -92.3674
+margin_top = -45.9136
+margin_right = -3.36743
+margin_bottom = -2.91357
+text = "Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnLog" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -188.779
+margin_top = -45.9136
+margin_right = -99.7786
+margin_bottom = -2.91357
+text = "Log"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxActions" type="HBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
 margin_top = 4.00903
@@ -72,57 +124,72 @@ __meta__ = {
 }
 
 [node name="BtnMove" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
-margin_right = 60.0
+margin_right = 49.0
 margin_bottom = 39.0
+hint_tooltip = "Move"
 size_flags_horizontal = 3
 
 [node name="Move" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMove"]
-position = Vector2( 30, 20 )
+position = Vector2( 25, 20 )
 texture = ExtResource( 8 )
 
 [node name="BtnMelee" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
-margin_left = 64.0
-margin_right = 124.0
+margin_left = 53.0
+margin_right = 102.0
 margin_bottom = 39.0
+hint_tooltip = "Basic Attack"
 size_flags_horizontal = 3
 
 [node name="Attack" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMelee"]
-position = Vector2( 29.389, 20 )
+position = Vector2( 25, 20 )
 texture = ExtResource( 7 )
 
 [node name="BtnSpell1" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
-margin_left = 128.0
-margin_right = 188.0
+margin_left = 106.0
+margin_right = 155.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
 
 [node name="Spell" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell1"]
-position = Vector2( 30, 20 )
+position = Vector2( 25, 20 )
 texture = ExtResource( 6 )
 
 [node name="BtnSpell2" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
-margin_left = 192.0
-margin_right = 252.0
+margin_left = 159.0
+margin_right = 209.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
 
 [node name="Spell2" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell2"]
-position = Vector2( 30, 20 )
+position = Vector2( 25, 20 )
 texture = ExtResource( 6 )
 
+[node name="BtnPotion" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
+margin_left = 213.0
+margin_right = 262.0
+margin_bottom = 39.0
+hint_tooltip = "Look inside this unit's potion bag."
+size_flags_horizontal = 3
+
+[node name="Potion" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnPotion"]
+position = Vector2( 25, 20 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 11 )
+
 [node name="BtnEndTurn" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
-margin_left = 256.0
+margin_left = 266.0
 margin_right = 316.0
 margin_bottom = 39.0
+hint_tooltip = "End this unit's turn now."
 size_flags_horizontal = 3
 
 [node name="Wait" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn"]
-position = Vector2( 29, 20 )
+position = Vector2( 25, 20 )
 texture = ExtResource( 9 )
 
 [node name="HBoxAnimSpeed" type="HBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
-margin_left = 1714.0
-margin_right = 1911.0
+margin_left = 1526.22
+margin_right = 1723.22
 margin_bottom = 44.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -189,9 +256,249 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PnlPotion" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 960.0
+margin_top = 290.0
+margin_right = 1560.0
+margin_bottom = 790.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnCancel" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlPotion"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 4.94568
+margin_top = -45.8945
+margin_right = 45.9457
+margin_bottom = -9.89453
+text = "X"
+
+[node name="LblHover" type="Label" parent="Panel/BattleHUD/CtrlTheme/PnlPotion"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -335.5
+margin_top = 2.64276
+margin_right = 335.5
+margin_bottom = 47.6428
+custom_fonts/font = ExtResource( 4 )
+align = 1
+valign = 1
+
+[node name="PnlLog" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 268.0
+margin_top = 99.0
+margin_right = 1692.0
+margin_bottom = 904.0
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/BattleHUD/CtrlTheme/PnlLog"]
+margin_left = 11.0
+margin_top = 53.0
+margin_right = 1412.0
+margin_bottom = 796.0
+custom_fonts/normal_font = ExtResource( 14 )
+text = "asdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasdasdasdasd
+asd
+asd
+asd
+asdasdasd
+asdasdasd
+asdasd
+asdas
+dasdasdasd"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="Panel/BattleHUD/CtrlTheme/PnlLog"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -109.0
+margin_right = 109.0
+margin_bottom = 48.0
+text = "Combat Log"
+align = 1
+valign = 1
+
+[node name="BtnClose" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlLog"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -31.0
+margin_bottom = 31.0
+text = "X"
+
 [node name="BattleUnitInfoPanel" parent="Panel/BattleHUD/CtrlTheme" instance=ExtResource( 10 )]
+visible = false
+
+[node name="PnlMenu" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 810.0
+margin_top = 340.0
+margin_right = 1110.0
+margin_bottom = 740.0
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -138.0
+margin_top = -183.0
+margin_right = 138.0
+margin_bottom = 183.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnResume" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlMenu/VBox"]
+margin_right = 276.0
+margin_bottom = 119.0
+size_flags_vertical = 3
+text = "Resume"
+
+[node name="BtnSettings" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlMenu/VBox"]
+margin_top = 123.0
+margin_right = 276.0
+margin_bottom = 242.0
+size_flags_vertical = 3
+text = "Settings"
+
+[node name="BtnQuit" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlMenu/VBox"]
+margin_top = 246.0
+margin_right = 276.0
+margin_bottom = 366.0
+size_flags_vertical = 3
+text = "Quit to Main Menu"
 
 [node name="CursorControl" parent="Panel/BattleHUD" instance=ExtResource( 5 )]
 
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnMenu" to="." method="OnBtnMenuPressed"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnLog" to="Panel/BattleHUD" method="ShowLog"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn" to="." method="OnBtnEndTurnPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/BtnEndTest" to="." method="OnBtnEndTestPressed"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlPotion/BtnCancel" to="." method="OnPnlPotionBtnCancelPressed"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlLog/BtnClose" to="." method="OnLogBtnClosePressed"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlMenu/VBox/BtnResume" to="." method="OnBtnResumePressed"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlMenu/VBox/BtnQuit" to="." method="OnBtnQuitPressed"]

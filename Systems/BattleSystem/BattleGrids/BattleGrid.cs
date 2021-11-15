@@ -8,13 +8,17 @@ public class BattleGrid : Control
 {
     private TileMap _overallTileMap;
     private AStar2D _aStar = new AStar2D();
+    private AStar2D _aStarNoUnitObstacles = new AStar2D();
     private Vector2 _cellSize = new Vector2(256,128);
     private Vector2 _halfCellSize;
     public Godot.Collections.Array TraversableCells {get; set;}
+    public Godot.Collections.Array TraversableCellsNoUnitObstacles {get; set;}
     public Godot.Collections.Array ObstacleCells {get; set;}
+    public Godot.Collections.Array ObstacleCellsNoUnitObstacles {get; set;}
     // private Godot.Collections.Array _obstacles;
     // private Rect2 _usedRect;
     private Dictionary<Vector2, int> _pointIDs = new Dictionary<Vector2, int>();
+    private Dictionary<Vector2, int> _pointIDsNoUnitObstacles = new Dictionary<Vector2, int>();
 
     // private List<Sprite> _movePoints = new List<Sprite>();
     // private List<Sprite> _attackAPPoints = new List<Sprite>();
@@ -32,14 +36,30 @@ public class BattleGrid : Control
     {
         _overallTileMap = GetNode<TileMap>("TileMapAll");
         _halfCellSize = _cellSize/2f;
+
+        GetNode<TileMap>("TileMapShadedTiles").Clear();
+        GetNode<TileMap>("TileMapShadedTilesLong").Clear();
+        GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
+        CalculateNoUnitObstacleAStarMap();
         // TraversableCells = _overallTileMap.GetUsedCellsById(0);
         // ObstacleCells = _overallTileMap.GetUsedCellsById(1);
         // _obstacles = _overallTileMap.GetUsedCellsById(1);
         // _usedRect = _overallTileMap.GetUsedRect();
 
+
         // SetPointIDs();
         // AddCells();
         // ConnectCells();
+    }
+
+    private void CalculateNoUnitObstacleAStarMap()
+    {
+        TraversableCellsNoUnitObstacles = _overallTileMap.GetUsedCellsById(0);
+        ObstacleCellsNoUnitObstacles = _overallTileMap.GetUsedCellsById(1);
+        SetPointIDsNoUnitObstacles();
+        AddCellsNoUnitObstacles();
+        ConnectCellsNoUnitObstacles();
     }
 
     public Vector2[] CalculatePath(Vector2 mapStart, Vector2 mapEnd)
@@ -52,14 +72,35 @@ public class BattleGrid : Control
         int endIndex = _pointIDs[mapEnd];
         return _aStar.GetPointPath(startIndex, endIndex);
     }
+    public Vector2[] CalculatePathNoUnitObstacles(Vector2 mapStart, Vector2 mapEnd)
+    {
+        if (!TraversableCellsNoUnitObstacles.Contains(mapStart) || ! TraversableCellsNoUnitObstacles.Contains(mapEnd))
+        {
+            return new Vector2[0];
+        }
+        int startIndex = _pointIDsNoUnitObstacles[mapStart];
+        int endIndex = _pointIDsNoUnitObstacles[mapEnd];
+        return _aStarNoUnitObstacles.GetPointPath(startIndex, endIndex);
+    }
 
+    int _pIDCount = 0;
     private void SetPointIDs()
     {
-        int pIDCount = 0;
+        _pIDCount = 0;
         foreach (Vector2 point in TraversableCells)
         {
-            _pointIDs.Add(point, pIDCount);
-            pIDCount += 1;
+            _pointIDs.Add(point, _pIDCount);
+            _pIDCount += 1;
+        }
+    }
+
+    private void SetPointIDsNoUnitObstacles()
+    {
+        int pIDCountNoUnitObstacles = 0;
+        foreach (Vector2 point in TraversableCellsNoUnitObstacles)
+        {
+            _pointIDsNoUnitObstacles.Add(point, pIDCountNoUnitObstacles);
+            pIDCountNoUnitObstacles += 1;
         }
     }
 
@@ -92,6 +133,13 @@ public class BattleGrid : Control
             _aStar.AddPoint(_pointIDs[point], point);
         }
     }
+    private void AddCellsNoUnitObstacles()
+    {
+        foreach (Vector2 point in TraversableCellsNoUnitObstacles)
+        {
+            _aStarNoUnitObstacles.AddPoint(_pointIDsNoUnitObstacles[point], point);
+        }
+    }
 
     private void ConnectCells()
     {
@@ -106,6 +154,34 @@ public class BattleGrid : Control
                 _aStar.ConnectPoints(_pointIDs[point], _pointIDs[neighbour], true);
             }
         }
+    }
+    private void ConnectCellsNoUnitObstacles()
+    {
+        foreach (Vector2 point in TraversableCellsNoUnitObstacles)
+        {
+            foreach (Vector2 neighbour in GetHorizontalNeighbours(point))
+            {
+                if (!TraversableCellsNoUnitObstacles.Contains(neighbour))
+                {
+                    continue;
+                }
+                _aStarNoUnitObstacles.ConnectPoints(_pointIDsNoUnitObstacles[point], _pointIDsNoUnitObstacles[neighbour], true);
+            }
+        }
+    }
+
+    public List<Vector2> GetAllCells()
+    {
+        List<Vector2> result = new List<Vector2>();
+        foreach (Vector2 point in TraversableCells)
+        {
+            result.Add(point);
+        }
+        foreach (Vector2 point in ObstacleCells)
+        {
+            result.Add(point);
+        }
+        return result;
     }
 
     public List<Vector2> GetHorizontalNeighbours(Vector2 cell) // commented out diagonal cells
@@ -255,6 +331,78 @@ public class BattleGrid : Control
     public int GetDistanceToPoint(Vector2 gridStartPos, Vector2 gridEndPos)
     {
         return CalculatePath(gridStartPos, gridEndPos).Count()-1;
+    }
+    // public int GetDistanceToPointNoUnitObstacles(Vector2 gridStartPos, Vector2 gridEndPos)
+    // {
+    //     return CalculatePathNoUnitObstacles(gridStartPos, gridEndPos).Count()-1;
+    // }
+
+    public int GetDistanceToPointNoUnitObstacles(Vector2 gridStartPos, Vector2 gridEndPos)
+    {
+
+        // AddSinglePoint(gridStartPos);
+        AddSinglePoint(gridEndPos);
+        // if (!TraversableCells.Contains(gridStartPos))
+        // {
+        //     TraversableCells.Add(gridStartPos);
+        // }
+        TraversableCells.Add(gridEndPos);
+        
+        int distance = CalculatePath(gridStartPos, gridEndPos).Count()-1;
+        TraversableCells.Remove(gridEndPos);
+        // RemoveSinglePoint(gridStartPos);
+        RemoveSinglePoint(gridEndPos);
+        return distance;
+        // return CalculatePathNoUnitObstacles(gridStartPos, gridEndPos).Count()-1;
+    }
+    // public int GetDistanceToObstacle(Vector2 gridStartPos, Vector2 gridEndPos)
+    // {
+    //     // AddSinglePoint(gridStartPos);
+    //     // AddSinglePoint(gridEndPos);
+    //     int distance = CalculatePath(gridStartPos, gridEndPos).Count()-1;
+    //     // RemoveSinglePoint(gridStartPos);
+    //     // RemoveSinglePoint(gridEndPos);
+    //     return distance;
+    // }
+
+    private void AddSinglePoint(Vector2 point)
+    {
+        if (_pointIDs.ContainsKey(point))
+        {
+            return;
+        }
+        _pointIDs.Add(point, _pIDCount);
+        _pIDCount += 1;
+        _aStar.AddPoint(_pointIDs[point], point);
+        foreach (Vector2 neighbour in GetHorizontalNeighbours(point))
+        {
+            if (!TraversableCells.Contains(neighbour))
+            {
+                continue;
+            }
+            _aStar.ConnectPoints(_pointIDs[point], _pointIDs[neighbour], true);
+        }
+    }
+
+    private void RemoveSinglePoint(Vector2 point)
+    {
+        if (!_pointIDs.ContainsKey(point))
+        {
+            return;
+        }
+        foreach (Vector2 neighbour in GetHorizontalNeighbours(point))
+        {
+            if (!_pointIDs.ContainsKey(neighbour))
+            {
+                continue;
+            }
+            if (_aStar.ArePointsConnected(_pointIDs[point], _pointIDs[neighbour]))
+            {
+                _aStar.DisconnectPoints(_pointIDs[point], _pointIDs[neighbour]);
+            }
+        }
+        _aStar.RemovePoint(_pointIDs[point]);
+        _pointIDs.Remove(point);
     }
 
     public Vector2 GetCentredWorldPosFromWorldPos(Vector2 position)

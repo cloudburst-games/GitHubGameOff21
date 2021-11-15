@@ -9,9 +9,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -609.0
-margin_top = -344.5
+margin_top = -344.0
 margin_right = 609.0
-margin_bottom = 344.5
+margin_bottom = 42.0
 theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -24,9 +24,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -554.0
-margin_top = -309.785
+margin_top = -174.571
 margin_right = 554.0
-margin_bottom = 151.215
+margin_bottom = 19.4291
+text = "Humungous shoe face attacks!
+
+Prepare for battle..."
 align = 1
 valign = 1
 autowrap = true
@@ -37,9 +40,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -225.0
-margin_top = -163.755
+margin_top = -155.818
 margin_right = 225.0
-margin_bottom = -37.7549
+margin_bottom = -29.8178
 text = "Proceed..."
 
 [connection signal="pressed" from="BtnContinue" to="." method="OnBtnContinuePressed"]
