@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Systems/DialogueSystem/DialogueControl.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Systems/DialogueSystem/TestWorld.cs" type="Script" id=2]
+[ext_resource path="res://Interface/Themes/DialogueTheme.tres" type="Theme" id=3]
+
+[node name="Node2D" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 1.0
+margin_bottom = 1.0
+theme = ExtResource( 3 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DialogueControl" parent="." instance=ExtResource( 1 )]
+anchor_top = 1.0
+margin_top = -1078.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="."]
+margin_left = 286.0
+margin_top = 10.0
+margin_right = 550.0
+margin_bottom = 58.0
+text = "Talk to NPC1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 16.0
+margin_top = 14.0
+margin_right = 256.0
+margin_bottom = 68.0
+text = "Talk to NPC0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 582.0
+margin_top = 6.0
+margin_right = 840.0
+margin_bottom = 54.0
+text = "Talk to NPC2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="."]
+margin_left = 866.0
+margin_top = 6.0
+margin_right = 1126.0
+margin_bottom = 54.0
+text = "Talk to NPC3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button5" type="Button" parent="."]
+margin_left = 1162.0
+margin_right = 1422.0
+margin_bottom = 48.0
+text = "Talk to NPC4"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="JournalButton" type="Button" parent="."]
+anchor_left = 0.887
+anchor_right = 0.887
+margin_left = 0.959961
+margin_right = 217.96
+margin_bottom = 94.0
+text = "Journal"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Button" to="." method="OnNPC1ButtonPressed"]
+[connection signal="pressed" from="Button2" to="." method="OnNPC0ButtonPressed"]
+[connection signal="pressed" from="Button3" to="." method="OnNPC2ButtonPressed"]
+[connection signal="pressed" from="Button4" to="." method="OnNPC3ButtonPressed"]
+[connection signal="pressed" from="Button5" to="." method="OnNPC4ButtonPressed"]
+[connection signal="pressed" from="JournalButton" to="." method="OnJournalButtonPressed"]

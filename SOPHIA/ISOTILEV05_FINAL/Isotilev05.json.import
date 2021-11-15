@@ -1,0 +1,13 @@
+[remap]
+
+importer="ink"
+type="Resource"
+valid=false
+
+[deps]
+
+source_file="res://SOPHIA/ISOTILEV05_FINAL/Isotilev05.json"
+[params]
+
+is_master_file=true
+compress=true
