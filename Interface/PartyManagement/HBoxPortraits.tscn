@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Interface/Cursors/Art/Hint.PNG" type="Texture" id=1]
+[ext_resource path="res://Interface/PartyManagement/HBoxPortraits.cs" type="Script" id=2]
+
+[node name="HBoxPortraits" type="Control"]
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PBtnPlayer" type="Button" parent="."]
+margin_left = 10.0
+margin_right = 60.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TexRect" type="TextureRect" parent="PBtnPlayer"]
+margin_left = 9.0
+margin_top = 4.0
+margin_right = 41.0
+margin_bottom = 36.0
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PBtnCompanion1" type="Button" parent="."]
+margin_left = 65.0
+margin_right = 115.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="TexRect" type="TextureRect" parent="PBtnCompanion1"]
+margin_left = 9.0
+margin_top = 4.0
+margin_right = 41.0
+margin_bottom = 36.0
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PBtnCompanion2" type="Button" parent="."]
+margin_left = 120.0
+margin_right = 170.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TexRect" type="TextureRect" parent="PBtnCompanion2"]
+margin_left = 9.0
+margin_top = 4.0
+margin_right = 41.0
+margin_bottom = 36.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="PopupMenu" type="PopupMenu" parent="."]
+margin_left = 8.485
+margin_right = 224.485
+margin_bottom = 121.0
+items = [ "Character Sheet", null, 0, false, false, 0, 0, null, "", false, "Inventory", null, 0, false, false, 1, 0, null, "", false, "Talk", null, 0, false, false, 2, 0, null, "", false ]
+
+[connection signal="id_pressed" from="PopupMenu" to="." method="OnPopupMenuIDPressed"]

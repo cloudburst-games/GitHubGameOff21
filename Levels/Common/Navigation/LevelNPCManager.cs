@@ -84,6 +84,20 @@ public class LevelNPCManager : YSort
         }
         return null;
     }
+    public Unit GetNPCFromUnitDataID(string ID)
+    {
+        foreach (Node n in GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                if (npc.CurrentUnitData.ID == ID)
+                {
+                    return npc;
+                }
+            }
+        }
+        return null;
+    }
 
 
     public void OnAIPathRequested(AIUnitControlState aIUnitControlState, Vector2 worldPos)

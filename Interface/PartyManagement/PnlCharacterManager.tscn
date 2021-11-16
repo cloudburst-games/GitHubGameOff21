@@ -1,0 +1,586 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Interface/Icons/Water.png" type="Texture" id=1]
+[ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.cs" type="Script" id=2]
+[ext_resource path="res://Interface/PartyManagement/PnlCharacterManagementAttributes.cs" type="Script" id=3]
+[ext_resource path="res://Interface/PartyManagement/PnlCharacterManagementStats.cs" type="Script" id=4]
+[ext_resource path="res://Interface/PartyManagement/HBoxPortraits.tscn" type="PackedScene" id=5]
+
+[node name="PnlCharacterManager" type="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -593.0
+margin_top = -342.0
+margin_right = 593.0
+margin_bottom = 402.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -574.0
+margin_top = -316.0
+margin_right = 575.0
+margin_bottom = 358.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Character" type="Control" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="LblLevelExperience" type="Label" parent="TabContainer/Character"]
+margin_right = 436.0
+margin_bottom = 48.0
+text = "Level: 
+Experience: "
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TexRectPortrait" type="TextureRect" parent="TabContainer/Character"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -196.716
+margin_right = 450.0
+margin_bottom = 253.284
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="TabContainer/Character"]
+margin_left = 447.0
+margin_right = 1135.0
+margin_bottom = 611.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attributes" type="Panel" parent="TabContainer/Character/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 3 )
+
+[node name="LblExplain" type="Label" parent="TabContainer/Character/TabContainer/Attributes"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -306.5
+margin_right = 306.5
+margin_bottom = 82.0
+text = "This character's prowess in each of the six domains of power."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxAttributes" type="VBoxContainer" parent="TabContainer/Character/TabContainer/Attributes"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -197.5
+margin_top = -185.198
+margin_right = 198.5
+margin_bottom = 75.8015
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlVigour" type="Panel" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes"]
+margin_right = 396.0
+margin_bottom = 40.0
+size_flags_vertical = 3
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlVigour"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -17.0
+margin_right = 177.5
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlVigour/HBox"]
+margin_top = 10.0
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Vigour"
+align = 2
+
+[node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlVigour/HBox"]
+margin_left = 161.0
+margin_top = 10.0
+margin_right = 319.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "213"
+align = 1
+
+[node name="BtnIncrease" type="Button" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlVigour/HBox"]
+margin_left = 323.0
+margin_right = 355.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "+"
+
+[node name="PnlResilience" type="Panel" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes"]
+margin_top = 44.0
+margin_right = 396.0
+margin_bottom = 84.0
+size_flags_vertical = 3
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlResilience"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -17.0
+margin_right = 177.5
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlResilience/HBox"]
+margin_top = 10.0
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Resilience"
+align = 2
+
+[node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlResilience/HBox"]
+margin_left = 161.0
+margin_top = 10.0
+margin_right = 319.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "44"
+align = 1
+
+[node name="BtnIncrease" type="Button" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlResilience/HBox"]
+margin_left = 323.0
+margin_right = 355.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "+"
+
+[node name="PnlIntellect" type="Panel" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes"]
+margin_top = 88.0
+margin_right = 396.0
+margin_bottom = 128.0
+size_flags_vertical = 3
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlIntellect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -17.0
+margin_right = 177.5
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlIntellect/HBox"]
+margin_top = 10.0
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Intellect"
+align = 2
+
+[node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlIntellect/HBox"]
+margin_left = 161.0
+margin_top = 10.0
+margin_right = 319.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "213"
+align = 1
+
+[node name="BtnIncrease" type="Button" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlIntellect/HBox"]
+margin_left = 323.0
+margin_right = 355.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "+"
+
+[node name="PnlSwiftness" type="Panel" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes"]
+margin_top = 132.0
+margin_right = 396.0
+margin_bottom = 172.0
+size_flags_vertical = 3
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlSwiftness"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -17.0
+margin_right = 177.5
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlSwiftness/HBox"]
+margin_top = 10.0
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Swiftness"
+align = 2
+
+[node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlSwiftness/HBox"]
+margin_left = 161.0
+margin_top = 10.0
+margin_right = 319.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "33"
+align = 1
+
+[node name="BtnIncrease" type="Button" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlSwiftness/HBox"]
+margin_left = 323.0
+margin_right = 355.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "+"
+
+[node name="PnlCharisma" type="Panel" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes"]
+margin_top = 176.0
+margin_right = 396.0
+margin_bottom = 216.0
+size_flags_vertical = 3
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlCharisma"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -17.0
+margin_right = 177.5
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlCharisma/HBox"]
+margin_top = 10.0
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Charisma"
+align = 2
+
+[node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlCharisma/HBox"]
+margin_left = 161.0
+margin_top = 10.0
+margin_right = 319.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "213"
+align = 1
+
+[node name="BtnIncrease" type="Button" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlCharisma/HBox"]
+margin_left = 323.0
+margin_right = 355.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "+"
+
+[node name="PnlLuck" type="Panel" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes"]
+margin_top = 220.0
+margin_right = 396.0
+margin_bottom = 260.0
+size_flags_vertical = 3
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlLuck"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -177.5
+margin_top = -17.0
+margin_right = 177.5
+margin_bottom = 17.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlLuck/HBox"]
+margin_top = 10.0
+margin_right = 157.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Luck"
+align = 2
+
+[node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlLuck/HBox"]
+margin_left = 161.0
+margin_top = 10.0
+margin_right = 319.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "213"
+align = 1
+
+[node name="BtnIncrease" type="Button" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlLuck/HBox"]
+margin_left = 323.0
+margin_right = 355.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "+"
+
+[node name="LblSkillPoints" type="Label" parent="TabContainer/Character/TabContainer/Attributes"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -315.5
+margin_top = -194.782
+margin_right = 315.5
+margin_bottom = -159.782
+text = "Points remaining: "
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlStatus" type="Panel" parent="TabContainer/Character/TabContainer/Attributes"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -319.0
+margin_top = -138.142
+margin_right = 319.0
+margin_bottom = -14.1422
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblStatus" type="Label" parent="TabContainer/Character/TabContainer/Attributes/PnlStatus"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -297.0
+margin_top = -60.0
+margin_right = 297.0
+margin_bottom = 60.0
+text = "explanation of the attributes explanation of the explanation of the attributes explanation of the attributes explanation of the attributes "
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Derived Stats (Advanced)" type="Panel" parent="TabContainer/Character/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+script = ExtResource( 4 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -318.5
+margin_top = -243.0
+margin_right = 318.5
+margin_bottom = 243.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlStats" type="Panel" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer"]
+margin_right = 637.0
+margin_bottom = 321.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxStats" type="HBoxContainer" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlStats"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -298.5
+margin_top = -104.5
+margin_right = 298.5
+margin_bottom = 104.5
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="LblStats1" type="Label" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlStats/HBoxStats"]
+margin_right = 338.0
+margin_bottom = 209.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Health: 10/10
+Mana: 10/10
+Health Regen: 1
+Mana Regen: 1
+Magic Resist: 10%
+Physical Resist: 10%
+Dodge: 5%"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblStats2" type="Label" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlStats/HBoxStats"]
+margin_left = 342.0
+margin_right = 597.0
+margin_bottom = 209.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 0.75
+text = "Action Points: 6/6
+Physical Damage: 24.2-23.5
+Spell Damage: 10
+Critical Chance: 1
+Move Speed: 6
+Leadership: 1
+Initiative: 1"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlSpells" type="Panel" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer"]
+margin_top = 325.0
+margin_right = 637.0
+margin_bottom = 486.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="VBox" type="VBoxContainer" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlSpells"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -281.0
+margin_top = -65.5
+margin_right = 281.0
+margin_bottom = 65.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlSpells/VBox"]
+margin_right = 562.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+text = "Known Spells"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblSpellsLearned" type="Label" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlSpells/VBox"]
+margin_top = 46.0
+margin_right = 562.0
+margin_bottom = 131.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Solar face
+Moon shock"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Inventory" type="Container" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="BtnClose" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -42.0
+margin_bottom = 37.0
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblCharacterName" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -399.0
+margin_right = 400.0
+margin_bottom = 54.0
+text = "Character Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxPortraits" parent="." instance=ExtResource( 5 )]
+margin_left = 8.47571
+margin_top = 30.7244
+margin_right = 8.47571
+margin_bottom = 30.7244
+
+[connection signal="pressed" from="BtnClose" to="." method="OnBtnClosePressed"]

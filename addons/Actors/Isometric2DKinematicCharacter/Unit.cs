@@ -16,6 +16,10 @@ public class Unit : KinematicBody2D
     public string ID = "";
     [Export]
     public string UnitName = "";
+    [Export]
+    public Texture PortraitPath = GD.Load<Texture>("res://Interface/Cursors/Art/Hint.PNG");
+    [Export]
+    public Texture PortraitPathSmall = GD.Load<Texture>("res://Interface/Cursors/Art/Hint.PNG");
     
     public float Speed {get; set;} = 200f;
     private Random _rand = new Random();
@@ -37,7 +41,6 @@ public class Unit : KinematicBody2D
 	}
 
     ///
-    private ExperienceManager _experienceManager = new ExperienceManager();
 
     [Export]
     private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
@@ -91,6 +94,8 @@ public class Unit : KinematicBody2D
         CurrentUnitData.ID = this.ID;
         CurrentUnitData.Name = this.UnitName;
         CurrentUnitData.PhysicalDamageRange = this._physicalDamageRange;
+        CurrentUnitData.PortraitPath = this.PortraitPath.ResourcePath;
+        CurrentUnitData.PortraitPathSmall = this.PortraitPathSmall.ResourcePath;
 
         CurrentUnitData.CurrentBattleUnitData = new BattleUnitData() {
             Combatant = _mainCombatant,
@@ -104,7 +109,7 @@ public class Unit : KinematicBody2D
 
         // GD.Print("level: " + CurrentUnitData.CurrentBattleUnitData.Level + ", xp: " + xpman.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level));
 
-        CurrentUnitData.CurrentBattleUnitData.Experience = _experienceManager.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level);
+        CurrentUnitData.CurrentBattleUnitData.Experience = CurrentUnitData.ExperienceManager.GetTotalExperienceValueOfLevel(CurrentUnitData.CurrentBattleUnitData.Level);
         CurrentUnitData.Minions = new List<BattleUnitData>();
         foreach (BattleUnit.Combatant combatant in _minions.Keys)
         {
@@ -115,7 +120,7 @@ public class Unit : KinematicBody2D
                 minionUnitData.CurrentBattleUnitData.Combatant = combatant;
                 minionUnitData.CurrentBattleUnitData.Level = CurrentUnitData.CurrentBattleUnitData.Level - 1;
                 SetAttributesByLevel(minionUnitData);
-                UpdateDerivedStatsFromAttributes(minionUnitData);
+                minionUnitData.UpdateDerivedStatsFromAttributes();
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
             } 
         }
@@ -170,74 +175,7 @@ public class Unit : KinematicBody2D
         //     GD.Print(att + ": " + unitData.Attributes[att]);
         // }
 
-        UpdateDerivedStatsFromAttributes(unitData);
-    }
-
-    // NEEDS BALANCING
-    public void UpdateDerivedStatsFromAttributes(UnitData unitData) // called pre-battle as well
-    {
-    // public Dictionary<DerivedStat, float> Stats {get; set;} = new Dictionary<DerivedStat, float>()
-    // {
-    //     {DerivedStat.Health, 10},
-    //     {DerivedStat.TotalHealth, 10},
-    //     {DerivedStat.Mana, 10},
-    //     {DerivedStat.TotalMana, 10},
-    //     {DerivedStat.HealthRegen, 1},
-    //     {DerivedStat.ManaRegen, 1},
-    //     {DerivedStat.MagicResist, 10},
-    //     {DerivedStat.PhysicalResist, 10},
-    //     {DerivedStat.Dodge, 5},
-    //     {DerivedStat.PhysicalDamage, 5},
-    //     {DerivedStat.PhysicalDamageRange, 3},
-    //     {DerivedStat.SpellDamage, 5},
-    //     {DerivedStat.Speed, 6},
-    //     {DerivedStat.Initiative, 5},
-    //     {DerivedStat.Leadership, 1},
-    //     {DerivedStat.CriticalChance, 1},
-    //     {DerivedStat.CurrentAP, 6},
-    // };
-
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth]
-            = unitData.Attributes[UnitData.Attribute.Vigour] * 1.5f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalDamage]
-            = (unitData.Attributes[UnitData.Attribute.Vigour] / 5f) + GetWeaponDamage();
-
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalMana]
-            = unitData.Attributes[UnitData.Attribute.Intellect] * 1.5f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.ManaRegen]
-            = unitData.Attributes[UnitData.Attribute.Intellect] / 6f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]
-            = unitData.Attributes[UnitData.Attribute.Intellect] / 2f;
-        
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Dodge]
-            = unitData.Attributes[UnitData.Attribute.Swiftness] / 8f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP]
-            = (float)Math.Floor(unitData.Attributes[UnitData.Attribute.Swiftness] / 2f);
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Initiative]
-            = unitData.Attributes[UnitData.Attribute.Swiftness] / 1.75f;
-
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Leadership]
-            = unitData.Attributes[UnitData.Attribute.Charisma];
-
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CriticalChance]
-            = unitData.Attributes[UnitData.Attribute.Luck] / 4f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.MagicResist]
-            = unitData.Attributes[UnitData.Attribute.Luck] / 10f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Dodge]
-            *= Math.Max(1,unitData.Attributes[UnitData.Attribute.Luck] / 5f);
-
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.HealthRegen]
-            = unitData.Attributes[UnitData.Attribute.Resilience] / 10f;
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.ManaRegen]
-            *= Math.Max(1,unitData.Attributes[UnitData.Attribute.Resilience] / 4f);
-        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.MagicResist]
-            *= Math.Max(1,unitData.Attributes[UnitData.Attribute.Resilience] / 10f);
-
-        // GD.Print("\n" + unitData.Name + ": ");
-        // foreach (BattleUnitData.DerivedStat stat in unitData.CurrentBattleUnitData.Stats.Keys)
-        // {
-        //     GD.Print(stat + ": " + unitData.CurrentBattleUnitData.Stats[stat]);
-        // }
+        unitData.UpdateDerivedStatsFromAttributes();
     }
 
     private float GetWeaponDamage()
