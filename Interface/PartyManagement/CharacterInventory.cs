@@ -285,7 +285,7 @@ public class CharacterInventory : Control
         }
         // List<PnlInventory.ItemMode> newHeld = new List<PnlInventory.ItemMode>();
         // for (int i =)
-        PopulateGridBag(_currentUnitData.CurrentBattleUnitData.ItemsHeld);
+        // PopulateGridBag(_currentUnitData.CurrentBattleUnitData.ItemsHeld);
         // foreach (PnlInventory.ItemMode pot in _currentUnitData.CurrentBattleUnitData.PotionsEquipped)
         // {
         //     GD.Print(Enum.GetName(typeof(PnlInventory.ItemMode),pot));

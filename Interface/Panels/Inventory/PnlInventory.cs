@@ -401,6 +401,10 @@ public class PnlInventory : Panel
     {
         if (!_active)
         {
+            if (_grid == null)
+            {
+                return;
+            }
             if (!WorldPositionIsOutOfBounds(GetLocalMousePosition()))
             {
                 MouseEnteredInventory?.Invoke(this);

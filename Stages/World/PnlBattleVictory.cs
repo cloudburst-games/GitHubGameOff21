@@ -120,10 +120,10 @@ public class PnlBattleVictory : Panel
         npcDefeated.CurrentUnitData.Hostile = false;
 
         // do some custom text
-        GetNode<Label>("LblDefeatMessage").Text = "Jill is super impressed by your silly face! She decided to join LOL!";
+        GetNode<Label>("LblDefeatMessage").Text = "blah blah u win ok!";
 
         // can make companion if we wish, but i dont think we will be using this to add companions
-        // EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
+        EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
 
         // can also give custom item reward after battles
         EmitSignal(nameof(FoundItems), new List<PnlInventory.ItemMode>() {
