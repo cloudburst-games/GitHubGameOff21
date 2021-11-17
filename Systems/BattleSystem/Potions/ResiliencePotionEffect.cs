@@ -6,7 +6,7 @@ public class ResiliencePotionEffect : PotionEffect
 
     public ResiliencePotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Resilience;
+        CurrentItemMode = PnlInventory.ItemMode.ResiliencePot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
         Magnitude = 5f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionGreen.png");

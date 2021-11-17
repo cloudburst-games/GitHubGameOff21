@@ -9,9 +9,34 @@ public class HUD : CanvasLayer
     {
         GetNode<Panel>("CtrlTheme/PnlMenu").Visible = GetNode<ColorRect>("CtrlTheme/PauseRect").Visible = 
             GetNode<Control>("CtrlTheme/ProgressAnim").Visible = GetNode<Control>("CtrlTheme/DialogueControl").Visible =
-            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible = false;
+            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible = GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible = false;
 
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.DialogueEnded), this, nameof(OnDialogueEnded));
+        GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Connect(nameof(Journal.ClosedJournal), this, nameof(OnBtnJournalClosePressed));
+        // fix position bugs
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").RectPosition = new Vector2(-960,540);
+        GetNode<Journal>("CtrlTheme/DialogueControl/Journal").RectGlobalPosition = new Vector2(0,0);
+    }
+
+    private void OnBtnJournalClosePressed()
+    {
+        Pausable = true;
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = false;
+        PauseCommon(false);
+    }
+
+    public void OnBtnEventsPressed()
+    {
+        PauseCommon(true);
+        Pausable = false;
+        GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible = true;
+    }
+
+    public void OnBtnCloseEventsPressed()
+    {
+        PauseCommon(false);
+        Pausable = true;
+        GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible = false;
     }
 
     public void OnBtnResumePressed()
@@ -37,10 +62,17 @@ public class HUD : CanvasLayer
         GetNode<AnimationPlayer>("CtrlTheme/ProgressAnim/Anim").Stop();
     }
 
-    public void LogEntry(string text)
+    public void LogEntry(string text, bool record=true)
     {
-        GetNode<Label>("CtrlTheme/LblLog").Text = text;
-        GetNode<AnimationPlayer>("CtrlTheme/LblLog/Anim").Play("LogEntry");
+        if (record)
+        {
+            GetNode<PnlEvents>("CtrlTheme/PnlUIBar/PnlEvents").LogEntry(text);
+            GetNode<RichTextLabel>("CtrlTheme/PnlEventsBig/RichTextLabel").Text += text + "\n";
+        }
+        else
+        {
+            GetNode<PnlEvents>("CtrlTheme/PnlUIBar/PnlEvents").LogEntry(text);
+        }
     }
 
     public void TogglePauseMenu(bool pause)
@@ -68,6 +100,7 @@ public class HUD : CanvasLayer
     public void StartDialogue(UnitData unitData, UnitData khepriUnitData)
     {
         PauseCommon(true);
+        Pausable = false;
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = true;
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Start(unitData, khepriUnitData);
     }
@@ -78,6 +111,7 @@ public class HUD : CanvasLayer
     public void OnDialogueEnded()
     {
         PauseCommon(false);
+        Pausable = true;
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = false;
     }
 

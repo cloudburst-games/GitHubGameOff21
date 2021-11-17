@@ -6,7 +6,7 @@ public class SwiftnessPotionEffect : PotionEffect
 
     public SwiftnessPotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Swiftness;
+        CurrentItemMode = PnlInventory.ItemMode.SwiftnessPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
         Magnitude = 5f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionAqua.png");

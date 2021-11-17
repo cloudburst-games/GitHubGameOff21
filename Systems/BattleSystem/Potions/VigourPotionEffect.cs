@@ -6,7 +6,7 @@ public class VigourPotionEffect : PotionEffect
 
     public VigourPotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Vigour;
+        CurrentItemMode = PnlInventory.ItemMode.VigourPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
         Magnitude = 5f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionRed.png");

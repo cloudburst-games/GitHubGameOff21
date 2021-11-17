@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 
 // [Serializable()]
-public class PotionEffect : Reference, IInventoryPlaceable
+public class PotionEffect : IInventoryPlaceable
 {
-    public enum PotionMode {Charisma, Health, Intellect, Luck, Mana, Resilience, Swiftness, Vigour}
-    public PotionMode CurrentPotionMode = PotionMode.Health;
+    public PnlInventory.ItemMode CurrentItemMode {get; set;} = PnlInventory.ItemMode.HealthPot;
     public List<BattleUnitData.DerivedStat> StatsAffected = new List<BattleUnitData.DerivedStat>();
     public SpellEffectManager.SpellMode SpellEffect {get; set;} = SpellEffectManager.SpellMode.HealthPotion;
     public float Magnitude {get; set;} = 0;

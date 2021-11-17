@@ -26,6 +26,9 @@ public class Journal : MarginContainer
     Button QuestButton;
     Label JournalLabel;
     
+    [Signal]
+    public delegate void ClosedJournal();
+
    //public List<string> JournalList = new List < string>();
 
     public override void _Ready()
@@ -46,8 +49,14 @@ public class Journal : MarginContainer
         DialogueControl.JournalList.Add("YYYYYYYYYYYYYYYYYYYYY"); */
     }
 
-    public void ShowJournal()
+    public void ShowJournal(UnitData khepriUnitData)
     {
+        // UPDATE JOURNAL WITH KHEPRI DATA IN HERE
+
+        //TEST
+        GD.Print(khepriUnitData.CurrentDialogueData.JournalString);
+        //
+
         this.Visible = true; //replace with anim
     }
 
@@ -120,6 +129,7 @@ public class Journal : MarginContainer
     public void OnExitButtonPressed()
     {
         this.Visible=false;
+        EmitSignal(nameof(ClosedJournal)); // need to know when u are closing journal so can unpause stuff..
     }
 
 /*     public void OnQuestButtonPressed()

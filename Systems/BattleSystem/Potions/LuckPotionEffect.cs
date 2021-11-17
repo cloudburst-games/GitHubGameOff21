@@ -6,7 +6,7 @@ public class LuckPotionEffect : PotionEffect
 
     public LuckPotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Luck;
+        CurrentItemMode = PnlInventory.ItemMode.LuckPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
         Magnitude = 10f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionYellow.png");

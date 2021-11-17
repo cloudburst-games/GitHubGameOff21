@@ -64,14 +64,28 @@ public class Unit : KinematicBody2D
     [Export]
     private float _physicalDamageRange = 3f;
     [Export]
-    private SpellEffectManager.SpellMode[] _startingSpells = new SpellEffectManager.SpellMode[2] {
-        SpellEffectManager.SpellMode.Empty, SpellEffectManager.SpellMode.Empty
-    };
+    private SpellEffectManager.SpellMode _startingSpell1 = SpellEffectManager.SpellMode.Empty;
+    [Export]
+    private SpellEffectManager.SpellMode _startingSpell2 = SpellEffectManager.SpellMode.Empty;
     [Export]
     private SpellEffectManager.SpellMode _spellGainedAtHigherLevel = SpellEffectManager.SpellMode.Empty;
 
     [Export]
-    private List<PotionEffect.PotionMode> _potions = new  List<PotionEffect.PotionMode>(); // max 9
+    private int _startingGold = 0;
+    [Export]
+    private List<PnlInventory.ItemMode> _itemsHeld = new  List<PnlInventory.ItemMode>();
+    [Export]
+    private PnlInventory.ItemMode _potionEquipped1 = PnlInventory.ItemMode.Empty;
+    [Export]
+    private PnlInventory.ItemMode _potionEquipped2 = PnlInventory.ItemMode.Empty;
+    [Export]
+    private PnlInventory.ItemMode _potionEquipped3 = PnlInventory.ItemMode.Empty;
+    [Export]
+    private PnlInventory.ItemMode _weaponEquipped = PnlInventory.ItemMode.Empty;
+    [Export]
+    private PnlInventory.ItemMode _armourEquipped = PnlInventory.ItemMode.Empty;
+    [Export]
+    private PnlInventory.ItemMode _amuletEquipped = PnlInventory.ItemMode.Empty;
     //
 
     public UnitData CurrentUnitData {get; set;} = new UnitData();
@@ -96,19 +110,30 @@ public class Unit : KinematicBody2D
         }
         CurrentUnitData.ID = this.ID;
         CurrentUnitData.Name = this.UnitName;
-        CurrentUnitData.PhysicalDamageRange = this._physicalDamageRange;
+        CurrentUnitData.BasePhysicalDamageRange = this._physicalDamageRange;
         CurrentUnitData.PortraitPath = this.PortraitPath.ResourcePath;
         CurrentUnitData.PortraitPathSmall = this.PortraitPathSmall.ResourcePath;
+        CurrentUnitData.Gold = _startingGold;
 
         CurrentUnitData.CurrentBattleUnitData = new BattleUnitData() {
             Combatant = _mainCombatant,
             Level = _combatLevel,
             Name = CurrentUnitData.Name,
-            Potions = _potions,
-            Spell1 = _startingSpells[0],
-            Spell2 = _startingSpells[1],
+            ItemsHeld = _itemsHeld,
+            WeaponEquipped = _weaponEquipped,
+            AmuletEquipped = _amuletEquipped,
+            ArmourEquipped = _armourEquipped,
+            Spell1 = _startingSpell1,
+            Spell2 = _startingSpell2,
             SpellGainedAtHigherLevel = _spellGainedAtHigherLevel
         };
+
+        CurrentUnitData.EquipAmulet(_amuletEquipped);
+        CurrentUnitData.EquipArmour(_armourEquipped);
+        CurrentUnitData.EquipWeapon(_weaponEquipped);
+        CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[0] = _potionEquipped1;
+        CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[1] = _potionEquipped2;
+        CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[2] = _potionEquipped3;
         // ExperienceManager xpman = new ExperienceManager();
 
         // GD.Print("level: " + CurrentUnitData.CurrentBattleUnitData.Level + ", xp: " + xpman.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level));

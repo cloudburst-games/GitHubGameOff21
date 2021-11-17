@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[Serializable()]
 public class ExperienceManager
 {
     public float GetTotalExperienceValueOfLevel(int level)

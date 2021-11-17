@@ -39,7 +39,7 @@ PortraitPath = ExtResource( 9 )
 PortraitPathSmall = ExtResource( 9 )
 _startingBools = {
 "Companion": false,
-"Hostile": true
+"Hostile": false
 }
 _combatLevel = 10
 _minions = {
@@ -62,6 +62,11 @@ _minions = {
 0: 0,
 1: 0
 }
+_potionEquipped1 = 0
+_potionEquipped3 = 4
+_potionEquipped4 = 3
+_potionEquipped5 = 1
+_potionEquipped6 = 1
 
 [node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -218.578, 1189.19 )

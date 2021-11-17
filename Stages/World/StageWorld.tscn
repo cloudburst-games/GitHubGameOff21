@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Stages/World/PnlBattleVictory.cs" type="Script" id=15]
 [ext_resource path="res://Stages/World/Music/SadAlchemy_World.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Interface/PartyManagement/HBoxPortraits.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Stages/World/HUD/PnlEvents.cs" type="Script" id=18]
 [ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=20]
 
@@ -179,23 +180,32 @@ __meta__ = {
 margin_left = 184.0
 margin_right = 1594.0
 margin_bottom = 40.0
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents"]
-margin_right = 1398.0
+margin_left = 14.0
+margin_right = 1394.0
 margin_bottom = 40.0
+custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_right = 1290.0
+margin_right = 1268.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+align = 1
+valign = 1
+clip_text = true
 
 [node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_left = 1294.0
-margin_right = 1398.0
+margin_left = 1278.0
+margin_right = 1380.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -238,14 +248,7 @@ margin_bottom = -540.0
 
 [node name="DialogueControl" parent="HUD/CtrlTheme" instance=ExtResource( 7 )]
 visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -1000.0
-margin_top = 500.0
-margin_right = -1000.0
-margin_bottom = 500.0
+margin_top = 540.0
 
 [node name="PnlCharacterManager" parent="HUD/CtrlTheme" instance=ExtResource( 19 )]
 
@@ -464,6 +467,49 @@ margin_right = 87.0
 margin_bottom = -38.6813
 text = "Proceed"
 
+[node name="PnlEventsBig" type="Panel" parent="HUD/CtrlTheme"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -519.0
+margin_top = -323.5
+margin_right = 519.0
+margin_bottom = 323.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HUD/CtrlTheme/PnlEventsBig"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -477.0
+margin_top = -256.5
+margin_right = 478.0
+margin_bottom = 297.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblTitle" type="Label" parent="HUD/CtrlTheme/PnlEventsBig"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -200.0
+margin_right = 200.0
+margin_bottom = 28.0
+text = "Game Events"
+align = 1
+valign = 1
+
+[node name="BtnClose" type="Button" parent="HUD/CtrlTheme/PnlEventsBig"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -34.0
+margin_bottom = 34.0
+text = "X"
+
 [node name="Blah" type="Panel" parent="HUD/CtrlTheme"]
 visible = false
 margin_left = -415.714
@@ -579,7 +625,9 @@ anims/default = SubResource( 4 )
 
 [node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 
+[connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnJournal" to="." method="OnBtnJournalPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnMenu" to="HUD" method="OnBtnMenuPressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer/BtnEvents" to="HUD" method="OnBtnEventsPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnResume" to="HUD" method="OnBtnResumePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnSave" to="HUD" method="OnBtnSavePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnLoad" to="HUD" method="OnBtnLoadPressed"]
@@ -589,4 +637,7 @@ anims/default = SubResource( 4 )
 [connection signal="pressed" from="HUD/CtrlTheme/PnlDefeat/VBoxBtns/BtnSettings" to="." method="OnBtnSettingsPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlDefeat/VBoxBtns/BtnExit" to="." method="OnBtnExitPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlBattleVictory/BtnContinue" to="HUD/CtrlTheme/PnlBattleVictory" method="OnBtnContinuePressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlEventsBig/BtnClose" to="HUD" method="OnBtnCloseEventsPressed"]
 [connection signal="file_selected" from="HUD/CtrlTheme/FileDialog" to="." method="OnFileDialogConfirmed"]
+
+[editable path="HUD/CtrlTheme/DialogueControl"]

@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class AggressiveAITurnState : AITurnState
 {
@@ -79,25 +80,26 @@ public class AggressiveAITurnState : AITurnState
     private bool SuccessUsingPotion(CntBattle cntBattle)
     {
         BattleUnitData currentUnitData = cntBattle.GetActiveBattleUnit().CurrentBattleUnitData;
-        List<PotionEffect.PotionMode> potions = currentUnitData.Potions;
+        List<PnlInventory.ItemMode> potions = currentUnitData.GetPotionsEquipped();
         // first prioritise health or mana if these are low
-        foreach (PotionEffect.PotionMode pot in potions)
+        foreach (PnlInventory.ItemMode pot in potions)
         {
-            if (pot == PotionEffect.PotionMode.Health && currentUnitData.Stats[BattleUnitData.DerivedStat.Health] < currentUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth])
+            if (pot == PnlInventory.ItemMode.HealthPot && currentUnitData.Stats[BattleUnitData.DerivedStat.Health] < currentUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth])
             {
                 cntBattle.OnPnlPotionPotionSelected(pot);
                 return true;
             }
-            else if (pot == PotionEffect.PotionMode.Mana && currentUnitData.Stats[BattleUnitData.DerivedStat.Mana] < currentUnitData.Stats[BattleUnitData.DerivedStat.TotalMana])
+            else if (pot == PnlInventory.ItemMode.ManaPot && currentUnitData.Stats[BattleUnitData.DerivedStat.Mana] < currentUnitData.Stats[BattleUnitData.DerivedStat.TotalMana])
             {
                 cntBattle.OnPnlPotionPotionSelected(pot);
                 return true;
             }
         }
         // then go through the rest and use whichever as long as not health or mana
-        foreach (PotionEffect.PotionMode pot in potions)
+        foreach (PnlInventory.ItemMode pot in potions)
         {
-            if (pot != PotionEffect.PotionMode.Health && pot != PotionEffect.PotionMode.Mana)
+            GD.Print(Enum.GetName(typeof(PnlInventory.ItemMode),pot));
+            if (pot != PnlInventory.ItemMode.HealthPot && pot != PnlInventory.ItemMode.ManaPot)
             {
                 cntBattle.OnPnlPotionPotionSelected(pot);
                 return true;

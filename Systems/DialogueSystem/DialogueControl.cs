@@ -8,6 +8,12 @@ public class DialogueControl : Control
     // Just emit this signal when you want to hide the dialog box
     [Signal]
     public delegate void DialogueEnded();
+    [Signal]
+    public delegate void CompanionJoining(UnitDataSignalWrapper npcUnitData);
+    [Signal]
+    public delegate void CompanionLeaving(UnitDataSignalWrapper npcUnitData);
+    [Signal]
+    public delegate void CompletedQuest(int difficulty, List<PnlInventory.ItemMode> wrappedItemRewards, int goldReward);
 
 #region Ink code
     public InkStory InkStory;
@@ -68,6 +74,7 @@ public class DialogueControl : Control
 		ContinueButton = GetNode<Button>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer4/ContinueButton");
 		Portrait = GetNode<TextureRect>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer/MarginContainer/Portrait");
 		NameLabel = GetNode<Label>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer/NameLabel");
+        Journal.Connect(nameof(Journal.ClosedJournal), this, nameof(OnJournalClosed));
 		//MakeQuestDict();
     }
 
@@ -236,7 +243,50 @@ public class DialogueControl : Control
 		}
 	}
 
+    // call this when khepri talks to an NPC, and accepts the NPC offer to join.
+    private void CompanionJoinParty(UnitData npcUnitData, UnitData khepriUnitData)
+    {
+        // @Sarah - you should only show the option to join party if khepri has less than two companions - check this
+        // by doing if (khepriUnitData.Companions.Count < 2). If khepri already has 2 or more companions, you need to show
+        // dialogue option that party is full and come back if you need me something like that
 
+        // error checking -check if khepri already has 2 companions. If this shows up, sarah fix your code.
+        if (khepriUnitData.Companions.Count >= 2)
+        {
+            GD.Print("we shouldnt offer to join because party is full!");
+            return;
+        }
+        EmitSignal(nameof(CompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcUnitData});
+    }
+
+    // call this for example, when khepri talks to the party member and says I don't want you anymore. The option should
+    // only exist for party members!
+    private void CompanionLeaveParty(UnitData npcUnitData, UnitData khepriUnitData)
+    {
+        
+        // error checking - check if the npc is indeed one of khepri's crew. If this shows up, sarah fix your code.
+        if (!khepriUnitData.Companions.Contains(npcUnitData))
+        {
+            GD.Print("we shouldnt ask them to leave because they aren't in our party!");
+            return;
+        }
+        EmitSignal(nameof(CompanionLeaving), new UnitDataSignalWrapper() {CurrentUnitData = npcUnitData});
+    }
+
+    // call this after the player hands in a quest to the NPC
+    // pass in a difficulty integer, which is equivalent to the player level the quest is designed for.
+    // e.g. a quest designed for level 3 character you would pass 3 as the difficulty variable
+    // also pass in a gold reward (0 if you dont want to reward gold), and any items
+    // e.g.:
+    // CompleteQuest(
+    //     difficulty:3, 
+    //     itemRewards:new List<PnlInventory.ItemMode> { PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot, PnlInventory.ItemMode.ResiliencePot },
+    //     goldReward:31);
+    // note you will also need to remove it from the player's journal
+    private void CompleteQuest(int difficulty, List<PnlInventory.ItemMode> itemRewards, int goldReward)
+    {
+        EmitSignal(nameof(CompletedQuest), difficulty, itemRewards, goldReward);
+    }
 
 
 /* 	public void MakeQuestDict()
@@ -269,9 +319,6 @@ everything in DialogueData will be saved between levels and on save/load*/
 
 #endregion
 
-    // Started when press E next to non-companion, non-hostile NPC
-    // Passes in the interlocutor data (modify variables inside here as needed - will be stored on save and load)
-    // within this can access DialogueData. Modify variables as needed in class below.
 
 	public void Load(UnitData npcUnitData, UnitData khepriUnitData)
 	{
@@ -292,8 +339,17 @@ everything in DialogueData will be saved between levels and on save/load*/
 
 	private UnitData _khepriUnitData;
 
+
+    // Started when press E next to non-companion, non-hostile NPC
+    // Passes in the interlocutor data (modify variables inside here as needed - will be stored on save and load)
+    // within this can access DialogueData. Modify variables as needed in class below.
     public void Start(UnitData npcUnitData, UnitData khepriUnitData)
     {
+        CompleteQuest(
+            difficulty:3, 
+            itemRewards:new List<PnlInventory.ItemMode> { PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot, PnlInventory.ItemMode.ResiliencePot },
+            goldReward:31);
+
 		_khepriUnitData = khepriUnitData;
 
 		// if (khepriUnitData.Modified)
@@ -340,6 +396,12 @@ everything in DialogueData will be saved between levels and on save/load*/
        
     } */
 
+    private void OnJournalClosed()
+    {
+        // here so we can hide the dialoguecontrol as well (GetParent() is bad and should never be used)
+        Visible = false;
+    }
+
 	public override void _Process(float delta)
 	{
 		//GD.Print(_nPC0Spoken);
@@ -365,6 +427,6 @@ public class DialogueData : IStoreable
 	public bool NightGateConvo {get; set;} = false;
 	public bool EscapeConvo {get; set;} = false;
 	public bool Modified {get; set;} = false;
-	public string JournalString{get;set;}
+	public string JournalString{get;set;} = "";
 	//public List <string> JournalList {get; set;}
 }

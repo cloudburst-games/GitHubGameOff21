@@ -6,7 +6,7 @@ public class IntellectPotionEffect : PotionEffect
 
     public IntellectPotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Intellect;
+        CurrentItemMode = PnlInventory.ItemMode.IntellectPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
         Magnitude = 4f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionBlue.png");

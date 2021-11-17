@@ -797,7 +797,7 @@ public class CntBattle : Control
         if (actionMode == ActionMode.Potion)
         {
             BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
-            _pnlPotion.PopulateGrid(GetActiveBattleUnit().CurrentBattleUnitData.Potions);
+            _pnlPotion.PopulateGrid(GetActiveBattleUnit().CurrentBattleUnitData.GetPotionsEquipped());
             _pnlPotion.Visible = true;
             
             
@@ -861,12 +861,13 @@ public class CntBattle : Control
         _currentSelectedAction = actionMode;
     }
 
-    public void OnPnlPotionPotionSelected(PotionEffect.PotionMode potionMode)
+    public void OnPnlPotionPotionSelected(PnlInventory.ItemMode potionMode)
     {
         // GD.Print(potionEffect);
         _pnlPotion.Visible = false;
         // remove item from inventory
-        GetActiveBattleUnit().CurrentBattleUnitData.Potions.Remove(potionMode);
+        GetActiveBattleUnit().CurrentBattleUnitData.DeleteEquippedPotion(potionMode);
+        // GetActiveBattleUnit().CurrentBattleUnitData.Potions.Remove(potionMode);
         // use the spell code to apply the potion
         CurrentSpellEffectManager.ApplyPotionEffect(GetActiveBattleUnit(), _pnlPotion.PotionBuilder.BuildPotion(potionMode));
         // OnSpellEffectFinished is now called, ending the turn after LogEntry

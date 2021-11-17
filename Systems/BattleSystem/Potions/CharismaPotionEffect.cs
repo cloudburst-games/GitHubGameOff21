@@ -6,7 +6,7 @@ public class CharismaPotionEffect : PotionEffect
 
     public CharismaPotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Charisma;
+        CurrentItemMode = PnlInventory.ItemMode.CharismaPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
         Magnitude = 5f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionPurp.png");

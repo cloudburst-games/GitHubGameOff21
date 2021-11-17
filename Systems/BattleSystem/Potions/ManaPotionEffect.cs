@@ -6,7 +6,7 @@ public class ManaPotionEffect : PotionEffect
 
     public ManaPotionEffect()
     {
-        CurrentPotionMode = PotionEffect.PotionMode.Mana;
+        CurrentItemMode = PnlInventory.ItemMode.ManaPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Mana);
         Magnitude = 3f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/Water.png");

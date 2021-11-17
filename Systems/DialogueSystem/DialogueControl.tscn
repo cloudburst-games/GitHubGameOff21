@@ -192,6 +192,7 @@ align = 2
 script = ExtResource( 4 )
 
 [node name="Journal" parent="." instance=ExtResource( 2 )]
-visible = false
+margin_left = 0.0
+margin_right = 1920.0
 
 [connection signal="pressed" from="MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer4/ContinueButton" to="." method="OnContinueButtonPressed"]

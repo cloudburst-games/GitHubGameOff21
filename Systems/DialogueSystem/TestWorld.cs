@@ -55,6 +55,7 @@ public class TestWorld : Control
 
     public void OnJournalButtonPressed()
     {
-        Journal.ShowJournal();
+        //passing in fake unit data as dont have khepri 
+        Journal.ShowJournal(new UnitData());
     }
 }

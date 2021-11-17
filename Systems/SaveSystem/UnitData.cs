@@ -33,7 +33,9 @@ public class UnitData : IStoreable
         }
     }
     public bool Modified {get; set;} = false;
-    public float PhysicalDamageRange {get; set;} = 3f;
+    public float BasePhysicalDamageRange {get; set;} = 3f;
+    public int Gold {get; set;} = 0;
+    // public List<IInventoryPlaceable> ItemsHeld {get; set;} = new List<IInventoryPlaceable>();// TODO make a serializable thing instead
     
     public enum Attribute { Vigour, Resilience, Intellect, Swiftness, Charisma, Luck}
     
@@ -80,35 +82,147 @@ public class UnitData : IStoreable
         Behaviour = AIUnitControlState.AIBehaviour.Stationary;
     }
 
+    public float GetWeaponDamage()
+    {
+
+        if (CurrentBattleUnitData.WeaponEquipped != PnlInventory.ItemMode.Empty)
+        {
+            ItemBuilder itemBuilder = new ItemBuilder();
+            WeaponItem weapon = itemBuilder.BuildWeapon(CurrentBattleUnitData.WeaponEquipped);
+            return weapon.WeaponDamage;
+        }
+        return 0;
+    }
+
+    public float GetDamageRange()
+    {
+        if (CurrentBattleUnitData.WeaponEquipped != PnlInventory.ItemMode.Empty)
+        {
+            ItemBuilder itemBuilder = new ItemBuilder();
+            WeaponItem weapon = itemBuilder.BuildWeapon(CurrentBattleUnitData.WeaponEquipped);
+            return weapon.DamageRange;
+        }
+        return BasePhysicalDamageRange;
+    }
+
+    public float GetArmourBonus()
+    {
+        if (CurrentBattleUnitData.ArmourEquipped != PnlInventory.ItemMode.Empty)
+        {
+            ItemBuilder itemBuilder = new ItemBuilder();
+            ArmourItem armour = itemBuilder.BuildArmour(CurrentBattleUnitData.ArmourEquipped);
+            return armour.ArmourBonus;
+        }
+        return 0;
+    }
+
+    public void RemoveEquippedWeapon()
+    {
+        PnlInventory.ItemMode oldWeapon = CurrentBattleUnitData.WeaponEquipped;
+        if (oldWeapon != PnlInventory.ItemMode.Empty)
+        {
+            ItemBuilder itemBuilder = new ItemBuilder();
+            WeaponItem old = itemBuilder.BuildWeapon(oldWeapon);
+            foreach (Attribute att in old.AttributesAffected)
+            {
+                Attributes[att] -= old.AttributesAffectedMagnitude;
+            }
+            CurrentBattleUnitData.WeaponEquipped = PnlInventory.ItemMode.Empty;
+            UpdateDerivedStatsFromAttributes();
+        }
+    }
+
+    public void RemoveEquippedArmour()
+    {
+        PnlInventory.ItemMode oldArmour = CurrentBattleUnitData.ArmourEquipped;
+        if (oldArmour != PnlInventory.ItemMode.Empty)
+        {
+            ItemBuilder itemBuilder = new ItemBuilder();
+            ArmourItem old = itemBuilder.BuildArmour(oldArmour);
+            foreach (Attribute att in old.AttributesAffected)
+            {
+                Attributes[att] -= old.AttributesAffectedMagnitude;
+            }
+            CurrentBattleUnitData.ArmourEquipped = PnlInventory.ItemMode.Empty;
+            UpdateDerivedStatsFromAttributes();
+        }
+    }
+    public void RemoveEquippedAmulet()
+    {
+        PnlInventory.ItemMode oldAmulet = CurrentBattleUnitData.AmuletEquipped;
+        if (oldAmulet != PnlInventory.ItemMode.Empty)
+        {
+            ItemBuilder itemBuilder = new ItemBuilder();
+            AmuletItem old = itemBuilder.BuildAmulet(oldAmulet);
+            foreach (Attribute att in old.AttributesAffected)
+            {
+                Attributes[att] -= old.AttributesAffectedMagnitude;
+            }
+            CurrentBattleUnitData.AmuletEquipped = PnlInventory.ItemMode.Empty;
+            UpdateDerivedStatsFromAttributes();
+        }
+    }
+
+    public void EquipArmour(PnlInventory.ItemMode newArmourItemMode)
+    {
+        if (newArmourItemMode == PnlInventory.ItemMode.Empty)
+        {
+            return;
+        }
+        RemoveEquippedArmour();
+        CurrentBattleUnitData.ArmourEquipped = newArmourItemMode;
+        ItemBuilder itemBuilder = new ItemBuilder();
+        ArmourItem newArmour = itemBuilder.BuildArmour(newArmourItemMode);
+        foreach (Attribute att in newArmour.AttributesAffected)
+        {
+            Attributes[att] += newArmour.AttributesAffectedMagnitude;
+        }
+        UpdateDerivedStatsFromAttributes();
+    }
+    public void EquipWeapon(PnlInventory.ItemMode newWeaponItemMode)
+    {
+        if (newWeaponItemMode == PnlInventory.ItemMode.Empty)
+        {
+            return;
+        }
+        RemoveEquippedWeapon();
+        CurrentBattleUnitData.WeaponEquipped = newWeaponItemMode;
+        ItemBuilder itemBuilder = new ItemBuilder();
+        WeaponItem newWeapon = itemBuilder.BuildWeapon(newWeaponItemMode);
+        foreach (Attribute att in newWeapon.AttributesAffected)
+        {
+            Attributes[att] += newWeapon.AttributesAffectedMagnitude;
+        }
+        UpdateDerivedStatsFromAttributes();
+    }
+
+    public void EquipAmulet(PnlInventory.ItemMode newAmuletItemMode)
+    {
+        if (newAmuletItemMode == PnlInventory.ItemMode.Empty)
+        {
+            return;
+        }
+        RemoveEquippedAmulet();
+        CurrentBattleUnitData.AmuletEquipped = newAmuletItemMode;
+        ItemBuilder itemBuilder = new ItemBuilder();
+        AmuletItem newAmulet = itemBuilder.BuildAmulet(newAmuletItemMode);
+        foreach (Attribute att in newAmulet.AttributesAffected)
+        {
+            Attributes[att] += newAmulet.AttributesAffectedMagnitude;
+        }
+        UpdateDerivedStatsFromAttributes();
+    }
+
     // NEEDS BALANCING. consider applying similar formula that is used for armour, if flat increases don't work out. or maybe just for luck %
     public void UpdateDerivedStatsFromAttributes() // called pre-battle as well
     {
         UnitData unitData = this; // clean this up when get time
-    // public Dictionary<DerivedStat, float> Stats {get; set;} = new Dictionary<DerivedStat, float>()
-    // {
-    //     {DerivedStat.Health, 10},
-    //     {DerivedStat.TotalHealth, 10},
-    //     {DerivedStat.Mana, 10},
-    //     {DerivedStat.TotalMana, 10},
-    //     {DerivedStat.HealthRegen, 1},
-    //     {DerivedStat.ManaRegen, 1},
-    //     {DerivedStat.MagicResist, 10},
-    //     {DerivedStat.PhysicalResist, 10},
-    //     {DerivedStat.Dodge, 5},
-    //     {DerivedStat.PhysicalDamage, 5},
-    //     {DerivedStat.PhysicalDamageRange, 3},
-    //     {DerivedStat.SpellDamage, 5},
-    //     {DerivedStat.Speed, 6},
-    //     {DerivedStat.Initiative, 5},
-    //     {DerivedStat.Leadership, 1},
-    //     {DerivedStat.CriticalChance, 1},
-    //     {DerivedStat.CurrentAP, 6},
-    // };
-
         unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth]
             = UpdateStat(unitData.Attributes[UnitData.Attribute.Vigour], 2f);
         unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalDamage]
-            =  UpdateStat(unitData.Attributes[UnitData.Attribute.Vigour], 0.5f);// + GetWeaponDamage();
+            =  UpdateStat(unitData.Attributes[UnitData.Attribute.Vigour], 0.5f) + GetWeaponDamage();
+        
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalDamageRange] = GetDamageRange();
 
         unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalMana]
             =  UpdateStat(unitData.Attributes[UnitData.Attribute.Intellect], 2.5f);
@@ -139,6 +253,8 @@ public class UnitData : IStoreable
         unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.ManaRegen]
             *= Math.Max(1,UpdateStat(unitData.Attributes[UnitData.Attribute.Resilience], 0.2f));
 
+        unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalResist]
+            =  UpdateStat(GetArmourBonus(), 1f);
         // GD.Print("\n" + unitData.Name + ": ");
         // if (unitData.ID == "khepri")
         // foreach (BattleUnitData.DerivedStat stat in unitData.CurrentBattleUnitData.Stats.Keys)
@@ -146,6 +262,8 @@ public class UnitData : IStoreable
         //     GD.Print(stat + ": " + unitData.CurrentBattleUnitData.Stats[stat]);
         // }
     }
+
+
 
     private float UpdateStat(float att, float multiplier) // higher multiplier = higher result
     {

@@ -3,6 +3,11 @@ using System;
 
 public interface IInventoryPlaceable
 {
+    PnlInventory.ItemMode CurrentItemMode {
+        get;
+        set;
+    }
+
     Texture IconTexture {
         get;
         set;

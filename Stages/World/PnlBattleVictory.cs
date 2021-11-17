@@ -12,9 +12,11 @@ public class PnlBattleVictory : Panel
     [Signal]
     public delegate void TestCompanionJoining(UnitDataSignalWrapper unitDataSignalWrapper);
     [Signal]
-    public delegate void ExperienceGained(UnitDataSignalWrapper unitDataSignalWrapper);
+    public delegate void ExperienceGained(UnitDataSignalWrapper unitDataSignalWrapper, int xpPerMember);
     [Signal]
     public delegate void FoundGold(int goldAmount);
+    [Signal]
+    public delegate void FoundItems(List<PnlInventory.ItemMode> items);
 
     private Dictionary<string, Action<Unit>> _defeatNPCOutcomes;
     public override void _Ready()
@@ -33,11 +35,15 @@ public class PnlBattleVictory : Panel
         Visible = true;
 
         float xpPerMember = GetExperienceRewardPerMember(npcDefeated, playerData);
-        int goldReward = 5; // TODO - set starting gold for each npc, and randomise based on this for each minion. then access this after battle to distribute.
-        EmitSignal(nameof(FoundGold), goldReward);
 
-        string rewardMessage = String.Format("Each party member gains {0} experience!\nYou find {1} gold!{2}",
-            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\n\nOne of your party members has gained a level!" : "");
+        int goldReward = npcDefeated.CurrentUnitData.Gold;
+        EmitSignal(nameof(FoundGold), goldReward);
+        
+        EmitSignal(nameof(FoundItems), npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld);
+
+        string rewardMessage = String.Format("Each party member gains {0} experience!\nYou find {1} gold!{3}{2}",
+            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\n\nOne of your party members has gained a level!" : "",
+            npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Count > 0 ?"\n\nYou find treasure!" : "");
         
         DoExperienceOutcome(xpPerMember, playerData, companionDatas);
 
@@ -75,14 +81,14 @@ public class PnlBattleVictory : Panel
         playerData.CurrentBattleUnitData.Experience += xpPerMember;
         // if (playerData.ExperienceManager.CanLevelUp(playerData.CurrentBattleUnitData.Level, playerData.CurrentBattleUnitData.Experience))
         // {
-            EmitSignal(nameof(ExperienceGained), new UnitDataSignalWrapper() {CurrentUnitData = playerData});
+            EmitSignal(nameof(ExperienceGained), new UnitDataSignalWrapper() {CurrentUnitData = playerData}, xpPerMember);
         // }
         foreach (UnitData unitData in companionDatas)
         {
             unitData.CurrentBattleUnitData.Experience += xpPerMember;
             // if (unitData.ExperienceManager.CanLevelUp(unitData.CurrentBattleUnitData.Level, unitData.CurrentBattleUnitData.Experience))
             // {
-                EmitSignal(nameof(ExperienceGained), new UnitDataSignalWrapper() {CurrentUnitData = unitData}); // should lead to an alert that x levelled up
+                EmitSignal(nameof(ExperienceGained), new UnitDataSignalWrapper() {CurrentUnitData = unitData}, xpPerMember); // should lead to an alert that x levelled up
             // }
         }
 
@@ -103,22 +109,49 @@ public class PnlBattleVictory : Panel
             experienceValueOfDefeated += battleUnitData.Experience;
         }
         experienceValueOfDefeated += npcDefeated.CurrentUnitData.CurrentBattleUnitData.Experience;
-        return playerData.ExperienceManager.GetTotalExperienceFromVictory(experienceValueOfDefeated, npcDefeated.CurrentUnitData.Minions.Count + 1, playerData.Minions.Count) / (1 + playerData.Minions.Count);
+        return playerData.ExperienceManager.GetTotalExperienceFromVictory(experienceValueOfDefeated, npcDefeated.CurrentUnitData.Minions.Count + 1, playerData.Companions.Count);
     }
 
 
     private void OnEnemyJillDefeated(Unit npcDefeated)
     {
         // do something special
-        // lets try making her our companion
+        // lets try just making her neutral
         npcDefeated.CurrentUnitData.Hostile = false;
+
+        // do some custom text
         GetNode<Label>("LblDefeatMessage").Text = "Jill is super impressed by your silly face! She decided to join LOL!";
-        EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
-        // npcDefeated.CurrentUnitData.Name = "Reformed Jill";
-        // npcDefeated.CurrentUnitData.Hostile = false;
-        // npcDefeated.CurrentUnitData.Companion = true;
-        // npcDefeated.UpdateFromUnitData();
+
+        // can make companion if we wish, but i dont think we will be using this to add companions
+        // EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
+
+        // can also give custom item reward after battles
+        EmitSignal(nameof(FoundItems), new List<PnlInventory.ItemMode>() {
+            PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.VigourPot
+        });
+
+        // and custom gold
+        EmitSignal(nameof(FoundGold), 34);
     }
+
+    // private List<IInventoryPlaceableSignalWrapper> GetItemsFromEnemy(UnitData defeatedNPCUnitData)
+    // {
+    //     List<IInventoryPlaceableSignalWrapper> wrappedItems = new List<IInventoryPlaceableSignalWrapper>();
+
+    //     //dummy list
+    //     List<IInventoryPlaceable> items = new List<IInventoryPlaceable>() {
+    //         new VigourPotionEffect(),
+    //         new LuckPotionEffect(),
+    //         new SwiftnessPotionEffect()
+    //     }; //defeatedNPCUnitData.ItemsHeld;
+    //     //
+
+    //     foreach (IInventoryPlaceable item in items)
+    //     {
+    //         wrappedItems.Add(new IInventoryPlaceableSignalWrapper() {CurrentIInventoryPlaceable = item});
+    //     }
+    //     return wrappedItems;
+    // }
 
     private void OnBtnContinuePressed()
     {

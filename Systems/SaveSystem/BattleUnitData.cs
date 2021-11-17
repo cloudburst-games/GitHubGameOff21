@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable()]
 public class BattleUnitData : IStoreable
@@ -35,10 +36,43 @@ public class BattleUnitData : IStoreable
         {DerivedStat.CurrentAP, 6},
     };
 
-    public List<PotionEffect.PotionMode> Potions = new List<PotionEffect.PotionMode>() {
-        PotionEffect.PotionMode.Health, PotionEffect.PotionMode.Mana, PotionEffect.PotionMode.Resilience,
-        PotionEffect.PotionMode.Charisma, PotionEffect.PotionMode.Vigour, PotionEffect.PotionMode.Swiftness
+    public List<PnlInventory.ItemMode> ItemsHeld {get; set;} = new List<PnlInventory.ItemMode>() // all inventory items
+    {
+        PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot
     };
+
+    public PnlInventory.ItemMode[] PotionsEquipped {get; set;} = new PnlInventory.ItemMode[3] { // in potion slots
+        PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.Empty
+    };
+
+    public PnlInventory.ItemMode AmuletEquipped {get; set;} = PnlInventory.ItemMode.Empty; // in amulet slot
+    public PnlInventory.ItemMode WeaponEquipped {get; set;} = PnlInventory.ItemMode.Empty; // in weapon slot
+    public PnlInventory.ItemMode ArmourEquipped {get; set;} = PnlInventory.ItemMode.Empty; // in armour slot
+
+    public void DeleteEquippedPotion(PnlInventory.ItemMode potion)
+    {
+        foreach (PnlInventory.ItemMode pot in PotionsEquipped)
+        {
+            if (pot == potion)
+            {
+                int index = PotionsEquipped.ToList().IndexOf(pot);
+                PotionsEquipped[index] = PnlInventory.ItemMode.Empty;
+            }
+        }
+    }
+
+    public List<PnlInventory.ItemMode> GetPotionsEquipped() //can be better
+    {
+        List<PnlInventory.ItemMode> potionsEquipped = new List<PnlInventory.ItemMode>();
+        foreach (PnlInventory.ItemMode item in PotionsEquipped)
+        {
+            if ( item != PnlInventory.ItemMode.Empty)
+            {
+                potionsEquipped.Add(item);
+            }
+        }
+        return potionsEquipped;
+    }
 
     public AITurnHandler.AITurnStateMode CurrentAITurnStateMode = AITurnHandler.AITurnStateMode.Aggressive;
 

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Interface/Panels/Inventory/PnlInventory.tscn" type="PackedScene" id=1]
+
+[node name="InventoryTest" type="Node"]
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 689.192
+margin_top = 381.637
+margin_right = 1363.19
+margin_bottom = 824.637
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PnlInventory" parent="ScrollContainer" instance=ExtResource( 1 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 500.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 500, 500 )

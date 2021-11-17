@@ -8,15 +8,25 @@ public class PnlInventory : Panel
     // public delegate void InventoryItemSelected(Reference item); 
     // [Signal]
     // public delegate void InventoryItemHovered(Reference item);
+    public enum InventoryMode { PotionInventory, AmuletInventory, WeaponInventory, ArmourInventory, BagInventory }
 
-    public delegate void InventoryItemSelectedDelegate(IInventoryPlaceable item);
+    public InventoryMode CurrentInventoryMode {get; set;} = InventoryMode.BagInventory;
+    
+    public enum ItemMode {CharismaPot, HealthPot, IntellectPot, LuckPot, ManaPot, ResiliencePot, SwiftnessPot, VigourPot, Empty,
+        RustedMace, SilverMace, RustedArmour, ObsidianPlate, ScarabAmulet}
+
+    public delegate void InventoryItemSelectedDelegate(IInventoryPlaceable item, PnlInventory source);
     public event InventoryItemSelectedDelegate InventoryItemSelected;
-    public delegate void InventoryItemHoveredDelegate(IInventoryPlaceable item);
+    public delegate void InventoryItemHoveredDelegate(IInventoryPlaceable item, PnlInventory source);
     public event InventoryItemHoveredDelegate InventoryItemHovered;
+    public delegate void MouseEnteredInventoryDelegate(PnlInventory source);
+    public event MouseEnteredInventoryDelegate MouseEnteredInventory;
+    public ItemBuilder PotionBuilder {get; set;} = new ItemBuilder();
 
     private List<List<IInventoryPlaceable>> _grid;// = new List<List<IInventoryPlaceable>>();
     private Vector2 _cellSize;
 	private int _lineThickness = 0;
+    private bool _mouseInsideInventoryPanel = false;
     private IInventoryPlaceable _currentItemHover; // we track the item we currently hover over, to avoid emitting lots of hover signals
     // so we don't have to keep making new ones to show empty item
     private InventoryItemEmpty _inventoryItemEmpty = new InventoryItemEmpty();
@@ -24,7 +34,7 @@ public class PnlInventory : Panel
     public override void _Ready()
     {
         SetProcessInput(false);
-        // Start(10,5, new Vector2(128,128));
+        // Start(20,20, new Vector2(128,128));
 
         // // TESTS
         // AddItemAtGridPosition(3, 0, new CharismaPotionEffect());
@@ -44,7 +54,9 @@ public class PnlInventory : Panel
         GenerateGrid(x, y);
         Update();
         RectSize = new Vector2(_grid.Count*_cellSize.x, _grid[0].Count * _cellSize.y);
+        RectMinSize = RectSize;
         SetProcessInput(true);
+        
     }
 
     private void GenerateGrid(int x, int y)
@@ -81,17 +93,44 @@ public class PnlInventory : Panel
         {
             _grid[x][y] = newItem;
             RenderItem(x, y, newItem);
+            if (IsItemAtMouseCoords(_grid[x][y]))
+            {
+                FlashItem(_grid[x][y]);
+            }
             return true;
         }
+        if (IsItemAtMouseCoords(_grid[x][y]))
+        {
+            FlashItem(_grid[x][y]);
+        }
         return false;
+        
+    }
+
+    private bool IsItemAtMouseCoords(IInventoryPlaceable item)
+    {
+        int[] mouseCoords = GetCellGridPosition(GetLocalMousePosition());
+        return GetItemAtGridPosition(mouseCoords[0], mouseCoords[1]) == item;
+    }
+
+    public bool AddItemAtWorldPosition(Vector2 worldPos, IInventoryPlaceable newItem)
+    {
+        int[] gridPos = GetCellGridPosition(worldPos);
+        if (CellGridPositionIsOutOfBounds(gridPos[0], gridPos[1]))
+        {
+            GD.Print("out of bounds");
+            return false;
+        }
+        return AddItemAtGridPosition(gridPos[0], gridPos[1], newItem);
     }
 
     public bool AddItemToNextEmpty(IInventoryPlaceable newItem)
     {
-        for (int j = 0; j < _grid[0].Count; j++)
-        {
             for (int i = 0; i < _grid.Count; i++)
             {
+        for (int j = 0; j < _grid[0].Count; j++)
+        {
+                    GD.Print(i + ", " + j);
                 if (GetItemAtGridPosition(i, j) is InventoryItemEmpty)
                 {
                     AddItemAtGridPosition(i, j, newItem);
@@ -101,6 +140,24 @@ public class PnlInventory : Panel
         }
         return false;
     }
+
+    // public void AddItemToNextEmptyInOrder
+
+    // public bool AddItemIncludingEmptyToNextSlot(IInventoryPlaceable newItem)
+    // {
+    //     for (int j = 0; j < _grid[0].Count; j++)
+    //     {
+    //         for (int i = 0; i < _grid.Count; i++)
+    //         {
+    //             // if (GetItemAtGridPosition(i, j) is InventoryItemEmpty)
+    //             // {
+    //                 AddItemAtGridPosition(i, j, newItem);
+    //                 return true;
+    //             // }
+    //         }
+    //     }
+    //     return false;
+    // }
 
     public bool RemoveItem(IInventoryPlaceable oldItem)
     {
@@ -138,6 +195,8 @@ public class PnlInventory : Panel
         if (newItem.IconTexture != null)
         {
             TextureRect texRect = new TextureRect();
+            texRect.StretchMode = TextureRect.StretchModeEnum.Scale;
+            texRect.RectSize = new Vector2(128,128);
             texRect.Texture = newItem.IconTexture;
             texRect.HintTooltip = newItem.Tooltip;
             AddChild(texRect);
@@ -151,7 +210,7 @@ public class PnlInventory : Panel
         return new Vector2(x * _cellSize.x, y * _cellSize.y);
     }
 
-    private int[] GetCellGridPosition(Vector2 worldPos)
+    public int[] GetCellGridPosition(Vector2 worldPos)
     {
         Vector2 offsetWorldPos = worldPos - (_cellSize/2f);
         return new int[2] {Convert.ToInt32(offsetWorldPos.x/_cellSize.x), Convert.ToInt32(offsetWorldPos.y/_cellSize.y)};
@@ -168,11 +227,11 @@ public class PnlInventory : Panel
             _grid[x][y].TexRect.QueueFree();
         }
         _grid[x][y] = _inventoryItemEmpty;
-        // GD.Print("item removed");
+        GD.Print("item removed");
         return true;
     }
 
-    private IInventoryPlaceable GetItemAtGridPosition(int x, int y)
+    public IInventoryPlaceable GetItemAtGridPosition(int x, int y)
     {
         // GD.Print("x: ", x, "y: ", y);
         if (CellGridPositionIsOutOfBounds(x, y))
@@ -187,32 +246,42 @@ public class PnlInventory : Panel
     {
         return _grid.Count-1 < x || _grid[0].Count-1 < y || x < 0 || y < 0;
     }
+    public bool WorldPositionIsOutOfBounds(Vector2 worldPos)
+    {
+        int[] gridPos = GetCellGridPosition(worldPos);
+        return _grid.Count-1 < gridPos[0] || _grid[0].Count-1 < gridPos[1] || gridPos[0] < 0 || gridPos[1] < 0;
+    }
 
-    private IInventoryPlaceable GetItemAtWorldPosition(Vector2 worldPos)
+    public IInventoryPlaceable GetItemAtWorldPosition(Vector2 worldPos)
     {
         // Vector2 offset = _cellSize/2f;
         int[] gridPos = GetCellGridPosition(worldPos);
         return GetItemAtGridPosition(gridPos[0], gridPos[1]);
     }
 
-    private List<IInventoryPlaceable> GetAllItems()
+    public List<IInventoryPlaceable> GetAllItems(bool includeEmpty = false)
     {
         List<IInventoryPlaceable> result = new List<IInventoryPlaceable>();
         for (int i = 0; i < _grid.Count; i++)
         {
             for (int j = 0; j < _grid[0].Count; j++)
             {
-                if (!(GetItemAtGridPosition(i, j) is InventoryItemEmpty))
+                if (GetItemAtGridPosition(i, j) is InventoryItemEmpty)
                 {
-                    result.Add(GetItemAtGridPosition(i, j));
+                    if (!includeEmpty)
+                    {
+                        continue;
+                    }
+                    
                 }
+                result.Add(GetItemAtGridPosition(i, j));
             }
         }
         return result;
     }
 
     private void UpdateItemHover()
-    {            
+    {   
         // first turn off the shader for all items that aren't the currently being hovered item
         foreach (IInventoryPlaceable item in GetAllItems())
         {
@@ -223,25 +292,57 @@ public class PnlInventory : Panel
         }
         int[] gridPos = GetCellGridPosition(GetLocalMousePosition());
         // if we are not over an empty slot, and the current hover item isnt at the item we are hovering
-            if (_currentItemHover != GetItemAtWorldPosition(GetLocalMousePosition()))// && !CellGridPositionIsOutOfBounds(gridPos[0], gridPos[1]))
-            {
-                // then assign the current hover item to this new item, and emit a signal that new item hovered over
-                // and set the shader to flash
-                _currentItemHover = GetItemAtWorldPosition(GetLocalMousePosition());
-                // GD.Print(_currentItemHover);
-                InventoryItemHovered?.Invoke(_currentItemHover);
-                if (!(_currentItemHover is InventoryItemEmpty))
-                {
-                    ShaderMaterial shader = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
-                    shader.SetShaderParam("flash_colour_original", new Color(1,1,1));
-                    shader.SetShaderParam("flash_depth", 0.1f);
-                    _currentItemHover.TexRect.Material = shader;
-                }
-            }
+        if (_currentItemHover != GetItemAtWorldPosition(GetLocalMousePosition()))// && !CellGridPositionIsOutOfBounds(gridPos[0], gridPos[1]))
+        {
+            // then assign the current hover item to this new item, and emit a signal that new item hovered over
+            // and set the shader to flash
+            _currentItemHover = GetItemAtWorldPosition(GetLocalMousePosition());
+            // if (!_mouseInsideInventoryPanel)
+            // {
+            //     _currentItemHover = new InventoryItemEmpty();
+            // }
+
+            InventoryItemHovered?.Invoke(_currentItemHover, this);
+            FlashItem(_currentItemHover);
+        }
+    }
+
+    private void FlashItem(IInventoryPlaceable item)
+    {
+        if (!(item is InventoryItemEmpty))
+        {            
+            ShaderMaterial shader = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
+            shader.SetShaderParam("flash_colour_original", new Color(1,1,1));
+            shader.SetShaderParam("flash_depth", 0.1f);
+            item.TexRect.Material = shader;
+        }
+    }
+
+    public bool IsPotion(ItemMode itemMode)
+    {
+        return itemMode == ItemMode.CharismaPot || itemMode == ItemMode.HealthPot || itemMode == ItemMode.IntellectPot
+             || itemMode == ItemMode.LuckPot || itemMode == ItemMode.ManaPot || itemMode == ItemMode.ResiliencePot
+             || itemMode == ItemMode.SwiftnessPot || itemMode == ItemMode.VigourPot;
+    }
+    public bool IsWeapon(ItemMode itemMode)
+    {
+        return itemMode == ItemMode.RustedMace || itemMode == ItemMode.SilverMace;
+    }
+    public bool IsArmour(ItemMode itemMode)
+    {
+        return itemMode == ItemMode.RustedArmour || itemMode == ItemMode.ObsidianPlate;
+    }
+    public bool IsAmulet(ItemMode itemMode)
+    {
+        return itemMode == ItemMode.ScarabAmulet;
     }
 
     public override void _Input(InputEvent ev)
     {
+        if (!_mouseInsideInventoryPanel)
+        {
+            return;
+        }
 
         if (ev is InputEventMouseButton btn && !ev.IsEcho())
         {
@@ -249,7 +350,7 @@ public class PnlInventory : Panel
             {
                 if (!(GetItemAtWorldPosition(GetLocalMousePosition()) is InventoryItemEmpty))
                 {
-                    InventoryItemSelected?.Invoke(GetItemAtWorldPosition(GetLocalMousePosition()));
+                    InventoryItemSelected?.Invoke(GetItemAtWorldPosition(GetLocalMousePosition()), this);
                 }
             }
         }
@@ -280,5 +381,45 @@ public class PnlInventory : Panel
     {
         InventoryItemHovered = null;
         InventoryItemSelected = null;
+        MouseEnteredInventory = null;
+    }
+
+
+    private void OnPnlInventoryMouseEntered()
+    {
+        // GD.Print(Name);
+        _mouseInsideInventoryPanel = true;
+    }
+    private void OnPnlInventoryMouseExited()
+    {
+        _mouseInsideInventoryPanel = false;
+    }
+
+    private bool _active = false;
+
+    public override void _Process(float delta)
+    {
+        if (!_active)
+        {
+            if (!WorldPositionIsOutOfBounds(GetLocalMousePosition()))
+            {
+                MouseEnteredInventory?.Invoke(this);
+                _active = true;
+            }
+        }
+        if (WorldPositionIsOutOfBounds(GetLocalMousePosition()))
+        {
+            _active = false;        
+            foreach (IInventoryPlaceable item in GetAllItems())
+            {
+                item.TexRect.Material = null;
+            }
+        }
+    }
+
+    
+    private void OnPnlInventoryGUIInput(InputEvent ev)
+    {
+        // GD.Print(Name);
     }
 }

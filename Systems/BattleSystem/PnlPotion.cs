@@ -5,9 +5,8 @@ using System.Collections.Generic;
 public class PnlPotion : PnlInventory
 {
     // [Signal]
-    public delegate void PotionSelectedDelegate(PotionEffect.PotionMode potionMode);
+    public delegate void PotionSelectedDelegate(PnlInventory.ItemMode potionMode);
     public event PotionSelectedDelegate PotionSelected;
-    public PotionBuilder PotionBuilder {get; set;} = new PotionBuilder();
     private const int _EXPANDMARGIN = 50;
     public override void _Ready()
     {
@@ -25,13 +24,17 @@ public class PnlPotion : PnlInventory
             && GetGlobalMousePosition().y > RectGlobalPosition.y - _EXPANDMARGIN && GetGlobalMousePosition().y < RectGlobalPosition.y + RectSize.y + _EXPANDMARGIN;
     }
 
-    public void PopulateGrid(List<PotionEffect.PotionMode> potions)
+    public void PopulateGrid(List<PnlInventory.ItemMode> potions)
     {
         ClearGrid();
         // int halfSize = Convert.ToInt32(Math.Ceiling(potions.Count/2f));
-        Start(3, 3, new Vector2(128,128));
-        foreach (PotionEffect.PotionMode potionMode in potions)
+        Start(3, 1, new Vector2(128,128));
+        foreach (PnlInventory.ItemMode potionMode in potions)
         {
+            if (potionMode == PnlInventory.ItemMode.Empty)
+            {
+                continue;
+            }
             PotionEffect newPotion = PotionBuilder.BuildPotion(potionMode);
             AddItemToNextEmpty(newPotion);
         }
@@ -39,7 +42,7 @@ public class PnlPotion : PnlInventory
 
     }
 
-    public void OnInventoryItemHover(IInventoryPlaceable item)
+    public void OnInventoryItemHover(IInventoryPlaceable item, PnlInventory source)
     {
         if (!Visible)
         {
@@ -55,7 +58,7 @@ public class PnlPotion : PnlInventory
         }
     }
 
-    public void OnInventoryItemSelected(IInventoryPlaceable item)
+    public void OnInventoryItemSelected(IInventoryPlaceable item, PnlInventory source)
     {
         if (!Visible)
         {
@@ -67,7 +70,7 @@ public class PnlPotion : PnlInventory
         }
         RemoveItem(item);
         // EmitSignal(nameof(PotionSelected), item);
-        PotionSelected?.Invoke(((PotionEffect)item).CurrentPotionMode);
+        PotionSelected?.Invoke(((PotionEffect)item).CurrentItemMode);
     }
 
     public override void Die()
