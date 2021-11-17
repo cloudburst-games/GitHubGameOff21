@@ -65,7 +65,7 @@ _minions = {
 
 [node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -218.578, 1189.19 )
-ID = "james1"
+ID = "NPC0"
 UnitName = "James Reginald"
 _startingBools = {
 "Companion": false,
@@ -77,7 +77,7 @@ _minions = {
 
 [node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 108.628, 786.293 )
-ID = "neutralbill1"
+ID = "NPC0"
 UnitName = "Bill Take-No-Sides"
 _startingBools = {
 "Companion": false,
@@ -96,7 +96,6 @@ _startingBools = {
 }
 _startingBehaviour = 2
 _combatLevel = 3
-_physicalDamageRange = 5.0
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
 position = Vector2( 311.302, 327.745 )

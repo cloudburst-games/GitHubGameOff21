@@ -16,8 +16,12 @@ __meta__ = {
 }
 
 [node name="DialogueControl" parent="." instance=ExtResource( 1 )]
-anchor_top = 1.0
-margin_top = -1078.0
+anchor_left = 0.0
+anchor_right = 1.0
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = 426.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 

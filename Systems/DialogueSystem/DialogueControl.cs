@@ -16,6 +16,9 @@ public class DialogueControl : Control
 	public Dictionary<int, string> DialogueDict = new Dictionary <int, string>();
 	public Dictionary<int, string> ChoiceDict = new Dictionary <int, string>();
     public Dictionary<string, PackedScene> QuestDict = new Dictionary<string, PackedScene>();
+	public List<string> _journalList = new List<string>();
+	public Dictionary <int,string> JournalDict = new Dictionary<int,string>();
+	public List<string> QuestList = new List<string>();
     public int n;
 	Label MainText;
 	int DialogueSize;
@@ -37,15 +40,17 @@ public class DialogueControl : Control
 	public string JournalUpdated = " ";
 	MarginContainer DialogueContainer;
 	Journal Journal;
-	bool NPC1Spoken = false;
-	bool NPC2Spoken = false;
-	bool NPC3Spoken = false;
-	bool NPC4Spoken = false;
-	bool LookingForAmulet = false;
-	bool AmuletFound = false;
-	bool StolenSun = false;
-	bool NightGateConvo = false;
-	bool EscapeConvo = false;
+//	bool _nPC0Spoken;
+	bool _nPC1Spoken;
+	bool _nPC2Spoken;
+	bool _nPC3Spoken;
+	bool _nPC4Spoken;
+	bool _lookingForAmulet;
+	bool _amuletFound;
+	bool _stolenSun;
+	bool _nightGateConvo;
+	bool _escapeConvo;
+	string JournalUpdate;
 #endregion
 
 #region Dialogue/ink
@@ -63,15 +68,16 @@ public class DialogueControl : Control
 		ContinueButton = GetNode<Button>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer4/ContinueButton");
 		Portrait = GetNode<TextureRect>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer/MarginContainer/Portrait");
 		NameLabel = GetNode<Label>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer/NameLabel");
-		MakeQuestDict();
+		//MakeQuestDict();
     }
 
     public void LoadInkStory()
     {
         InkStory = GetNode<InkStory>("Ink Story"); 
 		InkStory.InkFile = GD.Load("res://Systems/DialogueSystem/KhepriStory.json");
+		
 		InkStory.LoadStory();
-		GD.Print("inkstory loaded");
+//Setting ink variables works here
         //InkStory.InkVariableChanged();
     }
 
@@ -111,17 +117,21 @@ public class DialogueControl : Control
 
         private void OnContinueButtonPressed() 
 	{
-		CheckForJournalUpdates();
+		//CheckForJournalUpdates();
+		//SaveVariables();
  		if (Tween.IsActive())
 		{
 			Tween.StopAll();
 			//Tween.Stop(MainText, "percent_visible");
 			MainText.PercentVisible = 1;
+			
 		}
 		else
 		{
 			ShowText();
-		} 
+		}
+
+		Save();
 		
 	}
 
@@ -161,14 +171,15 @@ public class DialogueControl : Control
 					Label Label = (Label)Button.GetChild(0); //new
 					Label.Text = ChoiceDict[ChoiceNum];
 				//	Button.Text = ChoiceDict[ChoiceNum];
-					CheckForJournalUpdates();
+				//	CheckForJournalUpdates();
+				//	SaveVariables();
 					Button.Connect("ChoiceButtonPressedSignal", this, nameof(OnChoiceButtonPressed));
 				}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 			}
 			else
 			{
 				//instead of quickly removing the visibility, perhaps play an anim here
-
+				//	SaveVariables();
 					DialogueContainer.Visible = false;
 					GetTree().Paused = false;
                     EmitSignal(nameof(DialogueEnded)); //ENDS DIALOGUE ALTOGETHER
@@ -178,23 +189,25 @@ public class DialogueControl : Control
 		}
 	}
 
-	public void SaveVariables() //save variables before conversation closes (to do)
+/* 	public void SaveVariables() //save variables before conversation closes (to do)
 	{
-		Quest = (string)InkStory.GetVariable("quest");
-		NPC1Spoken = (bool)InkStory.GetVariable("npc1_spoken");
-		NPC2Spoken = (bool)InkStory.GetVariable("npc2_spoken");
-		NPC3Spoken = (bool)InkStory.GetVariable("npc3_spoken");
-		//NPC4Spoken = (bool)InkStory.GetVariable("npc0_spoken");
-		LookingForAmulet = (bool)InkStory.GetVariable("looking_for_amulet");
-		AmuletFound = (bool)InkStory.GetVariable("amulet_found");
-		StolenSun = (bool)InkStory.GetVariable("stolen_sun");
-		NightGateConvo = (bool)InkStory.GetVariable("night_gate_convo");
-		EscapeConvo = (bool)InkStory.GetVariable("escape_convo");
-	}
+		//_nPC0Spoken = (bool)InkStory.GetVariable("npc0_spoken");
+		//GD.Print("3. check 4 true - save variables method" + _nPC0Spoken); //this is true
+		_nPC1Spoken = (bool)InkStory.GetVariable("npc1_spoken");
+		_nPC2Spoken = (bool)InkStory.GetVariable("npc2_spoken");
+		_nPC3Spoken = (bool)InkStory.GetVariable("npc3_spoken");
+		//_NPC4Spoken = (bool)InkStory.GetVariable("npc0_spoken");
+		_lookingForAmulet = (bool)InkStory.GetVariable("looking_for_amulet");
+		_amuletFound = (bool)InkStory.GetVariable("amulet_found");
+		_stolenSun = (bool)InkStory.GetVariable("stolen_sun");
+		_nightGateConvo = (bool)InkStory.GetVariable("night_gate_convo");
+		_escapeConvo = (bool)InkStory.GetVariable("escape_convo");
+	} */
 
-	public void UpdateInkVariables()
+	public void UpdateInkVariables(string inkyVariable, bool savedVariable)
 	{
-		//update the ink script with the saved variables (to do)
+		InkStory.SetVariable(inkyVariable, savedVariable);
+		//GD.Print(inkyVariable + " " + savedVariable); //this is being transmitted as false
 	}
 
      public void OnChoiceButtonPressed(int n)  
@@ -216,37 +229,17 @@ public class DialogueControl : Control
 		if ((!InkStory.CanContinue) && (!InkStory.HasChoices))
 		{
 			//instead of quickly removing the visibility, perhaps play an anim here
-			
+			//SaveVariables();
 			DialogueContainer.Visible = false;
 			GetTree().Paused = false;
             EmitSignal(nameof(DialogueEnded));
 		}
 	}
 
-	public void CheckForJournalUpdates() //Checks for journal text updates and emits signals
-	{
-		if (Quest != (string)InkStory.GetVariable("quest")) //Check that the journal text variable is not the same as the ink journal text variable because this would have already been transmitted
-		{
-			Quest = (string)InkStory.GetVariable("quest"); //update the variable to the inkjournaltext variabke
-			AddSceneToQuestList(QuestDict[Quest]);
-			//make a dictionary that stores the location of the label scene
-
-		}
-		if (QuestComplete != (string)InkStory.GetVariable("quest_complete"))
-		{
-			QuestComplete = (string)InkStory.GetVariable("quest_complete");
-			Journal.UpdateCompletedQuests(QuestComplete); //replace this with signal in futre - same for others
-		}
-		if (JournalUpdated != (string)InkStory.GetVariable("journal_updated"))
-		{
-			JournalUpdated = (string)InkStory.GetVariable("journal_updated");
-			Journal.UpdateJournal(JournalUpdated);
-		}
-		return;
-	}
 
 
-	public void MakeQuestDict()
+
+/* 	public void MakeQuestDict()
 	{
 		QuestDict.Add("amulet", AmuletScene);
 		QuestDict.Add("companion", CompanionScene);
@@ -255,7 +248,7 @@ public class DialogueControl : Control
 		QuestDict.Add("escape", EscapeScene);
 		GD.Print("QuestDictionaryUpdated");
 		
-	}
+	} */
 
 	public void AddSceneToQuestList(PackedScene scene)
 	{
@@ -279,40 +272,78 @@ everything in DialogueData will be saved between levels and on save/load*/
     // Started when press E next to non-companion, non-hostile NPC
     // Passes in the interlocutor data (modify variables inside here as needed - will be stored on save and load)
     // within this can access DialogueData. Modify variables as needed in class below.
+
+	public void Load(UnitData npcUnitData, UnitData khepriUnitData)
+	{
+
+		UpdateInkVariables("npc0_spoken", khepriUnitData.CurrentDialogueData.NPC0Spoken);
+		UpdateInkVariables("npc1_spoken", khepriUnitData.CurrentDialogueData.NPC1Spoken);
+		UpdateInkVariables("npc2_spoken", khepriUnitData.CurrentDialogueData.NPC2Spoken);
+		UpdateInkVariables("npc3_spoken", khepriUnitData.CurrentDialogueData.NPC3Spoken);
+		UpdateInkVariables("npc4_spoken", khepriUnitData.CurrentDialogueData.NPC4Spoken);
+		UpdateInkVariables("looking_for_amulet", khepriUnitData.CurrentDialogueData.LookingForAmulet);
+		UpdateInkVariables("amulet_found", khepriUnitData.CurrentDialogueData.AmuletFound);
+		UpdateInkVariables("stolen_sun", khepriUnitData.CurrentDialogueData.StolenSun);
+		UpdateInkVariables("night_gate_convo", khepriUnitData.CurrentDialogueData.NightGateConvo);
+		UpdateInkVariables("escape_convo", khepriUnitData.CurrentDialogueData.EscapeConvo);
+		JournalUpdate = khepriUnitData.CurrentDialogueData.JournalString;
+		// OnDialogueRefSignal(npcUnitData.ID);
+	}
+
+	private UnitData _khepriUnitData;
+
     public void Start(UnitData npcUnitData, UnitData khepriUnitData)
     {
-        // Access one of your dialogue variables for this npc by doing unitData.CurrentDialogueData
-        bool test = npcUnitData.CurrentDialogueData.Blah;
+		_khepriUnitData = khepriUnitData;
 
-        GD.Print("testing dialogue editable variables: ", test);
+		// if (khepriUnitData.Modified)
+		// {
+		Load(npcUnitData, khepriUnitData);
 
-        string id = npcUnitData.ID; // this is the unique string identifier of the unitData
 
-        string name = npcUnitData.Name; // this is the human readable name
 
-        // if amulet found u can save it as found like so:
-        // khepriUnitData.CurrentDialogueData.AmuletFound = true;
 
-        // REMEMBER: khepriUnitData will always be there with the player (as it is khepri) and so u can store things to always be accessible there
-        // npcUnitData is the data for the guy khepri is talking to!
+        // // REMEMBER: khepriUnitData will always be there with the player (as it is khepri) and so u can store things to always be accessible there
+        // // npcUnitData is the data for the guy khepri is talking to!
 
-        // you can use KHEPRI'S "charisma" stat if you want to determine whether a dialogue option should be visible
-        int charisma = khepriUnitData.Attributes[UnitData.Attribute.Charisma];
-        if (charisma > 15)
-        {
-            // show special dialogue option
-        }
+        // // you can use KHEPRI'S "charisma" stat if you want to determine whether a dialogue option should be visible
+        // int charisma = khepriUnitData.Attributes[UnitData.Attribute.Charisma];
+        // if (charisma > 15)
+        // {
+        //     // show special dialogue option
+        // }
         //ADDED
-        OnDialogueRefSignal(npcUnitData.ID); //USE THIS WHEN INTEGRATED WITH STAGEWORLD
-		//UpdateNameAndPortrait(unitData.Portrait, unitData.Name); //USE THIS WHEN INTEGRATED WITH STAGE WORLD (ADD PORTRAIT TO UNIT PATH)
+		OnDialogueRefSignal(npcUnitData.ID); //USE THIS WHEN INTEGRATED WITH STAGEWORLD
+
     }
 
+	// run this and save stuff before exiting dialogue
+	public void Save()
+	{
+		_khepriUnitData.CurrentDialogueData.NPC0Spoken = (bool)InkStory.GetVariable("npc0_spoken");
+		_khepriUnitData.CurrentDialogueData.NPC1Spoken = (bool)InkStory.GetVariable("npc1_spoken");
+		_khepriUnitData.CurrentDialogueData.NPC2Spoken = (bool)InkStory.GetVariable("npc2_spoken");
+		_khepriUnitData.CurrentDialogueData.NPC3Spoken = (bool)InkStory.GetVariable("npc3_spoken");
+		_khepriUnitData.CurrentDialogueData.NPC4Spoken = (bool)InkStory.GetVariable("npc4_spoken");
+		_khepriUnitData.CurrentDialogueData.LookingForAmulet = (bool)InkStory.GetVariable("looking_for_amulet");
+		_khepriUnitData.CurrentDialogueData.AmuletFound = (bool)InkStory.GetVariable("amulet_found");
+		_khepriUnitData.CurrentDialogueData.StolenSun = (bool)InkStory.GetVariable("stolen_sun");
+		_khepriUnitData.CurrentDialogueData.NightGateConvo = (bool)InkStory.GetVariable("night_gate_convo");
+		_khepriUnitData.CurrentDialogueData.EscapeConvo = (bool)InkStory.GetVariable("escape_convo");
+		_khepriUnitData.CurrentDialogueData.JournalString = (string)InkStory.GetVariable("journal");
+	}
 
+		//NPC4Spoken = (bool)InkStory.GetVariable("npc0_spoken");
 
   /*   public void OnContinueButtonPressed() //@Sarah: move emit signal to when the dialogue finally ends.
     {
        
     } */
+
+	public override void _Process(float delta)
+	{
+		//GD.Print(_nPC0Spoken);
+	}
 
 }
 
@@ -324,4 +355,16 @@ public class DialogueData : IStoreable
 {
     public bool Blah {get; set;} = false;
     public bool AmuletFound {get; set;} = false; 
+	public bool NPC1Spoken {get; set;} = false; 
+	public bool NPC0Spoken {get; set;} = false; 
+	public bool NPC2Spoken {get; set;} = false;
+	public bool NPC3Spoken {get; set;} = false;
+	public bool NPC4Spoken {get; set;} = false;
+	public bool LookingForAmulet {get; set;} = false;
+	public bool StolenSun {get; set;} = false;
+	public bool NightGateConvo {get; set;} = false;
+	public bool EscapeConvo {get; set;} = false;
+	public bool Modified {get; set;} = false;
+	public string JournalString{get;set;}
+	//public List <string> JournalList {get; set;}
 }
