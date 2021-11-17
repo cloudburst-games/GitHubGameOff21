@@ -19,17 +19,18 @@ public class Journal : MarginContainer
     Label EscapeLabel;
     Panel JournalPanel;
     Panel QuestPanel;
-    Label JournalLabel;
+  //  Label JournalLabel;
     PackedScene journalLabelScene = GD.Load<PackedScene>("res://Systems/DialogueSystem/JournalLabel.tscn");
     VBoxContainer JournalContainer;
     Button JournalButton;
     Button QuestButton;
+    Label JournalLabel;
     
-   public List<string> JournalList = new List < string>();
+   //public List<string> JournalList = new List < string>();
 
     public override void _Ready()
     {
-       // DialogueControl = (DialogueControl)this.GetParent();
+       DialogueControl = (DialogueControl)this.GetParent();
         QuestContainer = GetNode<VBoxContainer>("Panel/MarginContainer/VBoxContainer/Quests/ScrollContainer/QuestContainer");
        // Tween = GetNode<Tween>("Tween");
         JournalPanel = GetNode<Panel>("Panel/MarginContainer/VBoxContainer/Journal");
@@ -40,6 +41,9 @@ public class Journal : MarginContainer
         QuestButton = GetNode<Button>("Panel/MarginContainer/VBoxContainer/HBoxContainer/QuestButton");
         JournalButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
         QuestButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
+        JournalLabel = GetNode<Label>("Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/Label");
+        /* DialogueControl.JournalList.Add("xxxxxxxxxxxxxxxxxxxxxx");
+        DialogueControl.JournalList.Add("YYYYYYYYYYYYYYYYYYYYY"); */
     }
 
     public void ShowJournal()
@@ -92,9 +96,9 @@ public class Journal : MarginContainer
 
     public void UpdateJournal(string journalUpdate)
     {
-        if (JournalList.Contains(journalUpdate)== false)
+        if (DialogueControl._journalList.Contains(journalUpdate)== false)
         {
-            JournalList.Add(journalUpdate);
+            DialogueControl._journalList.Add(journalUpdate);
         /*     for(int i = 0; i < JournalList.Count; i++)
             { */
                 var instance = journalLabelScene.Instance();
@@ -118,20 +122,27 @@ public class Journal : MarginContainer
         this.Visible=false;
     }
 
-    public void OnQuestButtonPressed()
+/*     public void OnQuestButtonPressed()
     {
         JournalPanel.Visible=false;
         QuestPanel.Visible = true;
         QuestButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
         JournalButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
-    }
+    } */
 
-    public void OnJournalButtonPressed()
+    public void OnJournalButtonPressed() //when you press the journal button, 
     {
+        this.Visible = true;
         JournalPanel.Visible=true;
-        QuestPanel.Visible = false;
+       // QuestPanel.Visible = false;
         JournalButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
-        QuestButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
+        JournalLabel.Text = (string)DialogueControl.InkStory.GetVariable("journal");
+
+/*         for (int i = 0; i<DialogueControl._journalList.Count; i++)
+        {
+            JournalLabel.Text += DialogueControl._journalList[i];
+        } */
+        //QuestButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
     }
 
 
