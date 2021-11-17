@@ -50,13 +50,11 @@ public class SpellEffectManager : Reference
 
     public SpellEffectManager()
     {
-        GD.Print("wronginitialiser -SpellEffectManager.cs");
-        throw new Exception();
+        // GD.Print("empty");
+        SetSpellEffects();
     }
-    public SpellEffectManager(BattleInteractionHandler battleInteractionHandler, Node2D spellEffectContainer)
+    private void SetSpellEffects()
     {
-        _battleInteractionHandler = battleInteractionHandler;
-        _spellEffectContainer = spellEffectContainer;
         SpellEffects = new Dictionary<SpellMode, List<SpellEffect>> {
             {SpellMode.Empty, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Empty Spell Slot",
@@ -315,7 +313,7 @@ public class SpellEffectManager : Reference
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
-                TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.CriticalChance,BattleUnitData.DerivedStat.MagicResist,BattleUnitData.DerivedStat.Dodge,},//, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
+                TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.CriticalChance,BattleUnitData.DerivedStat.Dodge,},//, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/ComingForthByDayEffect.tscn")
             }}
@@ -395,6 +393,12 @@ public class SpellEffectManager : Reference
             }}
             },
         };
+    }
+    public SpellEffectManager(BattleInteractionHandler battleInteractionHandler, Node2D spellEffectContainer)
+    {
+        _battleInteractionHandler = battleInteractionHandler;
+        _spellEffectContainer = spellEffectContainer;
+        SetSpellEffects();
 
         SpellMethods = new Dictionary<SpellMode, Action<BattleUnit,BattleUnit, List<BattleUnit>, Vector2>> {
             {SpellMode.SolarBolt, SolarBolt},

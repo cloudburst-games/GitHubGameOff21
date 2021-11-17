@@ -47,5 +47,6 @@ public class BattleUnitData : IStoreable
 
     public SpellEffectManager.SpellMode Spell1 = SpellEffectManager.SpellMode.Empty;
     public SpellEffectManager.SpellMode Spell2 = SpellEffectManager.SpellMode.Empty;
+    public SpellEffectManager.SpellMode SpellGainedAtHigherLevel = SpellEffectManager.SpellMode.Empty;
 
 }

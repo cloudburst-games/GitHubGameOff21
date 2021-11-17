@@ -8,7 +8,7 @@ public class LuckPotionEffect : PotionEffect
     {
         CurrentPotionMode = PotionEffect.PotionMode.Luck;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 5f;
+        Magnitude = 10f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionYellow.png");
         Name = "Luck Potion";
         SpellEffect = SpellEffectManager.SpellMode.LuckPotion;

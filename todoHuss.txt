@@ -17,7 +17,7 @@ Thurs:
 Fri:
 - Add spells to battle system. Complete battle system. Can use consumables in battle obviously. DONE
 - NEXT: on battle defeat -> show a DEFEATED message and menu (with resume and save disabled or hidden) DONE
-- Experience system, stats, and levelling, and gaining new spells
+- Experience system, stats, and levelling, and gaining new spells (gain your 2nd spell at level 5?)
 - Make up to date art asset list
 
 Sat:

@@ -10,6 +10,8 @@ public class LevelManager : Node2D
     public delegate void Announced(string message);
     [Signal]
     public delegate void NPCRightClicked(Unit npc);
+    [Signal]
+    public delegate void NPCGenerated();
 
     public enum Level {
         Level1, Level2
@@ -313,6 +315,7 @@ public class LevelManager : Node2D
             npc.GlobalPosition = unitData.NPCPosition;
         }
         //
+        EmitSignal(nameof(NPCGenerated));
     }
 
     public void OnNPCRightClicked(Unit npc)

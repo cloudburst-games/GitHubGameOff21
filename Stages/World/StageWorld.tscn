@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -16,12 +16,19 @@
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Stages/World/PnlBattleVictory.cs" type="Script" id=15]
 [ext_resource path="res://Stages/World/Music/SadAlchemy_World.ogg" type="AudioStream" id=16]
-[ext_resource path="res://Interface/PartyManagement/HBoxPortraits.cs" type="Script" id=17]
-[ext_resource path="res://Interface/Cursors/Art/Hint.PNG" type="Texture" id=18]
-[ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.cs" type="Script" id=19]
+[ext_resource path="res://Interface/PartyManagement/HBoxPortraits.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=20]
 
-[sub_resource type="Animation" id=1]
-resource_name = "Load"
+[sub_resource type="DynamicFont" id=1]
+size = 48
+outline_size = 6
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 20
+extra_spacing_space = 20
+font_data = ExtResource( 20 )
+
+[sub_resource type="Animation" id=2]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -37,8 +44,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "LogEntry"
+[sub_resource type="Animation" id=3]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -65,7 +71,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -133,16 +139,32 @@ __meta__ = {
 }
 
 [node name="HBoxBtns" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar"]
-margin_left = 1752.0
+margin_left = 1611.24
 margin_top = 1.0
-margin_right = 1908.0
+margin_right = 1899.24
 margin_bottom = 42.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BtnMap" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
+margin_right = 93.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Map"
+
+[node name="BtnJournal" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
+margin_left = 97.0
+margin_right = 190.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Journal"
+
 [node name="BtnMenu" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
-margin_right = 156.0
+margin_left = 194.0
+margin_right = 288.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 text = "Menu"
@@ -151,69 +173,34 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxPortraits" type="Control" parent="HUD/CtrlTheme/PnlUIBar"]
-script = ExtResource( 17 )
+[node name="HBoxPortraits" parent="HUD/CtrlTheme/PnlUIBar" instance=ExtResource( 17 )]
+
+[node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
+margin_left = 184.0
+margin_right = 1594.0
+margin_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents"]
+margin_right = 1398.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PBtnPlayer" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits"]
-margin_left = 10.0
-margin_right = 60.0
+[node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
+margin_right = 1290.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
+size_flags_vertical = 3
 
-[node name="TexRect" type="TextureRect" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PBtnPlayer"]
-margin_left = 9.0
-margin_top = 4.0
-margin_right = 41.0
-margin_bottom = 36.0
-texture = ExtResource( 18 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PBtnCompanion1" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits"]
-margin_left = 65.0
-margin_right = 115.0
+[node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
+margin_left = 1294.0
+margin_right = 1398.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
-
-[node name="TexRect" type="TextureRect" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PBtnCompanion1"]
-margin_left = 9.0
-margin_top = 4.0
-margin_right = 41.0
-margin_bottom = 36.0
-texture = ExtResource( 18 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PBtnCompanion2" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits"]
-margin_left = 120.0
-margin_right = 170.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TexRect" type="TextureRect" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PBtnCompanion2"]
-margin_left = 9.0
-margin_top = 4.0
-margin_right = 41.0
-margin_bottom = 36.0
-texture = ExtResource( 18 )
-
-[node name="PopupMenu" type="PopupMenu" parent="HUD/CtrlTheme/PnlUIBar/HBoxPortraits"]
-margin_left = 8.485
-margin_right = 224.485
-margin_bottom = 121.0
-items = [ "Character Sheet", null, 0, false, false, 0, 0, null, "", false, "Inventory", null, 0, false, false, 1, 0, null, "", false, "Talk", null, 0, false, false, 2, 0, null, "", false ]
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+text = "Events"
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
 visible = false
@@ -255,61 +242,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+margin_left = -1000.0
+margin_top = 500.0
+margin_right = -1000.0
+margin_bottom = 500.0
 
-[node name="PnlCharacterManager" type="Panel" parent="HUD/CtrlTheme"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -593.0
-margin_top = -342.5
-margin_right = 593.0
-margin_bottom = 342.5
-script = ExtResource( 19 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TabContainer" type="TabContainer" parent="HUD/CtrlTheme/PnlCharacterManager"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -574.5
-margin_top = -315.5
-margin_right = 574.5
-margin_bottom = 315.5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Character" type="Container" parent="HUD/CtrlTheme/PnlCharacterManager/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 46.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="Inventory" type="Container" parent="HUD/CtrlTheme/PnlCharacterManager/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 46.0
-margin_right = -4.0
-margin_bottom = -4.0
-
-[node name="BtnClose" type="Button" parent="HUD/CtrlTheme/PnlCharacterManager"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -42.0
-margin_bottom = 37.0
-text = "X"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="PnlCharacterManager" parent="HUD/CtrlTheme" instance=ExtResource( 19 )]
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false
@@ -454,7 +392,6 @@ size_flags_vertical = 3
 text = "Exit"
 
 [node name="PnlBattleVictory" type="Panel" parent="HUD/CtrlTheme"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -527,6 +464,45 @@ margin_right = 87.0
 margin_bottom = -38.6813
 text = "Proceed"
 
+[node name="Blah" type="Panel" parent="HUD/CtrlTheme"]
+visible = false
+margin_left = -415.714
+margin_top = -156.984
+margin_right = 476.286
+margin_bottom = 99.0162
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="HUD/CtrlTheme/Blah"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -410.0
+margin_top = 30.5686
+margin_right = 417.0
+margin_bottom = 82.5686
+custom_fonts/font = SubResource( 1 )
+text = "STATUS OF BLAH: "
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="HUD/CtrlTheme/Blah"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -410.0
+margin_top = -108.024
+margin_right = 417.0
+margin_bottom = -1.02435
+custom_fonts/font = SubResource( 1 )
+text = "I HAVE NOW SET BLAH TO: "
+align = 1
+valign = 1
+autowrap = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="HUD/CtrlTheme"]
 layer = 3
 
@@ -565,7 +541,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/ProgressAnim"]
-anims/Load = SubResource( 1 )
+anims/Load = SubResource( 2 )
 
 [node name="LblProgress" type="Label" parent="HUD/CtrlTheme/ProgressAnim"]
 margin_left = -21.3816
@@ -598,16 +574,12 @@ __meta__ = {
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblLog"]
 autoplay = "default"
-anims/LogEntry = SubResource( 2 )
-anims/default = SubResource( 3 )
+anims/LogEntry = SubResource( 3 )
+anims/default = SubResource( 4 )
 
 [node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnMenu" to="HUD" method="OnBtnMenuPressed"]
-[connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PBtnPlayer" to="." method="OnPortraitBtnPressed" binds= [ 0 ]]
-[connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PBtnCompanion1" to="." method="OnPortraitBtnPressed" binds= [ 1 ]]
-[connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PBtnCompanion2" to="." method="OnPortraitBtnPressed" binds= [ 2 ]]
-[connection signal="id_pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PopupMenu" to="HUD/CtrlTheme/PnlUIBar/HBoxPortraits" method="OnPopupMenuIDPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnResume" to="HUD" method="OnBtnResumePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnSave" to="HUD" method="OnBtnSavePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnLoad" to="HUD" method="OnBtnLoadPressed"]
