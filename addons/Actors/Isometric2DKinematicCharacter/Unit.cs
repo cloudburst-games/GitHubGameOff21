@@ -64,9 +64,12 @@ public class Unit : KinematicBody2D
     [Export]
     private float _physicalDamageRange = 3f;
     [Export]
-    private SpellEffectManager.SpellMode[] _spells = new SpellEffectManager.SpellMode[2] {
+    private SpellEffectManager.SpellMode[] _startingSpells = new SpellEffectManager.SpellMode[2] {
         SpellEffectManager.SpellMode.Empty, SpellEffectManager.SpellMode.Empty
     };
+    [Export]
+    private SpellEffectManager.SpellMode _spellGainedAtHigherLevel = SpellEffectManager.SpellMode.Empty;
+
     [Export]
     private List<PotionEffect.PotionMode> _potions = new  List<PotionEffect.PotionMode>(); // max 9
     //
@@ -102,8 +105,9 @@ public class Unit : KinematicBody2D
             Level = _combatLevel,
             Name = CurrentUnitData.Name,
             Potions = _potions,
-            Spell1 = _spells[0],
-            Spell2 = _spells[1]
+            Spell1 = _startingSpells[0],
+            Spell2 = _startingSpells[1],
+            SpellGainedAtHigherLevel = _spellGainedAtHigherLevel
         };
         // ExperienceManager xpman = new ExperienceManager();
 

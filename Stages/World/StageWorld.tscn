@@ -139,16 +139,32 @@ __meta__ = {
 }
 
 [node name="HBoxBtns" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar"]
-margin_left = 1752.0
+margin_left = 1611.24
 margin_top = 1.0
-margin_right = 1908.0
+margin_right = 1899.24
 margin_bottom = 42.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="BtnMap" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
+margin_right = 93.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Map"
+
+[node name="BtnJournal" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
+margin_left = 97.0
+margin_right = 190.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Journal"
+
 [node name="BtnMenu" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
-margin_right = 156.0
+margin_left = 194.0
+margin_right = 288.0
 margin_bottom = 41.0
 size_flags_horizontal = 3
 text = "Menu"
@@ -158,6 +174,33 @@ __meta__ = {
 }
 
 [node name="HBoxPortraits" parent="HUD/CtrlTheme/PnlUIBar" instance=ExtResource( 17 )]
+
+[node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
+margin_left = 184.0
+margin_right = 1594.0
+margin_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents"]
+margin_right = 1398.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
+margin_right = 1290.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
+margin_left = 1294.0
+margin_right = 1398.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.08
+text = "Events"
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
 visible = false

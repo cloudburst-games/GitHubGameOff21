@@ -65,20 +65,39 @@ public class StageWorld : Stage
 
     private void OnExperienceGained(UnitData unitData)
     {
-        // UI FEEDBACK
+        bool levelledup = false;
+        bool learnedNewSpell = false;
         if (unitData.ExperienceManager.CanLevelUp(unitData.CurrentBattleUnitData.Level, unitData.CurrentBattleUnitData.Experience))
         {
-            LblFloatScore lvlUpFloatLbl = new LblFloatScore();
-            lvlUpFloatLbl.FadeSpeed = 0.2f;
-            lvlUpFloatLbl.Text = unitData.Name + " has gained a level!";
-            GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits").SetToFlashIntensely(unitData.ID, lvlUpFloatLbl);
+            levelledup = true;
         }
+        
         // GETTING ATTRIBUTE POINTS AND LEVELS BASED ON XP
         while (unitData.ExperienceManager.CanLevelUp(
             unitData.CurrentBattleUnitData.Level, unitData.CurrentBattleUnitData.Experience))
         {
             unitData.CurrentBattleUnitData.Level += 1;
             unitData.AttributePoints += 5 + Convert.ToInt32(Math.Floor(unitData.CurrentBattleUnitData.Level/10f));
+        }
+
+        // IF REACH CERTAIN LEVEL, UNLOCK THE 2ND SPELL
+        if (unitData.CurrentBattleUnitData.Level >= 5 && 
+            unitData.CurrentBattleUnitData.Spell2 == SpellEffectManager.SpellMode.Empty && 
+            unitData.CurrentBattleUnitData.SpellGainedAtHigherLevel != SpellEffectManager.SpellMode.Empty)
+        {
+            unitData.CurrentBattleUnitData.Spell2 = unitData.CurrentBattleUnitData.SpellGainedAtHigherLevel;
+            learnedNewSpell = true;
+        }
+
+        // UI FEEDBACK
+        if (levelledup)
+        {
+            LblFloatScore lvlUpFloatLbl = new LblFloatScore();
+            lvlUpFloatLbl.FadeSpeed = 0.2f;
+            lvlUpFloatLbl.Text = 
+                String.Format("{0} has gained a level{1}",
+                    unitData.Name, learnedNewSpell ? " and learned a new spell!" : "!");
+            GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits").SetToFlashIntensely(unitData.ID, lvlUpFloatLbl);
         }
     }
 
@@ -338,6 +357,7 @@ public class StageWorld : Stage
         // set starting spells
         player.CurrentUnitData.CurrentBattleUnitData.Spell1 = SpellEffectManager.SpellMode.SolarBolt;
         player.CurrentUnitData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
+        player.CurrentUnitData.CurrentBattleUnitData.SpellGainedAtHigherLevel = SpellEffectManager.SpellMode.SolarBlast;
 
         OnCompanionChanged();
     }
