@@ -300,6 +300,14 @@ public class DialogueControl : Control
 		
 	} */
 
+    // public void OnCompletedAmuletQuest()
+    // {
+    //     CompleteQuest(
+    //         difficulty:1, 
+    //         itemRewards:new List<PnlInventory.ItemMode> { PnlInventory.ItemMode.ScarabAmulet },
+    //         goldReward:13);
+    // }
+
 	public void AddSceneToQuestList(PackedScene scene)
 	{
 		Journal.InstanceQuest(scene);
@@ -322,7 +330,6 @@ everything in DialogueData will be saved between levels and on save/load*/
 
 	public void Load(UnitData npcUnitData, UnitData khepriUnitData)
 	{
-
 		UpdateInkVariables("npc0_spoken", khepriUnitData.CurrentDialogueData.NPC0Spoken);
 		UpdateInkVariables("npc1_spoken", khepriUnitData.CurrentDialogueData.NPC1Spoken);
 		UpdateInkVariables("npc2_spoken", khepriUnitData.CurrentDialogueData.NPC2Spoken);
@@ -345,10 +352,6 @@ everything in DialogueData will be saved between levels and on save/load*/
     // within this can access DialogueData. Modify variables as needed in class below.
     public void Start(UnitData npcUnitData, UnitData khepriUnitData)
     {
-        CompleteQuest(
-            difficulty:3, 
-            itemRewards:new List<PnlInventory.ItemMode> { PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot, PnlInventory.ItemMode.ResiliencePot },
-            goldReward:31);
 
 		_khepriUnitData = khepriUnitData;
 
