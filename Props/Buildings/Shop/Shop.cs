@@ -13,6 +13,10 @@ public class Shop : StaticBody2D
     [Export]
     private string _shopTitle = "Shop";
     [Export]
+    private string _buyMessage = "Hmmph. Trash. I'll take it of your hands for";
+    [Export]
+    private string _sellMessage = "A bargain for";
+    [Export]
     private float _stinginess = 2f;
     [Export]
     private Texture _shopBackgroundTexture = GD.Load<Texture>("res://Effects/SpellEffects/Art/WhiteSphericalParticle.png");
@@ -27,17 +31,14 @@ public class Shop : StaticBody2D
 
     public void SetStartingData()
     {
-        // if (_shopData.Modified)
-        // {
-        //     return;
-        // }
-        // _shopData.Modified = true;
         CurrentShopData.ItemsStocked = _startingItemsStocked.ToList();
         CurrentShopData.ShopBackgroundTexturePath = _shopBackgroundTexture.ResourcePath;
         CurrentShopData.IntroText = _introText;
         CurrentShopData.ShopTitle = _shopTitle;
         CurrentShopData.Stinginess = _stinginess;
         CurrentShopData.GlobalStartPosition = this.GlobalPosition;
+        CurrentShopData.SellMessage = _sellMessage;
+        CurrentShopData.BuyMessage = _buyMessage;
     }
 
     // MUST BE RUN AFTER ADDED CHILD to overwrite starting data

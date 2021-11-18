@@ -269,12 +269,12 @@ public class PnlShopScreen : Panel
         int cost = item.Cost;
         if (source == GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell"))
         {
-            buyFor = " Hmmph. Trash. I'll take it of your hands for ";
+            buyFor = " " + _shopData.BuyMessage + " ";
             cost = Convert.ToInt32(Math.Floor(cost/2f));
         }
         else
         {
-            buyFor = " A bargain for ";
+            buyFor = " " + _shopData.SellMessage + " ";
             cost = Convert.ToInt32(Math.Ceiling(cost*2f));
         }
         if (item is InventoryItemEmpty)
@@ -283,7 +283,7 @@ public class PnlShopScreen : Panel
         }
         else
         {
-            GetNode<Label>("PnlStatus/LblStatus").Text = item.Name + "." + buyFor + cost + (source != GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell") ? " gold!" : " gold.");
+            GetNode<Label>("PnlStatus/LblStatus").Text = item.Name + "." + buyFor + cost + " gold.";// (source != GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell") ? " gold!" : " gold.");
         }
     }
 
