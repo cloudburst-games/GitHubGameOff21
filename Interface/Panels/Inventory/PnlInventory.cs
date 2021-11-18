@@ -1,13 +1,12 @@
+// in future, would be good to make this into just a data class to use instead of lists for inventory management
+// or actually id like to clone the MM6 style inventory or deus ex and add weight limits
+// so people can play tetris while they manage their gear
 using Godot;
 using System;
 using System.Collections.Generic;
 
 public class PnlInventory : Panel
 {
-    // [Signal] // we cannot pass IInventoryPlaceable as it is not a variant, hope this is fixed in Godot4
-    // public delegate void InventoryItemSelected(Reference item); 
-    // [Signal]
-    // public delegate void InventoryItemHovered(Reference item);
     public enum InventoryMode { PotionInventory, AmuletInventory, WeaponInventory, ArmourInventory, BagInventory }
 
     public InventoryMode CurrentInventoryMode {get; set;} = InventoryMode.BagInventory;
@@ -15,6 +14,8 @@ public class PnlInventory : Panel
     public enum ItemMode {CharismaPot, HealthPot, IntellectPot, LuckPot, ManaPot, ResiliencePot, SwiftnessPot, VigourPot, Empty,
         RustedMace, SilverMace, RustedArmour, ObsidianPlate, ScarabAmulet}
 
+    // we could have also used signal wrapper classes but i forgot
+    // EVENTS OR SIGNALS???? WHICH IS BETTER?
     public delegate void InventoryItemSelectedDelegate(IInventoryPlaceable item, PnlInventory source);
     public event InventoryItemSelectedDelegate InventoryItemSelected;
     public delegate void InventoryItemHoveredDelegate(IInventoryPlaceable item, PnlInventory source);
@@ -130,7 +131,7 @@ public class PnlInventory : Panel
             {
         for (int j = 0; j < _grid[0].Count; j++)
         {
-                    GD.Print(i + ", " + j);
+                    // GD.Print(i + ", " + j);
                 if (GetItemAtGridPosition(i, j) is InventoryItemEmpty)
                 {
                     AddItemAtGridPosition(i, j, newItem);
@@ -140,24 +141,6 @@ public class PnlInventory : Panel
         }
         return false;
     }
-
-    // public void AddItemToNextEmptyInOrder
-
-    // public bool AddItemIncludingEmptyToNextSlot(IInventoryPlaceable newItem)
-    // {
-    //     for (int j = 0; j < _grid[0].Count; j++)
-    //     {
-    //         for (int i = 0; i < _grid.Count; i++)
-    //         {
-    //             // if (GetItemAtGridPosition(i, j) is InventoryItemEmpty)
-    //             // {
-    //                 AddItemAtGridPosition(i, j, newItem);
-    //                 return true;
-    //             // }
-    //         }
-    //     }
-    //     return false;
-    // }
 
     public bool RemoveItem(IInventoryPlaceable oldItem)
     {
@@ -227,7 +210,7 @@ public class PnlInventory : Panel
             _grid[x][y].TexRect.QueueFree();
         }
         _grid[x][y] = _inventoryItemEmpty;
-        GD.Print("item removed");
+        // GD.Print("item removed");
         return true;
     }
 
@@ -254,7 +237,6 @@ public class PnlInventory : Panel
 
     public IInventoryPlaceable GetItemAtWorldPosition(Vector2 worldPos)
     {
-        // Vector2 offset = _cellSize/2f;
         int[] gridPos = GetCellGridPosition(worldPos);
         return GetItemAtGridPosition(gridPos[0], gridPos[1]);
     }
@@ -282,6 +264,7 @@ public class PnlInventory : Panel
 
     private void UpdateItemHover()
     {   
+        
         // first turn off the shader for all items that aren't the currently being hovered item
         foreach (IInventoryPlaceable item in GetAllItems())
         {
@@ -385,17 +368,18 @@ public class PnlInventory : Panel
     }
 
 
-    private void OnPnlInventoryMouseEntered()
+    public void OnPnlInventoryMouseEntered()
     {
         // GD.Print(Name);
         _mouseInsideInventoryPanel = true;
     }
-    private void OnPnlInventoryMouseExited()
+    public void OnPnlInventoryMouseExited()
     {
         _mouseInsideInventoryPanel = false;
     }
 
     private bool _active = false;
+
 
     public override void _Process(float delta)
     {
@@ -419,11 +403,5 @@ public class PnlInventory : Panel
                 item.TexRect.Material = null;
             }
         }
-    }
-
-    
-    private void OnPnlInventoryGUIInput(InputEvent ev)
-    {
-        // GD.Print(Name);
     }
 }

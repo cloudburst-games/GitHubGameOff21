@@ -175,6 +175,11 @@ __meta__ = {
 }
 
 [node name="HBoxPortraits" parent="HUD/CtrlTheme/PnlUIBar" instance=ExtResource( 17 )]
+margin_left = 5.03969
+margin_top = -2.83484
+margin_right = 5.03969
+margin_bottom = -2.83484
+rect_scale = Vector2( 0.375, 0.375 )
 
 [node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
 margin_left = 184.0
@@ -468,6 +473,7 @@ margin_bottom = -38.6813
 text = "Proceed"
 
 [node name="PnlEventsBig" type="Panel" parent="HUD/CtrlTheme"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

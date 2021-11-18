@@ -11,34 +11,46 @@ public class HBoxPortraits : Control
     [Signal]
     public delegate void PortraitPressed(string unitID);// int unitPortrait);
 
-    private Vector2[] _pBtnPositions = new Vector2[3] { new Vector2(10,0), new Vector2(65,0), new Vector2(120,0) };
-    private Button[] _pBtns;
-    private Dictionary<string, Button> _unitBtnsByID = new Dictionary<string, Button>();
-    // private int _indexMouseOver = -1;
-    private string _idOver = null;
-    // private int _portraitSelected = -1;
+    [Signal]
+    public delegate void InsideButtonOfCharacter(string id, bool inside);
 
+    private Vector2[] _pBtnPositions = new Vector2[3] { new Vector2(0,0), new Vector2(128,0), new Vector2(256,0) };
+    private PortraitButton[] _pBtns;
+    private Dictionary<string, PortraitButton> _unitBtnsByID = new Dictionary<string, PortraitButton>();
+    private string _idOver = null;
     public bool InCharacterManager {get; set;} = false;
+    private string _IDPopUpSelected = null;
 
     public override void _Ready()
     {
-        _pBtns = new Button[3] {GetNode<Button>("PBtnPlayer"), GetNode<Button>("PBtnCompanion1"), GetNode<Button>("PBtnCompanion2")};
-        foreach (Button btn in _pBtns)
-        {
+        _pBtns = new PortraitButton[3] {GetNode<PortraitButton>("PBtnPlayer"), GetNode<PortraitButton>("PBtnCompanion1"), GetNode<PortraitButton>("PBtnCompanion2")};
+        foreach (PortraitButton btn in _pBtns)
+        {   // the mouse_entered and mouse_exited signals don't seem to be reliable, so we made our own which works better
+            // i dare not remove the first two though, things break so easily
             btn.Connect("mouse_entered", this, nameof(OnPBtnMouseEntered), new Godot.Collections.Array {btn});
             btn.Connect("mouse_exited", this, nameof(OnPBtnMouseExited), new Godot.Collections.Array {btn});
+            btn.Connect(nameof(PortraitButton.InsideButton), this, nameof(OnInsidePortraitButton));
         }
-    //     SetPBtnVisible(1, false);
-    //     SetPBtnVisible(2, false);
-    //     _unitBtnsByID["khepri"] = _pBtns[0];
+    }
+
+    // from the signal in each PortraitButton
+    public void OnInsidePortraitButton(PortraitButton btn, bool inside)
+    {
+        string id = _unitBtnsByID.FirstOrDefault(x => x.Value == btn).Key;
+        if (id != null)
+        {
+            EmitSignal(nameof(InsideButtonOfCharacter), id, inside);
+        }
     }
 
     public void ResetPositions()
     {
         SetPBtnVisible(1, false);
         SetPBtnVisible(2, false);
+        _unitBtnsByID.Clear();
     }
 
+    // called on levelup to really make the player take notice
     public void SetToFlashIntensely(string id, LblFloatScore lvlUpFloatLbl)
     {
         if (_unitBtnsByID.ContainsKey(id))
@@ -68,53 +80,20 @@ public class HBoxPortraits : Control
         }
     }
 
-    // initialising.
-    // call this to begin with
-    // public void SetAllBtnsByID(string playerID, string[] companionIDs)
-    // {
-    //     SetPlayerUnitBtn(playerID);
-    //     SetUnitBtnsByID(companionIDs);
-    // }
-
-    // set this whenever companion is updated
-    // public void SetUnitBtnsByID(string[] companionIDs)
-    // {
-    //     if (companionIDs.Length != 2)
-    //     {
-    //         GD.Print("need to pass 2 strings to HBoxPortraits.cs SetUnitBtnsByID");
-    //         return;
-    //     }
-    //     for (int i = 0; i < companionIDs.Length; i++)
-    //     {
-    //         if (companionIDs[i] != "")
-    //         {
-    //             _unitBtnsByID[companionIDs[i]] = _pBtns[i+1];
-    //         }
-    //     }
-    // }
+    // this is where it all begins (player and companion IDs are passed into here at start and whenever companion changes)
     public void SetSingleUnitBtnByID(int index, string companionID)
     {
-        // if (companionIDs.Length != 2)
-        // {
-        //     GD.Print("need to pass 2 strings to HBoxPortraits.cs SetUnitBtnsByID");
-        //     return;
-        // }
-        // for (int i = 0; i < companionIDs.Length; i++)
-        // {
-            // if (companionIDs[i] != "")
-            // {
         _unitBtnsByID[companionID] = _pBtns[index];
+        _unitBtnsByID[companionID].CurrentID = companionID;
+        if (_unitBtnsByID[companionID].IsConnected("pressed", this, nameof(OnPortraitButtonPressed)))
+        {
+            _unitBtnsByID[companionID].Disconnect("pressed", this, nameof(OnPortraitButtonPressed));
+        }
+        _unitBtnsByID[companionID].Connect("pressed", this, nameof(OnPortraitButtonPressed), new Godot.Collections.Array {_unitBtnsByID[companionID].CurrentID});
         SetPBtnVisible(index, true);
-            // }
-        // }
     }
 
-    // public void SetPlayerUnitBtn(string playerID)
-    // {
-    //     _unitBtnsByID[playerID] = _pBtns[0];
-    // }
-
-    // also call this to set the portraits whenever a companion is updated
+    // this is also called with above, at start and whenever companion changes
     public void SetPortrait(string unitID, Texture tex)
     {
         if (unitID != "")
@@ -123,29 +102,22 @@ public class HBoxPortraits : Control
         }
     }
 
-    // Flash shader stuff
+    // this is probably not needed but we use this to know which portrait we are over to bring up the menu on click
+    // may be better just to use the signal we made for portrait button but we did that afterwards oh well
     private void OnPBtnMouseEntered(Button btn)
     {
-        ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
-        shaderMaterial.SetShaderParam("speed", 6f);
-        shaderMaterial.SetShaderParam("flash_colour_original", new Color(1,1,1));
-        shaderMaterial.SetShaderParam("flash_depth", 0.2f);
-        btn.GetNode<TextureRect>("TexRect").Material = shaderMaterial;
-        // _indexMouseOver = _pBtns.ToList().IndexOf(btn); /// tells us which button its over
         _idOver = _unitBtnsByID.FirstOrDefault(x => x.Value == btn).Key;
-        GD.Print(_idOver);
     }
-
     private void OnPBtnMouseExited(Button btn)
     {
-        // _indexMouseOver = -1;
-        btn.GetNode<TextureRect>("TexRect").Material = null;
         _idOver = null;
     }
 
-    private string _IDPopUpSelected = null;
+
     
-    // detecting left or right btn clicks
+    // detecting left or right btn clicks to bring up the popupmenu (only for the bototm part)
+    // rather than using InCharacterManager bool would be better to have 2 diff states and set state depending on 
+    // where we are
     public override void _Input(InputEvent ev)
     {
         base._Input(ev);
@@ -162,7 +134,7 @@ public class HBoxPortraits : Control
                         {
                             return;
                         }
-                        Button btnSelected = _unitBtnsByID[_idOver];
+                        PortraitButton btnSelected = _unitBtnsByID[_idOver];
                         int indexOfBtnSelected = _pBtns.ToList().IndexOf(btnSelected);
                         GetNode<PopupMenu>("PopupMenu").SetItemDisabled(2, indexOfBtnSelected == 0);
                         GetNode<PopupMenu>("PopupMenu").RectGlobalPosition = _pBtns[indexOfBtnSelected].RectGlobalPosition;
@@ -171,24 +143,36 @@ public class HBoxPortraits : Control
                     }
                 }
             }
-            else
-            {
-                if (btn.ButtonIndex == (int) ButtonList.Left && btn.Pressed && _idOver != null)// _indexMouseOver != -1)
-                {
-                    // Button portraitBtn = _unitBtnsByID[_idOver];
-                    EmitSignal(nameof(PortraitPressed), _idOver);// _unitBtnsByID
-                        // .FirstOrDefault(x => x.Value == portraitBtn).Key); // _indexMouseOver);
-                    // var myKey = types.FirstOrDefault(x => x.Value == "one").Key;
-                }
-            }
         }
-    }   
+    }
+
+    public void OnPortraitButtonPressed(string ID)
+    {
+        if (InCharacterManager)
+        {
+            DisableOnePortraitButtonByID(ID);
+            EmitSignal(nameof(PortraitPressed), ID);
+        }
+    }
+
+    public void DisableOnePortraitButtonByID(string id)
+    {
+        foreach (string s in _unitBtnsByID.Keys)
+        {
+            _unitBtnsByID[s].Disabled = false;
+            if (s == id)
+            {
+                _unitBtnsByID[id].Disabled = true;
+            }
+            
+        }
+    }
+
+
     // handling popupmenu clicks
     public void OnPopupMenuIDPressed(int id)
     {
-        // Button portraitBtn = _unitBtnsByID[_IDPopUpSelected];
         EmitSignal(nameof(PopupPressed), id, _IDPopUpSelected);
-        // EmitSignal(nameof(PopupPressed), id, _portraitSelected);
     }
 
     private void SetPBtnVisible(int index, bool visible)
@@ -197,6 +181,7 @@ public class HBoxPortraits : Control
         UpdatePBtnPositions();
     }
     
+    // TODO -REWRITE THIS MONSTROSITY
     private void UpdatePBtnPositions()
     {
         // 100 110 101 111. crude..
@@ -219,44 +204,5 @@ public class HBoxPortraits : Control
             _pBtns[2].RectPosition = _pBtnPositions[2];
         }
     }
-
-
-
-
-
-    // // public void SetPortrait(int index, Texture tex)
-    // // {
-    // //     _pBtns[index].GetNode<TextureRect>("TexRect").Texture = tex;
-    // // }
-
-    // private void SetPortrait(UnitData unitData)
-    // {
-    //     _unitBtnsByID[unitData.ID].GetNode<TextureRect>("TexRect").Texture = GD.Load<Texture>(unitData.PortraitPathSmall);
-    // }
-
-    // public void UpdateCharacters(List<UnitData> unitDatas)
-    // {
-    //     if (unitDatas.Count > 2)
-    //     {
-    //         for (int i = 0; i < 100; i++)
-    //             GD.Print("error somewhere (see HBoxPortraits.cs UpdateCharacters) - should not have more than 2 companions");
-    //         // throw new Exception("error somewhere (see HBoxPortraits.cs UpdateCharacters) - should not have more than 2 companions");
-    //     }
-    //     for (int i = 0; i < 2; i++)
-    //     {
-    //         if (unitDatas.Count < i+1)
-    //         {
-    //             SetPBtnVisible(i+1, false);
-    //             continue;
-    //         }
-    //         _unitBtnsByID[unitDatas[i].ID] = _pBtns[i];
-    //         SetPortrait(unitDatas[i]);
-    //         SetPBtnVisible(i+1, true);
-    //     }
-        
-
-    //     // TODO. call this for BOTH HBoxPortraits when need to change companion etc.
-    // }
-
  
 }

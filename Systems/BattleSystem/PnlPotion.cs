@@ -13,6 +13,15 @@ public class PnlPotion : PnlInventory
         base._Ready();
         Visible = false;
 
+        if (!IsConnected("mouse_entered", this, nameof(PnlInventory.OnPnlInventoryMouseEntered)))
+        {
+            Connect("mouse_entered", this, nameof(PnlInventory.OnPnlInventoryMouseEntered));
+        }
+        if (!IsConnected("mouse_exited", this, nameof(PnlInventory.OnPnlInventoryMouseExited)))
+        {
+            Connect("mouse_exited", this, nameof(PnlInventory.OnPnlInventoryMouseExited));
+        }
+
         // Connect(nameof(InventoryItemHovered), this, nameof(OnInventoryItemHover));
         InventoryItemHovered+=this.OnInventoryItemHover;
         InventoryItemSelected+=this.OnInventoryItemSelected;
@@ -44,6 +53,7 @@ public class PnlPotion : PnlInventory
 
     public void OnInventoryItemHover(IInventoryPlaceable item, PnlInventory source)
     {
+        GD.Print("trying to hover item");
         if (!Visible)
         {
             return;
@@ -71,6 +81,7 @@ public class PnlPotion : PnlInventory
         RemoveItem(item);
         // EmitSignal(nameof(PotionSelected), item);
         PotionSelected?.Invoke(((PotionEffect)item).CurrentItemMode);
+        GetNode<Label>("LblHover").Text = "";
     }
 
     public override void Die()

@@ -1,34 +1,34 @@
 Minimum targets
 
-Mon:
-- Battle map grid DONE
-- All units in the battle map DONE
 
-Tues:
-- Add skip turn DONE
 
-Weds:
-
-Thurs:
-- Battle system including movement and attack DONE
-- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack. DONE
-- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation. DONE
-
-Fri:
-- Add spells to battle system. Complete battle system. Can use consumables in battle obviously. DONE
-- NEXT: on battle defeat -> show a DEFEATED message and menu (with resume and save disabled or hidden) DONE
-- Experience system, stats, and levelling, and gaining new spells (gain your 2nd spell at level 5?)
-- Make up to date art asset list
-
-Sat:
+Next:
+Thursday:
+- Make multiple battlemaps and randomise the battlemap on starting a fight
 - Obstacles
-- Shop building
-- Obelisks
+- Shop building (on the map) - will probably need its own data with stock, and spawned with level transitions and on loading like NPCs
+- Shop interface (ideally transition to interface from NPC dialogue)
+Friday:
+- Map
+- Keybinds for UI elements (on world map and on battle map)
+- Add load to main menu
+- Balancing and difficulty options
+- Particle fx for every spell
+- Placeholder art for every non-animated sprite (including spell icons!)
+Saturday:
+- Integrate NPCs, dialogue, quests/journal system
+- Level design implementation
+Sunday:
+- Integrate sound and music
+- Playable game from start to finish by 21st Nov
 
 If time post all to-do:
 Polish:
 - Animate start and end of battle
 - Implement click to move controls
+- TEST and tweak numbers
+- day/night cycle
+- add weight to each item and character weight limit ?? will this even be fun...
 - Enter filename by script when saving files...
 - Make a less buggy FileDialog (only if plenty of time)
 - Redo animations for Unit.tscn / (Player/NPC) - see AnimationTree tutorial
@@ -133,3 +133,23 @@ THEN: hostile NPC - on area overlap -> BOX -> "dude and his minions attack!" -> 
 - Battle map and transition between adventure and battle maps DONE
 - Readjust weekly targets as per progress
 cc30baff
+
+Mon:
+- Battle map grid DONE
+- All units in the battle map DONE
+
+Tues:
+- Add skip turn DONE
+
+Weds:
+
+Thurs:
+- Battle system including movement and attack DONE
+- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack. DONE
+- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation. DONE
+
+Fri:
+- Add spells to battle system. Complete battle system. Can use consumables in battle obviously. DONE
+- NEXT: on battle defeat -> show a DEFEATED message and menu (with resume and save disabled or hidden) DONE
+- Experience system, stats, and levelling, and gaining new spells (gain your 2nd spell at level 5?) DONE
+- Make up to date art asset list DONE

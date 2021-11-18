@@ -22,10 +22,10 @@ public class StageWorld : Stage
         // {
         //     GetNode<Label>("HUD/CtrlTheme/Blah/Label").Text = "status of blah: " + GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentDialogueData.Blah;
         // }
-        // if (ev.IsActionPressed("Test"))
-        // {
-        //     GetNode<Panel>("HUD/CtrlTheme/Blah").Visible = !GetNode<Panel>("HUD/CtrlTheme/Blah").Visible;
-        // }
+        if (ev.IsActionPressed("Test"))
+        {
+            OnCompanionJoining(new UnitDataSignalWrapper() {CurrentUnitData = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNode<Unit>("Bob").CurrentUnitData});
+        }
     }
 
     public override void _Ready()
@@ -52,6 +52,7 @@ public class StageWorld : Stage
         GetNode<PnlCharacterManager>("HUD/CtrlTheme/PnlCharacterManager").Connect(nameof(PnlCharacterManager.RequestedPause), this, nameof(OnPauseRequested));
         GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits").Connect(nameof(HBoxPortraits.PopupPressed), this, nameof(OnPopupMenuIDPressed));
         GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlCharacterManager/HBoxPortraits").Connect(nameof(HBoxPortraits.PortraitPressed), this, nameof(OnCharacterManagerPortraitPressed));
+        GetNode<CharacterInventory>("HUD/CtrlTheme/PnlCharacterManager/TabContainer/Inventory").Connect(nameof(CharacterInventory.GivingItemToAnotherCharacter), this, nameof(OnGivingItemToAnotherCharacter));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.TestCompanionJoining), this, nameof(OnCompanionJoining));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.ExperienceGained), this, nameof(OnExperienceGainedWrapped));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.FoundGold), this, nameof(OnFoundGold));
@@ -61,6 +62,17 @@ public class StageWorld : Stage
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompletedQuest), this, nameof(OnCompletedQuest));
 
 // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
+    }
+
+    public void OnGivingItemToAnotherCharacter(string id, PnlInventory.ItemMode itemMode)
+    {
+        GD.Print(id);
+        if (id == GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.ID)
+        {
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Add(itemMode);
+            return;
+        }
+        GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(id).CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Add(itemMode);
     }
 
     public void OnExperienceGainedWrapped(UnitDataSignalWrapper unitDataSignalWrapper, int xpPerMember)
@@ -248,7 +260,7 @@ public class StageWorld : Stage
 
     public void OnCharacterManagerPortraitPressed(string unitID)//int portraitIndex)
     {
-        // GD.Print(unitID);
+        GD.Print(unitID);
         OnPopupMenuIDPressed(-1, unitID);
     }
 
@@ -260,6 +272,7 @@ public class StageWorld : Stage
             : GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitID);
         // GD.Print(unitID);
         // GD.Print(unit);
+        GetNode<PnlCharacterManager>("HUD/CtrlTheme/PnlCharacterManager").SetGold(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Gold);
 
         // if (GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetPlayerCompanions().Count >= portraitIndex)
         // {
@@ -428,8 +441,8 @@ public class StageWorld : Stage
 
         // set starting equipment
         player.CurrentUnitData.EquipAmulet(PnlInventory.ItemMode.Empty);
-        player.CurrentUnitData.EquipArmour(PnlInventory.ItemMode.Empty);
-        player.CurrentUnitData.EquipWeapon(PnlInventory.ItemMode.Empty);
+        player.CurrentUnitData.EquipArmour(PnlInventory.ItemMode.RustedArmour);
+        player.CurrentUnitData.EquipWeapon(PnlInventory.ItemMode.RustedMace);
         player.CurrentUnitData.CurrentBattleUnitData.PotionsEquipped = new PnlInventory.ItemMode[3] {
             PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.ManaPot
         };
