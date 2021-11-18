@@ -13,5 +13,6 @@ public class LuckPotionEffect : PotionEffect
         Name = "Luck Potion";
         SpellEffect = SpellEffectManager.SpellMode.LuckPotion;
         Tooltip = "Boosts luck, providing a bonus to critical hit, dodge, and magic resist!";
+        Cost = 5;
     }
 }

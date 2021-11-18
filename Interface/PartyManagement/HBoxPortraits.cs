@@ -83,6 +83,7 @@ public class HBoxPortraits : Control
     // this is where it all begins (player and companion IDs are passed into here at start and whenever companion changes)
     public void SetSingleUnitBtnByID(int index, string companionID)
     {
+        GD.Print(companionID);
         _unitBtnsByID[companionID] = _pBtns[index];
         _unitBtnsByID[companionID].CurrentID = companionID;
         if (_unitBtnsByID[companionID].IsConnected("pressed", this, nameof(OnPortraitButtonPressed)))
@@ -91,6 +92,11 @@ public class HBoxPortraits : Control
         }
         _unitBtnsByID[companionID].Connect("pressed", this, nameof(OnPortraitButtonPressed), new Godot.Collections.Array {_unitBtnsByID[companionID].CurrentID});
         SetPBtnVisible(index, true);
+
+        foreach (string k in _unitBtnsByID.Keys)
+        {
+            GD.Print(k);
+        }
     }
 
     // this is also called with above, at start and whenever companion changes

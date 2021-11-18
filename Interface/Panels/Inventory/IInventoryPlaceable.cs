@@ -24,4 +24,8 @@ public interface IInventoryPlaceable
     string Tooltip {
         get; set;
     }
+
+    int Cost{
+        get; set;
+    }
 }

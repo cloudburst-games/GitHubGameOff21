@@ -6,6 +6,7 @@ using System.Linq;
 
 public class StageWorld : Stage
 {
+    private ItemBuilder _itemBuilder = new ItemBuilder();
     public override void _Input(InputEvent ev)
     {
         base._Input(ev);
@@ -133,24 +134,22 @@ public class StageWorld : Stage
         }
 
     }
+    
 
-    private void OnFoundItems(List<PnlInventory.ItemMode> items)
+    private void OnFoundItems(Godot.Collections.Array<PnlInventory.ItemMode> items)
     {
         foreach (PnlInventory.ItemMode item in items)
         {
+            GD.Print(Enum.GetName(typeof(PnlInventory.ItemMode), item));
             if (item != PnlInventory.ItemMode.Empty)
             {
                 GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Add(item);
-            
-                // TODO
-                // build item first
-                // then get the name
-                GetNode<HUD>("HUD").LogEntry(String.Format("The party has picked up {0}.", item));
+                GetNode<HUD>("HUD").LogEntry(String.Format("The party has picked up {0}.", _itemBuilder.BuildAnyItem(item).Name));
             }
         }
     }
 
-    private void OnCompletedQuest(int questDifficulty, List<PnlInventory.ItemMode> itemrewards, int goldReward) // this is the level the quest is targeted for
+    private void OnCompletedQuest(int questDifficulty, Godot.Collections.Array<PnlInventory.ItemMode> itemrewards, int goldReward) // this is the level the quest is targeted for
     {
         float xpReward = 10 + GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.ExperienceManager.GetTotalExperienceValueOfLevel(questDifficulty);
         for (int i = 0; i < GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions.Count; i++)
@@ -191,7 +190,7 @@ public class StageWorld : Stage
 
     public void OnCompanionChanged()
     {
-        HBoxPortraits[] portraitControls = new HBoxPortraits[2] {GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits"), GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlCharacterManager/HBoxPortraits")};
+        HBoxPortraits[] portraitControls = new HBoxPortraits[3] {GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlShopScreen/HBoxPortraits"), GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits"), GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlCharacterManager/HBoxPortraits")};
         string playerID = GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.ID;
         
         foreach (HBoxPortraits portraitControl in portraitControls)
@@ -328,6 +327,7 @@ public class StageWorld : Stage
 
     public void OnDialogueStarted(Unit target)
     {
+        target.CurrentUnitData.InitiatesDialogue = false;
         GetNode<HUD>("HUD").StartDialogue(target.CurrentUnitData, GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData);
     }
     public async void OnBattleStarted(Unit target)
@@ -463,6 +463,18 @@ public class StageWorld : Stage
         OnCompanionChanged();
     }
 
+    public void OnShopAccessed(ShopDataSignalWrapper wrappedShopData)
+    {
+
+        GetNode<HUD>("HUD").PauseCommon(true);
+        GetNode<HUD>("HUD").Pausable = false;
+        GetNode<PnlShopScreen>("HUD/CtrlTheme/PnlShopScreen").Start(
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData,
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions,
+            wrappedShopData.CurrentShopData
+        );        
+    }
+
     private Unit CommonPlayerGen()
     {
         Unit player = (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance();
@@ -472,7 +484,8 @@ public class StageWorld : Stage
         //
         player.Connect(nameof(Unit.DialogueStarted), this, nameof(OnDialogueStarted));
         player.Connect(nameof(Unit.BattleStarted), this, nameof(OnBattleStarted));
-        
+        player.Connect(nameof(Unit.ShopAccessed), this, nameof(OnShopAccessed));
+        player.Connect(nameof(Unit.NPCStartingDialogue), this, nameof(OnDialogueStarted));
         return player;
     }
     /*
@@ -583,6 +596,7 @@ public class StageWorld : Stage
         // ?show a warning re unsaved data
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Die();
         GetNode<PnlCharacterManager>("HUD/CtrlTheme/PnlCharacterManager").Die();
+        GetNode<PnlShopScreen>("HUD/CtrlTheme/PnlShopScreen").Die();
         SceneManager.SimpleChangeScene(SceneData.Stage.MainMenu);
     }
 }

@@ -2,35 +2,16 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 public class BattleGrid : Control
 {
     private TileMap _overallTileMap;
     private AStar2D _aStar = new AStar2D();
-    private AStar2D _aStarNoUnitObstacles = new AStar2D();
     private Vector2 _cellSize = new Vector2(256,128);
     private Vector2 _halfCellSize;
     public Godot.Collections.Array TraversableCells {get; set;}
-    public Godot.Collections.Array TraversableCellsNoUnitObstacles {get; set;}
     public Godot.Collections.Array ObstacleCells {get; set;}
-    public Godot.Collections.Array ObstacleCellsNoUnitObstacles {get; set;}
-    // private Godot.Collections.Array _obstacles;
-    // private Rect2 _usedRect;
     private Dictionary<Vector2, int> _pointIDs = new Dictionary<Vector2, int>();
-    private Dictionary<Vector2, int> _pointIDsNoUnitObstacles = new Dictionary<Vector2, int>();
-
-    // private List<Sprite> _movePoints = new List<Sprite>();
-    // private List<Sprite> _attackAPPoints = new List<Sprite>();
-
-    private Texture[] _movePointTextures = new Texture[4] {
-        GD.Load<Texture>("res://Systems/BattleSystem/BattleGrids/ArrowBLYellow.png"),
-        GD.Load<Texture>("res://Systems/BattleSystem/BattleGrids/ArrowBRYellow.png"),
-        GD.Load<Texture>("res://Systems/BattleSystem/BattleGrids/ArrowTRYellow.png"),
-        GD.Load<Texture>("res://Systems/BattleSystem/BattleGrids/ArrowTLYellow.png"),
-    };
-    private Texture _movePointTex = GD.Load<Texture>("res://Systems/BattleSystem/GridMovePoint.png");
-    private Texture _attackPointTex = GD.Load<Texture>("res://Systems/BattleSystem/GridAttackAPPoint.png");
 
     public override void _Ready()
     {
@@ -41,25 +22,7 @@ public class BattleGrid : Control
         GetNode<TileMap>("TileMapShadedTilesLong").Clear();
         GetNode<TileMap>("TileMapShadedTilesPath").Clear();
         GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
-        CalculateNoUnitObstacleAStarMap();
-        // TraversableCells = _overallTileMap.GetUsedCellsById(0);
-        // ObstacleCells = _overallTileMap.GetUsedCellsById(1);
-        // _obstacles = _overallTileMap.GetUsedCellsById(1);
-        // _usedRect = _overallTileMap.GetUsedRect();
 
-
-        // SetPointIDs();
-        // AddCells();
-        // ConnectCells();
-    }
-
-    private void CalculateNoUnitObstacleAStarMap()
-    {
-        TraversableCellsNoUnitObstacles = _overallTileMap.GetUsedCellsById(0);
-        ObstacleCellsNoUnitObstacles = _overallTileMap.GetUsedCellsById(1);
-        SetPointIDsNoUnitObstacles();
-        AddCellsNoUnitObstacles();
-        ConnectCellsNoUnitObstacles();
     }
 
     public Vector2[] CalculatePath(Vector2 mapStart, Vector2 mapEnd)
@@ -70,17 +33,19 @@ public class BattleGrid : Control
         }
         int startIndex = _pointIDs[mapStart];
         int endIndex = _pointIDs[mapEnd];
+        // GD.Print("*");
+        // foreach (Vector2 point in _aStar.GetPointPath(startIndex, endIndex))
+        // {
+        //     GD.Print(point);
+        // }
+        // GD.Print("*");
+
+        // float xDiff = Math.Abs(mapStart.x - mapEnd.x);
+        // float yDiff = Math.Abs(mapStart.y - mapEnd.y);
+        // bool diagonal = Math.Abs(xDiff - yDiff) <= 1;
+        // GD.Print("diagonal: ", diagonal);
+        // GD.Print(IsPathStraight(mapStart, mapEnd));
         return _aStar.GetPointPath(startIndex, endIndex);
-    }
-    public Vector2[] CalculatePathNoUnitObstacles(Vector2 mapStart, Vector2 mapEnd)
-    {
-        if (!TraversableCellsNoUnitObstacles.Contains(mapStart) || ! TraversableCellsNoUnitObstacles.Contains(mapEnd))
-        {
-            return new Vector2[0];
-        }
-        int startIndex = _pointIDsNoUnitObstacles[mapStart];
-        int endIndex = _pointIDsNoUnitObstacles[mapEnd];
-        return _aStarNoUnitObstacles.GetPointPath(startIndex, endIndex);
     }
 
     int _pIDCount = 0;
@@ -94,25 +59,32 @@ public class BattleGrid : Control
         }
     }
 
-    private void SetPointIDsNoUnitObstacles()
-    {
-        int pIDCountNoUnitObstacles = 0;
-        foreach (Vector2 point in TraversableCellsNoUnitObstacles)
-        {
-            _pointIDsNoUnitObstacles.Add(point, pIDCountNoUnitObstacles);
-            pIDCountNoUnitObstacles += 1;
-        }
-    }
+    private List<Vector2> _lastAdditionalObstacles = new List<Vector2>();
 
-    public void RecalculateAStarMap(List<Vector2> additionalObstacles)
+    public void RecalculateAStarMap(List<Vector2> additionalObstacles, bool includeObstacles = true)
     {
         _aStar.Clear();
         _pointIDs.Clear();
+        if (additionalObstacles != null)
+        {
+            _lastAdditionalObstacles = additionalObstacles;
+        }
         TraversableCells = _overallTileMap.GetUsedCellsById(0);
         ObstacleCells = _overallTileMap.GetUsedCellsById(1);
-        foreach (Vector2 obstaclePoint in additionalObstacles)
+        if (additionalObstacles != null)
         {
-            ObstacleCells.Add(obstaclePoint);
+            foreach (Vector2 obstaclePoint in additionalObstacles)
+            {
+                ObstacleCells.Add(obstaclePoint);
+            }
+        }
+        if (!includeObstacles)
+        {
+            ObstacleCells.Clear();
+            foreach (Vector2 cell in _overallTileMap.GetUsedCellsById(1))
+            {
+                TraversableCells.Add(cell);
+            }
         }
         foreach (Vector2 point in ObstacleCells)
         {
@@ -133,13 +105,6 @@ public class BattleGrid : Control
             _aStar.AddPoint(_pointIDs[point], point);
         }
     }
-    private void AddCellsNoUnitObstacles()
-    {
-        foreach (Vector2 point in TraversableCellsNoUnitObstacles)
-        {
-            _aStarNoUnitObstacles.AddPoint(_pointIDsNoUnitObstacles[point], point);
-        }
-    }
 
     private void ConnectCells()
     {
@@ -152,20 +117,6 @@ public class BattleGrid : Control
                     continue;
                 }
                 _aStar.ConnectPoints(_pointIDs[point], _pointIDs[neighbour], true);
-            }
-        }
-    }
-    private void ConnectCellsNoUnitObstacles()
-    {
-        foreach (Vector2 point in TraversableCellsNoUnitObstacles)
-        {
-            foreach (Vector2 neighbour in GetHorizontalNeighbours(point))
-            {
-                if (!TraversableCellsNoUnitObstacles.Contains(neighbour))
-                {
-                    continue;
-                }
-                _aStarNoUnitObstacles.ConnectPoints(_pointIDsNoUnitObstacles[point], _pointIDsNoUnitObstacles[neighbour], true);
             }
         }
     }
@@ -234,64 +185,6 @@ public class BattleGrid : Control
         return false;
     }
 
-    private void GenerateMovePointSprite(Vector2 mapPos, Vector2 nextmapPos)
-    {
-        return;
-        var sprite = new Sprite() {
-            // Texture = _movePointTex
-        };
-        GetNode("BattleGridUI/MovePoints").AddChild(sprite);
-        sprite.Position = new Vector2(_overallTileMap.MapToWorld(mapPos).x,  _overallTileMap.MapToWorld(mapPos).y + 1.5f*_halfCellSize.y) ;
-        if (nextmapPos != mapPos)
-        {
-            float angle = mapPos.AngleToPoint(nextmapPos) - Mathf.Pi/2f;
-            switch (angle)
-            {
-                case 0:
-                    sprite.Texture = _movePointTextures[2];
-                    break;
-                case -Mathf.Pi/2f:
-                    sprite.Texture = _movePointTextures[3];
-                    break;
-                case -Mathf.Pi:
-                    sprite.Texture = _movePointTextures[0];
-                    break;
-                case Mathf.Pi/2f:
-                    sprite.Texture = _movePointTextures[1];
-                    break;
-
-            }
-        }
-
-        // make the sprite red - if we want to show AP for instance
-        sprite.Modulate = new Color(1,0,0);
-    }
-
-    private void ClearAllPointSprites()
-    {
-        foreach (Node n in GetNode("BattleGridUI/MovePoints").GetChildren())
-        {
-            n.QueueFree();
-        }
-        foreach (Node n in GetNode("BattleGridUI/AttackAPPoints").GetChildren())
-        {
-            n.QueueFree();
-        }
-    }
-
-    public void DrawMovePoints(Vector2[] points)
-    {
-        ClearAllPointSprites();
-        for (int i = 1; i < points.Count(); i++)
-        {
-            GenerateMovePointSprite(points[i], i+1 < points.Count() ? points[i+1] : points[i]);
-        }
-        // foreach (Vector2 vec in points)
-        // {
-        //     GenerateMovePointSprite(vec);
-        // }
-    }
-
     // For testing:
     private void PrintPathToConsole(Vector2[] path)
     {
@@ -337,33 +230,52 @@ public class BattleGrid : Control
     //     return CalculatePathNoUnitObstacles(gridStartPos, gridEndPos).Count()-1;
     // }
 
-    public int GetDistanceToPointNoUnitObstacles(Vector2 gridStartPos, Vector2 gridEndPos)
+    public int GetDistanceToPointNoTargetObstacle(Vector2 gridStartPos, Vector2 gridEndPos)
     {
-
-        // AddSinglePoint(gridStartPos);
         AddSinglePoint(gridEndPos);
-        // if (!TraversableCells.Contains(gridStartPos))
-        // {
-        //     TraversableCells.Add(gridStartPos);
-        // }
         TraversableCells.Add(gridEndPos);
         
         int distance = CalculatePath(gridStartPos, gridEndPos).Count()-1;
         TraversableCells.Remove(gridEndPos);
-        // RemoveSinglePoint(gridStartPos);
         RemoveSinglePoint(gridEndPos);
         return distance;
-        // return CalculatePathNoUnitObstacles(gridStartPos, gridEndPos).Count()-1;
     }
-    // public int GetDistanceToObstacle(Vector2 gridStartPos, Vector2 gridEndPos)
-    // {
-    //     // AddSinglePoint(gridStartPos);
-    //     // AddSinglePoint(gridEndPos);
-    //     int distance = CalculatePath(gridStartPos, gridEndPos).Count()-1;
-    //     // RemoveSinglePoint(gridStartPos);
-    //     // RemoveSinglePoint(gridEndPos);
-    //     return distance;
-    // }
+
+    public bool IsDistanceEqualWithOrWithoutObstacles(Vector2 gridStartPos, Vector2 gridEndPos)
+    {
+        if (GetDistanceToPointNoTargetObstacle(gridStartPos, gridEndPos) == 
+            GetDistanceToPointNoAnyObstacles(gridStartPos, gridEndPos))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    // public bool IsPathStraight
+    public bool IsPathStraight(Vector2 gridStartPos, Vector2 gridEndPos)
+    {
+        // check if diagonal
+        float xDiff = Math.Abs(gridStartPos.x - gridEndPos.x);
+        float yDiff = Math.Abs(gridStartPos.y - gridEndPos.y);
+        bool diagonal = Math.Abs(xDiff - yDiff) <= 1;
+        GD.Print("diagonal: ", diagonal);
+        // check if straight
+        bool straight = gridStartPos.x == gridEndPos.x || gridStartPos.y == gridEndPos.y;
+        GD.Print("straight: ", straight);
+        // check if distance equal
+        bool equal = IsDistanceEqualWithOrWithoutObstacles(gridStartPos, gridEndPos);
+        GD.Print("equal: ", equal);
+        GD.Print("overall..:");
+        return (diagonal || straight ) && equal;
+    }
+
+    public int GetDistanceToPointNoAnyObstacles(Vector2 gridStartPos, Vector2 gridEndPos)
+    {
+        RecalculateAStarMap(null, false);
+        int distance = CalculatePath(gridStartPos, gridEndPos).Count()-1;
+        RecalculateAStarMap(_lastAdditionalObstacles, true);
+        return distance;
+    }
 
     private void AddSinglePoint(Vector2 point)
     {

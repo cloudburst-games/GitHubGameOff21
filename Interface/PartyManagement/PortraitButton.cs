@@ -11,7 +11,7 @@ public class PortraitButton : Button
     {
         base._Process(delta);
         // on mouse entered/exited doesnt seem to work when the mouse button is pressed, so we do this instead
-        Vector2 correctedMousePos = (GetLocalMousePosition() + RectPosition)*((Control) GetParent()).RectScale;
+        Vector2 correctedMousePos = GetLocalMousePosition()*((Control) GetParent()).RectScale;
         
         if (correctedMousePos.x > 0 && correctedMousePos.x < RectSize.x * ((Control) GetParent()).RectScale.x && 
             correctedMousePos.y > 0 && correctedMousePos.y < RectSize.y * ((Control) GetParent()).RectScale.y && Visible)
@@ -21,6 +21,9 @@ public class PortraitButton : Button
                 return;
             }
             _inside = true;
+            GD.Print(correctedMousePos);
+            GD.Print(RectSize);
+            GD.Print("pos: ", RectPosition);
             EmitSignal(nameof(InsideButton), this, true);
             ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
             shaderMaterial.SetShaderParam("speed", 10f);

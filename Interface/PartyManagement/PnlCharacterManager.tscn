@@ -33,10 +33,10 @@ __meta__ = {
 }
 
 [node name="HBoxPortraits" parent="." instance=ExtResource( 5 )]
-margin_left = 17.4554
-margin_top = 8.09698
-margin_right = 17.4554
-margin_bottom = 8.09698
+margin_left = 17.0
+margin_top = 8.0
+margin_right = 17.0
+margin_bottom = 8.0
 
 [node name="TexRectGold" type="TextureRect" parent="."]
 margin_left = 1106.49

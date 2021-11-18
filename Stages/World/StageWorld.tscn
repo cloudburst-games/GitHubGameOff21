@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Stages/World/HUD/PnlEvents.cs" type="Script" id=18]
 [ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=20]
+[ext_resource path="res://Props/Buildings/Shop/PnlShopScreen.tscn" type="PackedScene" id=21]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -256,6 +257,11 @@ visible = false
 margin_top = 540.0
 
 [node name="PnlCharacterManager" parent="HUD/CtrlTheme" instance=ExtResource( 19 )]
+
+[node name="PnlShopScreen" parent="HUD/CtrlTheme" instance=ExtResource( 21 )]
+
+[node name="Buy" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="0"]
+margin_top = 46.0
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false
@@ -634,6 +640,7 @@ anims/default = SubResource( 4 )
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnJournal" to="." method="OnBtnJournalPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnMenu" to="HUD" method="OnBtnMenuPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer/BtnEvents" to="HUD" method="OnBtnEventsPressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlShopScreen/BtnClose" to="HUD" method="OnShopBtnClosePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnResume" to="HUD" method="OnBtnResumePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnSave" to="HUD" method="OnBtnSavePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnLoad" to="HUD" method="OnBtnLoadPressed"]
@@ -647,3 +654,4 @@ anims/default = SubResource( 4 )
 [connection signal="file_selected" from="HUD/CtrlTheme/FileDialog" to="." method="OnFileDialogConfirmed"]
 
 [editable path="HUD/CtrlTheme/DialogueControl"]
+[editable path="HUD/CtrlTheme/PnlShopScreen"]

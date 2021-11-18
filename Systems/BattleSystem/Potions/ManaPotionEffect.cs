@@ -13,5 +13,6 @@ public class ManaPotionEffect : PotionEffect
         Name = "Water";
         SpellEffect = SpellEffectManager.SpellMode.ManaPotion;
         Tooltip = "Restore " + Magnitude + " mana.";
+        Cost = 2;
     }
 }

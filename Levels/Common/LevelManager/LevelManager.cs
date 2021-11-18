@@ -260,6 +260,15 @@ public class LevelManager : Node2D
             }
         }
 
+        // pack shop data
+        foreach (Node n in GetLevelInTree().GetNode<YSort>("All/Shops").GetChildren())
+        {
+            if (n is Shop shop)
+            {
+                sourceLevelData.ShopDatas.Add(shop.CurrentShopData);// GetShopData());
+            }
+        }
+
         CurrentLevelData[((LevelLocation)GetChild(0)).Level] = sourceLevelData;
     }
 
@@ -292,6 +301,14 @@ public class LevelManager : Node2D
         {
             GenerateNPC(unitData);
         }
+        foreach (Node n in GetLevelInTree().GetNode<YSort>("All/Shops").GetChildren())
+        {
+            n.QueueFree();
+        }
+        foreach (ShopData shopData in CurrentLevelData[dest].ShopDatas)
+        {
+            GenerateShop(shopData);
+        }
     }
 
     private void GenerateNPC(UnitData unitData)
@@ -316,6 +333,13 @@ public class LevelManager : Node2D
         }
         //
         EmitSignal(nameof(NPCGenerated));
+    }
+
+    private void GenerateShop(ShopData shopData)
+    {
+        Shop shop = (Shop)GD.Load<PackedScene>("res://Props/Buildings/Shop/Shop.tscn").Instance();
+        GetLevelInTree().GetNode<YSort>("All/Shops").AddChild(shop);
+        shop.LoadStartingData(shopData);        
     }
 
     public void OnNPCRightClicked(Unit npc)

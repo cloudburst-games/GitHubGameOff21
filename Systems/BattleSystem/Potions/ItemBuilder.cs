@@ -65,4 +65,47 @@ public class ItemBuilder
                 return new AmuletItem();
         }
     }
+
+    public IInventoryPlaceable BuildAnyItem(PnlInventory.ItemMode itemMode)
+    {
+        if (IsPotion(itemMode))
+        {
+            return BuildPotion(itemMode);
+        }
+        else if (IsWeapon(itemMode))
+        {
+            return BuildWeapon(itemMode);
+        }
+        else if (IsArmour(itemMode))
+        {
+            return BuildArmour(itemMode);
+        }
+        else if (IsAmulet(itemMode))
+        {
+            return BuildAmulet(itemMode);
+        }
+        else
+        {
+            return new InventoryItemEmpty();
+        }
+    }
+
+    public bool IsPotion(PnlInventory.ItemMode itemMode)
+    {
+        return itemMode == PnlInventory.ItemMode.CharismaPot || itemMode == PnlInventory.ItemMode.HealthPot || itemMode == PnlInventory.ItemMode.IntellectPot
+             || itemMode == PnlInventory.ItemMode.LuckPot || itemMode == PnlInventory.ItemMode.ManaPot || itemMode == PnlInventory.ItemMode.ResiliencePot
+             || itemMode == PnlInventory.ItemMode.SwiftnessPot || itemMode == PnlInventory.ItemMode.VigourPot;
+    }
+    public bool IsWeapon(PnlInventory.ItemMode itemMode)
+    {
+        return itemMode == PnlInventory.ItemMode.RustedMace || itemMode == PnlInventory.ItemMode.SilverMace;
+    }
+    public bool IsArmour(PnlInventory.ItemMode itemMode)
+    {
+        return itemMode == PnlInventory.ItemMode.RustedArmour || itemMode == PnlInventory.ItemMode.ObsidianPlate;
+    }
+    public bool IsAmulet(PnlInventory.ItemMode itemMode)
+    {
+        return itemMode == PnlInventory.ItemMode.ScarabAmulet;
+    }
 }

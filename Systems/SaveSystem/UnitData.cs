@@ -61,6 +61,7 @@ public class UnitData : IStoreable
     // }
 
     public bool Hostile {get; set;} = false;
+    public bool InitiatesDialogue {get; set;} = false;
     public bool Player {get; set;} = false;
     public List<UnitData> Companions {get; set;} = new List<UnitData>();
     public AIUnitControlState.AIBehaviour Behaviour = AIUnitControlState.AIBehaviour.Stationary;

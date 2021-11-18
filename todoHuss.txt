@@ -1,13 +1,20 @@
 Minimum targets
 
-
-
 Next:
 Thursday:
-- Make multiple battlemaps and randomise the battlemap on starting a fight
-- Obstacles
-- Shop building (on the map) - will probably need its own data with stock, and spawned with level transitions and on loading like NPCs
-- Shop interface (ideally transition to interface from NPC dialogue)
+- Make it so that NPCs flagged hostile will initiate dialogue with you, then after dialogue is finished will fight you
+* add a "InitiatesDialogue" boolean and flag it true on npcs that start dialogue
+* make all hostile flags false
+* when an NPC turns hostile, sarah will do npcUnitData.Hostile = true. then after the dialogue, the npc will attack
+* sarah can also set NPC to hostile after each convo if the player is down the path of killing everyone DONE
+
+- Make multiple battlemaps and randomise the battlemap on starting a fight - DONE (await art for implementation)
+- Implement line of sight penalties in battle. DONE
+- Obstacles DONE
+- Shop building (on the map) - will probably need its own data with stock, and spawned with level transitions and on loading like NPCs DONE
+- Shop interface DONE
+
+
 Friday:
 - Map
 - Keybinds for UI elements (on world map and on battle map)
@@ -15,6 +22,7 @@ Friday:
 - Balancing and difficulty options
 - Particle fx for every spell
 - Placeholder art for every non-animated sprite (including spell icons!)
+- Make multiple battle maps with different environments
 Saturday:
 - Integrate NPCs, dialogue, quests/journal system
 - Level design implementation

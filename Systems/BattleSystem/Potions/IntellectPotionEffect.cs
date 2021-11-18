@@ -13,5 +13,6 @@ public class IntellectPotionEffect : PotionEffect
         Name = "Intellect Potion";
         SpellEffect = SpellEffectManager.SpellMode.IntellectPotion;
         Tooltip = "Boosts intellect, improving mana capacity, mana regen, and spell damage!";
+        Cost = 5;
     }
 }

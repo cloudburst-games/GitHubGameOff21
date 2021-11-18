@@ -140,6 +140,23 @@ public class PnlInventory : Panel
             }
         }
         return false;
+    }    
+    
+    public bool AddItemToNextEmptyRowsFirst(IInventoryPlaceable newItem)
+    {
+        for (int j = 0; j < _grid[0].Count; j++)
+        {
+            for (int i = 0; i < _grid.Count; i++)
+            {
+                    // GD.Print(i + ", " + j);
+                if (GetItemAtGridPosition(i, j) is InventoryItemEmpty)
+                {
+                    AddItemAtGridPosition(i, j, newItem);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public bool RemoveItem(IInventoryPlaceable oldItem)

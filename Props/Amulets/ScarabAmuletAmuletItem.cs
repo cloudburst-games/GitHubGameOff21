@@ -12,5 +12,6 @@ public class ScarabAmuletAmuletItem : AmuletItem
         IconTexture = GD.Load<Texture>("res://Interface/Cursors/Art/Spell.PNG");
         Name = "Scarab Amulet";
         Tooltip = String.Format("A divine amulet. Provides {0} to resilience.", AttributesAffectedMagnitude);
+        Cost = 25;
     }
 }

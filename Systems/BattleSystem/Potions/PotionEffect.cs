@@ -14,5 +14,6 @@ public class PotionEffect : IInventoryPlaceable
     public string Tooltip {get; set;} = "Potion does nothing";
     public Texture IconTexture {get; set;} = GD.Load<Texture>("res://Interface/Icons/PotionAqua.png");
     public TextureRect TexRect {get; set;} = null;
+    public int Cost {get; set;} = 5;
     // public PackedScene PotionEffectScn {get; set;} = GD.Load<PackedScene>("res://Effects/SpellEffects/ComingForthByDayEffect.tscn");
 }

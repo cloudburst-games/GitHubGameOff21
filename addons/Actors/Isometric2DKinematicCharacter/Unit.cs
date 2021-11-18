@@ -10,7 +10,11 @@ public class Unit : KinematicBody2D
     [Signal]
     public delegate void BattleStarted(Unit target);
     [Signal]
+    public delegate void NPCStartingDialogue(Unit target);
+    [Signal]
     public delegate void RightClicked(Unit target);
+    [Signal]
+    public delegate void ShopAccessed(ShopDataSignalWrapper wrappedShopData);
 
     [Export]
     public string ID = "";
@@ -45,7 +49,7 @@ public class Unit : KinematicBody2D
     [Export]
     private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
         {"Companion", false},
-        {"Hostile", false},
+        {"InitiatesDialogue", false},
     };
     [Export]
     private AIUnitControlState.AIBehaviour _startingBehaviour = AIUnitControlState.AIBehaviour.Stationary;
@@ -73,7 +77,7 @@ public class Unit : KinematicBody2D
     [Export]
     private int _startingGold = 0;
     [Export]
-    private List<PnlInventory.ItemMode> _itemsHeld = new  List<PnlInventory.ItemMode>();
+    private Godot.Collections.Array<PnlInventory.ItemMode> _itemsHeld = new Godot.Collections.Array<PnlInventory.ItemMode>();
     [Export]
     private PnlInventory.ItemMode _potionEquipped1 = PnlInventory.ItemMode.Empty;
     [Export]
@@ -119,7 +123,7 @@ public class Unit : KinematicBody2D
             Combatant = _mainCombatant,
             Level = _combatLevel,
             Name = CurrentUnitData.Name,
-            ItemsHeld = _itemsHeld,
+            ItemsHeld = _itemsHeld.ToList(),
             WeaponEquipped = _weaponEquipped,
             AmuletEquipped = _amuletEquipped,
             ArmourEquipped = _armourEquipped,
@@ -153,7 +157,8 @@ public class Unit : KinematicBody2D
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
             } 
         }
-        CurrentUnitData.Hostile = _startingBools["Hostile"];
+        // CurrentUnitData.Hostile = _startingBools["Hostile"];
+        CurrentUnitData.InitiatesDialogue = _startingBools["InitiatesDialogue"];
         CurrentUnitData.Behaviour = _startingBehaviour;
         CurrentUnitData.Companion = _startingBools["Companion"];
         
@@ -264,6 +269,7 @@ public class Unit : KinematicBody2D
         {
             aIUnitControlState.SetAIBehaviourState(CurrentUnitData.Behaviour);
         }
+        GetNode<Panel>("PnlInfo").Visible = false;
     }
 
     public override void _UnhandledInput(InputEvent ev)

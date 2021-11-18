@@ -9,4 +9,5 @@ public class LevelData : IStoreable
     public Dictionary<UnitData, Vector2> NPCPositions {get; set;} = new Dictionary<UnitData, Vector2>();
     public List<Tuple<Vector2, bool>> AutosaveAreaDatas {get; set;}
     public List<UnitData> NPCDatas {get; set;} = new List<UnitData>();
+    public List<ShopData> ShopDatas {get; set;} = new List<ShopData>();
 }

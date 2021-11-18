@@ -13,5 +13,6 @@ public class ResiliencePotionEffect : PotionEffect
         Name = "Resilience Potion";
         SpellEffect = SpellEffectManager.SpellMode.ResiliencePotion;
         Tooltip = "Boosts resilience, providing a bonus to health and mana regeneration, and magic resist!";
+        Cost = 5;
     }
 }

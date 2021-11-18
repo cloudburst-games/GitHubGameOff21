@@ -75,6 +75,13 @@ public class HUD : CanvasLayer
         }
     }
 
+    public void OnShopBtnClosePressed()
+    {
+        PauseCommon(false);
+        Pausable = true;
+        GetNode<PnlShopScreen>("CtrlTheme/PnlShopScreen").Visible = false;
+    }
+
     public void TogglePauseMenu(bool pause)
     {
         GetNode<Panel>("CtrlTheme/PnlMenu").Visible = pause;

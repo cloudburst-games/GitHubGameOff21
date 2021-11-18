@@ -127,7 +127,7 @@ public class CharacterInventory : Control
     private void PopulateGridBag(List<PnlInventory.ItemMode> itemsHeld)
     {
         _invBag.ClearGrid();
-        _invBag.Start(5, Math.Max(4,Convert.ToInt32(Math.Ceiling(itemsHeld.Count/5f))), new Vector2(128,128));
+        _invBag.Start(5, 1+Math.Max(4,Convert.ToInt32(Math.Ceiling(itemsHeld.Count/5f))), new Vector2(128,128));
         foreach (PnlInventory.ItemMode itemMode in itemsHeld)
         {
             if (itemMode == PnlInventory.ItemMode.Empty)
@@ -136,19 +136,19 @@ public class CharacterInventory : Control
             }
             if (_invBag.IsPotion(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildPotion(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildPotion(itemMode));
             }
             else if (_invBag.IsWeapon(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildWeapon(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildWeapon(itemMode));
             }
             else if (_invBag.IsArmour(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildArmour(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildArmour(itemMode));
             }
             else if (_invBag.IsAmulet(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildAmulet(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildAmulet(itemMode));
             }
         }
     }

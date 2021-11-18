@@ -36,6 +36,8 @@ public class SpellEffectManager : Reference
     public delegate void MultiSpellEffectFinished();
     [Signal]
     public delegate void AnnouncingSpell(string announceText);
+
+    private BattleGrid _battleGrid;
     public int AnimSpeed {get; set;} = 2;
     private int _effectsOngoing = 0;
     private BattleInteractionHandler _battleInteractionHandler;
@@ -394,10 +396,11 @@ public class SpellEffectManager : Reference
             },
         };
     }
-    public SpellEffectManager(BattleInteractionHandler battleInteractionHandler, Node2D spellEffectContainer)
+    public SpellEffectManager(BattleInteractionHandler battleInteractionHandler, Node2D spellEffectContainer, BattleGrid battleGrid)
     {
         _battleInteractionHandler = battleInteractionHandler;
         _spellEffectContainer = spellEffectContainer;
+        _battleGrid = battleGrid;
         SetSpellEffects();
 
         SpellMethods = new Dictionary<SpellMode, Action<BattleUnit,BattleUnit, List<BattleUnit>, Vector2>> {
@@ -433,8 +436,9 @@ public class SpellEffectManager : Reference
     }
     public async void GazeOfTheDead(BattleUnit origin, BattleUnit target, List<BattleUnit> unitsAtArea, Vector2 targetWorldPos)
     {
-        EmitSignal(nameof(AnnouncingSpell), String.Format("{0} casts {2} on {1}. {1} is paralysed!",
-                origin.CurrentBattleUnitData.Name, target.CurrentBattleUnitData.Name, SpellEffects[SpellMode.GazeOfTheDead][0].Name));
+        string los = GetLineOfSightPenalty(origin.GlobalPosition, target.GlobalPosition) != 1 ? " Reduced damage due to line of sight penalty." : "";
+        EmitSignal(nameof(AnnouncingSpell), String.Format("{0} casts {2} on {1}. {1} is paralysed!{3}",
+                origin.CurrentBattleUnitData.Name, target.CurrentBattleUnitData.Name, SpellEffects[SpellMode.GazeOfTheDead][0].Name, los));
 
         _effectsOngoing = 2;
         SpellMissile(origin, target, unitsAtArea, targetWorldPos, SpellMode.GazeOfTheDead, SpellEffects[SpellMode.GazeOfTheDead][1], multiEffect:true);
@@ -455,8 +459,10 @@ public class SpellEffectManager : Reference
 
     public async void LunarBlast(BattleUnit origin, BattleUnit target, List<BattleUnit> unitsAtArea, Vector2 targetWorldPos)
     {
-        EmitSignal(nameof(AnnouncingSpell), String.Format("{0} casts {2}! {1} creatures are affected!",
-                origin.CurrentBattleUnitData.Name, unitsAtArea.Count, SpellEffects[SpellMode.LunarBlast][0].Name));
+
+        string los = GetLineOfSightPenalty(origin.GlobalPosition, targetWorldPos) != 1 ? " Reduced damage due to line of sight penalty." : "";
+        EmitSignal(nameof(AnnouncingSpell), String.Format("{0} casts {2}! {1} creatures are affected!{3}",
+                origin.CurrentBattleUnitData.Name, unitsAtArea.Count, SpellEffects[SpellMode.LunarBlast][0].Name, los));
         // first do the missile effect
         SetToCastingState(origin, targetWorldPos);
         _effectsOngoing = 1;
@@ -522,7 +528,7 @@ public class SpellEffectManager : Reference
 
         _effectsOngoing = 1;
         // do the second effect
-        SpellArea(origin, target, unitsAtArea, targetWorldPos, SpellMode.SolarBlast, SpellEffects[SpellMode.HymnOfTheUnderworld][1], multiEffect:true, hostileOnly:true);
+        SpellArea(origin, target, unitsAtArea, targetWorldPos, SpellMode.HymnOfTheUnderworld, SpellEffects[SpellMode.HymnOfTheUnderworld][1], multiEffect:true, hostileOnly:true);
         
         AnimationPlayer anim = PlayStaticAnim(SpellEffects[SpellMode.HymnOfTheUnderworld][1], targetWorldPos);
         await ToSignal(anim, "animation_finished");
@@ -640,6 +646,8 @@ public class SpellEffectManager : Reference
         // make some lines for the log to display
         string announceText = String.Format("{0} casts {2}, raining fury upon {1} creatures!",
             origin.CurrentBattleUnitData.Name, unitsAtArea.Count, effect.Name);
+        string los = GetLineOfSightPenalty(origin.GlobalPosition, targetWorldPos) != 1 ? " Reduced damage due to line of sight penalty." : "";
+        announceText += los;
         if (!multiEffect)
         {
             EmitSignal(nameof(AnnouncingSpell), announceText);
@@ -661,7 +669,9 @@ public class SpellEffectManager : Reference
                     continue;
                 }
             }
-            _battleInteractionHandler.CalculateSpell(effect, origin.CurrentBattleUnitData, tarBattleUnit.CurrentBattleUnitData);
+            _battleInteractionHandler.CalculateSpell(effect, origin.CurrentBattleUnitData, tarBattleUnit.CurrentBattleUnitData, spell == SpellMode.HymnOfTheUnderworld ? 1 : GetLineOfSightPenalty(origin.GlobalPosition, targetWorldPos));
+
+            
             
             tarBattleUnit.UpdateHealthManaBars();
             // then set the target to hit state or dying state
@@ -701,24 +711,36 @@ public class SpellEffectManager : Reference
         }
     }
 
+    public float GetLineOfSightPenalty(Vector2 originWorldPos, Vector2 targetWorldPos)
+    {
+        if (_battleGrid.IsPathStraight(_battleGrid.GetCorrectedGridPosition(originWorldPos),
+            _battleGrid.GetCorrectedGridPosition(targetWorldPos)))
+        {
+            return 1;
+        }
+        return 0.6f;
+    }
+
     public async void SpellMissile(BattleUnit origin, BattleUnit target, List<BattleUnit> unitsAtArea, Vector2 targetWorldPos, SpellMode spell, SpellEffect effect, bool multiEffect = false)
     {
         // set the caster to Casting state
         SetToCastingState(origin, targetWorldPos);
-
+        
         // generate the missile and send to target
         GenerateMissile(effect, origin.GlobalPosition, target.GlobalPosition);
         await ToSignal(_currentMissileMoveTween, "tween_all_completed");
 
         // on missile reaching target, do damage calculation in battleInteractionHandler
-        float[] result = _battleInteractionHandler.CalculateSpell(effect, origin.CurrentBattleUnitData, target.CurrentBattleUnitData);
+        float[] result = _battleInteractionHandler.CalculateSpell(effect, origin.CurrentBattleUnitData, target.CurrentBattleUnitData,
+            GetLineOfSightPenalty(origin.GlobalPosition, target.GlobalPosition));
 
         // make some lines for the log to display
-        string announceText =  String.Format("{0} takes {2} damage from {1}.{3}{4}{5}",
+        string announceText =  String.Format("{0} takes {2} damage from {1}.{3}{4}{6}{5}",
             target.CurrentBattleUnitData.Name, origin.CurrentBattleUnitData.Name, Math.Round(result[2], 1),
             (result[0] == 2 ? " Double damage from critical hit!" : ""),
             (result[1] == 2 ? " Damage halved due to dodge!" : ""),
-            target.Dead ? " " + target.CurrentBattleUnitData.Name + " perishes!" : "");
+            target.Dead ? " " + target.CurrentBattleUnitData.Name + " perishes!" : "",
+            GetLineOfSightPenalty(origin.GlobalPosition, target.GlobalPosition) != 1 ? " Reduced damage due to line of sight penalty." : "");
 
         if (!multiEffect)
         {
