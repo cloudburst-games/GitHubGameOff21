@@ -23,7 +23,7 @@ public class DialogueControl : Control
 	public Dictionary<int, string> ChoiceDict = new Dictionary <int, string>();
     public Dictionary<string, PackedScene> QuestDict = new Dictionary<string, PackedScene>();
 	public List<string> _journalList = new List<string>();
-	public Dictionary <int,string> JournalDict = new Dictionary<int,string>();
+	public Dictionary <string,string> _journalDict = new Dictionary<string,string>();
 	public List<string> QuestList = new List<string>();
     public int n;
 	Label MainText;
@@ -57,6 +57,12 @@ public class DialogueControl : Control
 	bool _nightGateConvo;
 	bool _escapeConvo;
 	string JournalUpdate;
+	Label JournalLabel;
+	bool _joinParty = false;
+	bool _leaveParty = false;
+	UnitData CurrentUnitData;
+	UnitData CurrentKhepriUnitData;
+
 #endregion
 
 #region Dialogue/ink
@@ -64,6 +70,7 @@ public class DialogueControl : Control
     {
         DialogueContainer = GetNode<MarginContainer>("MarginContainer/DialogueContainer");
 		Journal = GetNode<Journal>("Journal");
+//		JournalLabel = GetNode<Label>("Journal/Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/Label");
 	    LoadInkStory();
 		MainText = GetNode<Label>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer2/MainText");
 		ButtonContainer = GetNode<VBoxContainer>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer3/ScrollContainer/ButtonContainer");
@@ -77,6 +84,43 @@ public class DialogueControl : Control
         Journal.Connect(nameof(Journal.ClosedJournal), this, nameof(OnJournalClosed));
 		//MakeQuestDict();
     }
+
+	public void CheckForJoinPartyChanges()
+	{
+		if ((bool)InkStory.GetVariable("join_party") == _joinParty) //if the ink variable is the same as default, nothing has happened. If it is diffeerent it has changes
+		{
+			return;
+		}
+		GD.Print("Joining party code");
+		CompanionJoinParty(CurrentUnitData, CurrentKhepriUnitData); //if the ink variable is different, trigger join party
+		GD.Print("Joining party code - 2");
+		_joinParty = false;
+		GD.Print("Joining party code - 3");
+		InkStory.SetVariable("join_party", false);
+		GD.Print("Joining party code -4");
+	}
+
+	public void CheckForLeavePartyChanges()
+	{
+		if ((bool)InkStory.GetVariable("leave_party") == _leaveParty) //
+		{
+			return;
+		}
+		CompanionLeaveParty(CurrentUnitData, CurrentKhepriUnitData);
+		_leaveParty = false;
+		InkStory.SetVariable("leave_party", false);
+	}
+
+	public void CheckIfQuestComplete()
+	{
+		if ((string)InkStory.GetVariable("quest_complete") == "amulet") //
+		{
+			CompleteQuest(1, itemRewards:new List<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 10);
+			InkStory.SetVariable("quest_complete", "");
+		}
+	}
+	
+
 
     public void LoadInkStory()
     {
@@ -142,6 +186,15 @@ public class DialogueControl : Control
 		
 	}
 
+	public void ManageParty()
+	{
+		if (((string)InkStory.GetVariable("companion_leave"))=="")
+		{
+			return;
+		}
+		//CompanionLeaveParty(npcUnitData, )
+	}
+
     private void ShowText()
 	{
 		ContinueButton.Visible = true;
@@ -188,6 +241,9 @@ public class DialogueControl : Control
 				//instead of quickly removing the visibility, perhaps play an anim here
 				//	SaveVariables();
 					DialogueContainer.Visible = false;
+					CheckForJoinPartyChanges();
+					CheckForLeavePartyChanges();
+					CheckIfQuestComplete();
 					GetTree().Paused = false;
                     EmitSignal(nameof(DialogueEnded)); //ENDS DIALOGUE ALTOGETHER
 				
@@ -238,6 +294,9 @@ public class DialogueControl : Control
 			//instead of quickly removing the visibility, perhaps play an anim here
 			//SaveVariables();
 			DialogueContainer.Visible = false;
+			CheckForJoinPartyChanges();
+			CheckForLeavePartyChanges();
+			CheckIfQuestComplete();
 			GetTree().Paused = false;
             EmitSignal(nameof(DialogueEnded));
 		}
@@ -264,7 +323,7 @@ public class DialogueControl : Control
     private void CompanionLeaveParty(UnitData npcUnitData, UnitData khepriUnitData)
     {
         
-        // error checking - check if the npc is indeed one of khepri's crew. If this shows up, sarah fix your code.
+        // error checking - check if the npc is indeed one of khepri's crew. If this shows up, sarah fix your code.CompanionLeave
         if (!khepriUnitData.Companions.Contains(npcUnitData))
         {
             GD.Print("we shouldnt ask them to leave because they aren't in our party!");
@@ -330,7 +389,7 @@ everything in DialogueData will be saved between levels and on save/load*/
 
 	public void Load(UnitData npcUnitData, UnitData khepriUnitData)
 	{
-		UpdateInkVariables("npc0_spoken", khepriUnitData.CurrentDialogueData.NPC0Spoken);
+/* 		UpdateInkVariables("npc0_spoken", khepriUnitData.CurrentDialogueData.NPC0Spoken);
 		UpdateInkVariables("npc1_spoken", khepriUnitData.CurrentDialogueData.NPC1Spoken);
 		UpdateInkVariables("npc2_spoken", khepriUnitData.CurrentDialogueData.NPC2Spoken);
 		UpdateInkVariables("npc3_spoken", khepriUnitData.CurrentDialogueData.NPC3Spoken);
@@ -339,12 +398,21 @@ everything in DialogueData will be saved between levels and on save/load*/
 		UpdateInkVariables("amulet_found", khepriUnitData.CurrentDialogueData.AmuletFound);
 		UpdateInkVariables("stolen_sun", khepriUnitData.CurrentDialogueData.StolenSun);
 		UpdateInkVariables("night_gate_convo", khepriUnitData.CurrentDialogueData.NightGateConvo);
-		UpdateInkVariables("escape_convo", khepriUnitData.CurrentDialogueData.EscapeConvo);
+		UpdateInkVariables("escape_convo", khepriUnitData.CurrentDialogueData.EscapeConvo); */
+		//UpdateInkVariables("charisma", khepriUnitData.)
 		JournalUpdate = khepriUnitData.CurrentDialogueData.JournalString;
 		// OnDialogueRefSignal(npcUnitData.ID);
+		if (khepriUnitData.CurrentDialogueData.InkyString == "nil")
+		{
+			return;
+			
+		}
+		GD.Print("Error4");
+		InkStory.SetState(khepriUnitData.CurrentDialogueData.InkyString);
 	}
 
 	private UnitData _khepriUnitData;
+	private UnitData _npcUnitData;
 
 
     // Started when press E next to non-companion, non-hostile NPC
@@ -354,6 +422,8 @@ everything in DialogueData will be saved between levels and on save/load*/
     {
 
 		_khepriUnitData = khepriUnitData;
+		CurrentUnitData = npcUnitData;
+		CurrentKhepriUnitData = khepriUnitData;
 
 		// if (khepriUnitData.Modified)
 		// {
@@ -366,12 +436,21 @@ everything in DialogueData will be saved between levels and on save/load*/
         // // npcUnitData is the data for the guy khepri is talking to!
 
         // // you can use KHEPRI'S "charisma" stat if you want to determine whether a dialogue option should be visible
-        // int charisma = khepriUnitData.Attributes[UnitData.Attribute.Charisma];
+        int charisma = khepriUnitData.Attributes[UnitData.Attribute.Charisma];
+		charisma = 16; //test
+		if (charisma>15)
+		{	
+			bool _charisma;
+			_charisma = true;
+			InkStory.SetVariable("charisma", _charisma);
+		}
+
         // if (charisma > 15)
         // {
         //     // show special dialogue option
         // }
         //ADDED
+
 		OnDialogueRefSignal(npcUnitData.ID); //USE THIS WHEN INTEGRATED WITH STAGEWORLD
 
     }
@@ -379,7 +458,7 @@ everything in DialogueData will be saved between levels and on save/load*/
 	// run this and save stuff before exiting dialogue
 	public void Save()
 	{
-		_khepriUnitData.CurrentDialogueData.NPC0Spoken = (bool)InkStory.GetVariable("npc0_spoken");
+/* 		_khepriUnitData.CurrentDialogueData.NPC0Spoken = (bool)InkStory.GetVariable("npc0_spoken");
 		_khepriUnitData.CurrentDialogueData.NPC1Spoken = (bool)InkStory.GetVariable("npc1_spoken");
 		_khepriUnitData.CurrentDialogueData.NPC2Spoken = (bool)InkStory.GetVariable("npc2_spoken");
 		_khepriUnitData.CurrentDialogueData.NPC3Spoken = (bool)InkStory.GetVariable("npc3_spoken");
@@ -389,8 +468,15 @@ everything in DialogueData will be saved between levels and on save/load*/
 		_khepriUnitData.CurrentDialogueData.StolenSun = (bool)InkStory.GetVariable("stolen_sun");
 		_khepriUnitData.CurrentDialogueData.NightGateConvo = (bool)InkStory.GetVariable("night_gate_convo");
 		_khepriUnitData.CurrentDialogueData.EscapeConvo = (bool)InkStory.GetVariable("escape_convo");
-		_khepriUnitData.CurrentDialogueData.JournalString = (string)InkStory.GetVariable("journal");
+		_khepriUnitData.CurrentDialogueData.JournalString = (string)InkStory.GetVariable("journal"); */
+		_khepriUnitData.CurrentDialogueData.JournalDict = _journalDict;
+		//GD.Print("error 1");
+		//string state = InkStory.GetState();
+		//GD.Print("error 2");
+		_khepriUnitData.CurrentDialogueData.InkyString = InkStory.GetState();
+		//GD.Print("error3");
 	}
+
 
 		//NPC4Spoken = (bool)InkStory.GetVariable("npc0_spoken");
 
@@ -431,5 +517,7 @@ public class DialogueData : IStoreable
 	public bool EscapeConvo {get; set;} = false;
 	public bool Modified {get; set;} = false;
 	public string JournalString{get;set;} = "";
+	public string InkyString {get; set;} = "nil";
+	public Dictionary<string, string> JournalDict;
 	//public List <string> JournalList {get; set;}
 }

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Interface/Themes/JournalTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Systems/DialogueSystem/Journal.cs" type="Script" id=2]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.223529, 0.129412, 0.0156863, 1 )
@@ -14,6 +15,25 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 30
+font_data = ExtResource( 3 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
@@ -83,6 +103,12 @@ margin_right = 1575.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "JOURNAL"
 expand_icon = true
 
@@ -135,9 +161,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer"]
 margin_right = 1680.0
-margin_bottom = 38.0
+margin_bottom = 78.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1660.0
+margin_bottom = 58.0
+autowrap = true
 
 [node name="Quests" type="Panel" parent="Panel/MarginContainer/VBoxContainer"]
 visible = false
@@ -165,6 +202,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/JournalButton" to="." method="OnJournalButtonPressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/QuestButton" to="." method="OnQuestButtonPressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

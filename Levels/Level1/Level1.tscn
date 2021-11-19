@@ -35,7 +35,7 @@ script = ExtResource( 8 )
 
 [node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 189.176, 1009.85 )
-ID = "NPC1"
+ID = "Doomsayer"
 UnitName = "Bobz"
 PortraitPath = ExtResource( 9 )
 PortraitPathSmall = ExtResource( 9 )
@@ -52,10 +52,15 @@ _itemsHeld = [ 1, 1, 1, 1, 0, 5, 2, 3, 4, 0, 6, 0, 12, 13, 9, 7 ]
 
 [node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -84.5477, 788.985 )
-ID = "NPC0"
+ID = "Ammit"
 UnitName = "Jimmy"
 PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 11 )
+_startingBools = {
+"Companion": false,
+"Hostile": false,
+"InitiatesDialogue": false
+}
 _mainCombatant = 1
 _combatLevel = 2
 _minions = {
@@ -67,7 +72,7 @@ _potionEquipped3 = 4
 
 [node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -218.578, 1189.19 )
-ID = "NPC0"
+ID = "test3416"
 UnitName = "James Reginald"
 _minions = {
 1: 0
@@ -75,7 +80,7 @@ _minions = {
 
 [node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 108.628, 786.293 )
-ID = "NPC0"
+ID = "Father"
 UnitName = "Bill Take-No-Sides"
 
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
