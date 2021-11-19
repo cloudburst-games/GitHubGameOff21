@@ -7,6 +7,7 @@ public class UnitData : IStoreable
 {
     public string PortraitPath {get; set;} = "";
     public string PortraitPathSmall {get; set;} = "";
+    public string CustomBattleText {get; set;} = "";
     public string ID {get; set;} = "";
     private string _name = "";
     public string Name {

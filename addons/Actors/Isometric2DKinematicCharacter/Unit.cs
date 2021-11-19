@@ -8,7 +8,7 @@ public class Unit : KinematicBody2D
     [Signal]
     public delegate void DialogueStarted(Unit target);
     [Signal]
-    public delegate void BattleStarted(Unit target);
+    public delegate void BattleStarted(Unit target, string customBattleText);
     [Signal]
     public delegate void NPCStartingDialogue(Unit target);
     [Signal]
@@ -20,6 +20,8 @@ public class Unit : KinematicBody2D
     public string ID = "";
     [Export]
     public string UnitName = "";
+    [Export]
+    private string _customBattleText {get; set;} = "";
     [Export]
     public Texture PortraitPath = GD.Load<Texture>("res://Interface/Cursors/Art/Hint.PNG");
     [Export]
@@ -50,6 +52,7 @@ public class Unit : KinematicBody2D
     private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
         {"Companion", false},
         {"InitiatesDialogue", false},
+        {"Hostile", false}
     };
     [Export]
     private AIUnitControlState.AIBehaviour _startingBehaviour = AIUnitControlState.AIBehaviour.Stationary;
@@ -157,9 +160,10 @@ public class Unit : KinematicBody2D
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
             } 
         }
-        // CurrentUnitData.Hostile = _startingBools["Hostile"];
+        CurrentUnitData.Hostile = _startingBools["Hostile"];
         CurrentUnitData.InitiatesDialogue = _startingBools["InitiatesDialogue"];
         CurrentUnitData.Behaviour = _startingBehaviour;
+        CurrentUnitData.CustomBattleText = _customBattleText;
         CurrentUnitData.Companion = _startingBools["Companion"];
         
         SetAttributesByLevel(CurrentUnitData);

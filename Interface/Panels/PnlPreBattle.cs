@@ -11,12 +11,12 @@ public class PnlPreBattle : Panel
         Visible = false;
     }
 
-    public void Start(UnitData unitData)// BattleUnit.Combatant combatant)
+    public void Start(UnitData unitData, string customStartText)// BattleUnit.Combatant combatant)
     {
         // GD.Print("start");
         Visible = true;
         GetNode<Label>("LblAttackMsg").Text = String.Format(
-            "{0} attacks!\n\nPrepare for battle...",
+            customStartText,
             unitData.Name == "" ? "A " + Enum.GetName(typeof(BattleUnit.Combatant), unitData.CurrentBattleUnitData.Combatant) : unitData.Name);
     }
 

@@ -37,7 +37,7 @@ public class PlayerUnitControlState : UnitControlState
             {
                 if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && unit.CurrentUnitData.Hostile)
                 {
-                    this.Unit.EmitSignal(nameof(Unit.BattleStarted), unit);
+                    this.Unit.EmitSignal(nameof(Unit.BattleStarted), unit, unit.CurrentUnitData.CustomBattleText);
                     return;
                 }
                 else if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && unit.CurrentUnitData.InitiatesDialogue)

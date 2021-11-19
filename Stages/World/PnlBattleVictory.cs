@@ -47,9 +47,9 @@ public class PnlBattleVictory : Panel
         }
         EmitSignal(nameof(FoundItems), convertedItems);
 
-        string rewardMessage = String.Format("Each party member gains {0} experience!\nYou find {1} gold!{3}{2}",
-            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\n\nOne of your party members has gained a level!" : "",
-            npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Count > 0 ?"\n\nYou find treasure!" : "");
+        string rewardMessage = String.Format("Each party member gains {0} experience!{2}\n\nYou find {1} gold!{3}",
+            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\nOne of your party members has gained a level!" : "",
+            npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Count > 0 ?" You find treasure!" : "");
         
         DoExperienceOutcome(xpPerMember, playerData, companionDatas);
 

@@ -39,6 +39,11 @@ ID = "NPC1"
 UnitName = "Bobz"
 PortraitPath = ExtResource( 9 )
 PortraitPathSmall = ExtResource( 9 )
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
 _combatLevel = 10
 _minions = {
 1: 0
@@ -79,10 +84,6 @@ ID = "NPC1"
 UnitName = "Evil Jill"
 PortraitPath = ExtResource( 13 )
 PortraitPathSmall = ExtResource( 12 )
-_startingBools = {
-"Companion": false,
-"InitiatesDialogue": true
-}
 _startingBehaviour = 2
 _combatLevel = 3
 

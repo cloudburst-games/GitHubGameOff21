@@ -330,9 +330,13 @@ public class StageWorld : Stage
         target.CurrentUnitData.InitiatesDialogue = false;
         GetNode<HUD>("HUD").StartDialogue(target.CurrentUnitData, GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData);
     }
-    public async void OnBattleStarted(Unit target)
+    public async void OnBattleStarted(Unit target, string customBattleText)
     {
-        GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData);
+        if (customBattleText == "")
+        {
+             customBattleText = "{0} attacks!\n\nPrepare for battle.";
+        }
+        GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData, String.Format(customBattleText, target.CurrentUnitData.Name));
         GetNode<HUD>("HUD").PauseCommon(true);
         GetNode<HUD>("HUD").Pausable = false;
         await ToSignal(GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle"), nameof(PnlPreBattle.BattleConfirmed));

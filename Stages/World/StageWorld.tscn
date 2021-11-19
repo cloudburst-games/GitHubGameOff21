@@ -438,9 +438,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -360.0
-margin_top = -411.0
+margin_top = -443.0
 margin_right = 362.0
-margin_bottom = -240.0
+margin_bottom = -272.0
 text = "You have defeated your foes in honourable combat!"
 align = 1
 valign = 1
@@ -455,9 +455,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -360.5
-margin_top = -258.091
+margin_top = -276.091
 margin_right = 361.5
-margin_bottom = -91.0914
+margin_bottom = -109.091
 text = "EACH PARTY MEMBER GAINS x EXPERIENCE!
 
 You FIND y GOLD!"
