@@ -18,14 +18,15 @@ public class PnlCharacterManager : Panel
         _characterInventory = GetNode<CharacterInventory>("TabContainer/Inventory");
         _pnlAttributes.Connect(nameof(PnlCharacterManagementAttributes.AttributePointSpent), _pnlStats, nameof(PnlCharacterManagementStats.UpdateStatDisplay));
         GetNode<HBoxPortraits>("HBoxPortraits").InCharacterManager = true;
+        GetNode<HBoxPortraits>("HBoxPortraits").Connect(nameof(HBoxPortraits.InsideButtonOfCharacter), _characterInventory, nameof(CharacterInventory.OnInsideButtonOfCharacter));
         Visible = false;
 
-        //TESTING
+        //TESTING. please keep this commented when doing release version
 
-        if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
-        {
-            Test();
-        }
+        // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+        // {
+        //     Test();
+        // }
 
         //
     }
@@ -85,6 +86,7 @@ public class PnlCharacterManager : Panel
             // PnlInventory.ItemMode.LuckPot, PnlInventory.ItemMode.ManaPot,
         };
 
+        SetGold(player.CurrentUnitData.Gold);
         Start(player.CurrentUnitData, 1);
         Visible = true;
     }
@@ -100,11 +102,17 @@ public class PnlCharacterManager : Panel
         _pnlStats.Start(unitData.CurrentBattleUnitData.Stats, new SpellEffectManager.SpellMode[2] 
             {unitData.CurrentBattleUnitData.Spell1, unitData.CurrentBattleUnitData.Spell2});
         _characterInventory.Start(unitData);
+        GetNode<HBoxPortraits>("HBoxPortraits").DisableOnePortraitButtonByID(unitData.ID);
         // show relevant tab
         Visible = true;
         GetNode<TabContainer>("TabContainer").CurrentTab = mode;
     }
 
+    public void SetGold(int num) // gold isuniversal
+    {
+        GetNode<Label>("TexRectGold/LblGold").Text = num.ToString();
+    }
+    
     private void OnBtnClosePressed()
     {
         // set sub-tabs to defaults
@@ -113,7 +121,7 @@ public class PnlCharacterManager : Panel
         Visible = false;
     }
 
-    public void Die()
+    public void Die() // we use c# events before we figured out that you can make a wrapper for those pesky unmarshalable variables
     {
         _characterInventory.Die();
     }

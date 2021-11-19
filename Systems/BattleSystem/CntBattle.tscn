@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
-[ext_resource path="res://Systems/BattleSystem/BattleGrids/BattleGrid.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/BattleSystem/BattleHUD.cs" type="Script" id=3]
 [ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=5]
@@ -17,7 +16,7 @@
 [ext_resource path="res://Systems/BattleSystem/PnlLog.cs" type="Script" id=15]
 [ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=16]
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 18
 outline_size = 6
 outline_color = Color( 0, 0, 0, 1 )
@@ -25,7 +24,7 @@ extra_spacing_char = 2
 extra_spacing_space = 5
 font_data = ExtResource( 16 )
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=2]
 expand_margin_left = 50.0
 expand_margin_right = 50.0
 expand_margin_top = 50.0
@@ -44,8 +43,6 @@ margin_bottom = 1032.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="BattleGrid" parent="Panel" instance=ExtResource( 2 )]
 
 [node name="BattleHUD" type="CanvasLayer" parent="Panel"]
 layer = 2
@@ -78,11 +75,12 @@ margin_left = -633.0
 margin_top = -21.0
 margin_right = 557.0
 margin_bottom = 26.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 1 )
 text = "This is where the log goesasdas asd as das das das das das das das as dsa dsa dfghdfrg drfrgdf gdf gdf gdf gdf gdfgdfgdf gdf gdfgdfgdf gdfgdfgdfgdfgdf gdfg dfg"
 align = 1
 valign = 1
 autowrap = true
+clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -266,7 +264,7 @@ margin_left = 960.0
 margin_top = 290.0
 margin_right = 1560.0
 margin_bottom = 790.0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = SubResource( 2 )
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false

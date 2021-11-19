@@ -13,5 +13,6 @@ public class RustedArmourArmourItem : ArmourItem
         IconTexture = GD.Load<Texture>("res://Interface/Cursors/Art/Spell.PNG");
         Name = "Rusted Armour";
         Tooltip = String.Format("A rusted slab of iron. Provides {0} armour bonus.", ArmourBonus);
+        Cost = 15;
     }
 }

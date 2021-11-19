@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Stages/World/HUD/PnlEvents.cs" type="Script" id=18]
 [ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=20]
+[ext_resource path="res://Props/Buildings/Shop/PnlShopScreen.tscn" type="PackedScene" id=21]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -175,6 +176,11 @@ __meta__ = {
 }
 
 [node name="HBoxPortraits" parent="HUD/CtrlTheme/PnlUIBar" instance=ExtResource( 17 )]
+margin_left = 5.03969
+margin_top = -2.83484
+margin_right = 5.03969
+margin_bottom = -2.83484
+rect_scale = Vector2( 0.375, 0.375 )
 
 [node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
 margin_left = 184.0
@@ -251,6 +257,11 @@ visible = false
 margin_top = 540.0
 
 [node name="PnlCharacterManager" parent="HUD/CtrlTheme" instance=ExtResource( 19 )]
+
+[node name="PnlShopScreen" parent="HUD/CtrlTheme" instance=ExtResource( 21 )]
+
+[node name="Buy" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="0"]
+margin_top = 46.0
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false
@@ -427,9 +438,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -360.0
-margin_top = -411.0
+margin_top = -443.0
 margin_right = 362.0
-margin_bottom = -240.0
+margin_bottom = -272.0
 text = "You have defeated your foes in honourable combat!"
 align = 1
 valign = 1
@@ -444,9 +455,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -360.5
-margin_top = -258.091
+margin_top = -276.091
 margin_right = 361.5
-margin_bottom = -91.0914
+margin_bottom = -109.091
 text = "EACH PARTY MEMBER GAINS x EXPERIENCE!
 
 You FIND y GOLD!"
@@ -468,6 +479,7 @@ margin_bottom = -38.6813
 text = "Proceed"
 
 [node name="PnlEventsBig" type="Panel" parent="HUD/CtrlTheme"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -628,6 +640,7 @@ anims/default = SubResource( 4 )
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnJournal" to="." method="OnBtnJournalPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnMenu" to="HUD" method="OnBtnMenuPressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer/BtnEvents" to="HUD" method="OnBtnEventsPressed"]
+[connection signal="pressed" from="HUD/CtrlTheme/PnlShopScreen/BtnClose" to="HUD" method="OnShopBtnClosePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnResume" to="HUD" method="OnBtnResumePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnSave" to="HUD" method="OnBtnSavePressed"]
 [connection signal="pressed" from="HUD/CtrlTheme/PnlMenu/VBoxBtns/BtnLoad" to="HUD" method="OnBtnLoadPressed"]
@@ -641,3 +654,4 @@ anims/default = SubResource( 4 )
 [connection signal="file_selected" from="HUD/CtrlTheme/FileDialog" to="." method="OnFileDialogConfirmed"]
 
 [editable path="HUD/CtrlTheme/DialogueControl"]
+[editable path="HUD/CtrlTheme/PnlShopScreen"]

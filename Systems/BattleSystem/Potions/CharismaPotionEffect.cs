@@ -13,5 +13,6 @@ public class CharismaPotionEffect : PotionEffect
         Name = "Charisma Potion";
         SpellEffect = SpellEffectManager.SpellMode.CharismaPotion;
         Tooltip = "Boosts leadership, providing a bonus to nearby companions!";
+        Cost = 5;
     }
 }

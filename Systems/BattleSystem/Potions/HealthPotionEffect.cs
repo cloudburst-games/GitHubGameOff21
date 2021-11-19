@@ -13,5 +13,6 @@ public class HealthPotionEffect : PotionEffect
         Name = "Food";
         SpellEffect = SpellEffectManager.SpellMode.HealthPotion;
         Tooltip = "Restore " + Magnitude + " health.";
+        Cost = 2;
     }
 }

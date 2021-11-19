@@ -110,11 +110,11 @@ public class AggressiveAITurnState : AITurnState
 
     private bool SuccessAttackingMelee(CntBattle cntBattle)
     {
-        Vector2 activeUnitGridPos = cntBattle.BattleGrid.GetCorrectedGridPosition(cntBattle.GetActiveBattleUnit().GlobalPosition);
+        Vector2 activeUnitGridPos = cntBattle.CurrentBattleGrid.GetCorrectedGridPosition(cntBattle.GetActiveBattleUnit().GlobalPosition);
         List<BattleUnit> adjacentUnits = cntBattle.GetNeighbouringBattleUnits(activeUnitGridPos);
         foreach (BattleUnit battleUnit in adjacentUnits)
         {
-            Vector2 targetUnitGridPos = cntBattle.BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+            Vector2 targetUnitGridPos = cntBattle.CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
             // teleport next to human controlled unit
             if (battleUnit.CurrentBattleUnitData.PlayerFaction)
             {
@@ -130,15 +130,15 @@ public class AggressiveAITurnState : AITurnState
 
     private bool SuccessMoving(CntBattle cntBattle, bool fullMovement)
     {
-        Vector2 gridPos = cntBattle.BattleGrid.GetCorrectedGridPosition(cntBattle.GetActiveBattleUnit().GlobalPosition);
+        Vector2 gridPos = cntBattle.CurrentBattleGrid.GetCorrectedGridPosition(cntBattle.GetActiveBattleUnit().GlobalPosition);
         List<Vector2> possibleGridDestinations = new List<Vector2>();
         // get list of possible destinations at half total AP
-        foreach (Vector2 cell in cntBattle.BattleGrid.TraversableCells)
+        foreach (Vector2 cell in cntBattle.CurrentBattleGrid.TraversableCells)
         {
             if (cntBattle.PermittedMove(gridPos, cell))
             {
                 float abilAPCost = cntBattle.GetUnitSpeed(cntBattle.GetActiveBattleUnit())/2f;
-                if (cntBattle.BattleGrid.GetDistanceToPoint(gridPos, cell) <= cntBattle.GetUnitAP(cntBattle.GetActiveBattleUnit())
+                if (cntBattle.CurrentBattleGrid.GetDistanceToPoint(gridPos, cell) <= cntBattle.GetUnitAP(cntBattle.GetActiveBattleUnit())
                     - (fullMovement ? 0 : abilAPCost))
                 {
                     possibleGridDestinations.Add(cell);
@@ -156,16 +156,16 @@ public class AggressiveAITurnState : AITurnState
             if (battleUnit.CurrentBattleUnitData.PlayerFaction)
             {
                 // GD.Print(battleUnit.CurrentBattleUnitData.Name);
-                enemyUnitPositions.Add(cntBattle.BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition));
+                enemyUnitPositions.Add(cntBattle.CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition));
             }
         }
-        enemyUnitPositions = enemyUnitPositions.OrderBy(x => cntBattle.BattleGrid.GetDistanceToPointNoUnitObstacles(gridPos, x)).ToList();
+        enemyUnitPositions = enemyUnitPositions.OrderBy(x => cntBattle.CurrentBattleGrid.GetDistanceToPointNoTargetObstacle(gridPos, x)).ToList();
 
         //
         // remove unreachable points
         foreach (Vector2 p in enemyUnitPositions.ToList())
         {
-            if (cntBattle.BattleGrid.GetDistanceToPointNoUnitObstacles(gridPos, p) == -1)
+            if (cntBattle.CurrentBattleGrid.GetDistanceToPointNoTargetObstacle(gridPos, p) == -1)
             {
                 enemyUnitPositions.Remove(p);
             }
@@ -181,9 +181,9 @@ public class AggressiveAITurnState : AITurnState
         // GD.Print(closestEnemyPosition);
 
         // get the closest grid destination to the closest enemy
-        possibleGridDestinations = possibleGridDestinations.OrderBy(x => cntBattle.BattleGrid.GetDistanceToPointNoUnitObstacles(x, closestEnemyPosition)).ToList();
+        possibleGridDestinations = possibleGridDestinations.OrderBy(x => cntBattle.CurrentBattleGrid.GetDistanceToPointNoTargetObstacle(x, closestEnemyPosition)).ToList();
         // re-order by whichever is neighbouring
-        possibleGridDestinations = possibleGridDestinations.OrderBy(x => !cntBattle.BattleGrid.GetHorizontalNeighbours(closestEnemyPosition).Contains(x)).ToList();
+        possibleGridDestinations = possibleGridDestinations.OrderBy(x => !cntBattle.CurrentBattleGrid.GetHorizontalNeighbours(closestEnemyPosition).Contains(x)).ToList();
 
         Vector2 closestGridDestinationToEnemy = possibleGridDestinations[0];
         // GD.Print(closestGridDestinationToEnemy);
@@ -212,7 +212,7 @@ public class AggressiveAITurnState : AITurnState
         {
             if (spell == SpellEffectManager.SpellMode.Teleport)
             {
-                foreach (Vector2 cell in cntBattle.BattleGrid.GetAllCells())
+                foreach (Vector2 cell in cntBattle.CurrentBattleGrid.GetAllCells())
                 {
                     List<BattleUnit> adjacentUnits = cntBattle.GetNeighbouringBattleUnits(cell);
 
@@ -227,7 +227,7 @@ public class AggressiveAITurnState : AITurnState
                                     (cntBattle.GetActiveBattleUnit(),
                                     cntBattle.GetBattleUnitAtGridPosition(cell),
                                     cntBattle.GetBattleUnitsAtArea(cntBattle.CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, cell),
-                                    cntBattle.BattleGrid.GetCorrectedWorldPosition(cell));
+                                    cntBattle.CurrentBattleGrid.GetCorrectedWorldPosition(cell));
                                     return true;
                             }
                         }
@@ -259,7 +259,7 @@ public class AggressiveAITurnState : AITurnState
             // AOE spells
             if (spell == SpellEffectManager.SpellMode.HymnOfTheUnderworld || cntBattle.CurrentSpellEffectManager.SpellEffects[spell][0].Target == SpellEffect.TargetMode.Area)
             {
-                foreach (Vector2 cell in cntBattle.BattleGrid.GetAllCells())
+                foreach (Vector2 cell in cntBattle.CurrentBattleGrid.GetAllCells())
                 {
                     List<BattleUnit> battleUnitsAtArea = cntBattle.GetBattleUnitsAtArea(cntBattle.CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, cell);
                     bool bad = false; // avoid hitting allies
@@ -284,7 +284,7 @@ public class AggressiveAITurnState : AITurnState
                                     (cntBattle.GetActiveBattleUnit(),
                                     cntBattle.GetBattleUnitAtGridPosition(cell),
                                     cntBattle.GetBattleUnitsAtArea(cntBattle.CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, cell),
-                                    cntBattle.BattleGrid.GetCorrectedWorldPosition(cell));
+                                    cntBattle.CurrentBattleGrid.GetCorrectedWorldPosition(cell));
                                     return true;
                                 }
                         }
@@ -299,7 +299,7 @@ public class AggressiveAITurnState : AITurnState
                 {
                     if (battleUnit.CurrentBattleUnitData.PlayerFaction)
                     {
-                        Vector2 gridPos = cntBattle.BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+                        Vector2 gridPos = cntBattle.CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
                         if (!cntBattle.GetBattleUnitAtGridPosition(gridPos).CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
                         {
                             if (cntBattle.PermittedSpell(spell, gridPos))
@@ -308,7 +308,7 @@ public class AggressiveAITurnState : AITurnState
                                 (cntBattle.GetActiveBattleUnit(),
                                 cntBattle.GetBattleUnitAtGridPosition(gridPos),
                                 cntBattle.GetBattleUnitsAtArea(cntBattle.CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, gridPos),
-                                cntBattle.BattleGrid.GetCorrectedWorldPosition(gridPos));
+                                cntBattle.CurrentBattleGrid.GetCorrectedWorldPosition(gridPos));
                                 return true;
                             }
                         }
@@ -322,7 +322,7 @@ public class AggressiveAITurnState : AITurnState
                 {
                     if (!battleUnit.CurrentBattleUnitData.PlayerFaction)
                     {
-                        Vector2 gridPos = cntBattle.BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+                        Vector2 gridPos = cntBattle.CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
                         if (!cntBattle.GetBattleUnitAtGridPosition(gridPos).CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
                         {
                             if (cntBattle.PermittedSpell(spell, gridPos))
@@ -331,7 +331,7 @@ public class AggressiveAITurnState : AITurnState
                                 (cntBattle.GetActiveBattleUnit(),
                                 cntBattle.GetBattleUnitAtGridPosition(gridPos),
                                 cntBattle.GetBattleUnitsAtArea(cntBattle.CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, gridPos),
-                                cntBattle.BattleGrid.GetCorrectedWorldPosition(gridPos));
+                                cntBattle.CurrentBattleGrid.GetCorrectedWorldPosition(gridPos));
                                 return true;
                             }
                         }

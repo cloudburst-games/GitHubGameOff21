@@ -30,20 +30,25 @@ public class PlayerUnitControlState : UnitControlState
 		this.Unit.CurrentVelocity *= this.Unit.Speed;
 		this.Unit.AnimRotation = TargetAnimRotation;
 
-        // Battle
+        // Battle / npc starting dialogue
         foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())
         {
             if (n is Unit unit)
             {
                 if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && unit.CurrentUnitData.Hostile)
                 {
-                    this.Unit.EmitSignal(nameof(Unit.BattleStarted), unit);
+                    this.Unit.EmitSignal(nameof(Unit.BattleStarted), unit, unit.CurrentUnitData.CustomBattleText);
+                    return;
+                }
+                else if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && unit.CurrentUnitData.InitiatesDialogue)
+                {
+                    this.Unit.EmitSignal(nameof(Unit.NPCStartingDialogue), unit);
                     return;
                 }
             }
         }
         // Interaction
-        if (Input.IsActionPressed("Interact"))
+        if (Input.IsActionJustPressed("Interact"))
         {
             foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())
             {
@@ -56,6 +61,17 @@ public class PlayerUnitControlState : UnitControlState
                     }
                 }
             }
+            foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingAreas())
+            {
+                if (n is ShopInteractableArea shopEntranceArea)
+                {
+                    // shopEntranceArea.CurrentShop.Start(Unit.CurrentUnitData);
+                    this.Unit.EmitSignal(nameof(Unit.ShopAccessed), new ShopDataSignalWrapper() {CurrentShopData = shopEntranceArea.CurrentShop.CurrentShopData});
+                    return;
+                    
+                }
+            }
+            // foreach (Node n in Unit.))
         }
     }
 }

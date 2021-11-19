@@ -25,6 +25,10 @@ config/icon="res://icon.png"
 SceneManager="*res://Systems/SceneManager/SceneManager.tscn"
 AudioManager="*res://Systems/AudioManager/AudioManager.tscn"
 
+[debug]
+
+gdscript/warnings/enable=false
+
 [display]
 
 window/size/width=1920

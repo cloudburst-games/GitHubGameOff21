@@ -60,7 +60,11 @@ public class CntBattle : Control
         }
     }
     private PackedScene _battleUnitScn = GD.Load<PackedScene>("res://Actors/BattleUnit/BattleUnit.tscn");
-    public BattleGrid BattleGrid {get; set;}
+    private List<PackedScene> _battleGridScns = new List<PackedScene>() {
+        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid.tscn"),
+        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid2.tscn")
+    };
+    public BattleGrid CurrentBattleGrid {get; set;}
     private BattleHUD _battleHUD;
     private PnlPotion _pnlPotion;
     private PnlLog _pnlLog;
@@ -78,6 +82,7 @@ public class CntBattle : Control
     private enum StartPositionMode {Ally1, Ally2, Ally3, Ally4, Ally5, Ally6, Enemy1, Enemy2, Enemy3, Enemy4, Enemy5, Enemy6}
     public enum ActionMode { Move, Melee, Spell1, Spell2, Wait, Potion}
     private Dictionary<StartPositionMode, Vector2> _startPositions;
+    private Random _rand = new Random();
     // private Dictionary<Button, ActionMode> _btnActionModes;
     
     private List<BattleUnit> _turnList = new List<BattleUnit>();
@@ -92,14 +97,16 @@ public class CntBattle : Control
         Visible = false;
         SetPhysicsProcess(false);
         SetProcessInput(false);
-        BattleGrid = GetNode<BattleGrid>("Panel/BattleGrid");
-        _battleUnitsContainer = BattleGrid.GetNode<YSort>("All/BattleUnits");
+        CurrentBattleGrid = (BattleGrid) _battleGridScns[_rand.Next(0, _battleGridScns.Count)].Instance();
+        GetNode("Panel").AddChild(CurrentBattleGrid);
+        // CurrentBattleGrid = GetNode<BattleGrid>("Panel/BattleGrid");
+        _battleUnitsContainer = CurrentBattleGrid.GetNode<YSort>("All/BattleUnits");
         _battleHUD = GetNode<BattleHUD>("Panel/BattleHUD");
         _cursorControl = GetNode<CursorControl>("Panel/BattleHUD/CursorControl");
         _pnlPotion = GetNode<PnlPotion>("Panel/BattleHUD/CtrlTheme/PnlPotion");
         _pnlLog = GetNode<PnlLog>("Panel/BattleHUD/CtrlTheme/PnlLog");
         _pnlMenu = GetNode<BattleHUDPnlMenu>("Panel/BattleHUD/CtrlTheme/PnlMenu");
-        CurrentSpellEffectManager = new SpellEffectManager(_battleInteractionHandler, BattleGrid.GetNode<Node2D>("SpellEffects"));
+        CurrentSpellEffectManager = new SpellEffectManager(_battleInteractionHandler, CurrentBattleGrid.GetNode<Node2D>("SpellEffects"), CurrentBattleGrid);
         CurrentSpellEffectManager.Connect(nameof(SpellEffectManager.SpellEffectFinished), this, nameof(OnSpellEffectFinished));
         CurrentSpellEffectManager.Connect(nameof(SpellEffectManager.AnnouncingSpell), this, nameof(OnAnnouncingSpell));
         // _pnlPotion.Connect(nameof(PnlPotion.PotionSelected), this, nameof(OnPnlPotionPotionSelected));
@@ -118,18 +125,18 @@ public class CntBattle : Control
         }
 
         _startPositions = new Dictionary<StartPositionMode, Vector2>() {
-            {StartPositionMode.Ally1, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D").GlobalPosition)},
-            {StartPositionMode.Ally2, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D2").GlobalPosition)},
-            {StartPositionMode.Ally3, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D3").GlobalPosition)},
-            {StartPositionMode.Ally4, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D4").GlobalPosition)},
-            {StartPositionMode.Ally5, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D5").GlobalPosition)},
-            {StartPositionMode.Ally6, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D6").GlobalPosition)},
-            {StartPositionMode.Enemy1, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D7").GlobalPosition)},
-            {StartPositionMode.Enemy2, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D8").GlobalPosition)},
-            {StartPositionMode.Enemy3, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D9").GlobalPosition)},
-            {StartPositionMode.Enemy4, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D10").GlobalPosition)},
-            {StartPositionMode.Enemy5, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D11").GlobalPosition)},
-            {StartPositionMode.Enemy6, BattleGrid.GetCentredWorldPosFromWorldPos(BattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D12").GlobalPosition)},
+            {StartPositionMode.Ally1, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D").GlobalPosition)},
+            {StartPositionMode.Ally2, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D2").GlobalPosition)},
+            {StartPositionMode.Ally3, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D3").GlobalPosition)},
+            {StartPositionMode.Ally4, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D4").GlobalPosition)},
+            {StartPositionMode.Ally5, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D5").GlobalPosition)},
+            {StartPositionMode.Ally6, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/AllyStartPositions/Position2D6").GlobalPosition)},
+            {StartPositionMode.Enemy1, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D7").GlobalPosition)},
+            {StartPositionMode.Enemy2, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D8").GlobalPosition)},
+            {StartPositionMode.Enemy3, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D9").GlobalPosition)},
+            {StartPositionMode.Enemy4, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D10").GlobalPosition)},
+            {StartPositionMode.Enemy5, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D11").GlobalPosition)},
+            {StartPositionMode.Enemy6, CurrentBattleGrid.GetCentredWorldPosFromWorldPos(CurrentBattleGrid.GetNode<Position2D>("StartPositions/EnemyStartPositions/Position2D12").GlobalPosition)},
         };
 
         for (int i = 1; i < GetNode("Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed").GetChildCount(); i++)
@@ -172,7 +179,7 @@ public class CntBattle : Control
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
             },
             Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-            Spell2 = SpellEffectManager.SpellMode.SolarBlast
+            Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld
         };
         BattleUnitData enemyCommanderData = new BattleUnitData() {
             Name = "Mr Commander",
@@ -197,8 +204,8 @@ public class CntBattle : Control
                 {BattleUnitData.DerivedStat.CriticalChance, 1},
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
             },
-            Spell1 = SpellEffectManager.SpellMode.PerilOfOsiris,
-            Spell2 = SpellEffectManager.SpellMode.Teleport
+            Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+            Spell2 = SpellEffectManager.SpellMode.LunarBlast
         };
         // GD.Print("fact: ", enemyCommanderData.PlayerFaction);
         enemyCommanderData.Stats[BattleUnitData.DerivedStat.Initiative] = 5;
@@ -225,7 +232,7 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.WeighingOfTheHeart,
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
                 Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
             },
             new BattleUnitData() {
@@ -250,8 +257,8 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.Teleport,
-                Spell2 = SpellEffectManager.SpellMode.LunarBlast
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.SolarBlast
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -275,8 +282,8 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
-                Spell2 = SpellEffectManager.SpellMode.PerilOfOsiris
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt
             }
         };
         List<BattleUnitData> hostilesData = new List<BattleUnitData>() {
@@ -302,8 +309,8 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.GazeOfTheDead,
-                Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -327,58 +334,8 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.LunarBlast,
-                Spell2 = SpellEffectManager.SpellMode.WeighingOfTheHeart
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.ComingForthByDay,
-                Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 1},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
-                Spell2 = SpellEffectManager.SpellMode.SolarBlast
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -403,7 +360,57 @@ public class CntBattle : Control
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.Teleport
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+            },
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Beetle,
+                Level = 1,
+                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
+                    {BattleUnitData.DerivedStat.Health, 10},
+                    {BattleUnitData.DerivedStat.TotalHealth, 10},
+                    {BattleUnitData.DerivedStat.Mana, 10},
+                    {BattleUnitData.DerivedStat.TotalMana, 10},
+                    {BattleUnitData.DerivedStat.HealthRegen, 1},
+                    {BattleUnitData.DerivedStat.ManaRegen, 1},
+                    {BattleUnitData.DerivedStat.MagicResist, 10},
+                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
+                    {BattleUnitData.DerivedStat.Dodge, 5},
+                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
+                {BattleUnitData.DerivedStat.PhysicalDamageRange, 1},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
+                    {BattleUnitData.DerivedStat.Speed, 6},
+                    {BattleUnitData.DerivedStat.Initiative, 3},
+                    {BattleUnitData.DerivedStat.Leadership, 1},
+                    {BattleUnitData.DerivedStat.CriticalChance, 1},
+                    {BattleUnitData.DerivedStat.CurrentAP, 6}
+                },
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+            },
+            new BattleUnitData() {
+                Combatant = BattleUnit.Combatant.Beetle,
+                Level = 1,
+                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
+                    {BattleUnitData.DerivedStat.Health, 10},
+                    {BattleUnitData.DerivedStat.TotalHealth, 10},
+                    {BattleUnitData.DerivedStat.Mana, 10},
+                    {BattleUnitData.DerivedStat.TotalMana, 10},
+                    {BattleUnitData.DerivedStat.HealthRegen, 1},
+                    {BattleUnitData.DerivedStat.ManaRegen, 1},
+                    {BattleUnitData.DerivedStat.MagicResist, 10},
+                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
+                    {BattleUnitData.DerivedStat.Dodge, 5},
+                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
+                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
+                    {BattleUnitData.DerivedStat.SpellDamage, 5},
+                    {BattleUnitData.DerivedStat.Speed, 6},
+                    {BattleUnitData.DerivedStat.Initiative, 3},
+                    {BattleUnitData.DerivedStat.Leadership, 1},
+                    {BattleUnitData.DerivedStat.CriticalChance, 1},
+                    {BattleUnitData.DerivedStat.CurrentAP, 6}
+                },
+                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt
             }
         };
         Start(playerData, enemyCommanderData, friendliesData, hostilesData);
@@ -519,7 +526,7 @@ public class CntBattle : Control
     {
         // GD.Print("battle ended signal");        
         
-        foreach (Node n in BattleGrid.GetNode("All/BattleUnits").GetChildren())
+        foreach (Node n in CurrentBattleGrid.GetNode("All/BattleUnits").GetChildren())
         {
             n.QueueFree();
         }
@@ -534,7 +541,7 @@ public class CntBattle : Control
     public List<BattleUnit> GetBattleUnits()
     {
         List<BattleUnit> allBattleUnits = new List<BattleUnit>();
-        foreach (Node n in BattleGrid.GetNode("All/BattleUnits").GetChildren())
+        foreach (Node n in CurrentBattleGrid.GetNode("All/BattleUnits").GetChildren())
         {
             if (n is BattleUnit battleUnit)
             {
@@ -630,10 +637,10 @@ public class CntBattle : Control
             {
                 continue;
             }
-            Vector2 mapPos = BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+            Vector2 mapPos = CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
             currentBattleUnitPositions.Add(mapPos);
         }
-        BattleGrid.RecalculateAStarMap(currentBattleUnitPositions);
+        CurrentBattleGrid.RecalculateAStarMap(currentBattleUnitPositions);
     }
 
     public override void _Input(InputEvent ev)
@@ -682,11 +689,11 @@ public class CntBattle : Control
                 {
                     if (AreAllUnitsIdle())
                     {
-                        if (GetBattleUnitAtGridPosition(BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())) == null)
+                        if (GetBattleUnitAtGridPosition(CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())) == null)
                         {
                             return;
                         }
-                        if (GetBattleUnitAtGridPosition(BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).Dead)
+                        if (GetBattleUnitAtGridPosition(CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).Dead)
                         {
                             return;
                         }
@@ -710,7 +717,7 @@ public class CntBattle : Control
 
     private void ShowUnitInfo()
     {
-        BattleUnitData battleUnitData = GetBattleUnitAtGridPosition(BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).CurrentBattleUnitData;
+        BattleUnitData battleUnitData = GetBattleUnitAtGridPosition(CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition())).CurrentBattleUnitData;
         Dictionary<SpellEffectManager.SpellMode, string> spellNames = new Dictionary<SpellEffectManager.SpellMode, string>();
         foreach (SpellEffectManager.SpellMode spell in CurrentSpellEffectManager.SpellEffects.Keys)
         {
@@ -796,7 +803,7 @@ public class CntBattle : Control
     {
         if (actionMode == ActionMode.Potion)
         {
-            BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+            CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
             _pnlPotion.PopulateGrid(GetActiveBattleUnit().CurrentBattleUnitData.GetPotionsEquipped());
             _pnlPotion.Visible = true;
             
@@ -894,7 +901,7 @@ public class CntBattle : Control
 
     public void OnBtnMenuPressed()
     {
-        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
         _battleHUD.GetNode<Panel>("CtrlTheme/PnlMenu").Visible = true;
     }
     public void OnBtnResumePressed()
@@ -936,8 +943,8 @@ public class CntBattle : Control
     private void HighlightPathSquares()
     {
 
-        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
-        BattleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
         if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
         {
             return;
@@ -981,21 +988,21 @@ public class CntBattle : Control
         {
             return;
         }
-        foreach (Vector2 point in BattleGrid.GetAllCells())
+        foreach (Vector2 point in CurrentBattleGrid.GetAllCells())
         {
             if (PermittedSpell(spell, point))
             {
-                BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+                CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
             }
         }
-        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 mouseMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares > 0)
         {
             if (PermittedSpell(spell, mouseMapPos))
             {
                 foreach (Vector2 point in GetCells(CurrentSpellEffectManager.SpellEffects[spell][0].AreaSquares, mouseMapPos))
                 {
-                    BattleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").SetCellv(point, 4);
+                    CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesAOE").SetCellv(point, 4);
                 }
             }
         }
@@ -1003,22 +1010,22 @@ public class CntBattle : Control
 
     private void HighlightMeleeSquares()
     {
-        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
-        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        List<Vector2> neighbours = BattleGrid.GetHorizontalNeighbours(startMapPos);
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+        Vector2 startMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        List<Vector2> neighbours = CurrentBattleGrid.GetHorizontalNeighbours(startMapPos);
         foreach (Vector2 point in neighbours)
         {
             // if (PermittedAttack(point))
             // {
-            BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+            CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
             // }
         }
     }
 
     public bool PermittedAttack(Vector2 targetMapPos)
     {
-        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        List<Vector2> neighbours = BattleGrid.GetHorizontalNeighbours(startMapPos);
+        Vector2 startMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        List<Vector2> neighbours = CurrentBattleGrid.GetHorizontalNeighbours(startMapPos);
         if (!neighbours.Contains(targetMapPos))
         {
             return false;
@@ -1042,7 +1049,7 @@ public class CntBattle : Control
     {
         foreach (BattleUnit battleUnit in GetBattleUnits())
         {
-            if (BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == gridPos)
+            if (CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == gridPos)
             {
                 return battleUnit;
             }
@@ -1052,14 +1059,14 @@ public class CntBattle : Control
 
     private void HighlightMoveSquares()
     {
-        BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear(); // consider making a new hex in krita
-        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear(); // consider making a new hex in krita
+        Vector2 startMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        Vector2 mouseMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (PermittedMove(startMapPos, mouseMapPos))
         {
-            foreach (Vector2 point in BattleGrid.CalculatePath(startMapPos, mouseMapPos))
+            foreach (Vector2 point in CurrentBattleGrid.CalculatePath(startMapPos, mouseMapPos))
             {   
-                BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
+                CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").SetCellv(point, 4);
             }
         }
     }
@@ -1074,7 +1081,7 @@ public class CntBattle : Control
         }
 
         // GD.Print(_currentSelectedAction);
-        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 mouseMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         switch (_currentSelectedAction)
         {
             case ActionMode.Move:
@@ -1104,8 +1111,8 @@ public class CntBattle : Control
 
     private void OnLeftClickSpell(SpellEffectManager.SpellMode spellMode)
     {
-        Vector2 targetMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
-        Vector2 startingMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        Vector2 targetMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 startingMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
 
         if (spellMode == SpellEffectManager.SpellMode.Empty)
         {
@@ -1113,11 +1120,13 @@ public class CntBattle : Control
         }
         if (PermittedSpell(spellMode, targetMapPos))
         {
+            // GD.Print("is path straight: ", CurrentBattleGrid.IsPathStraight(startingMapPos, targetMapPos));
+
             CurrentSpellEffectManager.SpellMethods[spellMode]
                 (GetActiveBattleUnit(),
                 GetBattleUnitAtGridPosition(targetMapPos),
                 GetBattleUnitsAtArea(CurrentSpellEffectManager.SpellEffects[spellMode][0].AreaSquares, targetMapPos),
-                BattleGrid.GetCorrectedWorldPosition(targetMapPos));            
+                CurrentBattleGrid.GetCorrectedWorldPosition(targetMapPos));            
 
             // GD.Print(_spellEffectManager.SpellEffects[spellMode].RangeSquares);
         }
@@ -1174,8 +1183,8 @@ public class CntBattle : Control
 
     public bool AnyValidTargetsWithinRangeToCastSpell(SpellEffectManager.SpellMode spell) // also checks mana however
     {
-        Vector2 startingMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
-        foreach (Vector2 point in BattleGrid.GetAllCells())
+        Vector2 startingMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        foreach (Vector2 point in CurrentBattleGrid.GetAllCells())
         {
             if (PermittedSpell(spell, point))
             {
@@ -1192,7 +1201,7 @@ public class CntBattle : Control
         {
             return false;
         }
-        Vector2 startingMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        Vector2 startingMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
         
         float totalCost = 0;
         foreach (SpellEffect spellEffect in CurrentSpellEffectManager.SpellEffects[spell])
@@ -1236,11 +1245,11 @@ public class CntBattle : Control
             }
             else if (spellEffect.Target == SpellEffect.TargetMode.Empty)
             {
-                if (BattleGrid.ObstacleCells.Contains(targetMapPos))
+                if (CurrentBattleGrid.ObstacleCells.Contains(targetMapPos))
                 {
                     return false;
                 }
-                if (!BattleGrid.TraversableCells.Contains(targetMapPos))
+                if (!CurrentBattleGrid.TraversableCells.Contains(targetMapPos))
                 {
                     return false;
                 }
@@ -1280,7 +1289,7 @@ public class CntBattle : Control
     public List<BattleUnit> GetNeighbouringBattleUnits(Vector2 tarGridPos) // within 1 square-melee strike distance
     {
         List<BattleUnit> result = new List<BattleUnit>();
-        foreach (Vector2 gridPos in BattleGrid.GetHorizontalNeighbours(tarGridPos))
+        foreach (Vector2 gridPos in CurrentBattleGrid.GetHorizontalNeighbours(tarGridPos))
         {
             if (GetBattleUnitAtGridPosition(gridPos) != null)
             {
@@ -1298,7 +1307,7 @@ public class CntBattle : Control
             for (float y = tarGridPos.y - radius; y <= tarGridPos.y + radius; y++)
             {
                 Vector2 cell = new Vector2(x, y);
-                if (BattleGrid.GetAllCells().Contains(cell))
+                if (CurrentBattleGrid.GetAllCells().Contains(cell))
                 {
                     result.Add(cell);
                 }
@@ -1317,13 +1326,13 @@ public class CntBattle : Control
         
         if (PermittedAttack(targetGridPos))
         {
-            GetActiveBattleUnit().TargetWorldPos = BattleGrid.GetCorrectedWorldPosition(targetGridPos);
+            GetActiveBattleUnit().TargetWorldPos = CurrentBattleGrid.GetCorrectedWorldPosition(targetGridPos);
             GetActiveBattleUnit().SetActionState(BattleUnit.ActionStateMode.Casting);
             GetActiveBattleUnit().DetectingHalfway = true;
             await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.ReachedHalfwayAnimation));
             // GD.Print("reached halfway through animation");
             BattleUnit targetUnit = GetBattleUnitAtGridPosition(targetGridPos);
-            targetUnit.TargetWorldPos = BattleGrid.GetCentredWorldPosFromWorldPos(GetActiveBattleUnit().GlobalPosition);
+            targetUnit.TargetWorldPos = CurrentBattleGrid.GetCentredWorldPosFromWorldPos(GetActiveBattleUnit().GlobalPosition);
             
             // do battle calculations
             float[] result = _battleInteractionHandler.CalculateMelee(GetActiveBattleUnit().CurrentBattleUnitData, targetUnit.CurrentBattleUnitData);
@@ -1350,26 +1359,26 @@ public class CntBattle : Control
 
     public async void OnLeftClickMove(Vector2 tarGridPos, bool finalMovement = false)
     {
-        Vector2 startMapPos = BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
+        Vector2 startMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition);
         // Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (PermittedMove(startMapPos, tarGridPos))
         {
             // get the series of world positions to move
             List<Vector2> worldPoints = new List<Vector2>();
-            foreach (Vector2 point in BattleGrid.CalculatePath(startMapPos, tarGridPos))
+            foreach (Vector2 point in CurrentBattleGrid.CalculatePath(startMapPos, tarGridPos))
             {
-                worldPoints.Add(BattleGrid.GetCorrectedWorldPosition(point));
+                worldPoints.Add(CurrentBattleGrid.GetCorrectedWorldPosition(point));
 
             }
             // subtract AP cost from total AP
-            float apCost = BattleGrid.GetDistanceToPoint(startMapPos, tarGridPos);
+            float apCost = CurrentBattleGrid.GetDistanceToPoint(startMapPos, tarGridPos);
             // GD.Print("distance is: ", apCost);
             GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] -=  apCost;
             
             // commence animation
 
-            BattleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
-            BattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
+            CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
+            CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
             GetActiveBattleUnit().MoveAlongPoints(worldPoints);
 
             _battleHUD.LogEntry(String.Format("{0} moves {1} step{3}. {2} action points remaining.",
@@ -1377,7 +1386,7 @@ public class CntBattle : Control
             
             await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.CurrentActionCompleted));
 
-            BattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
+            CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesPath").Clear();
 
             if (GetUnitAP(GetActiveBattleUnit()) == 0 || finalMovement)
             {
@@ -1443,14 +1452,14 @@ public class CntBattle : Control
     private void SetCursorByAction() // TODO: replace with state pattern
     {
         
-        Vector2 mouseMapPos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 mouseMapPos = CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         if (IsMouseCursorOverUIPanel())
         {
             _cursorControl.SetCursor(CursorControl.CursorMode.Select);
         }
         else if (_currentSelectedAction == ActionMode.Move)
         {
-            if (PermittedMove(BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition),mouseMapPos))
+            if (PermittedMove(CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition),mouseMapPos))
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Move);
             }
@@ -1462,7 +1471,7 @@ public class CntBattle : Control
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Hint);//
             }
-            else if (BattleGrid.TraversableCells.Contains(mouseMapPos) || IsObstacleAt(mouseMapPos))
+            else if (CurrentBattleGrid.TraversableCells.Contains(mouseMapPos) || IsObstacleAt(mouseMapPos))
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Invalid);
             }
@@ -1512,27 +1521,27 @@ public class CntBattle : Control
 
     private void HighlightMoveableSquares()
     {
-        BattleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
-        BattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTiles").Clear();
+        CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").Clear();
         
         if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
         {
             return;
         }
-        foreach (Vector2 cell in BattleGrid.TraversableCells)
+        foreach (Vector2 cell in CurrentBattleGrid.TraversableCells)
         {
-            if (PermittedMove(BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell))
+            if (PermittedMove(CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell))
             {
                 float abilAPCost = GetUnitSpeed(GetActiveBattleUnit())/2f;
 
-                if ( BattleGrid.GetDistanceToPoint(BattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell)
+                if ( CurrentBattleGrid.GetDistanceToPoint(CurrentBattleGrid.GetCorrectedGridPosition(GetActiveBattleUnit().GlobalPosition), cell)
                     > GetUnitAP(GetActiveBattleUnit()) - abilAPCost)
                 {
-                    BattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").SetCellv(cell, 6);
+                    CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTilesLong").SetCellv(cell, 6);
                 }
                 else
                 {
-                    BattleGrid.GetNode<TileMap>("TileMapShadedTiles").SetCellv(cell, 4);
+                    CurrentBattleGrid.GetNode<TileMap>("TileMapShadedTiles").SetCellv(cell, 4);
                 }
             }
         }
@@ -1540,7 +1549,7 @@ public class CntBattle : Control
 
     public bool PermittedMove(Vector2 originMapPos, Vector2 targetMapPos)
     {
-        int distance = BattleGrid.GetDistanceToPoint(originMapPos, targetMapPos);
+        int distance = CurrentBattleGrid.GetDistanceToPoint(originMapPos, targetMapPos);
         float currentAP = GetUnitAP(GetActiveBattleUnit());
         if (currentAP >= distance && distance > 0 && TargetWorldPosIsFree(targetMapPos))
         {
@@ -1551,7 +1560,7 @@ public class CntBattle : Control
 
     private bool IsObstacleAt(Vector2 targetMapPos)
     {
-        return BattleGrid.ObstacleCells.Contains(targetMapPos);
+        return CurrentBattleGrid.ObstacleCells.Contains(targetMapPos);
     }
 
     public float GetUnitAP(BattleUnit battleUnit)
@@ -1567,7 +1576,7 @@ public class CntBattle : Control
     {
         foreach (BattleUnit battleUnit in GetBattleUnits())
         {
-            if (BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == targetMapPos)
+            if (CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition) == targetMapPos)
             {
                 return false;
             }
@@ -1577,7 +1586,7 @@ public class CntBattle : Control
 
     private void SetNonActiveBattleUnitOutlines()
     {
-        Vector2 mouseCentrePos = BattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
+        Vector2 mouseCentrePos = CurrentBattleGrid.GetCorrectedGridPosition(GetGlobalMousePosition());
         // GD.Print(mouseCentrePos);
         foreach (BattleUnit battleUnit in GetBattleUnits())
         {
@@ -1585,7 +1594,7 @@ public class CntBattle : Control
             {
                 continue;
             }
-            Vector2 battleUnitCentrePos = BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
+            Vector2 battleUnitCentrePos = CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition);
             if (mouseCentrePos == battleUnitCentrePos)
             {
                 if (battleUnit.CurrentBattleUnitData == _playerData || _friendliesData.Contains(battleUnit.CurrentBattleUnitData))
@@ -1633,7 +1642,7 @@ public class CntBattle : Control
             float leadership = battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Leadership];
             float bonus = leadership/10f;
             
-            List<BattleUnit> surroundingBattleUnits = GetBattleUnitsAtArea(1, BattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition));
+            List<BattleUnit> surroundingBattleUnits = GetBattleUnitsAtArea(1, CurrentBattleGrid.GetCorrectedGridPosition(battleUnit.GlobalPosition));
             foreach (BattleUnit surroundingUnit in surroundingBattleUnits)
             {
                 if (surroundingUnit == battleUnit)

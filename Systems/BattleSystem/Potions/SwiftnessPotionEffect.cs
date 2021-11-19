@@ -13,5 +13,6 @@ public class SwiftnessPotionEffect : PotionEffect
         Name = "Swiftness Potion";
         SpellEffect = SpellEffectManager.SpellMode.SwiftnessPotion;
         Tooltip = "Boosts swiftness, providing a bonus to dodge, speed, and initiative!";
+        Cost = 5;
     }
 }

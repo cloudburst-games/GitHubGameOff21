@@ -14,4 +14,6 @@ public class WeaponItem : IInventoryPlaceable
     public string Tooltip {get; set;} = "You shouldn't be able to see this";
     public Texture IconTexture {get; set;} = GD.Load<Texture>("res://Interface/Cursors/Art/Attack.PNG");
     public TextureRect TexRect {get; set;} = null;
+    public int Cost {get; set;} = 15;
+
 }

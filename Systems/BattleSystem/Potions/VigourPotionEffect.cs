@@ -13,5 +13,6 @@ public class VigourPotionEffect : PotionEffect
         Name = "Vigour Potion";
         SpellEffect = SpellEffectManager.SpellMode.VigourPotion;
         Tooltip = "Boosts vigour, providing a bonus to physical damage and health!";
+        Cost = 5;
     }
 }

@@ -16,7 +16,7 @@ public class PnlBattleVictory : Panel
     [Signal]
     public delegate void FoundGold(int goldAmount);
     [Signal]
-    public delegate void FoundItems(List<PnlInventory.ItemMode> items);
+    public delegate void FoundItems(Godot.Collections.Array<PnlInventory.ItemMode> items);
 
     private Dictionary<string, Action<Unit>> _defeatNPCOutcomes;
     public override void _Ready()
@@ -39,11 +39,17 @@ public class PnlBattleVictory : Panel
         int goldReward = npcDefeated.CurrentUnitData.Gold;
         EmitSignal(nameof(FoundGold), goldReward);
         
-        EmitSignal(nameof(FoundItems), npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld);
+        Godot.Collections.Array<PnlInventory.ItemMode> convertedItems = new Godot.Collections.Array<PnlInventory.ItemMode>();
+        foreach (PnlInventory.ItemMode item in npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld)
+        {
+            convertedItems.Add(item);
+            
+        }
+        EmitSignal(nameof(FoundItems), convertedItems);
 
-        string rewardMessage = String.Format("Each party member gains {0} experience!\nYou find {1} gold!{3}{2}",
-            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\n\nOne of your party members has gained a level!" : "",
-            npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Count > 0 ?"\n\nYou find treasure!" : "");
+        string rewardMessage = String.Format("Each party member gains {0} experience!{2}\n\nYou find {1} gold!{3}",
+            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\nOne of your party members has gained a level!" : "",
+            npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Count > 0 ?" You find treasure!" : "");
         
         DoExperienceOutcome(xpPerMember, playerData, companionDatas);
 
@@ -123,15 +129,15 @@ public class PnlBattleVictory : Panel
         GetNode<Label>("LblDefeatMessage").Text = "blah blah u win ok!";
 
         // can make companion if we wish, but i dont think we will be using this to add companions
-        EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
+        // EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
 
         // can also give custom item reward after battles
-        EmitSignal(nameof(FoundItems), new List<PnlInventory.ItemMode>() {
+        EmitSignal(nameof(FoundItems), new Godot.Collections.Array<PnlInventory.ItemMode>() {
             PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.VigourPot
         });
 
         // and custom gold
-        EmitSignal(nameof(FoundGold), 34);
+        // EmitSignal(nameof(FoundGold), 34);
     }
 
     // private List<IInventoryPlaceableSignalWrapper> GetItemsFromEnemy(UnitData defeatedNPCUnitData)

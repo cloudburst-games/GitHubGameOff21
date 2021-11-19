@@ -14,5 +14,7 @@ public class RustedMaceWeaponItem : WeaponItem
         IconTexture = GD.Load<Texture>("res://Interface/Cursors/Art/Attack.PNG");
         Name = "Rusted Mace";
         Tooltip = String.Format("A rusted mace. Deals {0}-{1} damage.", Convert.ToInt32(WeaponDamage-DamageRange), Convert.ToInt32(WeaponDamage+DamageRange));
+        Cost = 25;
+
     }
 }

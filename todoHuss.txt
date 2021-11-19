@@ -1,34 +1,44 @@
 Minimum targets
 
-Mon:
-- Battle map grid DONE
-- All units in the battle map DONE
+Next:
+Thursday:
+- Make it so that NPCs flagged hostile will initiate dialogue with you, then after dialogue is finished will fight you
+* add a "InitiatesDialogue" boolean and flag it true on npcs that start dialogue
+* make all hostile flags false
+* when an NPC turns hostile, sarah will do npcUnitData.Hostile = true. then after the dialogue, the npc will attack
+* sarah can also set NPC to hostile after each convo if the player is down the path of killing everyone DONE
 
-Tues:
-- Add skip turn DONE
+- Make multiple battlemaps and randomise the battlemap on starting a fight - DONE (await art for implementation)
+- Implement line of sight penalties in battle. DONE
+- Obstacles DONE
+- Shop building (on the map) - will probably need its own data with stock, and spawned with level transitions and on loading like NPCs DONE
+- Shop interface DONE
 
-Weds:
+Friday:
+- prep for dialoguecontrol.cs changes - questcompleted, as well as method to alter NPCPropertyByID and signal for NPCPropertychanged, and ambush method and signal for onambush
+- show portrait, equipment on right click
+- Map
+- Keybinds for UI elements (on world map and on battle map)
+- Add load to main menu
+- Balancing and difficulty options
+- Particle fx for every spell
+- Placeholder art for every non-animated sprite (including spell icons!)
+- Make multiple battle maps with different environments
 
-Thurs:
-- Battle system including movement and attack DONE
-- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack. DONE
-- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation. DONE
-
-Fri:
-- Add spells to battle system. Complete battle system. Can use consumables in battle obviously. DONE
-- NEXT: on battle defeat -> show a DEFEATED message and menu (with resume and save disabled or hidden) DONE
-- Experience system, stats, and levelling, and gaining new spells (gain your 2nd spell at level 5?)
-- Make up to date art asset list
-
-Sat:
-- Obstacles
-- Shop building
-- Obelisks
+Saturday:
+- Integrate NPCs, dialogue, quests/journal system
+- Level design implementation
+Sunday:
+- Integrate sound and music
+- Playable game from start to finish by 21st Nov
 
 If time post all to-do:
 Polish:
 - Animate start and end of battle
 - Implement click to move controls
+- TEST and tweak numbers
+- day/night cycle
+- add weight to each item and character weight limit ?? will this even be fun...
 - Enter filename by script when saving files...
 - Make a less buggy FileDialog (only if plenty of time)
 - Redo animations for Unit.tscn / (Player/NPC) - see AnimationTree tutorial
@@ -133,3 +143,23 @@ THEN: hostile NPC - on area overlap -> BOX -> "dude and his minions attack!" -> 
 - Battle map and transition between adventure and battle maps DONE
 - Readjust weekly targets as per progress
 cc30baff
+
+Mon:
+- Battle map grid DONE
+- All units in the battle map DONE
+
+Tues:
+- Add skip turn DONE
+
+Weds:
+
+Thurs:
+- Battle system including movement and attack DONE
+- Abilities! 2 companions. 2 spells per companion and 2 spells for player. everyone has basic attack. DONE
+- Animations that tween from A to B. They will need to have a at-cast animation, a projectile animation, and an at destination animation. DONE
+
+Fri:
+- Add spells to battle system. Complete battle system. Can use consumables in battle obviously. DONE
+- NEXT: on battle defeat -> show a DEFEATED message and menu (with resume and save disabled or hidden) DONE
+- Experience system, stats, and levelling, and gaining new spells (gain your 2nd spell at level 5?) DONE
+- Make up to date art asset list DONE

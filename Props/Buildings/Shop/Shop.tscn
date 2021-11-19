@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Props/Buildings/placeholder_tent.png" type="Texture" id=1]
+[ext_resource path="res://Props/Buildings/Shop/Shop.cs" type="Script" id=2]
+[ext_resource path="res://Props/Buildings/Shop/ShopInteractableArea.cs" type="Script" id=3]
+[ext_resource path="res://Interface/Labels/LblInteract/LblInteractInfo.cs" type="Script" id=4]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 26.8753
+height = 39.9874
+
+[node name="Shop" type="StaticBody2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 9.43874, -14.6301 )
+polygon = PoolVector2Array( -87.6783, 49.4668, -28.2994, 31.434, 21.3392, 26.3419, 78.4435, 57.4897, 26.5305, 66.9285, -23.9668, 99.9641, -54.6427, 62.2091 )
+
+[node name="InteractableArea" type="Area2D" parent="."]
+collision_layer = 2
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
+position = Vector2( 40.2233, 76.407 )
+rotation = 1.07258
+shape = SubResource( 1 )
+
+[node name="PnlInfo" type="Panel" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -55.5
+margin_top = -92.6783
+margin_right = 55.5
+margin_bottom = -52.6783
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblInteractInfo" type="Label" parent="PnlInfo"]
+margin_right = 109.0
+margin_bottom = 41.0
+text = "'E' to interact"
+align = 1
+valign = 1
+script = ExtResource( 4 )
+
+[connection signal="body_entered" from="InteractableArea" to="." method="OnInteractableAreaBodyEntered"]
+[connection signal="body_exited" from="InteractableArea" to="." method="OnInteractableAreaBodyExited"]

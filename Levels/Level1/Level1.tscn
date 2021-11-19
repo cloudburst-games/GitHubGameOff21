@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
-[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Doodads/WorldObstacles/TestObstacle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=8]
@@ -13,6 +13,8 @@
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Death/villager_death_40008.png" type="Texture" id=11]
 [ext_resource path="res://Effects/SpellEffects/Art/WhiteSphericalParticle.png" type="Texture" id=12]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnClicked.png" type="Texture" id=13]
+[ext_resource path="res://Doodads/WorldObstacles/TestTreeObstacle.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=15]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 601.027, 775.031, 608.162, 687.03, 650.973, 677.516, 727.083, 668.002, 729.461, 839.248, 665.244, 912.979, -10.2261, 682.273, 53.9912, 658.489, 113.452, 658.489, 358.428, 789.301, 339.401, 834.491, 63.5049, 1281.63, -5.46924, 1236.44, -93.4706, 794.058, -93.4706, 732.219, -481.152, 981.953, -174.337, 1319.69, -155.309, 1393.42, -241.4, 1424.4, -281.365, 1429.1, -324.177, 1410.07, -550.126, 1069.95, -547.748, 1015.25, 391.726, 855.897, 620.054, 993.845, -545.37, 1293.53, -609.587, 1260.23, -604.83, 1229.31, -564.397, 1081.85, 603.405, 1077.09, 527.77, 1153.18, -619.1, 1115.14, 532.008, 1212.51, 464.203, 1250.65, 408.375, 1293.53, 165.777, 1329.2, -326.555, 901.087, -383.637, 1429.1, -438.341, 1414.82, -526.342, 1364.88 )
@@ -39,12 +41,14 @@ PortraitPath = ExtResource( 9 )
 PortraitPathSmall = ExtResource( 9 )
 _startingBools = {
 "Companion": false,
-"Hostile": false
+"Hostile": true,
+"InitiatesDialogue": false
 }
 _combatLevel = 10
 _minions = {
 1: 0
 }
+_itemsHeld = [ 1, 1, 1, 1, 0, 5, 2, 3, 4, 0, 6, 0, 12, 13, 9, 7 ]
 
 [node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -84.5477, 788.985 )
@@ -54,7 +58,8 @@ PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 11 )
 _startingBools = {
 "Companion": false,
-"Hostile": false
+"Hostile": false,
+"InitiatesDialogue": false
 }
 _mainCombatant = 1
 _combatLevel = 2
@@ -69,10 +74,6 @@ _potionEquipped3 = 4
 position = Vector2( -218.578, 1189.19 )
 ID = "test3416"
 UnitName = "James Reginald"
-_startingBools = {
-"Companion": false,
-"Hostile": false
-}
 _minions = {
 1: 0
 }
@@ -81,21 +82,13 @@ _minions = {
 position = Vector2( 108.628, 786.293 )
 ID = "Father"
 UnitName = "Bill Take-No-Sides"
-_startingBools = {
-"Companion": false,
-"Hostile": false
-}
 
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -513.633, 1057.28 )
-ID = "enemyjill1"
+ID = "NPC1"
 UnitName = "Evil Jill"
 PortraitPath = ExtResource( 13 )
 PortraitPathSmall = ExtResource( 12 )
-_startingBools = {
-"Companion": false,
-"Hostile": true
-}
 _startingBehaviour = 2
 _combatLevel = 3
 
@@ -143,16 +136,25 @@ _oneShot = false
 
 [node name="Obstacles" type="YSort" parent="All"]
 
-[node name="TestObstacle" type="StaticBody2D" parent="All/Obstacles"]
-position = Vector2( -63.5679, 981.063 )
+[node name="TestObstacle" parent="All/Obstacles" instance=ExtResource( 5 )]
 
-[node name="Sprite" type="Sprite" parent="All/Obstacles/TestObstacle"]
-texture = ExtResource( 5 )
+[node name="TestTreeObstacle" parent="All/Obstacles" instance=ExtResource( 14 )]
+position = Vector2( 292.253, 912.593 )
 
-[node name="Shape" type="CollisionPolygon2D" parent="All/Obstacles/TestObstacle"]
-position = Vector2( 0, 18.5406 )
-rotation = 1.58042
-polygon = PoolVector2Array( -4.29034, 13.2973, -7.18268, 7.34029, -6.97382, -3.68654, -3.91522, -13.1658, 3.37146, -8.82607, 6.59082, -1.61219, 6.32141, 3.11534, 1.03674, 10.4111 )
+[node name="TestTreeObstacle2" parent="All/Obstacles" instance=ExtResource( 14 )]
+position = Vector2( 245.109, 1008 )
+
+[node name="TestTreeObstacle3" parent="All/Obstacles" instance=ExtResource( 14 )]
+position = Vector2( 312.457, 1144.94 )
+
+[node name="Shops" type="YSort" parent="All"]
+
+[node name="Shop" parent="All/Shops" instance=ExtResource( 15 )]
+position = Vector2( -20.4878, 1096.57 )
+_startingItemsStocked = [ 4, 1, 9, 10, 11, 12, 13 ]
+_introText = "Welcome! Please, peruse my humble wares."
+_shopTitle = "Abdul's Desert Merchandise"
+_stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

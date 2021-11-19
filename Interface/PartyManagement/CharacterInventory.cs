@@ -4,18 +4,37 @@ using System.Collections.Generic;
 
 public class CharacterInventory : Control
 {
+    [Signal]
+    public delegate void GivingItemToAnotherCharacter(string id, PnlInventory.ItemMode item);
+
     private PnlInventory _invAmulet;
     private PnlInventory _invArmour;
     private PnlInventory _invWeapon;
     private PnlInventory _invPotions;
     private PnlInventory _invBag;
     private ItemBuilder _itemBuilder = new ItemBuilder();
-
+    private IInventoryPlaceable _currentlySelectedItem;
+    private PnlInventory _currentSource;
+    private PnlInventory _targetSource;
+    private bool _leftButtonPressed = false;
+    private TextureRect _currentItemTexRect;
+    private int[] _initialGridPos;
     private UnitData _currentUnitData;
+    private Dictionary<string, bool> _insidePortraitIDs = new Dictionary<string, bool>();
 
-    // Called when the node enters the scene tree for the first time.
+    
     public override void _Ready()
     {
+        // TODO use a loop for below, something like:
+        // PnlInventory[] inventories = new PnlInventory[5] {_invAmulet, _invArmour, _invWeapon,_invPotions, _invBag};
+        // foreach (PnlInventory inv in inventories)
+        // {
+        //     inv.InventoryItemHovered+=this.OnHover;
+        //     inv.InventoryItemSelected+=this.OnClicked;
+        //     inv.MouseEnteredInventory+=this.OnMouseEnteredInventory;
+        // }
+
+        // on the other hand if it aint broke dont fix it
         _invAmulet = GetNode<PnlInventory>("PnlInventoryAmulet");
         _invAmulet.Start(1,1, new Vector2(128,128));
         _invAmulet.InventoryItemHovered+=this.OnHover;
@@ -54,13 +73,13 @@ public class CharacterInventory : Control
     public void Start(UnitData unitData)
     {
         _currentUnitData = unitData;
+        _insidePortraitIDs.Clear();
         // _invBag.Start(5, Math.Max(4,Convert.ToInt32(Math.Ceiling(itemsHeld.Count/5f))), new Vector2(128,128));
         PopulateGridBag(unitData.CurrentBattleUnitData.ItemsHeld);
         PopulateAmuletSlot(unitData.CurrentBattleUnitData.AmuletEquipped);
         PopulateArmourSlot(unitData.CurrentBattleUnitData.ArmourEquipped);
         PopulateWeaponSlot(unitData.CurrentBattleUnitData.WeaponEquipped);
         PopulatePotionSlots(unitData.CurrentBattleUnitData.PotionsEquipped);
-        SetGold(unitData.Gold);
 
     }
 
@@ -102,46 +121,40 @@ public class CharacterInventory : Control
         }
     }
 
-    private void SetGold(int num)
-    {
-        GetNode<Label>("TexRectGold/LblGold").Text = num.ToString();
-    }
-
+    // make a 5 by 4 to however big we need, bag
+    // it would have been more interesting if there was a weight limit or max inventory limit but no time
+    // might as well have made a single inventory for the party but oh well
     private void PopulateGridBag(List<PnlInventory.ItemMode> itemsHeld)
     {
         _invBag.ClearGrid();
-        // int halfSize = Convert.ToInt32(Math.Ceiling(potions.Count/2f));
-        _invBag.Start(5, Math.Max(4,Convert.ToInt32(Math.Ceiling(itemsHeld.Count/5f))), new Vector2(128,128));
+        _invBag.Start(5, 1+Math.Max(4,Convert.ToInt32(Math.Ceiling(itemsHeld.Count/5f))), new Vector2(128,128));
         foreach (PnlInventory.ItemMode itemMode in itemsHeld)
         {
             if (itemMode == PnlInventory.ItemMode.Empty)
             {
-                _invBag.AddItemToNextEmpty(new InventoryItemEmpty());
+                continue;
             }
             if (_invBag.IsPotion(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildPotion(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildPotion(itemMode));
             }
             else if (_invBag.IsWeapon(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildWeapon(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildWeapon(itemMode));
             }
             else if (_invBag.IsArmour(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildArmour(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildArmour(itemMode));
             }
             else if (_invBag.IsAmulet(itemMode))
             {
-                _invBag.AddItemToNextEmpty(_itemBuilder.BuildAmulet(itemMode));
+                _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildAmulet(itemMode));
             }
         }
-        // RectGlobalPosition = new Vector2(GetViewportRect().Size.x / 2f - RectSize.x/2f, GetViewportRect().Size.y / 2f - RectSize.y/2f);
     }
 
     public void OnHover(IInventoryPlaceable item, PnlInventory source)
     {
-        // GD.Print(item.Name);
-        // _targetSource = source;
         if (item is InventoryItemEmpty)
         {
             GetNode<Label>("PanelStatus/LblStatusText").Text = "";
@@ -156,32 +169,18 @@ public class CharacterInventory : Control
     private void OnMouseEnteredInventory(PnlInventory source)
     {
         _targetSource = source;
-        // GD.Print("new souce");
     }
-
-    private IInventoryPlaceable _currentlySelectedItem;
-    private PnlInventory _currentSource;
-    private PnlInventory _targetSource;
-
-    private TextureRect _currentItemTexRect;
-    private int[] _initialGridPos;
 
     public void OnClicked(IInventoryPlaceable item, PnlInventory source)
     {
-        // IInventoryPlaceable tempItem = item;
-        // source.RemoveItem(item);
         _currentSource = source;
         _currentlySelectedItem = item;
         _currentItemTexRect = (TextureRect) item.TexRect.Duplicate();
         AddChild(_currentItemTexRect);
         _currentlySelectedItem.TexRect.Visible = false;
         _initialGridPos = source.GetCellGridPosition(_currentlySelectedItem.TexRect.RectPosition + _currentItemTexRect.RectSize/2);
-        GD.Print(_initialGridPos[0] + ", " + _initialGridPos[1]);
         _currentItemTexRect.RectGlobalPosition = GetGlobalMousePosition() - _currentItemTexRect.RectSize/2;
-        // _pickedUp = true;
-        GD.Print("picking up item ", item.Name);
     }
-    private bool _leftButtonPressed = false;
 
     private bool IsItemHeld()
     {
@@ -231,23 +230,51 @@ public class CharacterInventory : Control
         return false;
     }
 
+
     private void DropItem()
     {
+        // dont drop anything if nothing held
         if (!IsItemHeld())
         {
             return;
         }
 
-        GD.Print(_targetSource.Name);
+        // check if over portraits, if so, give the item to the portrait owner (if it isnt the character holding the item)
+        foreach (KeyValuePair<string,bool> kv in _insidePortraitIDs)
+        {
+            if (kv.Value)
+            {
+                if (kv.Key == _currentUnitData.ID)
+                {
+                    ResetSelection();
+                    return;
+                }
+                EmitSignal(nameof(GivingItemToAnotherCharacter), kv.Key, _currentlySelectedItem.CurrentItemMode);
+                _currentSource.RemoveItem(_currentlySelectedItem);
+                UpdateUnitData();
+                ResetSelection();
+                return;
+            }
+        }
 
-        if (_targetSource.WorldPositionIsOutOfBounds(_targetSource.GetLocalMousePosition()) || !IsValidTarget(_currentlySelectedItem))
+        // otherwise, check where we are. if we are not over the correct inventory do nothing
+        if (!IsValidTarget(_currentlySelectedItem))
         {
             ResetSelection();
             return;
         }
 
+        // if we were over the right inventory, but are now out of bounds, do nothing
+        if (_targetSource.WorldPositionIsOutOfBounds(_targetSource.GetLocalMousePosition()))
+        {
+            ResetSelection();
+            return;
+        }
+
+        // store a local reference to the item or slot that we are about to release the held item
         IInventoryPlaceable oldItem = _targetSource.GetItemAtWorldPosition(_targetSource.GetLocalMousePosition());
         
+        // if the slot is empty, just deposit the held item
         if (oldItem is InventoryItemEmpty)
         {
             _currentSource.RemoveItem(_currentlySelectedItem);
@@ -256,10 +283,23 @@ public class CharacterInventory : Control
             ResetSelection();
             return;            
         }
+
+        // otherwise, swap out the old item
         _targetSource.RemoveItem(oldItem);
         _currentSource.RemoveItem(_currentlySelectedItem);
         _targetSource.AddItemAtWorldPosition(_targetSource.GetLocalMousePosition(), _currentlySelectedItem);
-        _currentSource.AddItemAtGridPosition(_initialGridPos[0], _initialGridPos[1], oldItem);
+        // if the place we swapped out from is valid, put the old item there
+        _targetSource = _currentSource;
+        if (IsValidTarget(oldItem))
+        {
+            _targetSource.AddItemAtGridPosition(_initialGridPos[0], _initialGridPos[1], oldItem);
+        }
+        // otherwise, place it in our bag
+        else
+        {
+            _invBag.AddItemToNextEmpty(oldItem);
+        }
+        // update the unitdata with our inventory changes
         UpdateUnitData();
         ResetSelection();
     }
@@ -274,25 +314,17 @@ public class CharacterInventory : Control
             _invPotions.GetItemAtGridPosition(1,0).CurrentItemMode,
             _invPotions.GetItemAtGridPosition(2,0).CurrentItemMode,
         };
+        // we currently dont store grid positions
+        // if i were to do this again, i would make a InventoryGrid object so that items can be stored by position
+        // this would have to be able to dynamically grow, so ability to add rows as the object grows near capacity
         _currentUnitData.CurrentBattleUnitData.ItemsHeld.Clear();
-        foreach (IInventoryPlaceable item in _invBag.GetAllItems(includeEmpty:true))
+        foreach (IInventoryPlaceable item in _invBag.GetAllItems(includeEmpty:false))
         {
-            // if (item.CurrentItemMode != PnlInventory.ItemMode.Empty)
-            // {
-                _currentUnitData.CurrentBattleUnitData.ItemsHeld.Add(item.CurrentItemMode);
-                GD.Print(Enum.GetName(typeof(PnlInventory.ItemMode),item.CurrentItemMode));
-            // }
+            _currentUnitData.CurrentBattleUnitData.ItemsHeld.Add(item.CurrentItemMode);
         }
-        // List<PnlInventory.ItemMode> newHeld = new List<PnlInventory.ItemMode>();
-        // for (int i =)
-        // PopulateGridBag(_currentUnitData.CurrentBattleUnitData.ItemsHeld);
-        // foreach (PnlInventory.ItemMode pot in _currentUnitData.CurrentBattleUnitData.PotionsEquipped)
-        // {
-        //     GD.Print(Enum.GetName(typeof(PnlInventory.ItemMode),pot));
-        // }
-        // GD.Print(Enum.GetName(typeof(PnlInventory.ItemMode),_currentUnitData.CurrentBattleUnitData.AmuletEquipped));
     }
 
+    // set all to defaults
     private void ResetSelection()
     {
         _currentlySelectedItem.TexRect.Visible = true;
@@ -301,16 +333,26 @@ public class CharacterInventory : Control
         _currentItemTexRect.QueueFree();
     }
     
+    public void OnInsideButtonOfCharacter(string ID, bool inside)
+    {
+        _insidePortraitIDs[ID] = inside;
+        foreach (KeyValuePair<string,bool> kv in _insidePortraitIDs)
+        {
+            GD.Print("inside: ", kv.Key, ": ", kv.Value);
+        }
+        
+    }
 
     public override void _Input(InputEvent ev)
     {
-       
+        // if we are holding down the mouse button, store it so that when the mouse moves....(1)
         if (ev is InputEventMouseButton btn)
         {
             if (btn.ButtonIndex == (int) ButtonList.Left)
             {
                 _leftButtonPressed = btn.Pressed;
             }
+            // if we release the mouse button, try to drop the item (of course we check if we arent holding anything!)
             if (!btn.Pressed)
             {
                 DropItem();
@@ -322,6 +364,7 @@ public class CharacterInventory : Control
             {
                 if (!(_currentlySelectedItem is InventoryItemEmpty))
                 {
+                    // ... (1) the item sprite moves with the cursor
                     if (_leftButtonPressed)
                     {
                         _currentItemTexRect.RectGlobalPosition = GetGlobalMousePosition() - _currentItemTexRect.RectSize/2;
@@ -331,6 +374,7 @@ public class CharacterInventory : Control
         }
     }
 
+    // we use c# events here so kill everything upon exit
     public void Die()
     {
         _invAmulet.Die();

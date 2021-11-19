@@ -55,12 +55,16 @@ public class BattleInteractionHandler : Reference
     }
 
 
-    public float[] CalculateSpell(SpellEffect spellEffect, BattleUnitData aggressor, BattleUnitData defender)
+    public float[] CalculateSpell(SpellEffect spellEffect, BattleUnitData aggressor, BattleUnitData defender, float lineOfSightPenalty)
     {
         // randomise
         _rng.Randomize();
         // get spell damage
         float damage = spellEffect.Magnitude + aggressor.Stats[BattleUnitData.DerivedStat.SpellDamage];
+        // multiply by LOS penalty
+        damage *= lineOfSightPenalty;
+        // TODO -distance penalty
+        
         // apply critical chance for double damage
         int critical = _rng.RandiRange(0,100) < aggressor.Stats[BattleUnitData.DerivedStat.CriticalChance] ? 2 : 1;
         damage *= critical;
