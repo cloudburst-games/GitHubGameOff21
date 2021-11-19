@@ -1,13 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Level2/TerrainLevel2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Props/Buildings/Shop/Shop.cs" type="Script" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
 [ext_resource path="res://icon.png" type="Texture" id=8]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=9]
+[ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=10]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( -1514.87, 1278.19, -1919.59, 1076.9, -1775.5, 1015.45, -124.856, 890.43, -59.1689, 926.452, -148.164, 968.83, -474.479, 379.769, -366.413, 439.099, -510.5, 509.023, -567.711, 396.72, -1807.28, 949.76, -1415.28, 763.294, -1400.45, 1227.34, -502.025, 566.234, -959.713, 528.094, -972.426, 487.834, -745.701, 394.601, -658.825, 386.125, -124.856, 1034.52, -637.636, 1276.07, -703.323, 1254.89, -1192.79, 657.348, -1315.69, 1284.55, -1415.28, 710.321, -1245.77, 644.635, -1213.98, 1259.12, -116.38, 759.057, -874.956, 1335.4, -1063.54, 1335.4 )
@@ -33,10 +35,6 @@ ID = "anna1"
 [node name="EnemyKaren" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -983.199, 1217.35 )
 ID = "karen1"
-_startingBools = {
-"Companion": false,
-"Hostile": true
-}
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -79,6 +77,16 @@ texture = ExtResource( 8 )
 position = Vector2( 0, 18.5406 )
 rotation = 1.58042
 polygon = PoolVector2Array( 25.9429, -11.5033, 24.1505, 22.4183, 52.0418, 58.1733, 95.2331, 32.3293, 101.284, 0.485779, 93.4906, -38.6412, 62.6146, -54.2367, 40.3364, -57.2008 )
+
+[node name="Shops" type="YSort" parent="All"]
+
+[node name="Shop" type="StaticBody2D" parent="All/Shops" instance=ExtResource( 10 )]
+position = Vector2( -558.695, 846.537 )
+script = ExtResource( 6 )
+_startingItemsStocked = [ 4, 1, 9, 10, 11, 12, 13 ]
+_introText = "Welcome! Please, peruse my humble wares."
+_shopTitle = "Abdul's Desert Merchandise"
+_stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 9 )

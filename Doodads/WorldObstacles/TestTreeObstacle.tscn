@@ -3,15 +3,14 @@
 [ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_04.png" type="Texture" id=1]
 
 [node name="TestTreeObstacle" type="StaticBody2D"]
-position = Vector2( -63.5679, 981.063 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
-offset = Vector2( 0, -225 )
+offset = Vector2( -90, -225 )
 
 [node name="Shape" type="CollisionPolygon2D" parent="."]
-position = Vector2( 44.3351, -16.6242 )
+position = Vector2( -0.382019, -16.6242 )
 rotation = 1.58042
 scale = Vector2( 3.59946, 1.65901 )
 polygon = PoolVector2Array( 4.29446, 1.80677, 4.2785, -1.78526, 4.67471, -3.70945, 5.7045, -3.81078, 6.59384, -2.39241, 6.54684, 3.59583, 5.15091, 4.10396 )

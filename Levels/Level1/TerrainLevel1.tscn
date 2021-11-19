@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Utils/LevelBuilder/Grid.tscn" type="PackedScene" id=2]
 
-[node name="Terrain2" type="Node2D"]
+[node name="Terrain1" type="Node2D"]
 
 [node name="Tilemaps" type="Node2D" parent="."]
 

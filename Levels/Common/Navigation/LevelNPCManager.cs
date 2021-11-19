@@ -70,6 +70,22 @@ public class LevelNPCManager : YSort
         return result;
     }
 
+    public List<Vector2> GetNPCPositions()
+    {
+        List<Vector2> result = new List<Vector2>();
+        foreach (Node n in GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                if (! npc.CurrentUnitData.Player)
+                {
+                    result.Add(npc.Position);
+                }
+            }
+        }
+        return result;
+    }
+
     public Unit GetNPCFromBattleUnitData(BattleUnitData battleUnitData)
     {
         foreach (Node n in GetChildren())

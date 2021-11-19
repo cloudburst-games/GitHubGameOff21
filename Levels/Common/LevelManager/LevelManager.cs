@@ -13,6 +13,9 @@ public class LevelManager : Node2D
     [Signal]
     public delegate void NPCGenerated();
 
+    [Signal]
+    public delegate void LevelGenerated(Node2D terrainTilemaps);
+
     public enum Level {
         Level1, Level2
     }
@@ -32,6 +35,21 @@ public class LevelManager : Node2D
     public override void _Ready()
     {
         base._Ready();
+    }
+
+    public UnitData GetNPCUnitDataByIDFromPackedLevels(string npcID)
+    {
+        foreach (KeyValuePair<Level, LevelData> kv in CurrentLevelData)
+        {
+            foreach (UnitData unitData in kv.Value.NPCDatas)
+            {
+                if (unitData.ID == npcID)
+                {
+                    return unitData;
+                }
+            }
+        }
+        return null;
     }
 
     // private void OnCurrentLevelExitedTree()
@@ -59,6 +77,9 @@ public class LevelManager : Node2D
         InitialiseNPCsAfterGen();
         ConnectLevelSignals(newLevelLocation);
         SetNavigation();
+
+
+        EmitSignal(nameof(LevelGenerated));    
     }
 
     private void InitialiseNPCsAfterGen()
@@ -181,7 +202,8 @@ public class LevelManager : Node2D
         // UnpackLevelData(dest, player);
         
         // fade from black
-        loadingScreen.FadeOut();        
+        loadingScreen.FadeOut();
+    
     }
 
     public IStoreable PackAndGetData()
@@ -209,7 +231,7 @@ public class LevelManager : Node2D
         return GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager");
     }
 
-    private LevelLocation GetLevelInTree()
+    public LevelLocation GetLevelInTree()
     {
         if (GetChild(0).Name == "OldLevel")
         {
@@ -270,6 +292,44 @@ public class LevelManager : Node2D
         }
 
         CurrentLevelData[((LevelLocation)GetChild(0)).Level] = sourceLevelData;
+    }
+
+    public List<Shop> GetShops()
+    {
+        List<Shop> result = new List<Shop>();
+        foreach (Node n in GetLevelInTree().GetNode<YSort>("All/Shops").GetChildren())
+        {
+            if (n is Shop shop)
+            {
+                result.Add(shop);
+            }
+        }
+        return result;
+    }
+    public List<Vector2> GetLevelTransitionPositions()
+    {
+        List<Vector2> result = new List<Vector2>();
+        foreach (Node n in GetLevelInTree().GetNode("All/TransitionMarkers").GetChildren())
+        {
+            if (n is LevelTransitionMarker marker)
+            {
+                result.Add(marker.Position);
+            }
+        }
+        return result;
+    }
+
+    public List<StaticBody2D> GetObstacles()
+    {
+        List<StaticBody2D> result = new List<StaticBody2D>();
+        foreach (Node n in GetLevelInTree().GetNode("All/Obstacles").GetChildren())
+        {
+            if (n is StaticBody2D obstacle)
+            {
+                result.Add(obstacle);
+            }
+        }
+        return result;
     }
 
     private void UnpackLevelData(Level dest, Unit player)

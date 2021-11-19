@@ -161,6 +161,21 @@ public class HBoxPortraits : Control
         }
     }
 
+    public void OnPortraitButtonPressedByIndex(int index)
+    {
+        if (InCharacterManager)
+        {
+            if (_pBtns[index].Visible)
+            {
+                if (_unitBtnsByID.FirstOrDefault(x => x.Value == _pBtns[index]).Key != null)
+                {
+                    OnPortraitButtonPressed(_unitBtnsByID.FirstOrDefault(x => x.Value == _pBtns[index]).Key);
+                }
+                // _pBtns[index].Pressed = true;
+            }
+        }
+    }
+
     public void DisableOnePortraitButtonByID(string id)
     {
         foreach (string s in _unitBtnsByID.Keys)

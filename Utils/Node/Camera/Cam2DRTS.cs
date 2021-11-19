@@ -7,6 +7,7 @@
 // camera.Current = true;
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class Cam2DRTS : Camera2D
 {
@@ -28,6 +29,9 @@ public class Cam2DRTS : Camera2D
 	private float botBound;
 	private float leftBound;
 
+    public bool DragOnly {get; set;} = false;
+    public bool Active {get; set;} = false;
+
 	// We export the scrollspeed so easy to tweak in editor
 	[Export]
 	private float scrollSpeed = 1000;
@@ -46,7 +50,139 @@ public class Cam2DRTS : Camera2D
 	public override void _Process(float delta)
 	{
 		Scroll (delta);
+        if (!Active)
+        {
+            return;
+        }
+
+        if (DragOnly)
+        {
+            if (_cameraWorldBoundaries == null)
+            {
+                return;
+            }
+        }
+        if (_dragNow)
+        {
+            Vector2 difference = _dragPosition - _clickPosition;
+            float dragRate = 20f;
+            
+            Position -= difference/dragRate;
+        }
+        else
+        {
+            Vector2 difference = new Vector2(0,0);
+            float scrollRate = 10f;
+            if (_dragPosition.x < -50 || _dragPosition.x > 1490 || _dragPosition.y < -50 || _dragPosition.y > 860)
+            {
+                return;
+            }
+            if (_dragPosition.x < 50)
+            {
+                difference = new Vector2(difference.x-scrollRate,difference.y);
+            }
+            if (_dragPosition.x > 1390)
+            {
+                difference = new Vector2(difference.x+scrollRate,difference.y);
+            }
+            if (_dragPosition.y < 50)
+            {
+                difference = new Vector2(difference.x,difference.y-scrollRate);
+            }
+            if (_dragPosition.y > 760)
+            {
+                difference = new Vector2(difference.x,difference.y+scrollRate);
+            }
+            Position += difference;
+        }
+              
+        // Vector2 keyDiff = new Vector2(0,0);
+        // float keyScrollRate = 10f;
+        // if (Input.IsActionPressed("Move Left"))
+        // {
+        //     keyDiff = new Vector2(keyDiff.x-keyScrollRate,keyDiff.y);
+        // }
+        // if (Input.IsActionPressed("Move Right"))
+        // {
+        //     keyDiff = new Vector2(keyDiff.x+keyScrollRate,keyDiff.y);
+        // }
+        // if (Input.IsActionPressed("Move Up"))
+        // {
+        //     keyDiff = new Vector2(keyDiff.x,keyDiff.y-keyScrollRate);
+        // }
+        // if (Input.IsActionPressed("Move Down"))
+        // {
+        //     keyDiff = new Vector2(keyDiff.x,keyDiff.y+keyScrollRate);
+        // }
+        // Position += keyDiff;
+        Position = new Vector2(Mathf.Clamp(Position.x, _cameraWorldBoundaries[BoundaryMode.Left].x, _cameraWorldBoundaries[BoundaryMode.Right].x),
+            Mathf.Clamp(Position.y, _cameraWorldBoundaries[BoundaryMode.Top].y, _cameraWorldBoundaries[BoundaryMode.Bot].y));
+        
 	}
+
+    private enum BoundaryMode {Left, Top, Right, Bot}
+    private Dictionary<BoundaryMode, Vector2> _cameraWorldBoundaries;
+
+    public void SetNewBoundaries(Vector2 leftWorldPos, Vector2 topWorldPos, Vector2 rightWorldPos, Vector2 botWorldPos)
+    {
+        _cameraWorldBoundaries = new Dictionary<BoundaryMode, Vector2>();
+        _cameraWorldBoundaries[BoundaryMode.Left] = leftWorldPos;
+        _cameraWorldBoundaries[BoundaryMode.Right] = rightWorldPos;
+        _cameraWorldBoundaries[BoundaryMode.Top] = topWorldPos;
+        _cameraWorldBoundaries[BoundaryMode.Bot] = botWorldPos;
+    }
+
+    private bool _dragNow = false;
+    private Vector2 _dragPosition;
+    private Vector2 _clickPosition;
+
+    private void Drag(InputEvent ev)
+    {
+        if (!Active)
+        {
+            return;
+        }
+
+        if (ev is InputEventMouseMotion motion)
+        {
+            _dragPosition = motion.Position;// - GetViewportRect().Size/2f;
+        }
+
+        if (ev is InputEventMouseButton btn)
+        {
+            _dragNow = btn.Pressed;
+            if (btn.Pressed)
+            {
+                _clickPosition = btn.Position;
+                // Position += btn.Position - GetViewportRect().Size/2f;
+            }
+            // _atStartedDrag = btn.Position;
+        }
+        // if (ev is InputEventKey)
+        // {            
+        //     Vector2 difference = new Vector2(0,0);
+        //     float keyScrollRate = 10f;
+        //     if (ev.IsActionPressed("Move Left"))
+        //     {
+        //         difference = new Vector2(difference.x-keyScrollRate,difference.y);
+        //     }
+        //     if (ev.IsActionPressed("Move Right"))
+        //     {
+        //         difference = new Vector2(difference.x+keyScrollRate,difference.y);
+        //     }
+        //     if (ev.IsActionPressed("Move Up"))
+        //     {
+        //         difference = new Vector2(difference.x,difference.y-keyScrollRate);
+        //     }
+        //     if (ev.IsActionPressed("Move Down"))
+        //     {
+        //         difference = new Vector2(difference.x,difference.y+keyScrollRate);
+        //     }
+        //     Position += difference;
+        // }
+    }
+
+
 
 	private void OnViewportSizeChanged()
 	{
@@ -71,6 +207,10 @@ public class Cam2DRTS : Camera2D
 	// Method that checks mouse position and compares with screen edge position. 
 	void Scroll(float delta)
 	{
+        if (DragOnly)
+        {
+            return;
+        }
 		// By default not scrolling, so moveX and moveY is 0
 		float moveX = 0;
 		float moveY = 0;
@@ -104,6 +244,14 @@ public class Cam2DRTS : Camera2D
 
 	public override void _Input(InputEvent ev)
 	{
+
+        Drag(ev);
+
+        if (DragOnly)
+        {
+            return;
+        }
+
 		// Only check input if it is mouse input
 		if (ev is InputEventMouseButton) {
 

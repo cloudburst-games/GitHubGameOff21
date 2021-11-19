@@ -27,8 +27,8 @@ public class PnlSettings : Panel
 	public override void _Ready()
 	{
         //
-		//OnBtnControlsPressed(); // CHANGE THIS BACK IF I MAKE THIS A NEW PROJ
-        OnBtnAudioPressed();
+		OnBtnControlsPressed(); // CHANGE THIS BACK IF I MAKE THIS A NEW PROJ
+        // OnBtnAudioPressed();
         //
 		GetNode<Panel>("PnlConfirmExit").Visible = false;
 		ConnectControlsSignals();

@@ -47,7 +47,8 @@ public class Unit : KinematicBody2D
 	}
 
     ///
-
+    [Export]
+    private bool _active = true;
     [Export]
     private Dictionary<string, bool> _startingBools = new Dictionary<string, bool>() {
         {"Companion", false},
@@ -76,7 +77,7 @@ public class Unit : KinematicBody2D
     private SpellEffectManager.SpellMode _startingSpell2 = SpellEffectManager.SpellMode.Empty;
     [Export]
     private SpellEffectManager.SpellMode _spellGainedAtHigherLevel = SpellEffectManager.SpellMode.Empty;
-
+    
     [Export]
     private int _startingGold = 0;
     [Export]
@@ -121,6 +122,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.PortraitPath = this.PortraitPath.ResourcePath;
         CurrentUnitData.PortraitPathSmall = this.PortraitPathSmall.ResourcePath;
         CurrentUnitData.Gold = _startingGold;
+        CurrentUnitData.Active = _active;
 
         CurrentUnitData.CurrentBattleUnitData = new BattleUnitData() {
             Combatant = _mainCombatant,
@@ -134,7 +136,7 @@ public class Unit : KinematicBody2D
             Spell2 = _startingSpell2,
             SpellGainedAtHigherLevel = _spellGainedAtHigherLevel
         };
-
+        CurrentUnitData.CurrentBattleUnitData.BattlePortraitPath = this.PortraitPathSmall.ResourcePath;
         CurrentUnitData.EquipAmulet(_amuletEquipped);
         CurrentUnitData.EquipArmour(_armourEquipped);
         CurrentUnitData.EquipWeapon(_weaponEquipped);
@@ -155,7 +157,7 @@ public class Unit : KinematicBody2D
                 minionUnitData.CurrentBattleUnitData = new BattleUnitData();
                 minionUnitData.CurrentBattleUnitData.Combatant = combatant;
                 minionUnitData.CurrentBattleUnitData.Level = CurrentUnitData.CurrentBattleUnitData.Level - 1;
-                SetAttributesByLevel(minionUnitData);
+                minionUnitData.SetAttributesByLevel(_favouredAttributes);
                 minionUnitData.UpdateDerivedStatsFromAttributes();
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
             } 
@@ -166,7 +168,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.CustomBattleText = _customBattleText;
         CurrentUnitData.Companion = _startingBools["Companion"];
         
-        SetAttributesByLevel(CurrentUnitData);
+        CurrentUnitData.SetAttributesByLevel(_favouredAttributes);
         
         foreach (Node n in GetChildren())
         {
@@ -181,54 +183,29 @@ public class Unit : KinematicBody2D
         {
             CurrentUnitData.Behaviour = AIUnitControlState.AIBehaviour.Stationary;
         }
+        Visible = CurrentUnitData.Active;
     }
 
 
-    public void SetAttributesByLevel(UnitData unitData)
-    {
-        int pool = 60;// CurrentUnitData.CurrentBattleUnitData.Level * 60;
-        if (unitData.CurrentBattleUnitData.Level >= 2)
-        {
-            for (int i = 2; i <= unitData.CurrentBattleUnitData.Level; i++)
-            {
-                pool += 5 + Convert.ToInt32(Math.Floor(i/10f));
-            }
-        }
-        // GD.Print("\nsetting attributes for " + unitData.Name + "from pool of " + pool + " who is level " + unitData.CurrentBattleUnitData.Level);
-        while (pool > 0)
-        {
-            List<UnitData.Attribute> atts = unitData.Attributes.Keys.ToList();
-            for (int i = 0; i < atts.Count; i++)
-            {
-                UnitData.Attribute att = atts[_rand.Next(0, atts.Count)];
-                int numToAllocate = Math.Min(pool, _rand.Next(0, _favouredAttributes.Contains(att) ? 4 : 2));
-                unitData.Attributes[att] += numToAllocate;
-                pool -= numToAllocate;
-                atts.Remove(att);
-            }
 
-        }
-        // foreach (UnitData.Attribute att in unitData.Attributes.Keys)
-        // {
-        //     GD.Print(att + ": " + unitData.Attributes[att]);
-        // }
 
-        unitData.UpdateDerivedStatsFromAttributes();
-    }
+    // private float GetWeaponDamage()
+    // {
+    //     return 0f;
+    // }
 
-    private float GetWeaponDamage()
-    {
-        return 0f;
-    }
-
-    public void UpdateArmourEffects(BattleUnitData battleUnitData, float armourValue)
-    {
-        // y=\frac{\left(x\cdot2\right)}{\left(1+\left(x\cdot0.05\right)\right)} // https://www.desmos.com/calculator/3fisjexbvp
-        battleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalResist] = armourValue*2 / (1 + (armourValue * 0.05f));
-    }
+    // public void UpdateArmourEffects(BattleUnitData battleUnitData, float armourValue)
+    // {
+    //     // y=\frac{\left(x\cdot2\right)}{\left(1+\left(x\cdot0.05\right)\right)} // https://www.desmos.com/calculator/3fisjexbvp
+    //     battleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalResist] = armourValue*2 / (1 + (armourValue * 0.05f));
+    // }
 
     private void OnNPCInteractAreaBodyEntered(Godot.Object body)
     {
+        if (!CurrentUnitData.Active)
+        {
+            return;
+        }
         if (body is Unit unit)
         {
             if (unit.CurrentUnitData.Player)
@@ -246,7 +223,11 @@ public class Unit : KinematicBody2D
     }
     
     private void OnNPCInteractAreaBodyExited(Godot.Object body)
-    {      
+    {   
+        if (!CurrentUnitData.Active)
+        {
+            return;
+        }  
         if (body is Unit unit)
         {
             if (unit.CurrentUnitData.Player)
@@ -273,12 +254,16 @@ public class Unit : KinematicBody2D
         {
             aIUnitControlState.SetAIBehaviourState(CurrentUnitData.Behaviour);
         }
+        Visible = CurrentUnitData.Active;
         GetNode<Panel>("PnlInfo").Visible = false;
     }
 
     public override void _UnhandledInput(InputEvent ev)
     {
-        
+        if (!CurrentUnitData.Active)
+        {
+            return;
+        }
         if (ev is InputEventMouseButton btn)// && !(ev.IsEcho()))
         {
             if (btn.ButtonIndex == (int) ButtonList.Right)

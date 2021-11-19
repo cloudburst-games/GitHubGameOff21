@@ -139,9 +139,9 @@ public class BattleHUD : CanvasLayer
         }
     }
 
-    public void UpdateAndShowUnitInfoPanel(string name, Dictionary<BattleUnitData.DerivedStat, float> derivedStats, Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>> currentEffects, Dictionary<SpellEffectManager.SpellMode, string> effectNames, List<string> spellsLearned)
+    public void UpdateAndShowUnitInfoPanel(string name, Dictionary<BattleUnitData.DerivedStat, float> derivedStats, Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>> currentEffects, Dictionary<SpellEffectManager.SpellMode, string> effectNames, List<string> spellsLearned, PnlInventory.ItemMode weaponEquipped, PnlInventory.ItemMode amuletEquipped, PnlInventory.ItemMode armourEquipped, PnlInventory.ItemMode[] potionsEquipped, string portraitPath)
     {
-        _battleUnitInfoPanel.Update(name, derivedStats, currentEffects, effectNames, spellsLearned);
+        _battleUnitInfoPanel.Update(name, derivedStats, currentEffects, effectNames, spellsLearned, weaponEquipped, amuletEquipped, armourEquipped, potionsEquipped, portraitPath);
         _battleUnitInfoPanel.Activate();
     }
 }

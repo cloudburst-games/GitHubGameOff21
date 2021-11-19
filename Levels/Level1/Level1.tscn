@@ -41,10 +41,27 @@ PortraitPath = ExtResource( 9 )
 PortraitPathSmall = ExtResource( 9 )
 _startingBools = {
 "Companion": false,
-"Hostile": true,
+"Hostile": false,
 "InitiatesDialogue": false
 }
 _combatLevel = 10
+_minions = {
+1: 0
+}
+_itemsHeld = [ 1, 1, 1, 1, 0, 5, 2, 3, 4, 0, 6, 0, 12, 13, 9, 7 ]
+
+[node name="Bob2" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -506.3, 1312.23 )
+ID = "bob2"
+UnitName = "Bobz brother"
+PortraitPath = ExtResource( 9 )
+PortraitPathSmall = ExtResource( 9 )
+_active = false
+_startingBools = {
+"Companion": false,
+"Hostile": false,
+"InitiatesDialogue": false
+}
 _minions = {
 1: 0
 }

@@ -35,6 +35,10 @@ public class PlayerUnitControlState : UnitControlState
         {
             if (n is Unit unit)
             {
+                if (!unit.CurrentUnitData.Active)
+                {
+                    continue;
+                }
                 if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && unit.CurrentUnitData.Hostile)
                 {
                     this.Unit.EmitSignal(nameof(Unit.BattleStarted), unit, unit.CurrentUnitData.CustomBattleText);
@@ -52,8 +56,13 @@ public class PlayerUnitControlState : UnitControlState
         {
             foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())
             {
+
                 if (n is Unit unit)
                 {
+                    if (!unit.CurrentUnitData.Active)
+                    {
+                        continue;
+                    }
                     if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && !unit.CurrentUnitData.Hostile)
                     {
                         this.Unit.EmitSignal(nameof(Unit.DialogueStarted), unit);

@@ -1,28 +1,44 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public class NPCInfoPanel : Panel
 {
+    private ItemBuilder _itemBuilder = new ItemBuilder();
     public override void _Ready()
     {
         Visible = false;
 
-        // Test();
+        //TESTING. please keep this commented when doing release version
+        // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+        // {
+        //     Test();
+        // }
     }
 
     private void Test()
     {
-        // UnitData unitData = new UnitData();
-        // unitData.MainCombatant = BattleUnit.Combatant.Wasp;
-        // unitData.Minions = new System.Collections.Generic.Dictionary<BattleUnit.Combatant, int>()
-        // {
-        //     {BattleUnit.Combatant.Beetle, 3},
-        //     {BattleUnit.Combatant.Noob, 4},
-        //     {BattleUnit.Combatant.Wasp, 1}
-        // };
-        // unitData.Hostile = true;
-        // Activate(unitData);
+        UnitData unitData = new UnitData();
+        unitData.CurrentBattleUnitData.Combatant = BattleUnit.Combatant.Beetle;
+        unitData.CurrentBattleUnitData.Level = 3;
+        unitData.PortraitPathSmall = "res://Interface/Icons/PotionPurp.png";
+        for (int i = 0; i < 4; i++)
+        {
+            UnitData minionUnitData = new UnitData();
+            minionUnitData.CurrentBattleUnitData = new BattleUnitData();
+            minionUnitData.CurrentBattleUnitData.Combatant = unitData.CurrentBattleUnitData.Combatant;
+            minionUnitData.CurrentBattleUnitData.Level = unitData.CurrentBattleUnitData.Level - 1;
+            minionUnitData.SetAttributesByLevel(new List<UnitData.Attribute>());
+            minionUnitData.UpdateDerivedStatsFromAttributes();
+            unitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
+        }
+        unitData.CurrentBattleUnitData.WeaponEquipped = PnlInventory.ItemMode.RustedMace;
+        unitData.CurrentBattleUnitData.AmuletEquipped = PnlInventory.ItemMode.ScarabAmulet;
+        unitData.CurrentBattleUnitData.ArmourEquipped = PnlInventory.ItemMode.ObsidianPlate;
+        unitData.CurrentBattleUnitData.PotionsEquipped = new PnlInventory.ItemMode[3] {PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ResiliencePot};
+        unitData.Hostile = true;
+        Activate(unitData);
     }
 
     public void Activate(UnitData unitData)
@@ -32,10 +48,35 @@ public class NPCInfoPanel : Panel
         // int value = GetValueFromDb();
         // var enumDisplayStatus = (EnumDisplayStatus)value;
         // string stringValue = enumDisplayStatus.ToString();
+        List<string> equipmentNames = new List<string>();
+        equipmentNames.Add(_itemBuilder.BuildAnyItem(unitData.CurrentBattleUnitData.WeaponEquipped).Name);
+        equipmentNames.Add(_itemBuilder.BuildAnyItem(unitData.CurrentBattleUnitData.ArmourEquipped).Name);
+        equipmentNames.Add(_itemBuilder.BuildAnyItem(unitData.CurrentBattleUnitData.AmuletEquipped).Name);
+        foreach (PnlInventory.ItemMode item in unitData.CurrentBattleUnitData.PotionsEquipped)
+        {
+            equipmentNames.Add(_itemBuilder.BuildAnyItem(item).Name);
+        }
+        foreach (string s in equipmentNames.ToList())
+        {
+            if (s == "Empty")
+            {
+                equipmentNames.Remove(s);
+            }
+        }
+        string equippedString = "Equipped: ";
+        foreach (string name in equipmentNames)
+        {
+            equippedString += name + ", ";
+        }
+        GetNode<Label>("VBoxLabels/LblEquipment").Text = equipmentNames.Count != 0 ? equippedString.Substring(0, equippedString.Length-2)
+            : "Nothing equipped.";
 
-        GetNode<Label>("VBoxLabels/LblMainCombatant").Text = unitData.Name;// Enum.GetName(typeof(BattleUnit.Combatant), unitData.MainCombatant.Combatant);
-        GetNode<Label>("VBoxLabels/LblMinions").Text = unitData.Minions.Count == 0 ? "" : "Minions:";
-        GetNode<Label>("VBoxLabels/LblMinions").Visible = !(unitData.Minions.Count == 0);
+        GetNode<Label>("VBoxLabels/PnlTitle/LblMainCombatant").Text = unitData.Name != "" ? unitData.Name :
+            Enum.GetName(typeof(BattleUnit.Combatant), unitData.CurrentBattleUnitData.Combatant);
+        GetNode<TextureRect>("VBoxLabels/PnlTitle/TexRectPortrait").Texture = GD.Load<Texture>(unitData.PortraitPathSmall);
+        GetNode<Label>("VBoxLabels/LblMinions").Text = unitData.Minions.Count == 0 ? "No minions." : "Minions:";
+
+
         GetNode<Label>("VBoxLabels/LblLevel").Text = "Level: " + unitData.CurrentBattleUnitData.Level;
 
         var combatantNumbers = new Dictionary<BattleUnit.Combatant, int>() {

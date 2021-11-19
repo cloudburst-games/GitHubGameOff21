@@ -15,10 +15,11 @@ Thursday:
 - Shop interface DONE
 
 Friday:
-- prep for dialoguecontrol.cs changes - questcompleted, as well as method to alter NPCPropertyByID and signal for NPCPropertychanged, and ambush method and signal for onambush
-- show portrait, equipment on right click
-- Map
-- Keybinds for UI elements (on world map and on battle map)
+- prep for dialoguecontrol.cs changes - questcompleted, as well as method to alter NPCPropertyByID and signal for NPCPropertychanged, and ambush method and signal for onambush DONE
+- show portrait, equipment on right click DONE
+- Map DONE
+
+- Keybinds for UI elements (on world map and on battle map) - do battle map..
 - Add load to main menu
 - Balancing and difficulty options
 - Particle fx for every spell

@@ -24,10 +24,10 @@ public class PnlShopScreen : Panel
         GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell").InventoryItemSelected+=this.OnItemSelected;
         //TESTING. please keep this commented when doing release version
 
-        if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
-        {
-            Test();
-        }
+        // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+        // {
+        //     Test();
+        // }
     }
     public void Test()
     {
@@ -283,6 +283,7 @@ public class PnlShopScreen : Panel
         }
         else
         {
+            // GD.Print("buyfor is: ", buyFor);
             GetNode<Label>("PnlStatus/LblStatus").Text = item.Name + ". " + string.Format(buyFor, cost);// (source != GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell") ? " gold!" : " gold.");
         }
     }

@@ -7,8 +7,9 @@ position = Vector2( -63.5679, 981.063 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+offset = Vector2( 0, -14 )
 
 [node name="Shape" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, 18.5406 )
+position = Vector2( 0, 5.44452 )
 rotation = 1.58042
 polygon = PoolVector2Array( -4.29034, 13.2973, -7.18268, 7.34029, -6.97382, -3.68654, -3.91522, -13.1658, 3.37146, -8.82607, 6.59082, -1.61219, 6.32141, 3.11534, 1.03674, 10.4111 )

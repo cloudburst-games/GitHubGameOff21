@@ -210,11 +210,12 @@ public class Terrain : Node2D
 		{
 			return;
 		}
-		if (Input.IsActionPressed("Paint Terrain"))
+        
+		if (Input.IsActionPressed("Editor Paint Terrain"))
 		{
             SetTerrain();
 		}
-        if (Input.IsActionJustPressed("Hide Grid"))
+        if (Input.IsActionJustPressed("Editor Hide Grid"))
         {
             GetNode<GridVisualiser>("GridVisualiser").Visible = !GetNode<GridVisualiser>("GridVisualiser").Visible;
         }

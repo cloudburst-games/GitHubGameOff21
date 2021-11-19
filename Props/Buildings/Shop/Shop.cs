@@ -15,7 +15,7 @@ public class Shop : StaticBody2D
     [Export]
     private string _buyMessage = "Hmmph. Trash. I'll take it of your hands for {0} gold.";
     [Export]
-    private string _sellMessage = "A bargain for {1} gold!";
+    private string _sellMessage = "A bargain for {0} gold!";
     [Export]
     private float _stinginess = 2f;
     [Export]

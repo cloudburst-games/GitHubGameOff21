@@ -5,6 +5,10 @@ using System.Collections.Generic;
 public class DialogueControl : Control
 {
 
+    [Signal]
+    public delegate void CreatedAmbush(string idOfAmbusher);
+    [Signal]
+    public delegate void NPCUnitDataRequested(string npcID);
     // Just emit this signal when you want to hide the dialog box
     [Signal]
     public delegate void DialogueEnded();
@@ -13,8 +17,7 @@ public class DialogueControl : Control
     [Signal]
     public delegate void CompanionLeaving(UnitDataSignalWrapper npcUnitData);
     [Signal]
-    public delegate void CompletedQuest(int difficulty, List<PnlInventory.ItemMode> wrappedItemRewards, int goldReward);
-
+    public delegate void CompletedQuest(int difficulty, Godot.Collections.Array<PnlInventory.ItemMode> wrappedItemRewards, int goldReward);
 #region Ink code
     public InkStory InkStory;
     string KnotName;
@@ -62,6 +65,7 @@ public class DialogueControl : Control
 	bool _leaveParty = false;
 	UnitData CurrentUnitData;
 	UnitData CurrentKhepriUnitData;
+    private UnitData _requestedUnitData;
 
 #endregion
 
@@ -115,11 +119,22 @@ public class DialogueControl : Control
 	{
 		if ((string)InkStory.GetVariable("quest_complete") == "amulet") //
 		{
-			CompleteQuest(1, itemRewards:new List<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 10);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 10);
 			InkStory.SetVariable("quest_complete", "");
 		}
 	}
 	
+    // YOU CAN ONLY REQUEST THE DATA OF AN NPC IN THE SAME LEVEL AS THE PLAYER!!! (or in a level you visited before - untested)
+    public UnitData GetNPCUnitDataByID(string npcID)
+    {
+        EmitSignal(nameof(NPCUnitDataRequested), npcID);
+        return _requestedUnitData;
+    }
+
+    public void OnNPCUnitDataRequestSuccessful(UnitData npcUnitData)
+    {
+        _requestedUnitData = npcUnitData;
+    }
 
 
     public void LoadInkStory()
@@ -342,7 +357,7 @@ public class DialogueControl : Control
     //     itemRewards:new List<PnlInventory.ItemMode> { PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot, PnlInventory.ItemMode.ResiliencePot },
     //     goldReward:31);
     // note you will also need to remove it from the player's journal
-    private void CompleteQuest(int difficulty, List<PnlInventory.ItemMode> itemRewards, int goldReward)
+    private void CompleteQuest(int difficulty, Godot.Collections.Array<PnlInventory.ItemMode> itemRewards, int goldReward)
     {
         EmitSignal(nameof(CompletedQuest), difficulty, itemRewards, goldReward);
     }
@@ -414,12 +429,33 @@ everything in DialogueData will be saved between levels and on save/load*/
 	private UnitData _khepriUnitData;
 	private UnitData _npcUnitData;
 
+    public void CreateAmbush(string idOfAmbusher)
+    {
+        EmitSignal(nameof(CreatedAmbush), idOfAmbusher);
+    }
 
     // Started when press E next to non-companion, non-hostile NPC
     // Passes in the interlocutor data (modify variables inside here as needed - will be stored on save and load)
     // within this can access DialogueData. Modify variables as needed in class below.
     public void Start(UnitData npcUnitData, UnitData khepriUnitData)
     {
+
+        // ******** @Sarah: examples -: ********
+        // YOU CAN GET THE ID OF ANY NPC AND ACCESS ITS UNITDATA BY DOING UnitData requestedUnitData = GetNPCUnitDataByID(id); E.g.:
+        
+        // UnitData requestedUnitData = GetNPCUnitDataByID("test3416");
+        // GD.Print("name of test3416: ", requestedUnitData.Name);
+        // requestedUnitData.Hostile = true; // make them hostile on sight
+        // requestedUnitData.InitiatesDialogue = true; // alternatively, make them intiiate dialogue as soon as they are close to you
+        // (do one or the other, not both)
+
+        // You can create an ambush by entering the id of the ambusher NPC. this NPC would usually be set as Active = false in the editor. 
+        // So the player cannot see them on the world map
+        // E.g:
+        // CreateAmbush("bob2");
+        // If the NPC with this ID does not exist in the same level as the player, nothing will happen
+
+        // ********    examples end.    ********
 
 		_khepriUnitData = khepriUnitData;
 		CurrentUnitData = npcUnitData;

@@ -1,10 +1,12 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable()]
 public class UnitData : IStoreable
 {
+    public bool Active {get; set;} = true;
     public string PortraitPath {get; set;} = "";
     public string PortraitPathSmall {get; set;} = "";
     public string CustomBattleText {get; set;} = "";
@@ -213,6 +215,40 @@ public class UnitData : IStoreable
             Attributes[att] += newAmulet.AttributesAffectedMagnitude;
         }
         UpdateDerivedStatsFromAttributes();
+    }
+    
+    public void SetAttributesByLevel(List<UnitData.Attribute> favouredAttributes)
+    {
+        Random rand = new Random();
+        UnitData unitData = this;
+        int pool = 60;// CurrentUnitData.CurrentBattleUnitData.Level * 60;
+        if (unitData.CurrentBattleUnitData.Level >= 2)
+        {
+            for (int i = 2; i <= unitData.CurrentBattleUnitData.Level; i++)
+            {
+                pool += 5 + Convert.ToInt32(Math.Floor(i/10f));
+            }
+        }
+        // GD.Print("\nsetting attributes for " + unitData.Name + "from pool of " + pool + " who is level " + unitData.CurrentBattleUnitData.Level);
+        while (pool > 0)
+        {
+            List<UnitData.Attribute> atts = unitData.Attributes.Keys.ToList();
+            for (int i = 0; i < atts.Count; i++)
+            {
+                UnitData.Attribute att = atts[rand.Next(0, atts.Count)];
+                int numToAllocate = Math.Min(pool, rand.Next(0, favouredAttributes.Contains(att) ? 4 : 2));
+                unitData.Attributes[att] += numToAllocate;
+                pool -= numToAllocate;
+                atts.Remove(att);
+            }
+
+        }
+        // foreach (UnitData.Attribute att in unitData.Attributes.Keys)
+        // {
+        //     GD.Print(att + ": " + unitData.Attributes[att]);
+        // }
+
+        unitData.UpdateDerivedStatsFromAttributes();
     }
 
     // NEEDS BALANCING. consider applying similar formula that is used for armour, if flat increases don't work out. or maybe just for luck %

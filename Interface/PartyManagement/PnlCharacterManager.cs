@@ -31,6 +31,34 @@ public class PnlCharacterManager : Panel
         //
     }
 
+    public override void _Input(InputEvent ev)
+    {
+        base._Input(ev);
+        if (!Visible)
+        {
+            return;
+        }
+        if (ev.IsActionPressed("Party 1") && !ev.IsEcho())
+        {
+            GetNode<HBoxPortraits>("HBoxPortraits").OnPortraitButtonPressedByIndex(0);
+        }
+        else if (ev.IsActionPressed("Party 2") && !ev.IsEcho())
+        {
+            GetNode<HBoxPortraits>("HBoxPortraits").OnPortraitButtonPressedByIndex(1);
+        }
+        else if (ev.IsActionPressed("Party 3") && !ev.IsEcho())
+        {
+            GetNode<HBoxPortraits>("HBoxPortraits").OnPortraitButtonPressedByIndex(2);
+        }
+        else if (ev.IsActionPressed("Inventory") && !ev.IsEcho())
+        {
+            GetNode<TabContainer>("TabContainer").CurrentTab = 1;
+        }     
+        // else if (ev.IsActionPressed("Pause") && !ev.IsEcho())
+        // {
+        //     OnBtnClosePressed();
+        // }         
+    }
     public void Test()
     {
         Unit player = new Unit();
@@ -113,7 +141,7 @@ public class PnlCharacterManager : Panel
         GetNode<Label>("TexRectGold/LblGold").Text = num.ToString();
     }
     
-    private void OnBtnClosePressed()
+    public void OnBtnClosePressed()
     {
         // set sub-tabs to defaults
         GetNode<TabContainer>("TabContainer/Character/TabContainer").CurrentTab = 0;

@@ -75,6 +75,7 @@ public class HUD : CanvasLayer
         }
     }
 
+
     public void OnShopBtnClosePressed()
     {
         PauseCommon(false);
@@ -122,13 +123,83 @@ public class HUD : CanvasLayer
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = false;
     }
 
-    public override void _Input(InputEvent ev)
+    public override void _Process(float delta)
     {
-        base._Input(ev);
-        if (Input.IsActionJustPressed("Pause") && Pausable)
+        if (Input.IsActionJustPressed("Pause") && !IsAnyWindowVisible())
         {
             TogglePauseMenu(!GetTree().Paused);
         }
+        else
+        {
+            if (!IsAnyWindowVisible())
+            {
+                if (Input.IsActionJustPressed("Event Log") && !GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible)
+                {
+                    OnBtnEventsPressed();
+                }
+                else if (Input.IsActionJustPressed("Map") && !GetNode<Map>("CtrlTheme/Map").Visible)
+                {
+                    EmitSignal(nameof(RequestingMap));
+                }
+                else if (Input.IsActionJustPressed("Journal") && !GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible)
+                {
+                    EmitSignal(nameof(RequestingJournal));
+                }
+            }
+            else
+            {
+                if (Input.IsActionJustPressed("Pause") && GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible)
+                {
+                    OnBtnCloseEventsPressed();
+                }
+                else if (Input.IsActionJustPressed("Pause") && GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").Visible)
+                {
+                    GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").OnBtnClosePressed();
+                }
+                else if (Input.IsActionJustPressed("Pause") && GetNode<Map>("CtrlTheme/Map").Visible)
+                {
+                    OnBtnMapClosePressed();
+                }
+                else if (Input.IsActionJustPressed("Pause") && GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible)
+                {
+                    GetNode<Journal>("CtrlTheme/DialogueControl/Journal").OnExitButtonPressed();
+                }
+            }
+        }
+        
+    }
+
+    [Signal]
+    public delegate void RequestingMap();
+    [Signal]
+    public delegate void RequestingJournal();
+
+    public bool IsAnyWindowVisible()
+    {
+        return GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible || GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").Visible || 
+            GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible;
+    }
+
+    public override void _Input(InputEvent ev)
+    {
+        base._Input(ev);
+        // else if (Input.IsActionJustPressed("Pause") && GetNode<PnlShopScreen>("CtrlTheme/PnlShopScreen").Visible)
+        // {
+        //     OnShopBtnClosePressed();
+        // }
+        // if (Input.IsActionJustPressed("Event Log") && GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible)
+        // {
+        //     OnBtnCloseEventsPressed();
+        // }
+        // else if (Input.IsActionJustPressed("Pause") && GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible)
+        // {
+        //     GetNode<Journal>("CtrlTheme/DialogueControl/Journal").OnExitButtonPressed();
+        // }
+        // else if (Input.IsActionJustPressed("Pause") && GetNode<Map>("CtrlTheme/Map").Visible)
+        // {
+        //     OnBtnMapClosePressed();
+        // }
+        
         if (ev is InputEventMouseButton btn)// && !(ev.IsEcho()))
         {
             if (btn.ButtonIndex == (int) ButtonList.Right)
@@ -139,6 +210,12 @@ public class HUD : CanvasLayer
                 }
             }
         }
+    }
+
+    public void OnBtnMapClosePressed()
+    {
+        GetNode<Map>("CtrlTheme/Map").Visible = false;
+        // Pausable = true;
     }
 
     public void OnBtnSavePressed()

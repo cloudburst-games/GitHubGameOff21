@@ -7,6 +7,7 @@ using System.Linq;
 public class BattleUnitData : IStoreable
 {
     public BattleUnit.Combatant Combatant = BattleUnit.Combatant.Beetle;
+    public string BattlePortraitPath {get; set;} = "";
     public string Name {get; set;} = "";
     public int Level {get; set;} = 1;
     public float Experience {get; set;} = 0;

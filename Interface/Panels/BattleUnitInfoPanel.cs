@@ -10,17 +10,84 @@ public class BattleUnitInfoPanel : Panel
     private Label _name;
     private Label _effects;
     private Label _lblSpellsLearned;
+    private ItemBuilder _itemBuilder = new ItemBuilder();
     public override void _Ready()
     {
         _stats1 = GetNode<Label>("VBoxLabels/HBoxStats/LblStats");
         _stats2 = GetNode<Label>("VBoxLabels/HBoxStats/LblStats2");
-        _name = GetNode<Label>("VBoxLabels/LblName");
+        _name = GetNode<Label>("VBoxLabels/Panel/LblName");
         _effects = GetNode<Label>("VBoxLabels/LblEffects");
         _lblSpellsLearned = GetNode<Label>("VBoxLabels/LblSpellsLearned");
         Visible = false;
+
+        // TESTING. please keep this commented when doing release version
+        // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+        // {
+        //     Test();
+        // }
     }
 
-    public void Update(string name, Dictionary<BattleUnitData.DerivedStat, float> derivedStats, Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>> currentEffects, Dictionary<SpellEffectManager.SpellMode, string> effectNames, List<string> spellsLearned)
+    public void Test()
+    {
+        BattleUnitData playerData = new BattleUnitData() {
+            Name = "Khepri sun",
+            Combatant = BattleUnit.Combatant.Beetle,
+            Level = 3,
+            Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
+                {BattleUnitData.DerivedStat.Health, 10},
+                {BattleUnitData.DerivedStat.TotalHealth, 10},
+                {BattleUnitData.DerivedStat.Mana, 10},
+                {BattleUnitData.DerivedStat.TotalMana, 10},
+                {BattleUnitData.DerivedStat.HealthRegen, 1},
+                {BattleUnitData.DerivedStat.ManaRegen, 1},
+                {BattleUnitData.DerivedStat.MagicResist, 10},
+                {BattleUnitData.DerivedStat.PhysicalResist, 10},
+                {BattleUnitData.DerivedStat.Dodge, 5},
+                {BattleUnitData.DerivedStat.PhysicalDamage, 5},
+                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
+                {BattleUnitData.DerivedStat.SpellDamage, 5},
+                {BattleUnitData.DerivedStat.Speed, 6},
+                {BattleUnitData.DerivedStat.Initiative, 5},
+                {BattleUnitData.DerivedStat.Leadership, 1},
+                {BattleUnitData.DerivedStat.CriticalChance, 1},
+                {BattleUnitData.DerivedStat.CurrentAP, 6}
+            },
+            Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+            Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
+            BattlePortraitPath = "res://Effects/SpellEffects/Art/WhiteSphericalParticle.png"
+        };
+        SpellEffectManager fxManager = new SpellEffectManager();
+        Dictionary<SpellEffectManager.SpellMode, string> spellNames = new Dictionary<SpellEffectManager.SpellMode, string>();
+        foreach (SpellEffectManager.SpellMode spell in fxManager.SpellEffects.Keys)
+        {
+            if (spell == SpellEffectManager.SpellMode.Empty)
+            {
+                continue;
+            }
+            spellNames.Add(spell, fxManager.SpellEffects[spell][0].Name);
+        }
+
+        List<string> spellNameList = new List<string>();
+        
+        if (playerData.Spell1 != SpellEffectManager.SpellMode.Empty)
+        {
+            spellNameList.Add(spellNames[playerData.Spell1]);
+        }
+        if (playerData.Spell2 != SpellEffectManager.SpellMode.Empty)
+        {
+            spellNameList.Add(spellNames[playerData.Spell2]);
+        }
+
+
+
+        Update(playerData.Name, playerData.Stats, new Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>>() {{SpellEffectManager.SpellMode.LeadershipBonus, new Tuple<int, float>(3,2)}},
+            spellNames, spellNameList, playerData.WeaponEquipped, playerData.AmuletEquipped, playerData.ArmourEquipped, playerData.PotionsEquipped, playerData.BattlePortraitPath);
+        
+        Activate();
+    }
+
+    public void Update(string name, Dictionary<BattleUnitData.DerivedStat, float> derivedStats, Dictionary<SpellEffectManager.SpellMode, Tuple<int, float>> currentEffects, Dictionary<SpellEffectManager.SpellMode, string> effectNames, List<string> spellsLearned,
+        PnlInventory.ItemMode weaponEquipped, PnlInventory.ItemMode amuletEquipped, PnlInventory.ItemMode armourEquipped, PnlInventory.ItemMode[] potionsEquipped, string portraitPath)
     {
         _name.Text = name;
         Dictionary<BattleUnitData.DerivedStat, float> readableStats = derivedStats.ToDictionary(x => x.Key, x => x.Value);
@@ -72,6 +139,39 @@ public class BattleUnitInfoPanel : Panel
             // currentEffectsStr.TrimEnd(new char[] {',', ' '});
             // currentEffectsStr.Remove(currentEffectsStr.Length-4, 2);
             _lblSpellsLearned.Text = spellsLearnedStr.Substring(0, spellsLearnedStr.Length-2);
+        }
+
+        List<string> equipmentNames = new List<string>();
+        equipmentNames.Add(_itemBuilder.BuildAnyItem(weaponEquipped).Name);
+        equipmentNames.Add(_itemBuilder.BuildAnyItem(armourEquipped).Name);
+        equipmentNames.Add(_itemBuilder.BuildAnyItem(amuletEquipped).Name);
+        foreach (PnlInventory.ItemMode item in potionsEquipped)
+        {
+            equipmentNames.Add(_itemBuilder.BuildAnyItem(item).Name);
+        }
+        foreach (string s in equipmentNames.ToList())
+        {
+            if (s == "Empty")
+            {
+                equipmentNames.Remove(s);
+            }
+        }
+        string equippedString = "Equipped: ";
+        foreach (string eName in equipmentNames)
+        {
+            equippedString += eName + ", ";
+        }
+        GetNode<Label>("VBoxLabels/LblEquipment").Text = equipmentNames.Count != 0 ? equippedString.Substring(0, equippedString.Length-2)
+            : "Nothing equipped.";
+
+        if (portraitPath == "")
+        {
+            GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Visible = false;
+        }
+        else
+        {
+            GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Visible = true;
+            GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Texture = GD.Load<Texture>(portraitPath);
         }
     }
 

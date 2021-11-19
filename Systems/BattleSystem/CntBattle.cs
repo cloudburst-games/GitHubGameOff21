@@ -740,7 +740,8 @@ public class CntBattle : Control
             
             
         _battleHUD.UpdateAndShowUnitInfoPanel(battleUnitData.Name, battleUnitData.Stats, battleUnitData.CurrentStatusEffects, 
-            spellNames, spellNameList);
+            spellNames, spellNameList, battleUnitData.WeaponEquipped, battleUnitData.AmuletEquipped, battleUnitData.ArmourEquipped, battleUnitData.PotionsEquipped,
+            battleUnitData.BattlePortraitPath);
     }
 
 
