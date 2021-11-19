@@ -20,6 +20,7 @@ public class StageMainMenu : Stage
 		_pictureStory = GetNode<PictureStory>("PictureStory");
 		_pnlSettings = GetNode<PnlSettings>("PnlSettings");
 		_pnlSettings.Visible = false;
+        _pnlSettings.Connect(nameof(PnlSettings.FinalClosed), this, nameof(OnSettingsFinalClosed));
 
 		if (OS.HasFeature("HTML5"))
 		{
@@ -34,11 +35,26 @@ public class StageMainMenu : Stage
 		
 	}
 
+    private void OnBtnLoadPressed()
+    {
+        
+        GetNode<FileDialogFixed>("FileDialog").Mode = FileDialog.ModeEnum.OpenFile;
+        GetNode<FileDialogFixed>("FileDialog").Access = FileDialog.AccessEnum.Userdata;
+        GetNode<FileDialogFixed>("FileDialog").PopupCentered();
+        GetNode<FileDialogFixed>("FileDialog").Refresh();
+    }
 
+    public void OnLoadConfirmed(string path)
+    {
+        _pnlSettings.OnDie();
+        DataBinary dataBinary = FileBinary.LoadFromFile(ProjectSettings.GlobalizePath(path));
+        SceneManager.SimpleChangeScene(SceneData.Stage.World, new Dictionary<string, object>() {{"Load", true}, {"Data", dataBinary}});
+        // GetNode<HUD>("HUD").LogEntry(String.Format("Loading {0}", System.IO.Path.GetFileName(path)));
+    }
 
 	private void OnBtnNewPressed()
 	{
-		
+		_pnlSettings.OnDie();
 		SceneManager.SimpleChangeScene(SceneData.Stage.World);
 	}
 
@@ -104,7 +120,27 @@ public class StageMainMenu : Stage
 	private void OnBtnSettingsPressed()
 	{
 		_pnlSettings.Visible = true;
+        foreach (Node node in GetNode<HBoxContainer>("HBoxContainer").GetChildren())
+        {
+            if (node is Button btn)
+            {
+                btn.Disabled = true;
+            }
+        }
+        GetNode<Button>("BtnPlay").Disabled = true;
 	}
+
+    private void OnSettingsFinalClosed()
+    {
+        foreach (Node node in GetNode<HBoxContainer>("HBoxContainer").GetChildren())
+        {
+            if (node is Button btn)
+            {
+                btn.Disabled = false;
+            }
+        }
+        GetNode<Button>("BtnPlay").Disabled = false;
+    }
 
 	private void OnBtnTexBackgroundPressed()
 	{

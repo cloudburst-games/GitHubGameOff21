@@ -5,12 +5,15 @@ using System.Collections.Generic;
 public class SettingsLoadSaveHandler
 {
 
-	public void SaveToFile()
+    public delegate void DifficultySelectedDelegate(int difficulty);
+    public event DifficultySelectedDelegate DifficultySelected;
+
+	public void SaveToFile(int difficulty)
 	{
 		SettingsData data = new SettingsData() {
 			KeyActionMapDict = GetKeyActionMapDict(), MouseActionMapDict = GetMouseActionMapDict(), 
 			JoypadButtonActionMapDict = GetJoypadButtonActionMapDict(), JoypadMotionActionMapDict = GetJoypadMotionActionMapDict(),
-			AudioSettingsDict = GetAudioSettingsDict(), GraphicsFullScreen = OS.WindowFullscreen
+			AudioSettingsDict = GetAudioSettingsDict(), GraphicsFullScreen = OS.WindowFullscreen, Difficulty = difficulty
 		};
 
 		FileJSON.SaveToJSON(OS.GetUserDataDir() + "/Settings.json", data);
@@ -28,8 +31,14 @@ public class SettingsLoadSaveHandler
 		LoadControls(data);
 		LoadAudio(data.AudioSettingsDict);
 		LoadGraphics(data.GraphicsFullScreen);
+        LoadDifficulty(data.Difficulty);
 		return true;
 	}
+
+    private void LoadDifficulty(int difficulty)
+    {
+        DifficultySelected?.Invoke(difficulty);
+    }
 
 	private void LoadGraphics(bool fullscreen)
 	{
@@ -178,5 +187,10 @@ public class SettingsLoadSaveHandler
 		}
 		return joypadMotionActionMapDict;
 	}
+
+    public void OnDie()
+    {
+        DifficultySelected = null;
+    }
 
 }

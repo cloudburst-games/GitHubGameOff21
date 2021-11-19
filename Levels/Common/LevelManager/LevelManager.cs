@@ -129,6 +129,10 @@ public class LevelManager : Node2D
 
     public void FreeCurrentLevel()
     { 
+        if (!HasNode("Level"))
+        {
+            return;
+        }
         LevelLocation oldLevel = (LevelLocation) GetChild(0);
 
         if (oldLevel.GetNode("All/Units").HasNode("Player"))

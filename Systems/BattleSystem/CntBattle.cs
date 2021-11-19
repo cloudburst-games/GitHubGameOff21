@@ -91,6 +91,7 @@ public class CntBattle : Control
     private float _currentSpeedSetting = 1f;
     private int _round = 0;
     private bool _endTurnEffectsInProgress = false;
+    private bool _firstTurn = true;
 
     public override void _Ready()
     {
@@ -145,275 +146,13 @@ public class CntBattle : Control
                 "pressed", this, nameof(OnBtnAnimSpeedPressed), new Godot.Collections.Array{i});
         }
         OnBtnAnimSpeedPressed(1);
+        _active = true;
 
-        //TEST
-        if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
-        {
-            Test();
-        }
-    }
-
-    public void Test()
-    {
-        BattleUnitData playerData = new BattleUnitData() {
-            Name = "Khepri sun",
-            Combatant = BattleUnit.Combatant.Beetle,
-            Level = 3,
-            Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                {BattleUnitData.DerivedStat.Health, 10},
-                {BattleUnitData.DerivedStat.TotalHealth, 10},
-                {BattleUnitData.DerivedStat.Mana, 10},
-                {BattleUnitData.DerivedStat.TotalMana, 10},
-                {BattleUnitData.DerivedStat.HealthRegen, 1},
-                {BattleUnitData.DerivedStat.ManaRegen, 1},
-                {BattleUnitData.DerivedStat.MagicResist, 10},
-                {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                {BattleUnitData.DerivedStat.Dodge, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                {BattleUnitData.DerivedStat.SpellDamage, 5},
-                {BattleUnitData.DerivedStat.Speed, 6},
-                {BattleUnitData.DerivedStat.Initiative, 5},
-                {BattleUnitData.DerivedStat.Leadership, 1},
-                {BattleUnitData.DerivedStat.CriticalChance, 1},
-                {BattleUnitData.DerivedStat.CurrentAP, 6}
-            },
-            Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-            Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld
-        };
-        BattleUnitData enemyCommanderData = new BattleUnitData() {
-            Name = "Mr Commander",
-            Combatant = BattleUnit.Combatant.Beetle,
-            Level = 3,
-            Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                {BattleUnitData.DerivedStat.Health, 10},
-                {BattleUnitData.DerivedStat.TotalHealth, 10},
-                {BattleUnitData.DerivedStat.Mana, 10},
-                {BattleUnitData.DerivedStat.TotalMana, 10},
-                {BattleUnitData.DerivedStat.HealthRegen, 1},
-                {BattleUnitData.DerivedStat.ManaRegen, 1},
-                {BattleUnitData.DerivedStat.MagicResist, 10},
-                {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                {BattleUnitData.DerivedStat.Dodge, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 2},
-                {BattleUnitData.DerivedStat.SpellDamage, 5},
-                {BattleUnitData.DerivedStat.Speed, 6},
-                {BattleUnitData.DerivedStat.Initiative, 4},
-                {BattleUnitData.DerivedStat.Leadership, 15},
-                {BattleUnitData.DerivedStat.CriticalChance, 1},
-                {BattleUnitData.DerivedStat.CurrentAP, 6}
-            },
-            Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-            Spell2 = SpellEffectManager.SpellMode.LunarBlast
-        };
-        // GD.Print("fact: ", enemyCommanderData.PlayerFaction);
-        enemyCommanderData.Stats[BattleUnitData.DerivedStat.Initiative] = 5;
-        List<BattleUnitData> friendliesData = new List<BattleUnitData>() {
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 2,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBlast
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamageRange, 4},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 2},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
-            }
-        };
-        List<BattleUnitData> hostilesData = new List<BattleUnitData>() {
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 2,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 1},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 2},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 1},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
-            },
-            new BattleUnitData() {
-                Combatant = BattleUnit.Combatant.Beetle,
-                Level = 1,
-                Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
-                    {BattleUnitData.DerivedStat.Health, 10},
-                    {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
-                    {BattleUnitData.DerivedStat.HealthRegen, 1},
-                    {BattleUnitData.DerivedStat.ManaRegen, 1},
-                    {BattleUnitData.DerivedStat.MagicResist, 10},
-                    {BattleUnitData.DerivedStat.PhysicalResist, 10},
-                    {BattleUnitData.DerivedStat.Dodge, 5},
-                    {BattleUnitData.DerivedStat.PhysicalDamage, 5},
-                {BattleUnitData.DerivedStat.PhysicalDamageRange, 3},
-                    {BattleUnitData.DerivedStat.SpellDamage, 5},
-                    {BattleUnitData.DerivedStat.Speed, 6},
-                    {BattleUnitData.DerivedStat.Initiative, 3},
-                    {BattleUnitData.DerivedStat.Leadership, 1},
-                    {BattleUnitData.DerivedStat.CriticalChance, 1},
-                    {BattleUnitData.DerivedStat.CurrentAP, 6}
-                },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
-            }
-        };
-        Start(playerData, enemyCommanderData, friendliesData, hostilesData);
+        // //TEST
+        // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+        // {
+        //     Test();
+        // }
     }
 
     private void SetFaction(List<BattleUnitData> combatants, bool playerFaction)
@@ -426,7 +165,7 @@ public class CntBattle : Control
     }
 
 
-    public void Start(BattleUnitData playerData, BattleUnitData enemyCommanderData, List<BattleUnitData> friendliesData, List<BattleUnitData> hostilesData)
+    public void Start(BattleUnitData playerData, BattleUnitData enemyCommanderData, List<BattleUnitData> friendliesData, List<BattleUnitData> hostilesData, int difficulty)
     {
         SetPhysicsProcess(true);
         SetProcessInput(true);
@@ -446,7 +185,7 @@ public class CntBattle : Control
         }
 
         // Generate each board piece from data and place on either side
-        GenerateCombatants();
+        GenerateCombatants(difficulty);
 
         // Set factions
         _playerData.PlayerFaction = true;
@@ -476,13 +215,90 @@ public class CntBattle : Control
         // player can adjust and see battleunit stats from adventure map
     }
 
-    private void GenerateCombatants()
+    private void GenerateCombatants(int difficulty)
     {
         if (_friendliesData.Count > 5 || _hostilesData.Count > 5)
         {
             GD.Print("Error! Too many combatants passed into battle!");
             throw new Exception();
         }
+
+         switch (difficulty)
+        {
+            case 0:
+                if (_hostilesData.Count > 3)
+                {
+                    _hostilesData.RemoveAt(_hostilesData.Count-1);
+                }
+                if (_hostilesData.Count > 2)
+                {
+                    _hostilesData.RemoveAt(_hostilesData.Count-1);
+                }
+                foreach (BattleUnitData battleUnitData in _hostilesData)
+                {
+                    battleUnitData.ModulateStats(_rand.Next(-3,-1));
+                }
+                break;
+            case 1:
+                if (_hostilesData.Count > 4)
+                {
+                    _hostilesData.RemoveAt(_hostilesData.Count-1);
+                }
+                foreach (BattleUnitData battleUnitData in _hostilesData)
+                {
+                    battleUnitData.ModulateStats(_rand.Next(-2,0));
+                }
+                break;
+            case 2:
+                if (_hostilesData.Count < 5)
+                {
+                    UnitData newEnemyData = new UnitData();
+                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
+                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
+                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level + 1;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
+                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
+                    newEnemyData.UpdateDerivedStatsFromAttributes();
+                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                }
+                foreach (BattleUnitData battleUnitData in _hostilesData)
+                {
+                    battleUnitData.ModulateStats(_rand.Next(0,2));
+                }
+                break;
+            case 3:
+                if (_hostilesData.Count < 5)
+                {
+                    UnitData newEnemyData = new UnitData();
+                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
+                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
+                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level + 1;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
+                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
+                    newEnemyData.UpdateDerivedStatsFromAttributes();
+                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                }
+                if (_hostilesData.Count < 5)
+                {
+                    UnitData newEnemyData = new UnitData();
+                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
+                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
+                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level + 1;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
+                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
+                    newEnemyData.UpdateDerivedStatsFromAttributes();
+                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                }
+                foreach (BattleUnitData battleUnitData in _hostilesData)
+                {
+                    battleUnitData.ModulateStats(_rand.Next(1,3));
+                }
+                break;
+        }
+
         GenerateBattleUnit(StartPositionMode.Ally1, _playerData);
         for (int i = 0; i < _friendliesData.Count; i++)
         {
@@ -493,6 +309,7 @@ public class CntBattle : Control
         {
             GenerateBattleUnit((StartPositionMode)i+7, _hostilesData[i]);
         }
+            
     }
 
     // private void UpdateHealthManaBars(BattleUnit battleUnit)
@@ -525,11 +342,8 @@ public class CntBattle : Control
     public void OnBattleEnded(bool victory)
     {
         // GD.Print("battle ended signal");        
-        
-        foreach (Node n in CurrentBattleGrid.GetNode("All/BattleUnits").GetChildren())
-        {
-            n.QueueFree();
-        }
+        _active = false;
+        // _turnList.Clear
         _round = 0;
         // set cursor to whatever is default
         _cursorControl.SetCursor(CursorControl.CursorMode.Select);
@@ -537,6 +351,8 @@ public class CntBattle : Control
         SetProcessInput(false);
         EmitSignal(nameof(BattleEnded), false, victory, new BattleUnitDataSignalWrapper() { CurrentBattleUnitData = _enemyCommanderData });
     }
+
+    private bool _active = false;
 
     public List<BattleUnit> GetBattleUnits()
     {
@@ -610,6 +426,16 @@ public class CntBattle : Control
 
         if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
         {
+            if (_firstTurn)
+            {
+                Timer timer = new Timer();
+                timer.WaitTime = 3;
+                timer.OneShot = true;
+                AddChild(timer);
+                timer.Start();
+                await ToSignal(timer, "timeout");
+                timer.QueueFree();
+            }
             // GD.Print("do AI stuff here");
             
             // don't allow click action if units are not idle or if mouse is over the UI
@@ -621,9 +447,10 @@ public class CntBattle : Control
             // GD.Print("ok rdy");
             _aiTurnHandler.SetAITurnState(GetActiveBattleUnit().CurrentBattleUnitData.CurrentAITurnStateMode);
             _aiTurnHandler.OnAITurn(this);
+            _firstTurn = false;
             return;
         }
-
+        _firstTurn = false;
         SetSelectedAction(ActionMode.Move);
     }
 
@@ -713,6 +540,61 @@ public class CntBattle : Control
                 OnBtnMenuPressed();
             }
         }
+        else
+        {
+            if (!_battleHUD.GetNode<Panel>("CtrlTheme/PnlMenu").Visible && !_battleHUD.GetNode<PnlPotion>("CtrlTheme/PnlPotion").Visible
+                && !_battleHUD.GetNode<PnlLog>("CtrlTheme/PnlLog").Visible)// && !GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed/BtnSpeed1").Disabled)
+            {
+                if (ev.IsActionPressed("Battle Move") && !ev.IsEcho())
+                {
+                    SetSelectedAction(ActionMode.Move);
+                }
+                else if (ev.IsActionPressed("Battle Melee") && !ev.IsEcho())
+                {
+                    SetSelectedAction(ActionMode.Melee);
+                }
+                else if (ev.IsActionPressed("Battle Potion") && !ev.IsEcho())
+                {
+                    SetSelectedAction(ActionMode.Potion);
+                }
+                else if (ev.IsActionPressed("Battle Spell 1") && !ev.IsEcho())
+                {
+                    SetSelectedAction(ActionMode.Spell1);
+                }
+                else if (ev.IsActionPressed("Battle Spell 2") && !ev.IsEcho())
+                {
+                    SetSelectedAction(ActionMode.Spell2);
+                }
+                else if (ev.IsActionPressed("Battle End Turn") && !ev.IsEcho())
+                {
+                    OnBtnEndTurnPressed();
+                }
+                else if (ev.IsActionPressed("Event Log") && !ev.IsEcho())
+                {
+                    _battleHUD.ShowLog();
+                }
+                else if (ev.IsActionPressed("Battle Anim Speed 1") && !ev.IsEcho())
+                {
+                    OnBtnAnimSpeedPressed(1);
+                }
+                else if (ev.IsActionPressed("Battle Anim Speed 2") && !ev.IsEcho())
+                {
+                    OnBtnAnimSpeedPressed(2);
+                }
+                else if (ev.IsActionPressed("Battle Anim Speed 3") && !ev.IsEcho())
+                {
+                    OnBtnAnimSpeedPressed(3);
+                }
+                else if (ev.IsActionPressed("Battle Anim Speed 4") && !ev.IsEcho())
+                {
+                    OnBtnAnimSpeedPressed(4);
+                }
+                else if (ev.IsActionPressed("Battle Anim Speed 5") && !ev.IsEcho())
+                {
+                    OnBtnAnimSpeedPressed(5);
+                }
+            }
+        }
     }
 
     private void ShowUnitInfo()
@@ -749,7 +631,11 @@ public class CntBattle : Control
     public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
-
+        
+        if (!_active)
+        {
+            return;
+        }
         if (_turnList.Count == 0)
         {
             return;
@@ -835,6 +721,10 @@ public class CntBattle : Control
             : GetActiveBattleUnit().CurrentBattleUnitData.Spell2;
         if (actionMode == ActionMode.Spell1 || actionMode == ActionMode.Spell2)
         {
+            if (spellTryingToCast == SpellEffectManager.SpellMode.Empty)
+            {
+                return;
+            }
             if (!SufficientManaToCastSpell(spellTryingToCast))
             {
                  LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();

@@ -177,7 +177,8 @@ public class HUD : CanvasLayer
     public bool IsAnyWindowVisible()
     {
         return GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible || GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").Visible || 
-            GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible;
+            GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible || 
+            GetNode<CntBattle>("CtrlTheme/CntBattle").Visible || GetNode<FileDialog>("CtrlTheme/FileDialog").Visible;
     }
 
     public override void _Input(InputEvent ev)

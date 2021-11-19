@@ -324,10 +324,10 @@ public class BattleGrid : Control
 
     public Vector2 GetCorrectedGridPosition(Vector2 position)
     {
-        return _overallTileMap.WorldToMap(new Vector2(position.x-_overallTileMap.GlobalPosition.x, position.y-_overallTileMap.GlobalPosition.y));
+        return _overallTileMap.WorldToMap(new Vector2(position.x-_overallTileMap.Position.x, position.y-_overallTileMap.Position.y));
     }
     public Vector2 GetCorrectedWorldPosition(Vector2 gridPosition)
     {
-        return _overallTileMap.MapToWorld(new Vector2(gridPosition.x, gridPosition.y)) + _overallTileMap.GlobalPosition;
+        return _overallTileMap.MapToWorld(new Vector2(gridPosition.x, gridPosition.y)) + _overallTileMap.Position;
     }
 }

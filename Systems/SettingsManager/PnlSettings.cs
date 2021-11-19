@@ -27,13 +27,13 @@ public class PnlSettings : Panel
 	public override void _Ready()
 	{
         //
-		OnBtnControlsPressed(); // CHANGE THIS BACK IF I MAKE THIS A NEW PROJ
-        // OnBtnAudioPressed();
+		OnBtnGamePressed();
         //
 		GetNode<Panel>("PnlConfirmExit").Visible = false;
 		ConnectControlsSignals();
 		ConnectAudioSignals();
 		ConnectGraphicsSignals();
+		ConnectGameSignals();
 		ChangesSaved = true;
 
 		LoadAndRefreshSettings();
@@ -45,10 +45,17 @@ public class PnlSettings : Panel
 		if (!_loadSaveHandler.LoadFromFile())
 		{
 			OS.WindowFullscreen = true;
+            GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected = 1; // default
 		}
+        else
+        {
+            // GetNode<PnlSettingsGame>("CntPanels/PnlGame").RefreshSettings();
+        }
 		GetNode<PnlControls>("CntPanels/PnlControls").RefreshBtnMapText();
 		GetNode<PnlAudio>("CntPanels/PnlAudio").RefreshHSlidValues();
 		GetNode<PnlGraphics>("CntPanels/PnlGraphics").RefreshSettings();
+
+		// 
 	}
 
 	private void ConnectControlsSignals()
@@ -74,6 +81,19 @@ public class PnlSettings : Panel
 	{
 		GetNode<PnlAudio>("CntPanels/PnlAudio").Connect(nameof(PnlAudio.SettingsChanged), this, nameof(OnSettingsChanged));
 	}
+	private void ConnectGameSignals()
+	{
+		GetNode<PnlSettingsGame>("CntPanels/PnlGame").Connect(nameof(PnlSettingsGame.SettingsChanged), this, nameof(OnSettingsChanged));
+        // Or difficulty setting selected
+        // GetNode<PnlSettingsGame>("CntPanels/PnlGame").Connect(nameof(PnlSettingsGame.DifficultySelected), this, nameof(OnDifficultySelected));
+        // Difficulty setting loaded
+        _loadSaveHandler.DifficultySelected+=this.OnDifficultySelected;
+	}
+
+    private void OnDifficultySelected(int difficulty)
+    {
+        GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected = difficulty;
+    }
 
 	private void OnSettingsChanged()
 	{
@@ -84,6 +104,12 @@ public class PnlSettings : Panel
 	{
 		EnableSingleSettingsPanel(GetNode<Panel>("CntPanels/PnlControls"));
 		EnableAllExceptOneButton(GetNode<Button>("VBoxBtns/BtnControls"));
+
+	}
+	private void OnBtnGamePressed()
+	{
+		EnableSingleSettingsPanel(GetNode<Panel>("CntPanels/PnlGame"));
+		EnableAllExceptOneButton(GetNode<Button>("VBoxBtns/BtnGame"));
 
 	}
 	private void OnBtnAudioPressed()
@@ -130,7 +156,7 @@ public class PnlSettings : Panel
 
 	private void OnBtnApplyPressed()
 	{
-		_loadSaveHandler.SaveToFile();
+		_loadSaveHandler.SaveToFile(GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected);
 		ChangesSaved = true;
 	}
 
@@ -161,5 +187,10 @@ public class PnlSettings : Panel
 	{
 		GetNode<Panel>("PnlConfirmExit").Visible = false;
 	}
+
+    public void OnDie()
+    {
+        _loadSaveHandler.OnDie();
+    }
 }
 

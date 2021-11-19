@@ -40,6 +40,7 @@ public class SpellEffectManager : Reference
     private BattleGrid _battleGrid;
     public int AnimSpeed {get; set;} = 2;
     private int _effectsOngoing = 0;
+    private Random _rand = new Random();
     private BattleInteractionHandler _battleInteractionHandler;
     private Node2D _spellEffectContainer;
 
@@ -49,6 +50,11 @@ public class SpellEffectManager : Reference
     public Dictionary<SpellMode, List<SpellEffect>> SpellEffects;
     public Dictionary<SpellMode, Action<BattleUnit,BattleUnit, List<BattleUnit>, Vector2>> SpellMethods;
     private Tween _currentMissileMoveTween;
+
+    public SpellMode GetRandomSpell()
+    {
+        return (SpellMode) _rand.Next(0,10);
+    }
 
     public SpellEffectManager()
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DataBinary
 {
 
-    public Dictionary<string,object> Data {get; private set;} = new Dictionary<string, object>();
+    public Dictionary<string,object> Data {get; set;} = new Dictionary<string, object>();
 
     public void SaveBinary(Dictionary<string,object> dataDict, string filename)
     {

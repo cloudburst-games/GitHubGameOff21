@@ -10,4 +10,5 @@ public class SettingsData : IJSONSaveable
 	public Dictionary<string, int> MouseActionMapDict {get; set;}
 	public Dictionary<string, float> AudioSettingsDict {get; set;}
 	public bool GraphicsFullScreen {get; set;}
+    public int Difficulty {get; set;}
 }

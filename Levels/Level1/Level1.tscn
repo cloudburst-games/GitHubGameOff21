@@ -41,10 +41,9 @@ PortraitPath = ExtResource( 9 )
 PortraitPathSmall = ExtResource( 9 )
 _startingBools = {
 "Companion": false,
-"Hostile": false,
+"Hostile": true,
 "InitiatesDialogue": false
 }
-_combatLevel = 10
 _minions = {
 1: 0
 }
@@ -99,6 +98,11 @@ _minions = {
 position = Vector2( 108.628, 786.293 )
 ID = "Father"
 UnitName = "Bill Take-No-Sides"
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
 
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -513.633, 1057.28 )

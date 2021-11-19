@@ -37,6 +37,20 @@ public class BattleUnitData : IStoreable
         {DerivedStat.CurrentAP, 6},
     };
 
+
+    public void ModulateStats(int increment)
+    {
+        foreach (BattleUnitData.DerivedStat stat in Stats.Keys.ToList())
+        {
+            if (stat == DerivedStat.Health || stat == DerivedStat.TotalHealth || stat == DerivedStat.Speed || stat == DerivedStat.CurrentAP 
+                || stat == DerivedStat.PhysicalDamage|| stat == DerivedStat.PhysicalDamageRange)
+                {
+                    continue;
+                }
+            Stats[stat] = Math.Max(0, Stats[stat] + increment);
+        }
+    }
+
     public List<PnlInventory.ItemMode> ItemsHeld {get; set;} = new List<PnlInventory.ItemMode>() // all inventory items
     {
         PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot

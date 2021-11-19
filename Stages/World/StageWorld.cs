@@ -7,6 +7,7 @@ using System.Linq;
 public class StageWorld : Stage
 {
     private ItemBuilder _itemBuilder = new ItemBuilder();
+    private int _difficulty = 1;
 
     
     public override void _Input(InputEvent ev)
@@ -81,25 +82,56 @@ public class StageWorld : Stage
     {
         base._Ready();
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").PnlSettings = GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings");
+        _difficulty = GetNode<OptionButton>("HUD/CtrlTheme/CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected;
         GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Visible = false;
         ConnectSignals();
         // GetNode<Control>("CntBattle").Visible = false;
         
-        //testing:
+        if (SharedData != null)
+        {
+            if (SharedData.ContainsKey("Load"))
+            {
+                if ((bool)SharedData["Load"] == true)
+                {
+                    DataBinary dataBinary = ((DataBinary)SharedData["Data"]);
+                    Dictionary<string, IStoreable> unpackedData = UnpackDataOnLoad(dataBinary);
+                    LoadWorldGen(unpackedData);
+                    return;
+                }
+            }
+            else if (SharedData.ContainsKey("Victory"))
+            {
+                DataBinary dataBinary = ((DataBinary)SharedData["Data"]);
+                Dictionary<string, IStoreable> unpackedData = UnpackDataOnLoad(dataBinary);
+                BattleUnitData enemyCommanderData = (BattleUnitData) SharedData["EnemyCommanderData"];
+                bool victory = (bool) SharedData["Victory"];
+                GetNode<RichTextLabel>("HUD/CtrlTheme/PnlEventsBig/RichTextLabel").Text = (string) SharedData["Events"];
+                LoadWorldGen(unpackedData, true, enemyCommanderData, victory);
+
+                return;
+            }
+        }
+
         NewWorldGen();
+    }
+
+    public void OnPnlSettingsFinalClosed()
+    {
+        _difficulty = GetNode<OptionButton>("HUD/CtrlTheme/CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected;
     }
 
     public void ConnectSignals()
     {
+        GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Connect(nameof(PnlSettings.FinalClosed), this, nameof(OnPnlSettingsFinalClosed));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.AutosaveAreaEntered), this, nameof(OnAutosaveTriggered));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.Announced), GetNode<HUD>("HUD"), nameof(HUD.LogEntry));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.LevelGenerated), this, nameof(OnLevelGenerated));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCRightClicked), GetNode<HUD>("HUD"), nameof(HUD.OnNPCRightClicked));
-        // GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCGenerated), this, nameof(OnCompanionChanged));
-        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
+        // // GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCGenerated), this, nameof(OnCompanionChanged));
+        // GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
         GetNode<HUD>("HUD").Connect(nameof(HUD.RequestingMap), this, nameof(OnBtnMapPressed));
         GetNode<HUD>("HUD").Connect(nameof(HUD.RequestingJournal), this, nameof(OnBtnJournalPressed));
-        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlMenu/VBox/BtnSettings").Connect("pressed", this, nameof(OnBtnSettingsPressed));
+        // GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlMenu/VBox/BtnSettings").Connect("pressed", this, nameof(OnBtnSettingsPressed));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.RequestedPause), this, nameof(OnPauseRequested));
         GetNode<PnlCharacterManager>("HUD/CtrlTheme/PnlCharacterManager").Connect(nameof(PnlCharacterManager.RequestedPause), this, nameof(OnPauseRequested));
         GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits").Connect(nameof(HBoxPortraits.PopupPressed), this, nameof(OnPopupMenuIDPressed));
@@ -454,15 +486,31 @@ public class StageWorld : Stage
 
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.UpdateDerivedStatsFromAttributes();
         UpdatePlayerBattleCompanions();
-
-        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Start(
-            playerData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData,
-            enemyCommanderData:target.CurrentUnitData.CurrentBattleUnitData,
-            friendliesData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions,
-            hostilesData:target.CurrentUnitData.Minions
-        );
-
+        // GD.Print(_difficulty);
         GetNode<HUD>("HUD").LogEntry(String.Format("Commenced battle with {0} and their minions.", target.CurrentUnitData.Name));
+
+        // GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Start(
+        //     playerData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData,
+        //     enemyCommanderData:target.CurrentUnitData.CurrentBattleUnitData,
+        //     friendliesData:GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions,
+        //     hostilesData:target.CurrentUnitData.Minions, _difficulty
+        // );
+
+        // save data to load back in
+        Dictionary<string, object> saveDict = PackDataPreSave();
+        DataBinary dataBinary = new DataBinary();
+        dataBinary.Data = saveDict;
+
+        SceneManager.SimpleChangeScene(SceneData.Stage.Battle, new Dictionary<string,object>() {
+            {"Data", dataBinary},
+            {"PlayerData", GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData},
+            {"EnemyCommanderData", target.CurrentUnitData.CurrentBattleUnitData},
+            {"FriendliesData", GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions},
+            {"HostilesData", target.CurrentUnitData.Minions},
+            {"Difficulty", _difficulty},
+            {"Events", GetNode<RichTextLabel>("HUD/CtrlTheme/PnlEventsBig/RichTextLabel").Text}
+        });
+
     }
 
     private void UpdatePlayerBattleCompanions()
@@ -475,28 +523,42 @@ public class StageWorld : Stage
         }
     }
 
-    public void OnBattleEnded(bool quitToMainMenu, bool victory, BattleUnitDataSignalWrapper wrappedEnemyCommanderData)
-    {
-        if (quitToMainMenu)
-        {
-            OnBtnExitPressed();
-            return;
-        }
-        GetNode<HUD>("HUD").PauseCommon(false);
-        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Visible = false;
+    // public void OnBattleEnded(bool quitToMainMenu, bool victory, BattleUnitDataSignalWrapper wrappedEnemyCommanderData)
+    // {
+    //     if (quitToMainMenu)
+    //     {
+    //         OnBtnExitPressed();
+    //         return;
+    //     }
+    //     GetNode<HUD>("HUD").PauseCommon(false);
+    //     GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Visible = false;
 
-        BattleUnitData enemyCommanderData = wrappedEnemyCommanderData.CurrentBattleUnitData;
-        Unit enemyNPC = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromBattleUnitData(enemyCommanderData);
+    //     BattleUnitData enemyCommanderData = wrappedEnemyCommanderData.CurrentBattleUnitData;
+    //     Unit enemyNPC = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromBattleUnitData(enemyCommanderData);
 
-        if (victory)
-        {
-            OnBattleVictory(enemyNPC);
-        }
-        else
-        {
-            OnDefeat();
-        }
-    }
+    //     if (victory)
+    //     {
+    //         OnBattleVictory(enemyNPC);
+    //     }
+    //     else
+    //     {
+    //         OnDefeat();
+    //     }
+
+    //     // this is a hack.next time we should switch scenes entirely to avoid corruption. or actually maybe this is good...
+    //     GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Name = "CntBattleOld";
+    //     GetNode<CntBattle>("HUD/CtrlTheme/CntBattleOld").QueueFree();
+    //     CntBattle cntBattleNext = (CntBattle) (GD.Load<PackedScene>("res://Systems/BattleSystem/CntBattle.tscn").Instance());
+    //     cntBattleNext.Name = "CntBattle";
+    //     GetNode("HUD/CtrlTheme").AddChild(cntBattleNext);
+    //     GetNode("HUD/CtrlTheme").MoveChild(cntBattleNext, 5);
+    //     cntBattleNext.RectGlobalPosition = new Vector2(0,0);
+
+    //     // foreach (Node n in GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").CurrentBattleGrid.GetNode("All/BattleUnits").GetChildren())
+    //     // {
+    //     //     n.QueueFree();
+    //     // }
+    // }
 
     public void OnPauseRequested(bool pauseEnable)
     {
@@ -612,7 +674,7 @@ public class StageWorld : Stage
             (IStoreable)dataBinary.Data["PlayerData"]
     */
 
-    public async void LoadWorldGen(Dictionary<string, IStoreable> unpackedData)
+    public async void LoadWorldGen(Dictionary<string, IStoreable> unpackedData, bool fromBattle = false, BattleUnitData enemyCommanderData = null, bool victory = false)
     {
         // fade to black or do loading screen
         LoadingScreen loadingScreen = (LoadingScreen) GD.Load<PackedScene>("res://Interface/Transitions/LoadingScreen.tscn").Instance();
@@ -639,7 +701,22 @@ public class StageWorld : Stage
         loadingScreen.FadeOut();        
         GetNode<HUD>("HUD").TogglePauseMenu(false);
 
-        GetNode<HUD>("HUD").LogEntry("Game Loaded");
+        if (!fromBattle)
+        {
+            GetNode<HUD>("HUD").LogEntry("Game Loaded");
+        }
+        else
+        {
+            if (victory)
+            {
+                Unit enemyNPC = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromBattleUnitData(enemyCommanderData);
+                OnBattleVictory(enemyNPC);
+            }
+            else
+            {
+                OnDefeat();
+            }
+        }
     }
 
     public void CommonWorldGen()
@@ -711,6 +788,7 @@ public class StageWorld : Stage
 
     public void OnBtnExitPressed()
     {
+        GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").OnDie();
         // ?show a warning re unsaved data
         GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Die();
         GetNode<PnlCharacterManager>("HUD/CtrlTheme/PnlCharacterManager").Die();

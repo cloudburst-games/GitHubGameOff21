@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Stages/MainMenu/StageMainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Interface/PictureStory/PictureStory.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Interface/Fonts/PANELSTYLEBOX.tres" type="StyleBox" id=11]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=13]
 [ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=14]
 
 [sub_resource type="DynamicFont" id=1]
@@ -121,10 +122,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BtnSettings" parent="HBoxContainer" instance=ExtResource( 2 )]
+[node name="BtnLoad" parent="HBoxContainer" instance=ExtResource( 2 )]
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 452.0
+margin_right = 336.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = null
+custom_fonts/font = ExtResource( 5 )
+text = "LOAD"
+
+[node name="BtnSettings" parent="HBoxContainer" instance=ExtResource( 2 )]
+margin_left = 348.0
+margin_top = 0.0
+margin_right = 684.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -133,9 +145,9 @@ custom_fonts/font = ExtResource( 5 )
 text = "SETTINGS"
 
 [node name="BtnAbout" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 464.0
+margin_left = 696.0
 margin_top = 0.0
-margin_right = 916.0
+margin_right = 1032.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -144,7 +156,7 @@ custom_fonts/font = ExtResource( 5 )
 text = "ABOUT"
 
 [node name="BtnQuit1" parent="HBoxContainer" instance=ExtResource( 2 )]
-margin_left = 928.0
+margin_left = 1044.0
 margin_top = 0.0
 margin_right = 1380.0
 margin_bottom = 72.0
@@ -156,10 +168,10 @@ text = "QUIT"
 
 [node name="BtnToggleMute" parent="HBoxContainer" instance=ExtResource( 2 )]
 visible = false
-margin_left = 499.0
+margin_left = 1113.0
 margin_top = 0.0
-margin_right = 829.0
-margin_bottom = 93.0
+margin_right = 1380.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = null
@@ -252,6 +264,26 @@ text = "X"
 [node name="PnlSettings" parent="." instance=ExtResource( 7 )]
 visible = false
 
+[node name="FileDialog" type="FileDialog" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -572.003
+margin_top = -346.0
+margin_right = 572.003
+margin_bottom = 346.0
+access = 1
+filters = PoolStringArray( "*.ksav; KSAV Files" )
+show_hidden_files = true
+current_dir = "user://Saves"
+current_file = "AUTOSAVE1.ksav"
+current_path = "user://Saves/AUTOSAVE1.ksav"
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="PictureStory" parent="." instance=ExtResource( 10 )]
 visible = false
 
@@ -269,11 +301,13 @@ SoundType = 3
 
 [connection signal="pressed" from="BtnTexBackground" to="." method="OnBtnTexBackgroundPressed"]
 [connection signal="pressed" from="BtnPlay" to="." method="OnBtnNewPressed"]
+[connection signal="pressed" from="HBoxContainer/BtnLoad" to="." method="OnBtnLoadPressed"]
 [connection signal="pressed" from="HBoxContainer/BtnSettings" to="." method="OnBtnSettingsPressed"]
 [connection signal="pressed" from="HBoxContainer/BtnAbout" to="." method="OnBtnAboutPressed"]
 [connection signal="pressed" from="HBoxContainer/BtnQuit1" to="." method="_on_BtnQuit_pressed"]
 [connection signal="pressed" from="HBoxContainer/BtnToggleMute" to="." method="ToggleMute"]
 [connection signal="pressed" from="PopAbout/GameLinkButton" to="." method="OnGameLinkButtonPressed"]
 [connection signal="pressed" from="PopAbout/BtnBack1" to="." method="OnBtnBackPressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="OnLoadConfirmed"]
 
 [editable path="PictureStory"]

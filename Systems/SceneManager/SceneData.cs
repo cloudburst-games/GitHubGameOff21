@@ -8,7 +8,8 @@ public class SceneData
     {
         MainMenu,
         World,
-        Scores
+        Scores,
+        Battle
     }
 
     public enum Scene
@@ -27,7 +28,7 @@ public class SceneData
     {
         {Stage.MainMenu, "res://Stages/MainMenu/StageMainMenu.tscn"},
         {Stage.World, "res://Stages/World/StageWorld.tscn"},
-        {Stage.Scores, "res://Stages/Scores/StageScores.tscn"}
+        {Stage.Battle, "res://Stages/Battle/StageBattle.tscn"}
     };
 
     public static System.Collections.Generic.Dictionary<Scene,string> Scenes 
