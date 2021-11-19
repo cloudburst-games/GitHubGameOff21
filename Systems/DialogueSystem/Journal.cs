@@ -44,7 +44,7 @@ public class Journal : MarginContainer
         QuestButton = GetNode<Button>("Panel/MarginContainer/VBoxContainer/HBoxContainer/QuestButton");
         JournalButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
         QuestButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
-        JournalLabel = GetNode<Label>("Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/Label");
+        JournalLabel = GetNode<Label>("Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/MarginContainer/Label");
         /* DialogueControl.JournalList.Add("xxxxxxxxxxxxxxxxxxxxxx");
         DialogueControl.JournalList.Add("YYYYYYYYYYYYYYYYYYYYY"); */
     }
@@ -52,13 +52,25 @@ public class Journal : MarginContainer
     public void ShowJournal(UnitData khepriUnitData)
     {
         // UPDATE JOURNAL WITH KHEPRI DATA IN HERE
-
+        UpdateJournal();
         //TEST
-        GD.Print(khepriUnitData.CurrentDialogueData.JournalString);
+       // GD.Print(khepriUnitData.CurrentDialogueData.JournalString);
         //
 
         this.Visible = true; //replace with anim
     }
+
+    public void UpdateJournal() //@ SARAH ADD ALL THE VARIABLES THAT YOU WANT RECORDED IN THE JOURNAL HERE
+	{
+        JournalLabel.Text = "";
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("intro");
+		JournalLabel.Text += "\n";
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal");
+		JournalLabel.Text += "\n";
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal_updated");
+		//_journalDict.Add()
+	}
+
 
     public void InstanceQuest(PackedScene scene)
     {
@@ -142,11 +154,12 @@ public class Journal : MarginContainer
 
     public void OnJournalButtonPressed() //when you press the journal button, 
     {
-        this.Visible = true;
+        /* this.Visible = true;
         JournalPanel.Visible=true;
        // QuestPanel.Visible = false;
         JournalButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
-        JournalLabel.Text = (string)DialogueControl.InkStory.GetVariable("journal");
+        JournalLabel.Text = (string)DialogueControl.InkStory.GetVariable("journal"); */
+       // DialogueControl.UpdateJournal();
 
 /*         for (int i = 0; i<DialogueControl._journalList.Count; i++)
         {
