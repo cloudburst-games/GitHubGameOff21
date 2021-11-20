@@ -10,7 +10,7 @@ public class ScarabAmuletAmuletItem : AmuletItem
         AttributesAffected.Add(UnitData.Attribute.Resilience);
         AttributesAffectedMagnitude = 10;
         IconTexture = GD.Load<Texture>("res://Props/GHGO21Plceholders/ScarabAmulet.PNG");
-        Name = "Scarab Amulet";
+        Name = "Amulet of the Scarab";
         Tooltip = String.Format("A divine amulet. Provides {0} to resilience.", AttributesAffectedMagnitude);
         Cost = 100;
     }

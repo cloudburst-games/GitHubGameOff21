@@ -7,11 +7,12 @@ using System.Linq;
 public class BattleUnitData : IStoreable
 {
     public BattleUnit.Combatant Combatant = BattleUnit.Combatant.Beetle;
-    public string BattlePortraitPath {get; set;} = "";
+    public string BattlePortraitPath {get; set;}
     public string Name {get; set;} = "";
     public int Level {get; set;} = 1;
     public float Experience {get; set;} = 0;
     public bool PlayerFaction {get; set;} = false;
+    public string BodyPath {get; set;}
 
     public enum DerivedStat { Health, TotalHealth, Mana, TotalMana, HealthRegen, ManaRegen, MagicResist,
         PhysicalResist, Dodge, PhysicalDamage, PhysicalDamageRange, SpellDamage, Speed, Initiative, Leadership, CriticalChance, CurrentAP}

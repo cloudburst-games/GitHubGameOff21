@@ -88,7 +88,8 @@ public class StageBattle : Stage
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
             },
             Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-            Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld
+            Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             
         };
         playerData.PotionsEquipped = new PnlInventory.ItemMode[3] {PnlInventory.ItemMode.LuckPot, PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.IntellectPot};
@@ -116,7 +117,8 @@ public class StageBattle : Stage
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
             },
             Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-            Spell2 = SpellEffectManager.SpellMode.LunarBlast
+            Spell2 = SpellEffectManager.SpellMode.LunarBlast,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
         };
         // GD.Print("fact: ", enemyCommanderData.PlayerFaction);
         enemyCommanderData.Stats[BattleUnitData.DerivedStat.Initiative] = 5;
@@ -144,7 +146,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.ComingForthByDay,
-                Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
+                Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -169,7 +172,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.PerilOfOsiris,
-                Spell2 = SpellEffectManager.SpellMode.LunarBlast
+                Spell2 = SpellEffectManager.SpellMode.LunarBlast,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -194,7 +198,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.WeighingOfTheHeart,
-                Spell2 = SpellEffectManager.SpellMode.Teleport
+                Spell2 = SpellEffectManager.SpellMode.Teleport,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             }
         };
         List<BattleUnitData> hostilesData = new List<BattleUnitData>() {
@@ -221,7 +226,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -246,7 +252,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -271,7 +278,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -296,7 +304,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -321,7 +330,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
                 Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+                Spell2 = SpellEffectManager.SpellMode.SolarBolt,
+            BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             }
         };
         GetNode<CntBattle>("CntBattle").Start(playerData, enemyCommanderData, friendliesData, hostilesData, 1);

@@ -76,6 +76,8 @@ public class StageWorld : Stage
                 GetNode<LevelManager>("LevelManager").GetLevelTransitionPositions());
             
         }
+
+        
     }
 
     public override void _Ready()
@@ -148,6 +150,8 @@ public class StageWorld : Stage
 
 // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
     }
+
+
 
     private void OnBtnMapPressed()
     {
@@ -607,7 +611,9 @@ public class StageWorld : Stage
             PortraitPath = "res://Actors/PortraitPlaceholders/Big/Khepri.PNG",
             PortraitPathSmall = "res://Actors/PortraitPlaceholders/Small/Khepri.PNG"
         };
+        player.CurrentUnitData.Time = 80f; // start at 8am
         player.CurrentUnitData.CurrentBattleUnitData.BattlePortraitPath = player.CurrentUnitData.PortraitPathSmall;
+        player.CurrentUnitData.CurrentBattleUnitData.BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"; // todo - change this to PlayerBody when this is done
         // set starting attributes
         foreach (UnitData.Attribute att in player.CurrentUnitData.Attributes.Keys.ToList())
         {
@@ -640,6 +646,8 @@ public class StageWorld : Stage
         GetNode<HUD>("HUD").LogEntry(String.Format("New world generated."));
         GetNode<HUD>("HUD").LogEntry(String.Format("Hint: {0}, {1}, {2}, {3} to move. Find someone to talk to.", controlUp, controlDown, controlLeft, controlRight));
 
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);
         OnCompanionChanged();
     }
 
@@ -679,6 +687,7 @@ public class StageWorld : Stage
 
     public async void LoadWorldGen(Dictionary<string, IStoreable> unpackedData, bool fromBattle = false, BattleUnitData enemyCommanderData = null, bool victory = false)
     {
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Stop();
         // fade to black or do loading screen
         LoadingScreen loadingScreen = (LoadingScreen) GD.Load<PackedScene>("res://Interface/Transitions/LoadingScreen.tscn").Instance();
         AddChild(loadingScreen);
@@ -697,7 +706,11 @@ public class StageWorld : Stage
         GetNode<LevelManager>("LevelManager").InitialiseLevel(
             GetNode<LevelManager>("LevelManager").CurrentLevel,
             player);
-        
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
+        GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
+        GD.Print("player tyime: ", player.CurrentUnitData.Time);
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);
+        GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         OnCompanionChanged();
 
         // fade out
@@ -745,6 +758,8 @@ public class StageWorld : Stage
         // show save animation - need to know how to detect progress of save first
         // GetNode<HUD>("HUD").PlayProgressAnim("Saving...");
         
+        // update the time before saving
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Time = GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition; // start at 8am
         // make the dict in which data will be saved - each object will pack and return data
         Dictionary<string, object> saveDict = PackDataPreSave();
 

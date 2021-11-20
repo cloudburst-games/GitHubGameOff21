@@ -54,20 +54,18 @@ public class BattleUnit : Node2D
     }
 
     // eventually swap out the sprites with this method
-    public void SetSprite(Combatant combatantMode)
+    public void SetSprite(string bodyPath)
     {
-        switch (combatantMode)
-        {
-            case Combatant.Beetle:
-                // Modulate = new Color(1,1,1);
-                break;
-            // case Combatant.Wasp:
-            //     // Modulate = new Color (1,0,0);
-            //     break;
-            // case Combatant.Noob:
-            //     // Modulate = new Color(0,0,1);
-            //     break;
-        }
+        Node body = GD.Load<PackedScene>(bodyPath).Instance();
+        Sprite newSprite = body.GetNode<Sprite>("Sprite");
+        _sprite.Name = "OldSprite";
+        newSprite.Name = "Sprite";
+        body.RemoveChild(newSprite);
+        AddChild(newSprite);
+        _sprite.QueueFree();
+        _sprite = newSprite;
+        _sprite.Scale = new Vector2(1.5f, 1.5f);
+        body.QueueFree();
     }
 
     public void SetActionState(ActionStateMode actionStateMode)

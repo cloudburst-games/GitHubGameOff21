@@ -262,6 +262,8 @@ public class CntBattle : Control
                     newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
                     newEnemyData.CurrentBattleUnitData.Spell1 = _rand.Next(0,2) == 1 ? _enemyCommanderData.Spell1 : SpellEffectManager.SpellMode.Empty;
                     newEnemyData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
+                    newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
+                    newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
                     _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
@@ -276,6 +278,8 @@ public class CntBattle : Control
                     newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
                     newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
                     newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
+                    newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
+                    newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
                     _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
@@ -288,6 +292,8 @@ public class CntBattle : Control
                     newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
                     newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
                     newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
+                    newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
+                    newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
                     _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
@@ -330,7 +336,7 @@ public class CntBattle : Control
 
         newBattleUnit.Direction = (data == _playerData || _friendliesData.Contains(data)) ? BattleUnit.DirectionFacingMode.UpRight
             : BattleUnit.DirectionFacingMode.DownLeft;
-        newBattleUnit.SetSprite(data.Combatant);
+        newBattleUnit.SetSprite(data.BodyPath);
         newBattleUnit.SetActionState(BattleUnit.ActionStateMode.Idle);
     }
     

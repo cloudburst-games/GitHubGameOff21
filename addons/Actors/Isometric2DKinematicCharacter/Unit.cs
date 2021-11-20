@@ -152,6 +152,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[0] = _potionEquipped1;
         CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[1] = _potionEquipped2;
         CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[2] = _potionEquipped3;
+        CurrentUnitData.CurrentBattleUnitData.BodyPath = CurrentUnitData.BodyPath;
         // ExperienceManager xpman = new ExperienceManager();
 
         // GD.Print("level: " + CurrentUnitData.CurrentBattleUnitData.Level + ", xp: " + xpman.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level));
@@ -166,6 +167,8 @@ public class Unit : KinematicBody2D
                 minionUnitData.CurrentBattleUnitData = new BattleUnitData();
                 minionUnitData.CurrentBattleUnitData.Combatant = combatant;
                 minionUnitData.CurrentBattleUnitData.Level = CurrentUnitData.CurrentBattleUnitData.Level - 1;
+                minionUnitData.BodyPath = CurrentUnitData.BodyPath;
+                minionUnitData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                 minionUnitData.SetAttributesByLevel(_favouredAttributes);
                 minionUnitData.UpdateDerivedStatsFromAttributes();
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
@@ -298,7 +301,6 @@ public class Unit : KinematicBody2D
         AddChild(sprite);
         AddChild(shape);
         AddChild(anim);
-
         oldSprite.QueueFree();
         oldshape.QueueFree();
         oldAnim.QueueFree();
