@@ -138,7 +138,7 @@ public class SpellEffectManager : Reference
                 Name = "Weighing of the Heart",
                 RangeSquares = 20,
                 DurationRounds = 3,
-                Magnitude = -2,
+                Magnitude = -1,
                 AreaSquares = 0,
                 ManaCost = 2f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Dodge, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
@@ -852,8 +852,12 @@ public class SpellEffectManager : Reference
         {
             bool casterIsAlly = origin.CurrentBattleUnitData.PlayerFaction == target.CurrentBattleUnitData.PlayerFaction;
             float finalMagnitude = effect.Magnitude + 
-                    ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/2) 
+                    ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/3) 
                         * (casterIsAlly ? 1 : -1));
+            if (spell == SpellMode.WeighingOfTheHeart)
+            {
+                finalMagnitude = Math.Max(-4, finalMagnitude);
+            }
             // GD.Print("effect magnitude ", effect.Magnitude);
             // GD.Print("spelldamage help ", ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/2) 
                         // * (casterIsAlly ? 1 : -1)));

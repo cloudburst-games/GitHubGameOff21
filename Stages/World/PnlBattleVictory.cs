@@ -23,9 +23,9 @@ public class PnlBattleVictory : Panel
     {
         Visible = false;
         _defeatNPCOutcomes = new Dictionary<string, Action<Unit>>() {
-           {"enemyjill1", OnEnemyJillDefeated},
-           {"NPC0", OnEnemyJillDefeated},
-           {"NPC1", OnEnemyJillDefeated}
+        //    {"enemyjill1", OnEnemyJillDefeated},
+        //    {"NPC0", OnEnemyJillDefeated},
+        //    {"NPC1", OnEnemyJillDefeated}
         };
     }
 
@@ -47,8 +47,8 @@ public class PnlBattleVictory : Panel
         }
         EmitSignal(nameof(FoundItems), convertedItems);
 
-        string rewardMessage = String.Format("Each party member gains {0} experience!{2}\n\nYou find {1} gold!{3}",
-            xpPerMember.ToString(), goldReward.ToString(), CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\nOne of your party members has gained a level!" : "",
+        string rewardMessage = String.Format("Each party member gains {0} experience!{2}\n\n{1}{3}",
+            xpPerMember.ToString(), goldReward > 0 ? "You find " + goldReward.ToString() + " gold!" : "", CanOneMemberLevelUp(playerData, companionDatas, xpPerMember) ? "\nOne of your party members has gained a level!" : "",
             npcDefeated.CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Count > 0 ?" You find treasure!" : "");
         
         DoExperienceOutcome(xpPerMember, playerData, companionDatas);

@@ -46,6 +46,7 @@ public class PnlSettings : Panel
 		{
 			OS.WindowFullscreen = true;
             GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected = 1; // default
+            GetNode<PnlSettingsGame>("CntPanels/PnlGame").SetDifficultyText(GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected);
 		}
         else
         {
@@ -93,6 +94,7 @@ public class PnlSettings : Panel
     private void OnDifficultySelected(int difficulty)
     {
         GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected = difficulty;
+        GetNode<PnlSettingsGame>("CntPanels/PnlGame").SetDifficultyText(GetNode<OptionButton>("CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected);
     }
 
 	private void OnSettingsChanged()

@@ -81,7 +81,6 @@ public class StageWorld : Stage
     public override void _Ready()
     {
         base._Ready();
-        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").PnlSettings = GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings");
         _difficulty = GetNode<OptionButton>("HUD/CtrlTheme/CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected;
         GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Visible = false;
         ConnectSignals();
@@ -270,6 +269,9 @@ public class StageWorld : Stage
             GetNode<HUD>("HUD").LogEntry(String.Format("{0} gains a new level.", unitData.Name));
         }
 
+        // Update stats
+        UpdatePlayerBattleCompanions();
+
     }
     
 
@@ -330,7 +332,7 @@ public class StageWorld : Stage
         HBoxPortraits[] portraitControls = new HBoxPortraits[3] {GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlShopScreen/HBoxPortraits"), GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits"), GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlCharacterManager/HBoxPortraits")};
         string playerID = GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.ID;
         
-        GD.Print("TEASTAST 1");
+        // GD.Print("TEASTAST 1");
         foreach (HBoxPortraits portraitControl in portraitControls)
         {
             portraitControl.ResetPositions();
@@ -340,7 +342,7 @@ public class StageWorld : Stage
                 GD.Load<Texture>(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.PortraitPathSmall));
         }
 
-        GD.Print("TEASTAST 2");
+        // GD.Print("TEASTAST 2");
         List<UnitData> unitDatas = GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions;
         if (unitDatas.Count == 0 || unitDatas.Count > 2)
         {
@@ -348,7 +350,7 @@ public class StageWorld : Stage
             return;
         }
 
-        GD.Print("TEASTAST 3");
+        // GD.Print("TEASTAST 3");
         foreach (HBoxPortraits portraitControl in portraitControls)
         {
             for (int i = 0; i < unitDatas.Count; i++)
@@ -358,7 +360,7 @@ public class StageWorld : Stage
                 portraitControl.SetPortrait(ID, GD.Load<Texture>(unitDatas[i].PortraitPathSmall));
             }
         }
-        GD.Print("TEASTAST 4");
+        // GD.Print("TEASTAST 4");
     }
 
     public void OnCompanionJoining(UnitDataSignalWrapper unitDataSignalWrapper)
@@ -516,6 +518,7 @@ public class StageWorld : Stage
     private void UpdatePlayerBattleCompanions()
     {
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions.Clear();
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.UpdateDerivedStatsFromAttributes();
         foreach (UnitData unitData in GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions)//  GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetPlayerCompanions())
         {
             unitData.UpdateDerivedStatsFromAttributes();
@@ -790,7 +793,7 @@ public class StageWorld : Stage
     {
         GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").OnDie();
         // ?show a warning re unsaved data
-        GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Die();
+        // GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Die();
         GetNode<PnlCharacterManager>("HUD/CtrlTheme/PnlCharacterManager").Die();
         GetNode<PnlShopScreen>("HUD/CtrlTheme/PnlShopScreen").Die();
         SceneManager.SimpleChangeScene(SceneData.Stage.MainMenu);

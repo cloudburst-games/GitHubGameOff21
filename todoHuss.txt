@@ -20,13 +20,15 @@ Friday:
 - Map DONE
 - Keybinds for UI elements (on world map and on battle map) - do battle map.. DONE
 - Add load to main menu DONE
-
-- Balancing and difficulty options
-- Particle fx for every spell
-- Placeholder art for every non-animated sprite (including spell icons!)
-- Make multiple battle maps with different environments
+- Balancing and difficulty options DONE
 
 Saturday:
+- More informative log entries for spells in battle.
+- Tilemap collisions
+- Particle fx for every spell
+- Map symbols
+- Placeholder art for every non-animated sprite (including spell icons!)
+- Make multiple battle maps with different environments
 - Integrate NPCs, dialogue, quests/journal system
 - Level design implementation
 Sunday:

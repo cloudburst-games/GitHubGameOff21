@@ -35,6 +35,7 @@ script = ExtResource( 8 )
 
 [node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 189.176, 1009.85 )
+_customBattleText = "Behold. It is I. Bob."
 ID = "Doomsayer"
 UnitName = "Bobz"
 PortraitPath = ExtResource( 9 )
@@ -45,9 +46,9 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _minions = {
-1: 0
+0: 0
 }
-_itemsHeld = [ 1, 1, 1, 1, 0, 5, 2, 3, 4, 0, 6, 0, 12, 13, 9, 7 ]
+_physicalDamageRange = 1.0
 
 [node name="Bob2" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -506.3, 1312.23 )
@@ -96,6 +97,7 @@ _minions = {
 
 [node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 108.628, 786.293 )
+_customBattleText = "hah! i am not neutral after all."
 ID = "Father"
 UnitName = "Bill Take-No-Sides"
 _startingBools = {
@@ -103,6 +105,10 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
+_minions = {
+0: 0
+}
+_physicalDamageRange = 1.0
 
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -513.633, 1057.28 )

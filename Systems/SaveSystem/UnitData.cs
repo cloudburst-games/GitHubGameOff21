@@ -36,7 +36,7 @@ public class UnitData : IStoreable
         }
     }
     public bool Modified {get; set;} = false;
-    public float BasePhysicalDamageRange {get; set;} = 3f;
+    public float BasePhysicalDamageRange {get; set;} = 1f;
     public int Gold {get; set;} = 0;
     // public List<IInventoryPlaceable> ItemsHeld {get; set;} = new List<IInventoryPlaceable>();// TODO make a serializable thing instead
     

@@ -60,44 +60,44 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 6
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFontData" id=12]
+[sub_resource type="DynamicFontData" id=7]
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=8]
 size = 36
 outline_size = 1
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-font_data = SubResource( 12 )
-
-[sub_resource type="DynamicFont" id=7]
-size = 35
-outline_size = 5
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 9
-font_data = ExtResource( 10 )
-
-[sub_resource type="DynamicFont" id=8]
-size = 35
-outline_size = 5
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 9
-font_data = ExtResource( 10 )
+font_data = SubResource( 7 )
 
 [sub_resource type="DynamicFont" id=9]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 9
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=11]
 size = 35
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 1
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=12]
 size = 30
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 4
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=13]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
@@ -123,15 +123,15 @@ __meta__ = {
 anchor_left = 0.566
 anchor_right = 0.566
 anchor_bottom = 0.008
-margin_left = -359.022
-margin_top = -10.2705
-margin_right = 358.978
-margin_bottom = 51.6575
+margin_left = -794.538
+margin_top = -10.0
+margin_right = 729.462
+margin_bottom = 65.816
 theme = ExtResource( 8 )
 custom_fonts/font = ExtResource( 11 )
 text = "SETTINGS"
 align = 1
-valign = 2
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -555,8 +555,8 @@ margin_right = 1469.0
 margin_bottom = 215.0
 size_flags_horizontal = 3
 theme = ExtResource( 8 )
-custom_fonts/font = SubResource( 13 )
-text = "At higher difficulty levels, enemies are more powerful and battle in greater numbers."
+custom_fonts/font = SubResource( 8 )
+text = "At medium difficulty, enemies put up a fight, but can be readily defeated with the right strategy."
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -577,7 +577,7 @@ margin_right = 209.0
 margin_bottom = 59.0
 size_flags_horizontal = 3
 theme = ExtResource( 8 )
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 8 )
 text = "Difficulty"
 
 [node name="BtnDifficulty" type="OptionButton" parent="CntPanels/PnlGame/HBoxContainer"]
@@ -1235,7 +1235,7 @@ anchor_right = 0.5
 margin_left = -359.0
 margin_right = 359.0
 margin_bottom = 63.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 9 )
 text = "Controls"
 align = 1
 valign = 1
@@ -1252,7 +1252,7 @@ margin_left = -731.5
 margin_top = -66.0
 margin_right = 742.5
 margin_bottom = -21.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 10 )
 text = "test"
 align = 1
 valign = 1
@@ -1278,7 +1278,7 @@ margin_bottom = 57.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "Game"
 
 [node name="BtnControls" type="Button" parent="VBoxBtns"]
@@ -1289,7 +1289,7 @@ focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "Controls"
 
 [node name="BtnAudio" type="Button" parent="VBoxBtns"]
@@ -1299,7 +1299,7 @@ margin_bottom = 169.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "Audio"
 
 [node name="BtnGraphics" type="Button" parent="VBoxBtns"]
@@ -1309,7 +1309,7 @@ margin_bottom = 225.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 11 )
 text = "Graphics"
 
 [node name="BtnClose" parent="." instance=ExtResource( 14 )]
@@ -1318,7 +1318,7 @@ margin_top = 836.41
 margin_right = 1600.16
 margin_bottom = 894.41
 theme = null
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 12 )
 text = "Close"
 
 [node name="BtnApply" parent="." instance=ExtResource( 14 )]
@@ -1327,7 +1327,7 @@ margin_top = 836.41
 margin_right = 1732.16
 margin_bottom = 894.41
 theme = null
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 12 )
 text = "Apply"
 
 [node name="PnlConfirmExit" type="Panel" parent="."]
@@ -1376,7 +1376,7 @@ margin_top = -54.0
 margin_right = 261.0
 margin_bottom = -8.0
 theme = null
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 13 )
 text = "Cancel"
 
 [connection signal="item_selected" from="CntPanels/PnlGame/HBoxContainer/BtnDifficulty" to="CntPanels/PnlGame" method="OnBtnDifficultyItemSelected"]

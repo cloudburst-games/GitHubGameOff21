@@ -129,7 +129,7 @@ public class LevelManager : Node2D
 
     public void FreeCurrentLevel()
     { 
-        if (!HasNode("Level"))
+        if (GetChildCount() == 0)
         {
             return;
         }

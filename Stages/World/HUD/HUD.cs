@@ -178,7 +178,8 @@ public class HUD : CanvasLayer
     {
         return GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible || GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").Visible || 
             GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible || 
-            GetNode<CntBattle>("CtrlTheme/CntBattle").Visible || GetNode<FileDialog>("CtrlTheme/FileDialog").Visible;
+            GetNode<FileDialog>("CtrlTheme/FileDialog").Visible || GetNode<Panel>("CtrlTheme/PnlBattleVictory").Visible ||
+            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible;
     }
 
     public override void _Input(InputEvent ev)

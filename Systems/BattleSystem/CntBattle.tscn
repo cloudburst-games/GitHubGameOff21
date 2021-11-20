@@ -493,32 +493,6 @@ text = "Quit to Main Menu"
 
 [node name="CursorControl" parent="Panel/BattleHUD" instance=ExtResource( 5 )]
 
-[node name="PnlIntro" type="Panel" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -316.0
-margin_top = -73.0
-margin_right = 316.0
-margin_bottom = 73.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="PnlIntro"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -20.0
-margin_top = -7.0
-margin_right = 20.0
-margin_bottom = 7.0
-align = 1
-valign = 1
-
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnMenu" to="." method="OnBtnMenuPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnLog" to="Panel/BattleHUD" method="ShowLog"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn" to="." method="OnBtnEndTurnPressed"]

@@ -9,6 +9,8 @@ public class StageBattle : Stage
     {
         base._Ready();
 
+        GetNode<Button>("CntBattle/Panel/BattleHUD/CtrlTheme/PnlMenu/VBox/BtnSettings").Connect("pressed", this, nameof(OnBtnSettingsPressed));
+        GetNode<OptionButton>("CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Disabled = true;
         if (SharedData != null)
         {
             // _heldData = (DataBinary) SharedData["Data"];
@@ -21,18 +23,26 @@ public class StageBattle : Stage
             
 
             GetNode<CntBattle>("CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
+            return;
         }
         else
         {
             GD.Print("ERROR data not loaded into stage battle");
+            Test();
         }
         
             
 
     }
 
+    public void OnBtnSettingsPressed()
+    {
+        GetNode<PnlSettings>("CanvasLayer/PnlSettings").Visible = true;
+    }
+
     public void OnBattleEnded(bool quitToMainMenu, bool victory, BattleUnitDataSignalWrapper wrappedEnemyCommanderData)
     {
+        GetNode<CntBattle>("CntBattle").Die();
         if (quitToMainMenu)
         {
             SceneManager.SimpleChangeScene(SceneData.Stage.MainMenu);

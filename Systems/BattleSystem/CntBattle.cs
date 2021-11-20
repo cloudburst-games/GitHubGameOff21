@@ -62,7 +62,10 @@ public class CntBattle : Control
     private PackedScene _battleUnitScn = GD.Load<PackedScene>("res://Actors/BattleUnit/BattleUnit.tscn");
     private List<PackedScene> _battleGridScns = new List<PackedScene>() {
         GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid.tscn"),
-        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid2.tscn")
+        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid2.tscn"),
+        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid3.tscn"),
+        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid4.tscn"),
+        GD.Load<PackedScene>("res://Systems/BattleSystem/BattleGrids/BattleGrid5.tscn"),
     };
     public BattleGrid CurrentBattleGrid {get; set;}
     private BattleHUD _battleHUD;
@@ -255,7 +258,33 @@ public class CntBattle : Control
                     UnitData newEnemyData = new UnitData();
                     newEnemyData.CurrentBattleUnitData = new BattleUnitData();
                     newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
-                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level + 1;
+                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = _rand.Next(0,2) == 1 ? _enemyCommanderData.Spell1 : SpellEffectManager.SpellMode.Empty;
+                    newEnemyData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
+                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
+                    newEnemyData.UpdateDerivedStatsFromAttributes();
+                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                }
+                break;
+            case 3:
+                if (_hostilesData.Count < 5)
+                {
+                    UnitData newEnemyData = new UnitData();
+                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
+                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
+                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
+                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
+                    newEnemyData.UpdateDerivedStatsFromAttributes();
+                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                }
+                if (_hostilesData.Count < 5)
+                {
+                    UnitData newEnemyData = new UnitData();
+                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
+                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
+                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
                     newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
                     newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
@@ -265,36 +294,6 @@ public class CntBattle : Control
                 foreach (BattleUnitData battleUnitData in _hostilesData)
                 {
                     battleUnitData.ModulateStats(_rand.Next(0,2));
-                }
-                break;
-            case 3:
-                if (_hostilesData.Count < 5)
-                {
-                    UnitData newEnemyData = new UnitData();
-                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
-                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
-                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level + 1;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
-                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
-                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
-                    newEnemyData.UpdateDerivedStatsFromAttributes();
-                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
-                }
-                if (_hostilesData.Count < 5)
-                {
-                    UnitData newEnemyData = new UnitData();
-                    newEnemyData.CurrentBattleUnitData = new BattleUnitData();
-                    newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
-                    newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level + 1;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
-                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
-                    newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
-                    newEnemyData.UpdateDerivedStatsFromAttributes();
-                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
-                }
-                foreach (BattleUnitData battleUnitData in _hostilesData)
-                {
-                    battleUnitData.ModulateStats(_rand.Next(1,3));
                 }
                 break;
         }
