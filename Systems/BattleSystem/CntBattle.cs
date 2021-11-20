@@ -115,6 +115,7 @@ public class CntBattle : Control
         CurrentSpellEffectManager.Connect(nameof(SpellEffectManager.AnnouncingSpell), this, nameof(OnAnnouncingSpell));
         // _pnlPotion.Connect(nameof(PnlPotion.PotionSelected), this, nameof(OnPnlPotionPotionSelected));
         _pnlPotion.PotionSelected+=this.OnPnlPotionPotionSelected;
+        _battleInteractionHandler.DefenderTakingDamage+=_battleHUD.OnDefenderTookDamage;
         // _btnActionModes = new Dictionary<Button, ActionMode>() {
 
         // }
@@ -416,7 +417,8 @@ public class CntBattle : Control
 
         _battleHUD.SetSpellUI(
             CurrentSpellEffectManager.SpellEffects[GetActiveBattleUnit().CurrentBattleUnitData.Spell1][0],
-            CurrentSpellEffectManager.SpellEffects[GetActiveBattleUnit().CurrentBattleUnitData.Spell2][0]);
+            CurrentSpellEffectManager.SpellEffects[GetActiveBattleUnit().CurrentBattleUnitData.Spell2][0],
+            GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]);
         
         RecalculateObstacles();
         GetActiveBattleUnit().SetOutlineShader(new float[3] {.8f, .7f, 0f});
@@ -1227,8 +1229,8 @@ public class CntBattle : Control
             // do battle calculations
             float[] result = _battleInteractionHandler.CalculateMelee(GetActiveBattleUnit().CurrentBattleUnitData, targetUnit.CurrentBattleUnitData);
             targetUnit.UpdateHealthManaBars();
-            _battleHUD.LogMeleeEntry(GetActiveBattleUnit().CurrentBattleUnitData.Name, targetUnit.CurrentBattleUnitData.Name, result,
-                targetUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f);
+            // _battleHUD.LogMeleeEntry(GetActiveBattleUnit().CurrentBattleUnitData.Name, targetUnit.CurrentBattleUnitData.Name, result,
+            //     targetUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f);
 
             if (targetUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f)
             {
@@ -1638,5 +1640,6 @@ public class CntBattle : Control
     public void Die()    // MUST CALL THIS WHEN FREEING THE PARENT SCENE (E.G. QUITTING TO MENU)
     {
         _pnlPotion.Die();
+        _battleInteractionHandler.OnDie();
     }
 }

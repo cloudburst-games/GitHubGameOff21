@@ -23,21 +23,29 @@ Friday:
 - Balancing and difficulty options DONE
 
 Saturday:
-- More informative log entries for spells in battle.
-- Tilemap collisions
-- Particle fx for every spell
-- Map symbols
-- Placeholder art for every non-animated sprite (including spell icons!)
-- Make multiple battle maps with different environments
+- More informative log entries for spells in battle. DONE
+- Tilemap collisions DONE
+- Particle fx for every spell DONE
+- Map symbols DONE
+- Placeholder art for every non-animated sprite (including spell icons!) DONE
+- Make multiple battle maps with different environments DONE kinda -await obstacles
+
+--
+- Swappable NPC sprites/collisions/anims (similar to how we did in void warrior) DONE
+
+- Swappable battleunit sprites/anims (similar to code warrior)
+
+
+Sunday:
 - Integrate NPCs, dialogue, quests/journal system
 - Level design implementation
-Sunday:
 - Integrate sound and music
 - Playable game from start to finish by 21st Nov
 
 If time post all to-do:
 Polish:
-- Animate start and end of battle
+- Animate start and end of battle DONE
+
 - Implement click to move controls
 - TEST and tweak numbers
 - day/night cycle

@@ -23,10 +23,18 @@ public class Unit : KinematicBody2D
     [Export]
     private string _customBattleText {get; set;} = "";
     [Export]
+    private string _defeatMessage {get; set;} = "You have defeated your foes in honourable combat!";
+    [Export]
     public Texture PortraitPath = GD.Load<Texture>("res://Interface/Cursors/Art/Hint.PNG");
     [Export]
     public Texture PortraitPathSmall = GD.Load<Texture>("res://Interface/Cursors/Art/Hint.PNG");
     
+    [Export]
+    private PackedScene _body = GD.Load<PackedScene>("res://Actors/NPC/Bodies/NPCBody.tscn");
+
+    [Export]
+    private Unit.FacingDirection _startDirection;
+
     public float Speed {get; set;} = 200f;
     private Random _rand = new Random();
 
@@ -121,6 +129,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.BasePhysicalDamageRange = this._physicalDamageRange;
         CurrentUnitData.PortraitPath = this.PortraitPath.ResourcePath;
         CurrentUnitData.PortraitPathSmall = this.PortraitPathSmall.ResourcePath;
+        CurrentUnitData.BodyPath = this._body.ResourcePath;
         CurrentUnitData.Gold = _startingGold;
         CurrentUnitData.Active = _active;
 
@@ -166,6 +175,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.InitiatesDialogue = _startingBools["InitiatesDialogue"];
         CurrentUnitData.Behaviour = _startingBehaviour;
         CurrentUnitData.CustomBattleText = _customBattleText;
+        CurrentUnitData.DefeatMessage = _defeatMessage;
         CurrentUnitData.Companion = _startingBools["Companion"];
         
         CurrentUnitData.SetAttributesByLevel(_favouredAttributes);
@@ -184,6 +194,9 @@ public class Unit : KinematicBody2D
             CurrentUnitData.Behaviour = AIUnitControlState.AIBehaviour.Stationary;
         }
         Visible = CurrentUnitData.Active;
+        BodySwap();
+        CurrentUnitData.StartDirectionFacing = _startDirection;
+        DirectionAnim = CurrentUnitData.StartDirectionFacing;
     }
 
 
@@ -256,6 +269,41 @@ public class Unit : KinematicBody2D
         }
         Visible = CurrentUnitData.Active;
         GetNode<Panel>("PnlInfo").Visible = false;
+        BodySwap();
+        DirectionAnim = CurrentUnitData.StartDirectionFacing;
+    }
+
+    private bool _bodySwapped = false;
+
+    private void BodySwap()
+    {
+        if (_bodySwapped)
+        {
+            return;
+        }
+        _bodySwapped = true;
+        Sprite oldSprite = GetNode<Sprite>("Sprite");
+        oldSprite.Name = "SpriteOld";
+        CollisionShape2D oldshape = GetNode<CollisionShape2D>("Shape");
+        oldshape.Name = "ShapeOld";
+        AnimationPlayer oldAnim = GetNode<AnimationPlayer>("ActionAnim");
+        oldAnim.Name = "ActionAnimOld";
+        Node npcBody = GD.Load<PackedScene>(CurrentUnitData.BodyPath).Instance();
+        Sprite sprite = npcBody.GetNode<Sprite>("Sprite");
+        CollisionShape2D shape = npcBody.GetNode<CollisionShape2D>("Shape");
+        AnimationPlayer anim = npcBody.GetNode<AnimationPlayer>("ActionAnim");
+        npcBody.RemoveChild(sprite);
+        npcBody.RemoveChild(shape);
+        npcBody.RemoveChild(anim);
+        AddChild(sprite);
+        AddChild(shape);
+        AddChild(anim);
+
+        oldSprite.QueueFree();
+        oldshape.QueueFree();
+        oldAnim.QueueFree();
+        npcBody.QueueFree();
+
     }
 
     public override void _UnhandledInput(InputEvent ev)

@@ -102,7 +102,7 @@ public class BattleUnitInfoPanel : Panel
             Math.Round(readableStats[BattleUnitData.DerivedStat.MagicResist],1), Math.Round(readableStats[BattleUnitData.DerivedStat.PhysicalResist],1),
             Math.Round(readableStats[BattleUnitData.DerivedStat.Dodge],1)
             );       
-        _stats2.Text = String.Format("Action Points: {0}/{1}\nPhysical Damage: {2}-{3}\nSpell Damage: {4}\nCritical Chance: {5}\nMove Speed: {6}\nLeadership: {7}\nInitiative: {8}",
+        _stats2.Text = String.Format("Action Points: {0}/{1}\nPhysical Damage: {2}-{3}\nSpell Power: {4}\nCritical Chance: {5}\nMove Speed: {6}\nLeadership: {7}\nInitiative: {8}",
             Math.Round(readableStats[BattleUnitData.DerivedStat.CurrentAP],1), Math.Round(readableStats[BattleUnitData.DerivedStat.Speed],1),
             Math.Round(Math.Max(readableStats[BattleUnitData.DerivedStat.PhysicalDamage] - readableStats[BattleUnitData.DerivedStat.PhysicalDamageRange], 0),1),
             Math.Round(readableStats[BattleUnitData.DerivedStat.PhysicalDamage] + readableStats[BattleUnitData.DerivedStat.PhysicalDamageRange],1),
@@ -166,7 +166,8 @@ public class BattleUnitInfoPanel : Panel
 
         if (portraitPath == "")
         {
-            GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Visible = false;
+            GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Visible = true;
+            GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Texture = GD.Load<Texture>("res://Actors/PortraitPlaceholders/Small/NPC.PNG");
         }
         else
         {

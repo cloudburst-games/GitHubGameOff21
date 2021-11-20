@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 public class BattleHUD : CanvasLayer
@@ -22,7 +23,12 @@ public class BattleHUD : CanvasLayer
             {CntBattle.ActionMode.Potion, GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnPotion")},
         };
         GetNode<Panel>("CtrlTheme/PnlUI").Visible = true;
-
+        ActionButtons[CntBattle.ActionMode.Move].SetMeta("Info", "Move");
+        ActionButtons[CntBattle.ActionMode.Melee].SetMeta("Info", "Basic Attack");
+        ActionButtons[CntBattle.ActionMode.Spell1].SetMeta("Info", "");
+        ActionButtons[CntBattle.ActionMode.Spell2].SetMeta("Info", "");
+        ActionButtons[CntBattle.ActionMode.Wait].SetMeta("Info", "End this unit's turn now.");
+        ActionButtons[CntBattle.ActionMode.Potion].SetMeta("Info", "Look inside this unit's potion bag.");
     }
 
     public void ClearLog()
@@ -36,6 +42,15 @@ public class BattleHUD : CanvasLayer
         _logEntries.Add(text);
     }
 
+    public void OnDefenderTookDamage(string aggressorName, string defenderName, float damage, bool crit, bool dodge, bool death)
+    {
+        LogEntry(String.Format("{0} inflicts {2} damage upon {1}.{3}{4}{5}", aggressorName, defenderName, damage,
+            (crit ? " Double damage from critical hit!" : ""),
+            (dodge ? " Damage halved due to dodge!" : ""),
+            death ? " " + defenderName + " perishes!" : "")
+            );
+    }
+
     public void ShowButDoNotLog(string text)
     {
         _lblLog.Text = text;
@@ -43,7 +58,7 @@ public class BattleHUD : CanvasLayer
 
     public void OnMouseEnteredActionButton(Button btn)
     {
-        ShowButDoNotLog(btn.HintTooltip);
+        ShowButDoNotLog((string)btn.GetMeta("Info"));// HintTooltip);
     }
 
     public void OnMouseExitedActionButton(Button btn)
@@ -56,14 +71,14 @@ public class BattleHUD : CanvasLayer
         GetNode<PnlLog>("CtrlTheme/PnlLog").Show(_logEntries);
     }
 
-    public void LogMeleeEntry(string aggressorName, string defenderName, float[] result, bool death) // crit, dodge, damage
-    {
-        LogEntry(String.Format("{0} strikes {1} for {2} damage.{3}{4}{5}", aggressorName, defenderName, Math.Round(result[2], 1),
-            (result[0] == 2 ? " Double damage from critical hit!" : ""),
-            (result[1] == 2 ? " Damage halved due to dodge!" : ""),
-            death ? " " + defenderName + " perishes!" : "")
-            );
-    }
+    // public void LogMeleeEntry(string aggressorName, string defenderName, float[] result, bool death) // crit, dodge, damage
+    // {
+    //     LogEntry(String.Format("{0} strikes {1} for {2} damage.{3}{4}{5}", aggressorName, defenderName, Math.Round(result[2], 1),
+    //         (result[0] == 2 ? " Double damage from critical hit!" : ""),
+    //         (result[1] == 2 ? " Damage halved due to dodge!" : ""),
+    //         death ? " " + defenderName + " perishes!" : "")
+    //         );
+    // }
 
     public void SetDisableAllActionButtons(bool disable)
     {
@@ -99,21 +114,51 @@ public class BattleHUD : CanvasLayer
         }
     }
 
-    public void SetSpellUI(SpellEffect effect1, SpellEffect effect2)
+    public void SetSpellUI(SpellEffect effect1, SpellEffect effect2, float spellPower)
     {
         // if (effect1 == null)
         // {
         //     GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1").Disabled = true;
         // }
         GetNode<Sprite>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1/Spell").Texture = effect1.IconTex;
-        GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1").HintTooltip = effect1.Name + ": " + effect1.ToolTip;
+
+        SpellEffect[] effects = new SpellEffect[2] {effect1, effect2};
+        Dictionary<SpellEffect, string> effectToolTips = new Dictionary<SpellEffect, string>() {
+            // {effect1, effect1.ToolTip},
+            // {effect2, effect2.ToolTip}
+        };
+        foreach (SpellEffect effect in effects)
+        {
+            if (!effectToolTips.ContainsKey(effect))
+            {
+                effectToolTips[effect] = effect.ToolTip;
+            }
+        }
+        foreach (SpellEffect effect in effectToolTips.Keys.ToList())
+        {
+            if (effect.Name == "Solar Bolt" || effect.Name == "Solar Blast" || effect.Name == "Lunar Blast" || effect.Name == "Peril of Osiris")
+            {
+                effectToolTips[effect] += " Base Damage: " + (Math.Abs(effect.Magnitude) + spellPower);
+            }
+            if (effect.Name == "Gaze of the Dead")
+            {
+                effectToolTips[effect] += " Base Damage: " + (3 + spellPower);
+            }
+            if (effect.Name == "Hymn of the Underworld")
+            {
+                effectToolTips[effect] += " Base Damage: " + (5 + spellPower);
+            }
+        }
+        GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1").SetMeta("Info", effect1.Name + ": " + effectToolTips[effect1]);
+        // GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1").HintTooltip = effect1.Name + ": " + effectToolTips[effect1];
         
         // if (effect2 == null)
         // {
         //     GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell2").Disabled = true;
         // }
         GetNode<Sprite>("CtrlTheme/PnlUI/HBoxActions/BtnSpell2/Spell2").Texture = effect2.IconTex;
-        GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell2").HintTooltip = effect2.Name + ": " + effect2.ToolTip;
+        GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell2").SetMeta("Info", effect2.Name + ": " + effectToolTips[effect2]);
+        // GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell2").HintTooltip = effect2.Name + ": " + effectToolTips[effect2];
         
     }
 

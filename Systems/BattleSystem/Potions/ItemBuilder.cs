@@ -51,6 +51,8 @@ public class ItemBuilder
                 return new RustedArmourArmourItem();
             case PnlInventory.ItemMode.ObsidianPlate:
                 return new ObsidianPlateArmourItem();
+            case PnlInventory.ItemMode.PhantomArmour:
+                return new PhantomArmourItem();
             default:
                 return new ArmourItem();
         }
@@ -102,7 +104,7 @@ public class ItemBuilder
     }
     public bool IsArmour(PnlInventory.ItemMode itemMode)
     {
-        return itemMode == PnlInventory.ItemMode.RustedArmour || itemMode == PnlInventory.ItemMode.ObsidianPlate;
+        return itemMode == PnlInventory.ItemMode.RustedArmour || itemMode == PnlInventory.ItemMode.ObsidianPlate || itemMode == PnlInventory.ItemMode.PhantomArmour;
     }
     public bool IsAmulet(PnlInventory.ItemMode itemMode)
     {

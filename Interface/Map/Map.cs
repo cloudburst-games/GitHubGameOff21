@@ -9,8 +9,6 @@ public class Map : Control
     private Control _allContainer;
     private Texture _playerSymbol;
     private Texture _NPCSymbol;
-    private Texture _shopSymbol;
-    private Texture _obstacleSymbol;
     private Texture _levelTransitionSymbol;
     private Vector2 _playerPos = new Vector2();
 
@@ -20,10 +18,9 @@ public class Map : Control
         _camera = GetNode<Cam2DRTS>("Panel/ViewportContainer/Viewport/Terrain/Cam2DRTS");
         _viewportContainer = GetNode<ViewportContainer>("Panel/ViewportContainer");
         _allContainer = GetNode<Control>("Panel/ViewportContainer/Viewport/Terrain/All");
-        _playerSymbol = GD.Load<Texture>("res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_01.png");
-        _NPCSymbol = GD.Load<Texture>("res://Interface/Icons/Food.png");
-        _shopSymbol = GD.Load<Texture>("res://Props/Buildings/placeholder_tent.png");
-        _levelTransitionSymbol = GD.Load<Texture>("res://Interface/PartyManagement/coin_placeholder.png");
+        _playerSymbol = GD.Load<Texture>("res://Interface/Map/Art/GHGO21MapSymbols/PlayerMarker.PNG");
+        _NPCSymbol = GD.Load<Texture>("res://Interface/Map/Art/GHGO21MapSymbols/NPCMarker.PNG");
+        _levelTransitionSymbol = GD.Load<Texture>("res://Interface/Map/Art/GHGO21MapSymbols/LevelTransition.PNG");
         Visible = false;
         //TEST
 
@@ -123,7 +120,7 @@ public class Map : Control
         ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
         shaderMaterial.SetShaderParam("speed", 10f);
         shaderMaterial.SetShaderParam("flash_colour_original", new Color(1,1,1));
-        shaderMaterial.SetShaderParam("flash_depth", 1.5f);
+        shaderMaterial.SetShaderParam("flash_depth", 0.5f);
         texRect.Material = shaderMaterial;
         _allContainer.AddChild(texRect);
         texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"Player"});
@@ -146,7 +143,7 @@ public class Map : Control
             ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
             shaderMaterial.SetShaderParam("speed", 5);
             shaderMaterial.SetShaderParam("flash_colour_original", new Color(1,1,1));
-            shaderMaterial.SetShaderParam("flash_depth", 0.5f);
+            shaderMaterial.SetShaderParam("flash_depth", 0.25f);
             texRect.Material = shaderMaterial;
             _allContainer.AddChild(texRect);
             texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"NPC"});
@@ -176,6 +173,11 @@ public class Map : Control
             texRect.RectPosition += shop.GetNode<Sprite>("Sprite").Offset * shop.GetNode<Sprite>("Sprite").Scale * 0.5f;
             texRect.Texture = shop.GetNode<Sprite>("Sprite").Texture;
             texRect.RectPosition -= texRect.Texture.GetSize()*0.5f*texRect.RectScale;
+            ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
+            shaderMaterial.SetShaderParam("speed", 5);
+            shaderMaterial.SetShaderParam("flash_colour_original", new Color(1,1,1));
+            shaderMaterial.SetShaderParam("flash_depth", 0.25f);
+            texRect.Material = shaderMaterial;
             // texRect.RectPivotOffset = (texRect.Texture.GetSize()*RectScale)/2f ;
             _allContainer.AddChild(texRect);
             texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"Shop"});
@@ -191,6 +193,11 @@ public class Map : Control
             texRect.Texture = _levelTransitionSymbol;
             texRect.RectSize = new Vector2(64,64);
             texRect.Expand = true;
+            ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
+            shaderMaterial.SetShaderParam("speed", 5);
+            shaderMaterial.SetShaderParam("flash_colour_original", new Color(1,1,1));
+            shaderMaterial.SetShaderParam("flash_depth", 0.25f);
+            texRect.Material = shaderMaterial;
             _allContainer.AddChild(texRect);
             texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"Level Transition"});
         }

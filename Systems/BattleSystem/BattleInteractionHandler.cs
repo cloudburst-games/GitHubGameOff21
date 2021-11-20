@@ -51,6 +51,9 @@ public class BattleInteractionHandler : Reference
         // reduce health by final damage
         defender.Stats[BattleUnitData.DerivedStat.Health] -= damage;
 
+        DefenderTakingDamage?.Invoke(aggressor.Name, defender.Name, (float) Math.Round(damage, 1), critical == 2, dodge == 2, defender.Stats[BattleUnitData.DerivedStat.Health] < 0.1f);
+
+
         return new float[3] {critical, dodge, damage};
     }
 
@@ -74,11 +77,23 @@ public class BattleInteractionHandler : Reference
         // apply flat reduction by magic resist
         float reductionMultiplier = 1 - defender.Stats[BattleUnitData.DerivedStat.MagicResist] / 100;
         damage *= reductionMultiplier;
+
         // reduce health by final damage
         defender.Stats[BattleUnitData.DerivedStat.Health] -= damage;
+
+        DefenderTakingDamage?.Invoke(aggressor.Name, defender.Name, (float) Math.Round(damage, 1), critical == 2, dodge == 2, defender.Stats[BattleUnitData.DerivedStat.Health] < 0.1f);
+        
         // // reduce mana by mana cost
         // aggressor.Stats[BattleUnitData.DerivedStat.Mana] -= spellEffect.ManaCost;
         // GD.Print(damage);
         return new float[3] {critical, dodge, damage};
     }
+
+    public void OnDie()
+    {
+        DefenderTakingDamage = null;
+    }
+
+    public delegate void DefenderTakingDamageDelegate(string aggressorName, string defenderName, float damage, bool crit, bool dodge, bool death);
+    public event DefenderTakingDamageDelegate DefenderTakingDamage;
 }

@@ -134,6 +134,13 @@ public class AudioManager : Node
 			_currentMusicPlayer.Play();
 			return;
 		}
+        // if (!_currentMusicPlayer.Playing)
+        // {
+		// 	_currentMusicPlayer.Stream = audioData.Streams[0];
+		// 	_currentMusicPlayer.Play();
+        //     GD.Print("here 1");
+        //     return;
+        // }
 		_currentMusicPlayer.PauseAndPlayNext(audioData.Streams[0]);
 	}
 

@@ -16,6 +16,8 @@ public class PnlCharacterManager : Panel
         _pnlAttributes = GetNode<PnlCharacterManagementAttributes>("TabContainer/Character/TabContainer/Attributes");
         _pnlStats = GetNode<PnlCharacterManagementStats>("TabContainer/Character/TabContainer/Derived Stats (Advanced)");
         _characterInventory = GetNode<CharacterInventory>("TabContainer/Inventory");
+        _characterInventory.Connect(nameof(CharacterInventory.CharacterStatsChanged), _pnlStats, nameof(PnlCharacterManagementStats.UpdateStatDisplay));
+        _characterInventory.Connect(nameof(CharacterInventory.CharacterAttributesChanged), _pnlAttributes, nameof(PnlCharacterManagementAttributes.OnAttributesChanged));
         _pnlAttributes.Connect(nameof(PnlCharacterManagementAttributes.AttributePointSpent), _pnlStats, nameof(PnlCharacterManagementStats.UpdateStatDisplay));
         GetNode<HBoxPortraits>("HBoxPortraits").InCharacterManager = true;
         GetNode<HBoxPortraits>("HBoxPortraits").Connect(nameof(HBoxPortraits.InsideButtonOfCharacter), _characterInventory, nameof(CharacterInventory.OnInsideButtonOfCharacter));

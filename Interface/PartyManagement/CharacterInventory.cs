@@ -7,6 +7,12 @@ public class CharacterInventory : Control
     [Signal]
     public delegate void GivingItemToAnotherCharacter(string id, PnlInventory.ItemMode item);
 
+    [Signal]
+    public delegate void CharacterStatsChanged(Dictionary<BattleUnitData.DerivedStat, float> stats);
+    
+    [Signal]
+    public delegate void CharacterAttributesChanged(Dictionary<UnitData.Attribute, int> atts);
+
     private PnlInventory _invAmulet;
     private PnlInventory _invArmour;
     private PnlInventory _invWeapon;
@@ -86,7 +92,7 @@ public class CharacterInventory : Control
     private void PopulateAmuletSlot(PnlInventory.ItemMode amuletItem)
     {
         _invAmulet.ClearGrid();
-        if (_invAmulet.IsAmulet(amuletItem))
+        if (_itemBuilder.IsAmulet(amuletItem))
         {
             _invAmulet.AddItemToNextEmpty(_itemBuilder.BuildAmulet(amuletItem));
         }
@@ -94,7 +100,7 @@ public class CharacterInventory : Control
     private void PopulateArmourSlot(PnlInventory.ItemMode armourItem)
     {
         _invArmour.ClearGrid();
-        if (_invArmour.IsArmour(armourItem))
+        if (_itemBuilder.IsArmour(armourItem))
         {
             _invArmour.AddItemToNextEmpty(_itemBuilder.BuildArmour(armourItem));
         }
@@ -102,7 +108,7 @@ public class CharacterInventory : Control
     private void PopulateWeaponSlot(PnlInventory.ItemMode weaponItem)
     {
         _invWeapon.ClearGrid();
-        if (_invWeapon.IsWeapon(weaponItem))
+        if (_itemBuilder.IsWeapon(weaponItem))
         {
             _invWeapon.AddItemToNextEmpty(_itemBuilder.BuildWeapon(weaponItem));
         }
@@ -134,19 +140,19 @@ public class CharacterInventory : Control
             {
                 continue;
             }
-            if (_invBag.IsPotion(itemMode))
+            if (_itemBuilder.IsPotion(itemMode))
             {
                 _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildPotion(itemMode));
             }
-            else if (_invBag.IsWeapon(itemMode))
+            else if (_itemBuilder.IsWeapon(itemMode))
             {
                 _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildWeapon(itemMode));
             }
-            else if (_invBag.IsArmour(itemMode))
+            else if (_itemBuilder.IsArmour(itemMode))
             {
                 _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildArmour(itemMode));
             }
-            else if (_invBag.IsAmulet(itemMode))
+            else if (_itemBuilder.IsAmulet(itemMode))
             {
                 _invBag.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildAmulet(itemMode));
             }
@@ -161,7 +167,7 @@ public class CharacterInventory : Control
         }
         else
         {
-            GetNode<Label>("PanelStatus/LblStatusText").Text = item.Name;
+            GetNode<Label>("PanelStatus/LblStatusText").Text = item.Name + ": " + item.Tooltip;
         }
         
     }
@@ -306,9 +312,17 @@ public class CharacterInventory : Control
 
     private void UpdateUnitData()
     {
-        _currentUnitData.CurrentBattleUnitData.AmuletEquipped = _invAmulet.GetItemAtGridPosition(0,0).CurrentItemMode;
-        _currentUnitData.CurrentBattleUnitData.ArmourEquipped = _invArmour.GetItemAtGridPosition(0,0).CurrentItemMode;
-        _currentUnitData.CurrentBattleUnitData.WeaponEquipped = _invWeapon.GetItemAtGridPosition(0,0).CurrentItemMode;
+        // _currentUnitData.CurrentBattleUnitData.AmuletEquipped = PnlInventory.ItemMode.Empty;
+        // _currentUnitData.CurrentBattleUnitData.ArmourEquipped = PnlInventory.ItemMode.Empty;
+        // _currentUnitData.CurrentBattleUnitData.WeaponEquipped = PnlInventory.ItemMode.Empty;
+        _currentUnitData.RemoveEquippedAmulet();
+        _currentUnitData.RemoveEquippedArmour();
+        _currentUnitData.RemoveEquippedWeapon();
+
+        _currentUnitData.EquipAmulet(_invAmulet.GetItemAtGridPosition(0,0).CurrentItemMode);
+        _currentUnitData.EquipArmour(_invArmour.GetItemAtGridPosition(0,0).CurrentItemMode);
+        _currentUnitData.EquipWeapon(_invWeapon.GetItemAtGridPosition(0,0).CurrentItemMode);
+
         _currentUnitData.CurrentBattleUnitData.PotionsEquipped = new PnlInventory.ItemMode[3] { // in potion slots
             _invPotions.GetItemAtGridPosition(0,0).CurrentItemMode,
             _invPotions.GetItemAtGridPosition(1,0).CurrentItemMode,
@@ -322,6 +336,9 @@ public class CharacterInventory : Control
         {
             _currentUnitData.CurrentBattleUnitData.ItemsHeld.Add(item.CurrentItemMode);
         }
+        _currentUnitData.UpdateDerivedStatsFromAttributes();
+        EmitSignal(nameof(CharacterStatsChanged), _currentUnitData.CurrentBattleUnitData.Stats);
+        EmitSignal(nameof(CharacterAttributesChanged), _currentUnitData.Attributes);
     }
 
     // set all to defaults
@@ -331,6 +348,7 @@ public class CharacterInventory : Control
         _currentlySelectedItem = null;
         _currentSource = null;
         _currentItemTexRect.QueueFree();
+
     }
     
     public void OnInsideButtonOfCharacter(string ID, bool inside)

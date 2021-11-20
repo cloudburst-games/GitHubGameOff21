@@ -90,6 +90,13 @@ public class PnlCharacterManagementAttributes : Panel
             _attributePanels[a].GetNode<Label>("HBox/LblNum").Text = unitData.Attributes[a].ToString();
         }
     }
+    public void OnAttributesChanged(Dictionary<UnitData.Attribute, int> atts)
+    {
+        foreach (UnitData.Attribute a in atts.Keys)
+        {
+            _attributePanels[a].GetNode<Label>("HBox/LblNum").Text = atts[a].ToString();
+        }
+    }
 
     public void Start(UnitData unitData)
     {

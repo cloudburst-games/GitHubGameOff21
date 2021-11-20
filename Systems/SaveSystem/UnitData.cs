@@ -9,9 +9,11 @@ public class UnitData : IStoreable
     public bool Active {get; set;} = true;
     public string PortraitPath {get; set;} = "";
     public string PortraitPathSmall {get; set;} = "";
+    public string BodyPath {get; set;} = "";
     public string CustomBattleText {get; set;} = "";
     public string ID {get; set;} = "";
     private string _name = "";
+    public Unit.FacingDirection StartDirectionFacing {get; set;} = Unit.FacingDirection.Down;
     public string Name {
         get {
             return _name;
@@ -22,6 +24,7 @@ public class UnitData : IStoreable
         }
     }
     public Vector2 NPCPosition {get; set;}
+    public string DefeatMessage {get; set;} = "You have defeated your foes in honourable combat!";
     private bool _companion = false;
     public bool Companion {
         get {

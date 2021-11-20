@@ -257,7 +257,7 @@ public class BattleGrid : Control
         // check if diagonal
         float xDiff = Math.Abs(gridStartPos.x - gridEndPos.x);
         float yDiff = Math.Abs(gridStartPos.y - gridEndPos.y);
-        bool diagonal = Math.Abs(xDiff - yDiff) <= 1;
+        bool diagonal = Math.Abs(xDiff - yDiff) <= 2;
         GD.Print("diagonal: ", diagonal);
         // check if straight
         bool straight = gridStartPos.x == gridEndPos.x || gridStartPos.y == gridEndPos.y;

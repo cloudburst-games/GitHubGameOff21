@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Props/Buildings/placeholder_tent.png" type="Texture" id=1]
 [ext_resource path="res://Props/Buildings/Shop/Shop.cs" type="Script" id=2]
 [ext_resource path="res://Props/Buildings/Shop/ShopInteractableArea.cs" type="Script" id=3]
 [ext_resource path="res://Interface/Labels/LblInteract/LblInteractInfo.cs" type="Script" id=4]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 26.8753
@@ -11,6 +12,7 @@ height = 39.9874
 
 [node name="Shop" type="StaticBody2D"]
 script = ExtResource( 2 )
+_shopBackgroundTexture = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )

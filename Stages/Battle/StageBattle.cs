@@ -71,8 +71,8 @@ public class StageBattle : Stage
             Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                 {BattleUnitData.DerivedStat.Health, 10},
                 {BattleUnitData.DerivedStat.TotalHealth, 10},
-                {BattleUnitData.DerivedStat.Mana, 10},
-                {BattleUnitData.DerivedStat.TotalMana, 10},
+                {BattleUnitData.DerivedStat.Mana, 100},
+                {BattleUnitData.DerivedStat.TotalMana, 100},
                 {BattleUnitData.DerivedStat.HealthRegen, 1},
                 {BattleUnitData.DerivedStat.ManaRegen, 1},
                 {BattleUnitData.DerivedStat.MagicResist, 10},
@@ -89,7 +89,9 @@ public class StageBattle : Stage
             },
             Spell1 = SpellEffectManager.SpellMode.SolarBolt,
             Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld
+            
         };
+        playerData.PotionsEquipped = new PnlInventory.ItemMode[3] {PnlInventory.ItemMode.LuckPot, PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.IntellectPot};
         BattleUnitData enemyCommanderData = new BattleUnitData() {
             Name = "Mr Commander",
             Combatant = BattleUnit.Combatant.Beetle,
@@ -125,8 +127,8 @@ public class StageBattle : Stage
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
                     {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
+                    {BattleUnitData.DerivedStat.Mana, 100},
+                    {BattleUnitData.DerivedStat.TotalMana, 100},
                     {BattleUnitData.DerivedStat.HealthRegen, 1},
                     {BattleUnitData.DerivedStat.ManaRegen, 1},
                     {BattleUnitData.DerivedStat.MagicResist, 10},
@@ -141,7 +143,7 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+                Spell1 = SpellEffectManager.SpellMode.ComingForthByDay,
                 Spell2 = SpellEffectManager.SpellMode.GazeOfTheDead
             },
             new BattleUnitData() {
@@ -150,8 +152,8 @@ public class StageBattle : Stage
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
                     {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
+                    {BattleUnitData.DerivedStat.Mana, 100},
+                    {BattleUnitData.DerivedStat.TotalMana, 100},
                     {BattleUnitData.DerivedStat.HealthRegen, 1},
                     {BattleUnitData.DerivedStat.ManaRegen, 1},
                     {BattleUnitData.DerivedStat.MagicResist, 10},
@@ -166,8 +168,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBlast
+                Spell1 = SpellEffectManager.SpellMode.PerilOfOsiris,
+                Spell2 = SpellEffectManager.SpellMode.LunarBlast
             },
             new BattleUnitData() {
                 Combatant = BattleUnit.Combatant.Beetle,
@@ -175,8 +177,8 @@ public class StageBattle : Stage
                 Stats = new Dictionary<BattleUnitData.DerivedStat, float>() {
                     {BattleUnitData.DerivedStat.Health, 10},
                     {BattleUnitData.DerivedStat.TotalHealth, 10},
-                    {BattleUnitData.DerivedStat.Mana, 10},
-                    {BattleUnitData.DerivedStat.TotalMana, 10},
+                    {BattleUnitData.DerivedStat.Mana, 100},
+                    {BattleUnitData.DerivedStat.TotalMana, 100},
                     {BattleUnitData.DerivedStat.HealthRegen, 1},
                     {BattleUnitData.DerivedStat.ManaRegen, 1},
                     {BattleUnitData.DerivedStat.MagicResist, 10},
@@ -191,8 +193,8 @@ public class StageBattle : Stage
                     {BattleUnitData.DerivedStat.CriticalChance, 1},
                     {BattleUnitData.DerivedStat.CurrentAP, 6}
                 },
-                Spell1 = SpellEffectManager.SpellMode.SolarBolt,
-                Spell2 = SpellEffectManager.SpellMode.SolarBolt
+                Spell1 = SpellEffectManager.SpellMode.WeighingOfTheHeart,
+                Spell2 = SpellEffectManager.SpellMode.Teleport
             }
         };
         List<BattleUnitData> hostilesData = new List<BattleUnitData>() {

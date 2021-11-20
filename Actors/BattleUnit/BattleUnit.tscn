@@ -1,84 +1,36 @@
-[gd_scene load_steps=104 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Actors/BattleUnit/BattleUnit.cs" type="Script" id=1]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00013.png" type="Texture" id=2]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10012.png" type="Texture" id=3]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30000.png" type="Texture" id=4]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30003.png" type="Texture" id=5]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40001.png" type="Texture" id=6]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20010.png" type="Texture" id=7]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00001.png" type="Texture" id=8]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00004.png" type="Texture" id=9]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30010.png" type="Texture" id=10]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40009.png" type="Texture" id=11]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00009.png" type="Texture" id=12]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10004.png" type="Texture" id=13]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20002.png" type="Texture" id=14]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30011.png" type="Texture" id=15]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00005.png" type="Texture" id=16]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20000.png" type="Texture" id=17]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40006.png" type="Texture" id=18]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40003.png" type="Texture" id=19]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20014.png" type="Texture" id=20]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40007.png" type="Texture" id=21]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30004.png" type="Texture" id=22]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20007.png" type="Texture" id=23]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30012.png" type="Texture" id=24]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10008.png" type="Texture" id=25]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20004.png" type="Texture" id=26]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10001.png" type="Texture" id=27]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30007.png" type="Texture" id=28]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40010.png" type="Texture" id=29]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00007.png" type="Texture" id=30]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Ilde/villager_idle_20000.png" type="Texture" id=31]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20013.png" type="Texture" id=32]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Ilde/villager_idle_00000.png" type="Texture" id=33]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10005.png" type="Texture" id=34]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20012.png" type="Texture" id=35]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10009.png" type="Texture" id=36]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00010.png" type="Texture" id=37]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Ilde/villager_idle_10000.png" type="Texture" id=38]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40008.png" type="Texture" id=39]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10003.png" type="Texture" id=40]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40013.png" type="Texture" id=41]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20011.png" type="Texture" id=42]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00011.png" type="Texture" id=43]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30008.png" type="Texture" id=44]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10011.png" type="Texture" id=45]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00014.png" type="Texture" id=46]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10000.png" type="Texture" id=47]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30006.png" type="Texture" id=48]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30014.png" type="Texture" id=49]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30013.png" type="Texture" id=50]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20009.png" type="Texture" id=51]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10007.png" type="Texture" id=52]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20006.png" type="Texture" id=53]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00012.png" type="Texture" id=54]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30009.png" type="Texture" id=55]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00006.png" type="Texture" id=56]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40002.png" type="Texture" id=57]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40011.png" type="Texture" id=58]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20003.png" type="Texture" id=59]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10010.png" type="Texture" id=60]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30005.png" type="Texture" id=61]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30001.png" type="Texture" id=62]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40012.png" type="Texture" id=63]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00000.png" type="Texture" id=64]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20001.png" type="Texture" id=65]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00003.png" type="Texture" id=66]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00008.png" type="Texture" id=67]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10006.png" type="Texture" id=68]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40014.png" type="Texture" id=69]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40000.png" type="Texture" id=70]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Ilde/villager_idle_40000.png" type="Texture" id=71]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_30002.png" type="Texture" id=72]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40004.png" type="Texture" id=73]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_00002.png" type="Texture" id=74]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10013.png" type="Texture" id=75]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20008.png" type="Texture" id=76]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_20005.png" type="Texture" id=77]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10014.png" type="Texture" id=78]
-[ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40005.png" type="Texture" id=79]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Ilde/villager_idle_30000.png" type="Texture" id=80]
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10002.png" type="Texture" id=81]
 [ext_resource path="res://Interface/Themes/BarStyleBoxBase.tres" type="StyleBox" id=82]
@@ -569,32 +521,6 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 33 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=8]
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
 "values": [ ExtResource( 38 ) ]
 }
 tracks/1/type = "value"
@@ -646,59 +572,7 @@ tracks/4/keys = {
 "values": [ 0.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 5.46416 ),
-"update": 1,
-"values": [ ExtResource( 31 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=10]
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1663.49 ),
-"update": 1,
-"values": [ ExtResource( 71 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
-}
-
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -760,34 +634,7 @@ tracks/4/keys = {
 "values": [ 0.0, 1.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=12]
-length = 1.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4 ),
-"transitions": PoolRealArray( 891.444, 891.444, 5220.6, 13777.3, 43237.6, 83529.6, 13777.3, 13777.3, 57052.4, 55108.9, 13777.3, 8480.89, 25709.3, 36358.4, 63303.6 ),
-"update": 1,
-"values": [ ExtResource( 64 ), ExtResource( 8 ), ExtResource( 74 ), ExtResource( 66 ), ExtResource( 9 ), ExtResource( 16 ), ExtResource( 56 ), ExtResource( 30 ), ExtResource( 67 ), ExtResource( 12 ), ExtResource( 37 ), ExtResource( 43 ), ExtResource( 54 ), ExtResource( 2 ), ExtResource( 46 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -9 ) ]
-}
-
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=9]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -814,61 +661,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
-[sub_resource type="Animation" id=14]
-length = 1.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4 ),
-"transitions": PoolRealArray( 3565.78, 4705.07, 4389.98, 106464, 262143, 92681.9, 77936, 36358.4, 86475.4, 55108.9, 10441.2, 8480.89, 185364, 75281.1, 131072 ),
-"update": 1,
-"values": [ ExtResource( 17 ), ExtResource( 65 ), ExtResource( 14 ), ExtResource( 59 ), ExtResource( 26 ), ExtResource( 77 ), ExtResource( 53 ), ExtResource( 23 ), ExtResource( 76 ), ExtResource( 51 ), ExtResource( 7 ), ExtResource( 42 ), ExtResource( 35 ), ExtResource( 32 ), ExtResource( 20 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -9 ) ]
-}
-
-[sub_resource type="Animation" id=15]
-length = 1.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4 ),
-"transitions": PoolRealArray( 7912.95, 4705.07, 40342.1, 179050, 2.13835e+07, 741455, 72716.8, 75281.1, 155872, 89524.9, 11993.8, 25709.3, 172951, 191901, 114104 ),
-"update": 1,
-"values": [ ExtResource( 70 ), ExtResource( 6 ), ExtResource( 57 ), ExtResource( 19 ), ExtResource( 73 ), ExtResource( 79 ), ExtResource( 18 ), ExtResource( 21 ), ExtResource( 39 ), ExtResource( 11 ), ExtResource( 29 ), ExtResource( 58 ), ExtResource( 63 ), ExtResource( 41 ), ExtResource( 69 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -9 ) ]
-}
-
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=10]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -895,7 +688,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
-[sub_resource type="StyleBoxFlat" id=17]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.470588, 0, 0, 1 )
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -903,7 +696,7 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 shadow_size = 2
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.0862745, 0.00392157, 0.00392157, 1 )
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -911,7 +704,7 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 shadow_size = 2
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.0470588, 0, 0.470588, 1 )
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -919,7 +712,7 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 shadow_size = 2
 
-[sub_resource type="StyleBoxFlat" id=20]
+[sub_resource type="StyleBoxFlat" id=14]
 corner_radius_top_left = 5
 corner_radius_top_right = 25
 corner_radius_bottom_right = 5
@@ -941,16 +734,10 @@ anims/DieDownRight = SubResource( 3 )
 anims/DieUpRight = SubResource( 4 )
 anims/HitDownRight = SubResource( 5 )
 anims/HitUpRight = SubResource( 6 )
-anims/IdleDown = SubResource( 7 )
-anims/IdleDownRight = SubResource( 8 )
-anims/IdleRight = SubResource( 9 )
-anims/IdleUp = SubResource( 10 )
-anims/IdleUpRight = SubResource( 11 )
-anims/WalkDown = SubResource( 12 )
-anims/WalkDownRight = SubResource( 13 )
-anims/WalkRight = SubResource( 14 )
-anims/WalkUp = SubResource( 15 )
-anims/WalkUpRight = SubResource( 16 )
+anims/IdleDownRight = SubResource( 7 )
+anims/IdleUpRight = SubResource( 8 )
+anims/WalkDownRight = SubResource( 9 )
+anims/WalkUpRight = SubResource( 10 )
 
 [node name="MoveTween" type="Tween" parent="."]
 
@@ -961,7 +748,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -59.0
 margin_top = -178.0
-margin_right = 49.0
+margin_right = 57.0
 margin_bottom = -147.0
 script = ExtResource( 83 )
 __meta__ = {
@@ -982,8 +769,8 @@ __meta__ = {
 margin_right = 91.0
 margin_bottom = 12.0
 size_flags_vertical = 3
-custom_styles/fg = SubResource( 17 )
-custom_styles/bg = SubResource( 18 )
+custom_styles/fg = SubResource( 11 )
+custom_styles/bg = SubResource( 12 )
 value = 50.0
 percent_visible = false
 
@@ -992,17 +779,17 @@ margin_top = 14.0
 margin_right = 91.0
 margin_bottom = 26.0
 size_flags_vertical = 3
-custom_styles/fg = SubResource( 19 )
+custom_styles/fg = SubResource( 13 )
 custom_styles/bg = ExtResource( 82 )
 value = 75.0
 percent_visible = false
 
 [node name="PnlFaction" type="Panel" parent="PnlInfo"]
-margin_left = 97.1091
+margin_left = 97.0
 margin_top = 2.0
-margin_right = 106.109
+margin_right = 114.0
 margin_bottom = 29.0
-custom_styles/panel = SubResource( 20 )
+custom_styles/panel = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

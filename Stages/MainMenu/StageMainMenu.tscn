@@ -23,7 +23,7 @@ extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 65
+size = 48
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
@@ -109,7 +109,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 14 )
 custom_fonts/font = SubResource( 2 )
-text = "PLAY"
+text = "New Game"
+clip_text = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 476.0

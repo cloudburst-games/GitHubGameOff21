@@ -38,7 +38,7 @@ public class PnlCharacterManagementStats : Panel
                 Math.Round(readableStats[BattleUnitData.DerivedStat.Dodge],1)
                 );
         GetNode<Label>("VBoxContainer/PnlStats/HBoxStats/LblStats2").Text = 
-            String.Format("Action Points: {0}/{1}\nPhysical Damage: {2}-{3}\nSpell Damage: {4}\nCritical Chance: {5}\nMove Speed: {6}\nLeadership: {7}\nInitiative: {8}",
+            String.Format("Action Points: {0}/{1}\nPhysical Damage: {2}-{3}\nSpell Power: {4}\nCritical Chance: {5}\nMove Speed: {6}\nLeadership: {7}\nInitiative: {8}",
                 Math.Round(readableStats[BattleUnitData.DerivedStat.CurrentAP],1), Math.Round(readableStats[BattleUnitData.DerivedStat.Speed],1),
                 Math.Round(Math.Max(readableStats[BattleUnitData.DerivedStat.PhysicalDamage] - readableStats[BattleUnitData.DerivedStat.PhysicalDamageRange], 0),1),
                 Math.Round(readableStats[BattleUnitData.DerivedStat.PhysicalDamage] + readableStats[BattleUnitData.DerivedStat.PhysicalDamageRange],1),

@@ -16,7 +16,8 @@ public class LevelTransitionMarker : Node2D
     public override void _Ready()
     {
         Visible = false;
-        GetNode<Button>("BtnTransition").Text = ButtonLabel;
+        string interact = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
+        GetNode<Label>("Sprite/Panel/Label").Text = String.Format("'{0}': {1}", interact, ButtonLabel);
     }
 
     public void OnAreaPlayerDetectBodyEntered(Godot.Object body)
@@ -40,8 +41,17 @@ public class LevelTransitionMarker : Node2D
         }
     }
 
-    public void OnBtnTransitionPressed()
+    public override void _Input(InputEvent ev)
     {
-        EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
+        base._Input(ev);
+        if (ev.IsActionPressed("Interact") && Visible && !ev.IsEcho())
+        {
+            EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
+        }
     }
+
+    // public void OnBtnTransitionPressed()
+    // {
+    //     EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
+    // }
 }

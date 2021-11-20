@@ -55,7 +55,6 @@ __meta__ = {
 }
 
 [node name="PnlUI" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
-visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -74,14 +73,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -633.0
 margin_top = -21.0
-margin_right = 557.0
+margin_right = 556.0
 margin_bottom = 26.0
 custom_fonts/font = SubResource( 1 )
 text = "This is where the log goesasdas asd as das das das das das das das as dsa dsa dfghdfrg drfrgdf gdf gdf gdf gdf gdfgdfgdf gdf gdfgdfgdf gdfgdfgdfgdfgdf gdfg dfg"
 align = 1
 valign = 1
 autowrap = true
-clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -136,7 +134,6 @@ texture = ExtResource( 8 )
 margin_left = 53.0
 margin_right = 102.0
 margin_bottom = 39.0
-hint_tooltip = "Basic Attack"
 size_flags_horizontal = 3
 
 [node name="Attack" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMelee"]
@@ -151,6 +148,7 @@ size_flags_horizontal = 3
 
 [node name="Spell" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell1"]
 position = Vector2( 25, 20 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 6 )
 
 [node name="BtnSpell2" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
@@ -161,13 +159,13 @@ size_flags_horizontal = 3
 
 [node name="Spell2" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell2"]
 position = Vector2( 25, 20 )
+scale = Vector2( 0.25, 0.25 )
 texture = ExtResource( 6 )
 
 [node name="BtnPotion" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
 margin_left = 213.0
 margin_right = 262.0
 margin_bottom = 39.0
-hint_tooltip = "Look inside this unit's potion bag."
 size_flags_horizontal = 3
 
 [node name="Potion" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnPotion"]
@@ -179,7 +177,6 @@ texture = ExtResource( 11 )
 margin_left = 266.0
 margin_right = 316.0
 margin_bottom = 39.0
-hint_tooltip = "End this unit's turn now."
 size_flags_horizontal = 3
 
 [node name="Wait" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn"]

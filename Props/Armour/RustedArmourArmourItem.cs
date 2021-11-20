@@ -9,10 +9,10 @@ public class RustedArmourArmourItem : ArmourItem
         CurrentItemMode = PnlInventory.ItemMode.RustedArmour;
         // AttributesAffected.Add(UnitData.Attribute.Vigour);
         // AttributesAffectedMagnitude = 3f;
-        ArmourBonus = 2f;
-        IconTexture = GD.Load<Texture>("res://Interface/Cursors/Art/Spell.PNG");
-        Name = "Rusted Armour";
-        Tooltip = String.Format("A rusted slab of iron. Provides {0} armour bonus.", ArmourBonus);
+        ArmourBonus = 5f;
+        IconTexture = GD.Load<Texture>("res://Props/GHGO21Plceholders/AncientArmour.PNG");
+        Name = "Ancient Armour";
+        Tooltip = String.Format("This ancient piece of armour has not seen much use lately. Provides {0} armour bonus.", ArmourBonus);
         Cost = 15;
     }
 }

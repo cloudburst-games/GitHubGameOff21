@@ -1,0 +1,254 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://Effects/SpellEffects/Art/WhitePastelParticle.png" type="Texture" id=1]
+[ext_resource path="res://Effects/SpellEffects/Art/WhiteSphericalParticle2.png" type="Texture" id=3]
+[ext_resource path="res://Effects/SpellEffects/SolarColourRam2p.tres" type="Texture" id=4]
+[ext_resource path="res://Effects/SpellEffects/Art/WhiteSphericalParticle.png" type="Texture" id=5]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.643411, 1 )
+colors = PoolColorArray( 0.866667, 0.603922, 0.458824, 0.0862745, 0.858824, 0.682353, 0.52549, 0.054902, 0.85098, 0.784314, 0.611765, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 0.589091 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.986842, 0.790802 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+trail_divisor = 2
+trail_size_modifier = SubResource( 6 )
+flag_disable_z = true
+direction = Vector3( 100, 0, 0 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = -125.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 125.0
+scale = 0.5
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[sub_resource type="CanvasItemMaterial" id=8]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.511628, 0.782946, 1 )
+colors = PoolColorArray( 0.0588235, 0.215686, 0.211765, 0.52549, 0.341176, 0.109804, 0.913725, 0.235294, 0.0313726, 0.0235294, 0.301961, 0.0980392, 0, 0.054902, 0.247059, 0 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="Curve" id=11]
+_data = [ Vector2( 0, 0.715909 ), 0.0, 6.81697, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 24.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 45.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 250.0
+scale_curve = SubResource( 12 )
+color_ramp = SubResource( 10 )
+
+[sub_resource type="Animation" id=14]
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ExplosionMain:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ExplosionSmoke:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Trail:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Missile:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Trail:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = false
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Missile:emitting")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = false
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Curve" id=15]
+_data = [ Vector2( 0, 1 ), 0.0, -0.1, 0, 0, Vector2( 0.328947, 0.783553 ), -1.34545, -1.34545, 0, 0, Vector2( 1, 0.447189 ), -0.157025, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 15 )
+
+[sub_resource type="ParticlesMaterial" id=17]
+emission_shape = 1
+emission_sphere_radius = 40.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 200.0
+radial_accel = 150.0
+scale_curve = SubResource( 16 )
+color_ramp = ExtResource( 4 )
+
+[sub_resource type="CanvasItemMaterial" id=18]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=19]
+offsets = PoolRealArray( 0, 0.534884, 1 )
+colors = PoolColorArray( 0.0823529, 0.203922, 0.976471, 0.145098, 0.133333, 0.6, 0.87451, 0.0431373, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=20]
+gradient = SubResource( 19 )
+
+[sub_resource type="ParticlesMaterial" id=21]
+emission_shape = 1
+emission_sphere_radius = 70.0
+flag_disable_z = true
+direction = Vector3( 0, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 200.0
+radial_accel = 150.0
+scale_curve = SubResource( 16 )
+color_ramp = SubResource( 20 )
+
+[node name="LunarBlastEffect" type="Node2D"]
+
+[node name="Trail" type="Particles2D" parent="."]
+visible = false
+position = Vector2( -51.4697, 0 )
+amount = 750
+preprocess = 10.0
+process_material = SubResource( 7 )
+texture = ExtResource( 3 )
+
+[node name="Missile" type="Particles2D" parent="."]
+material = SubResource( 8 )
+position = Vector2( -7.75533, 0 )
+amount = 300
+preprocess = 10.0
+process_material = SubResource( 13 )
+texture = ExtResource( 3 )
+
+[node name="MoveTween" type="Tween" parent="."]
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/Die = SubResource( 14 )
+
+[node name="ExplosionSmoke" type="Particles2D" parent="."]
+emitting = false
+amount = 1000
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource( 17 )
+texture = ExtResource( 5 )
+
+[node name="ExplosionMain" type="Particles2D" parent="."]
+material = SubResource( 18 )
+emitting = false
+amount = 1000
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource( 21 )
+texture = ExtResource( 1 )

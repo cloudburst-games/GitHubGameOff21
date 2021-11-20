@@ -55,7 +55,7 @@ public class PnlBattleVictory : Panel
 
         
         GetNode<Label>("LblXPGoldMessage").Text = rewardMessage;
-        
+        GetNode<Label>("LblDefeatMessage").Text = npcDefeated.CurrentUnitData.DefeatMessage;
         if (_defeatNPCOutcomes.ContainsKey(npcDefeated.CurrentUnitData.ID))
         {
             _defeatNPCOutcomes[npcDefeated.CurrentUnitData.ID](npcDefeated);

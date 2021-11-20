@@ -232,19 +232,19 @@ public class PnlShopScreen : Panel
             {
                 continue;
             }
-            if (inventory.IsPotion(itemMode))
+            if (_itemBuilder.IsPotion(itemMode))
             {
                 inventory.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildPotion(itemMode));
             }
-            else if (inventory.IsWeapon(itemMode))
+            else if (_itemBuilder.IsWeapon(itemMode))
             {
                 inventory.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildWeapon(itemMode));
             }
-            else if (inventory.IsArmour(itemMode))
+            else if (_itemBuilder.IsArmour(itemMode))
             {
                 inventory.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildArmour(itemMode));
             }
-            else if (inventory.IsAmulet(itemMode))
+            else if (_itemBuilder.IsAmulet(itemMode))
             {
                 inventory.AddItemToNextEmptyRowsFirst(_itemBuilder.BuildAmulet(itemMode));
             }
@@ -284,7 +284,7 @@ public class PnlShopScreen : Panel
         else
         {
             // GD.Print("buyfor is: ", buyFor);
-            GetNode<Label>("PnlStatus/LblStatus").Text = item.Name + ". " + string.Format(buyFor, cost);// (source != GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell") ? " gold!" : " gold.");
+            GetNode<Label>("PnlStatus/LblStatus").Text = item.Name + ": " + item.Tooltip + " " + string.Format(buyFor, cost);// (source != GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell") ? " gold!" : " gold.");
         }
     }
 

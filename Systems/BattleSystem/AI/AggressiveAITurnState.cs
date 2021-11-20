@@ -270,7 +270,8 @@ public class AggressiveAITurnState : AITurnState
                             bad = true;
                         }
                     }
-                    if (bad)
+                    // dont avoid if lunar blast as it heals allies
+                    if (bad && spell != SpellEffectManager.SpellMode.LunarBlast)
                     {
                         continue;
                     }

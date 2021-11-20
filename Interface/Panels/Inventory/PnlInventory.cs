@@ -12,7 +12,7 @@ public class PnlInventory : Panel
     public InventoryMode CurrentInventoryMode {get; set;} = InventoryMode.BagInventory;
     
     public enum ItemMode {CharismaPot, HealthPot, IntellectPot, LuckPot, ManaPot, ResiliencePot, SwiftnessPot, VigourPot, Empty,
-        RustedMace, SilverMace, RustedArmour, ObsidianPlate, ScarabAmulet}
+        RustedMace, SilverMace, RustedArmour, ObsidianPlate, ScarabAmulet, PhantomArmour}
 
     // we could have also used signal wrapper classes but i forgot
     // EVENTS OR SIGNALS???? WHICH IS BETTER?
@@ -197,8 +197,10 @@ public class PnlInventory : Panel
             TextureRect texRect = new TextureRect();
             texRect.StretchMode = TextureRect.StretchModeEnum.Scale;
             texRect.RectSize = new Vector2(128,128);
+            texRect.Expand = true;
             texRect.Texture = newItem.IconTexture;
             texRect.HintTooltip = newItem.Tooltip;
+
             AddChild(texRect);
             newItem.TexRect = texRect;
             texRect.RectPosition = GetCellWorldPosition(x, y);
@@ -318,24 +320,24 @@ public class PnlInventory : Panel
         }
     }
 
-    public bool IsPotion(ItemMode itemMode)
-    {
-        return itemMode == ItemMode.CharismaPot || itemMode == ItemMode.HealthPot || itemMode == ItemMode.IntellectPot
-             || itemMode == ItemMode.LuckPot || itemMode == ItemMode.ManaPot || itemMode == ItemMode.ResiliencePot
-             || itemMode == ItemMode.SwiftnessPot || itemMode == ItemMode.VigourPot;
-    }
-    public bool IsWeapon(ItemMode itemMode)
-    {
-        return itemMode == ItemMode.RustedMace || itemMode == ItemMode.SilverMace;
-    }
-    public bool IsArmour(ItemMode itemMode)
-    {
-        return itemMode == ItemMode.RustedArmour || itemMode == ItemMode.ObsidianPlate;
-    }
-    public bool IsAmulet(ItemMode itemMode)
-    {
-        return itemMode == ItemMode.ScarabAmulet;
-    }
+    // public bool IsPotion(ItemMode itemMode)
+    // {
+    //     return itemMode == ItemMode.CharismaPot || itemMode == ItemMode.HealthPot || itemMode == ItemMode.IntellectPot
+    //          || itemMode == ItemMode.LuckPot || itemMode == ItemMode.ManaPot || itemMode == ItemMode.ResiliencePot
+    //          || itemMode == ItemMode.SwiftnessPot || itemMode == ItemMode.VigourPot;
+    // }
+    // public bool IsWeapon(ItemMode itemMode)
+    // {
+    //     return itemMode == ItemMode.RustedMace || itemMode == ItemMode.SilverMace;
+    // }
+    // public bool IsArmour(ItemMode itemMode)
+    // {
+    //     return itemMode == ItemMode.RustedArmour || itemMode == ItemMode.ObsidianPlate;
+    // }
+    // public bool IsAmulet(ItemMode itemMode)
+    // {
+    //     return itemMode == ItemMode.ScarabAmulet;
+    // }
 
     public override void _Input(InputEvent ev)
     {

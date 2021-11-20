@@ -604,8 +604,8 @@ public class StageWorld : Stage
             ID = "khepri",
             BasePhysicalDamageRange = 1f, // ideally this would change depending on weapon equipped
             Modified = true,
-            PortraitPath = "res://Systems/BattleSystem/GridAttackAPPoint.png",
-            PortraitPathSmall = "res://Systems/BattleSystem/GridAttackAPPoint.png"
+            PortraitPath = "res://Actors/PortraitPlaceholders/Big/Khepri.PNG",
+            PortraitPathSmall = "res://Actors/PortraitPlaceholders/Small/Khepri.PNG"
         };
         player.CurrentUnitData.CurrentBattleUnitData.BattlePortraitPath = player.CurrentUnitData.PortraitPathSmall;
         // set starting attributes
@@ -613,14 +613,13 @@ public class StageWorld : Stage
         {
             player.CurrentUnitData.Attributes[att] = 10;
         }
-        player.CurrentUnitData.UpdateDerivedStatsFromAttributes();
         // set starting spells
         player.CurrentUnitData.CurrentBattleUnitData.Spell1 = SpellEffectManager.SpellMode.SolarBolt;
         player.CurrentUnitData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
         player.CurrentUnitData.CurrentBattleUnitData.SpellGainedAtHigherLevel = SpellEffectManager.SpellMode.SolarBlast;
 
         // set starting equipment
-        player.CurrentUnitData.EquipAmulet(PnlInventory.ItemMode.Empty);
+        player.CurrentUnitData.EquipAmulet(PnlInventory.ItemMode.ScarabAmulet);
         player.CurrentUnitData.EquipArmour(PnlInventory.ItemMode.RustedArmour);
         player.CurrentUnitData.EquipWeapon(PnlInventory.ItemMode.RustedMace);
         player.CurrentUnitData.CurrentBattleUnitData.PotionsEquipped = new PnlInventory.ItemMode[3] {
@@ -629,6 +628,7 @@ public class StageWorld : Stage
         player.CurrentUnitData.CurrentBattleUnitData.ItemsHeld = new List<PnlInventory.ItemMode>() {
             PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot
         };
+        player.CurrentUnitData.UpdateDerivedStatsFromAttributes();
 
         
         string controlUp = ((InputEvent)InputMap.GetActionList("Move Up")[0]).AsText();

@@ -11,9 +11,9 @@ public class SilverMaceWeaponItem : WeaponItem
         // AttributesAffectedMagnitude = 3f;
         WeaponDamage = 3f;
         DamageRange = 2f;
-        IconTexture = GD.Load<Texture>("res://Interface/Cursors/Art/Select.PNG");
-        Name = "Silver Mace";
-        Tooltip = String.Format("A shiny silver mace. Deals {0}-{1} damage.", Convert.ToInt32(WeaponDamage-DamageRange), Convert.ToInt32(WeaponDamage+DamageRange));
+        IconTexture = GD.Load<Texture>("res://Props/GHGO21Plceholders/EnchantedMace.PNG");
+        Name = "Enchanted Mace";
+        Tooltip = String.Format("The powerful enchantments surrounding this mace are in contrast to its mundane appearance. Deals {0}-{1} damage.", Convert.ToInt32(WeaponDamage-DamageRange), Convert.ToInt32(WeaponDamage+DamageRange));
         Cost = 50;
     }
 }
