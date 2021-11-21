@@ -39,16 +39,51 @@ script = ExtResource( 4 )
 script = ExtResource( 8 )
 
 [node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( 189.176, 1009.85 )
-_customBattleText = "Behold. It is I. Bob."
-ID = "Doomsayer"
-UnitName = "Bobz"
+position = Vector2( 455.048, 1077.73 )
+ID = "Child"
+UnitName = "Little Scarab"
 PortraitPath = ExtResource( 20 )
 PortraitPathSmall = ExtResource( 19 )
 _startDirection = 2
 _startingBools = {
 "Companion": false,
-"Hostile": true,
+"Hostile": false,
+"InitiatesDialogue": false
+}
+_minions = {
+0: 0
+}
+_physicalDamageRange = 1.0
+
+[node name="Bob4" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( 206.146, 1230.47 )
+ID = "Mahef"
+UnitName = "Mahef the Ferrybug"
+PortraitPath = ExtResource( 20 )
+PortraitPathSmall = ExtResource( 19 )
+_startDirection = 2
+_startingBools = {
+"Companion": false,
+"Hostile": false,
+"InitiatesDialogue": false
+}
+_minions = {
+0: 0
+}
+_physicalDamageRange = 1.0
+
+[node name="Bob3" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( 115.637, 1026.82 )
+_customBattleText = "AMBUSH! Followers of Apophis emerge from the sand dunes. You are surrounded.They chant a demonic melody and you are engulfed in smoke. In an instant, the dark mist disappears... along with your sun!"
+ID = "Ambush"
+UnitName = "Scarabs of the Netherworld"
+PortraitPath = ExtResource( 20 )
+PortraitPathSmall = ExtResource( 19 )
+_startDirection = 2
+_active = false
+_startingBools = {
+"Companion": false,
+"Hostile": false,
 "InitiatesDialogue": false
 }
 _minions = {
@@ -57,12 +92,11 @@ _minions = {
 _physicalDamageRange = 1.0
 
 [node name="Bob2" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -506.3, 1312.23 )
-ID = "bob2"
-UnitName = "Bobz brother"
+position = Vector2( -421.447, 1312.23 )
+ID = "Skull"
+UnitName = "Spirit of the Skull"
 PortraitPath = ExtResource( 16 )
 PortraitPathSmall = ExtResource( 18 )
-_active = false
 _startingBools = {
 "Companion": false,
 "Hostile": false,
@@ -75,8 +109,8 @@ _itemsHeld = [ 1, 1, 1, 1, 0, 5, 2, 3, 4, 0, 6, 0, 12, 13, 9, 7 ]
 
 [node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -84.5477, 788.985 )
-ID = "Ammit"
-UnitName = "Jimmy"
+ID = "Father"
+UnitName = "High Priest Setna"
 PortraitPath = ExtResource( 17 )
 PortraitPathSmall = ExtResource( 9 )
 _startDirection = 3
@@ -95,9 +129,10 @@ _potionEquipped1 = 0
 _potionEquipped3 = 4
 
 [node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -218.578, 1189.19 )
-ID = "test3416"
-UnitName = "James Reginald"
+position = Vector2( -241.205, 1211.82 )
+_defeatMessage = "AMBUSH! Followers of Apophis emerge from the sand dunes. You are surrounded.They chant a demonic melody and you are engulfed in smoke. In an instant, the dark mist disappears... along with your sun!"
+ID = "Ammit"
+UnitName = "Ammit"
 PortraitPath = ExtResource( 11 )
 PortraitPathSmall = ExtResource( 13 )
 _startDirection = 2
@@ -108,14 +143,14 @@ _minions = {
 [node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 108.628, 786.293 )
 _customBattleText = "hah! i am not neutral after all."
-ID = "Father"
-UnitName = "Bill Take-No-Sides"
+ID = "Meri"
+UnitName = "Meri the Merchant"
 PortraitPath = ExtResource( 12 )
 PortraitPathSmall = ExtResource( 10 )
 _startDirection = 4
 _startingBools = {
 "Companion": false,
-"Hostile": true,
+"Hostile": false,
 "InitiatesDialogue": false
 }
 _minions = {
@@ -124,12 +159,19 @@ _minions = {
 _physicalDamageRange = 1.0
 
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -513.633, 1057.28 )
-ID = "NPC1"
-UnitName = "Evil Jill"
+position = Vector2( -547.574, 1142.13 )
+_customBattleText = "Stay away from my potions!"
+_defeatMessage = "As you cast the spell that strikes her down, the Ancient Crone vanishes into a dust of skin, and you gained her potions of charisma."
+ID = "AncientCrone"
+UnitName = "Ancient Crone"
 PortraitPath = ExtResource( 12 )
 PortraitPathSmall = ExtResource( 10 )
 _startDirection = 2
+_startingBools = {
+"Companion": false,
+"Hostile": false,
+"InitiatesDialogue": false
+}
 _startingBehaviour = 2
 _combatLevel = 3
 
