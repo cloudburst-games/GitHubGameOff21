@@ -54,7 +54,7 @@ PortraitPathSmall = ExtResource( 10 )
 _startDirection = 6
 _startingBools = {
 "Companion": false,
-"Hostile": true,
+"Hostile": false,
 "InitiatesDialogue": false
 }
 _minions = {

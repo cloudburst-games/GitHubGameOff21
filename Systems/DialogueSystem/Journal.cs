@@ -65,9 +65,15 @@ public class Journal : MarginContainer
         JournalLabel.Text = "";
 		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("intro");
 		JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal");
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("sphynx");
 		JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal_updated");
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("sphynx2");
+        JournalLabel.Text += "\n";
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("amulet");
+        JournalLabel.Text += "\n";
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("traitor");
+        JournalLabel.Text += "\n";
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("escape");
 		//_journalDict.Add()
 	}
 
