@@ -147,7 +147,7 @@ __meta__ = {
 }
 
 [node name="AnimDayNight" type="AnimationPlayer" parent="CanvasLayer"]
-playback_speed = 64.0
+playback_speed = 0.17
 anims/DayNight = SubResource( 1 )
 
 [node name="HUD" type="CanvasLayer" parent="."]

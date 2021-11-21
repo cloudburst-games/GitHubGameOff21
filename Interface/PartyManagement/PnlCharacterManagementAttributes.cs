@@ -12,7 +12,7 @@ public class PnlCharacterManagementAttributes : Panel
     {
         {UnitData.Attribute.Vigour, "Physical prowess. Determines physical damage and health."},
         {UnitData.Attribute.Resilience, "Shrug off magical attacks and outlast the opponent. Increases health and mana regeneration, and magic resistance."},
-        {UnitData.Attribute.Intellect, "A great mind lends itself to even greater magical power. Increases mana capacity, mana regeneration, and spell damage."},
+        {UnitData.Attribute.Intellect, "A great mind lends itself to even greater magical power. Increases mana capacity, mana regeneration, and spell power."},
         {UnitData.Attribute.Swiftness, "Outmaneuver the opponent. Increases initiative (strike first), speed (move fast), and dodge (chance to reduce incoming damage)."},
         {UnitData.Attribute.Charisma, "Improves leadership (provides a bonus in battle to nearby companions) and used in dialogue."},
         {UnitData.Attribute.Luck, "Shifts encounters into the character's favour. Improves chance to critically hit, and chance to dodge an attack."}
