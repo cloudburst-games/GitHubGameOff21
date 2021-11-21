@@ -70,16 +70,32 @@ public class LevelNPCManager : YSort
         return result;
     }
 
-    public List<Vector2> GetNPCPositions()
+    public List<Tuple<Vector2, string>> GetNPCPositions()
     {
-        List<Vector2> result = new List<Vector2>();
+        List<Tuple<Vector2, string>> result = new List<Tuple<Vector2, string>>();
         foreach (Node n in GetChildren())
         {
             if (n is Unit npc)
             {
-                if (! npc.CurrentUnitData.Player)
+                if (! npc.CurrentUnitData.Player && npc.CurrentUnitData.Active)
                 {
-                    result.Add(npc.Position);
+                    result.Add(new Tuple<Vector2, string>(npc.Position, npc.CurrentUnitData.Name));
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<Unit> GetActiveNonCompanionNPCs()
+    {
+        List<Unit> result = new List<Unit>();
+        foreach (Node n in GetChildren())
+        {
+            if (n is Unit npc)
+            {
+                if (! npc.CurrentUnitData.Player && ! npc.CurrentUnitData.Companion && npc.CurrentUnitData.Active)
+                {
+                    result.Add(npc);
                 }
             }
         }

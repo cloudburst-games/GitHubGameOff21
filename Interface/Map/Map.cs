@@ -76,7 +76,7 @@ public class Map : Control
     }
 
     // if performance is an issue consider object pooling (currently making up to 6000 objects which are reference counted and removed on free)
-    public void Update(Vector2 playerPos, Unit.FacingDirection dir, List<Vector2> npcPositions, List<Shop> shops, List<StaticBody2D> obstacles,
+    public void Update(Vector2 playerPos, Unit.FacingDirection dir,  List<Tuple<Vector2, string>> npcPositions, List<Shop> shops, List<StaticBody2D> obstacles,
         List<Vector2> transitionPositions)
     {
         _playerPos = playerPos;
@@ -123,7 +123,7 @@ public class Map : Control
         shaderMaterial.SetShaderParam("flash_depth", 0.5f);
         texRect.Material = shaderMaterial;
         _allContainer.AddChild(texRect);
-        texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"Player"});
+        texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"Khepri"});
     }
 
     private void OnMouseEnteredSymbol(string hintToolTip)
@@ -131,12 +131,12 @@ public class Map : Control
         GetNode<Label>("Panel/PnlStatus/LblStatus").Text = hintToolTip;
     }
 
-    private void GenerateNPCSymbols(List<Vector2> npcPositions)
+    private void GenerateNPCSymbols( List<Tuple<Vector2, string>> npcPositions)
     {
-        foreach (Vector2 pos in npcPositions)
+        foreach (Tuple<Vector2, string> pos in npcPositions)
         {
             TextureRect texRect = new TextureRect();
-            texRect.RectPosition = pos - new Vector2(32,32);
+            texRect.RectPosition = pos.Item1 - new Vector2(32,32);
             texRect.Texture = _NPCSymbol;
             texRect.RectSize = new Vector2(64,64);
             texRect.Expand = true;
@@ -146,7 +146,7 @@ public class Map : Control
             shaderMaterial.SetShaderParam("flash_depth", 0.25f);
             texRect.Material = shaderMaterial;
             _allContainer.AddChild(texRect);
-            texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"NPC"});
+            texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {pos.Item2});
         }
     }
 

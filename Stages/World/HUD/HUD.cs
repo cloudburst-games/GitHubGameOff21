@@ -16,6 +16,11 @@ public class HUD : CanvasLayer
         // fix position bugs
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").RectPosition = new Vector2(-960,540);
         GetNode<Journal>("CtrlTheme/DialogueControl/Journal").RectGlobalPosition = new Vector2(0,0);
+        // connect journal updated to below
+    }
+    private void OnJournalUpdated()
+    {
+        LogEntry("Your journal has been updated.");
     }
 
     private void OnBtnJournalClosePressed()
@@ -114,7 +119,9 @@ public class HUD : CanvasLayer
     }
     public void OnNPCRightClicked(Unit npc)
     {
-        GetNode<NPCInfoPanel>("CtrlTheme/NPCInfoPanel").Activate(npc.CurrentUnitData);
+        int difficulty = GetNode<OptionButton>("CtrlTheme/CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected;
+        
+        GetNode<NPCInfoPanel>("CtrlTheme/NPCInfoPanel").Activate(npc.CurrentUnitData, difficulty);
     }
     public void OnDialogueEnded()
     {
@@ -179,7 +186,7 @@ public class HUD : CanvasLayer
         return GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible || GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").Visible || 
             GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible || 
             GetNode<FileDialog>("CtrlTheme/FileDialog").Visible || GetNode<Panel>("CtrlTheme/PnlBattleVictory").Visible ||
-            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible;
+            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible || GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible;
     }
 
     public override void _Input(InputEvent ev)

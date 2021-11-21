@@ -6,9 +6,8 @@
 [ext_resource path="res://Interface/Labels/LblInteract/LblInteractInfo.cs" type="Script" id=4]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=5]
 
-[sub_resource type="CapsuleShape2D" id=1]
-radius = 26.8753
-height = 39.9874
+[sub_resource type="CircleShape2D" id=1]
+radius = 62.8198
 
 [node name="Shop" type="StaticBody2D"]
 script = ExtResource( 2 )
@@ -26,8 +25,8 @@ polygon = PoolVector2Array( -87.6783, 49.4668, -28.2994, 31.434, 21.3392, 26.341
 collision_layer = 2
 script = ExtResource( 3 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableArea"]
-position = Vector2( 40.2233, 76.407 )
+[node name="Shape" type="CollisionShape2D" parent="InteractableArea"]
+position = Vector2( 37.2267, 71.9121 )
 rotation = 1.07258
 shape = SubResource( 1 )
 
@@ -53,5 +52,5 @@ align = 1
 valign = 1
 script = ExtResource( 4 )
 
-[connection signal="body_entered" from="InteractableArea" to="." method="OnInteractableAreaBodyEntered"]
-[connection signal="body_exited" from="InteractableArea" to="." method="OnInteractableAreaBodyExited"]
+[connection signal="area_entered" from="InteractableArea" to="." method="OnInteractableAreaAreaEntered"]
+[connection signal="area_exited" from="InteractableArea" to="." method="OnInteractableAreaAreaExited"]

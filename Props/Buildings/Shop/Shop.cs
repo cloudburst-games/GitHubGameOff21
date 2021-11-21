@@ -68,24 +68,99 @@ public class Shop : StaticBody2D
     //     }
         
     // }
-    private void OnInteractableAreaBodyEntered(Godot.Object body)
+    // private void OnInteractableAreaBodyEntered(Godot.Object body)
+    // {
+    //     if (body is Unit unit)
+    //     {
+    //         if (unit.CurrentUnitData.Player)
+    //         {
+    //             GetNode<Panel>("PnlInfo").Visible = true;
+    //         }
+    //     }
+    // }
+    // private void OnInteractableAreaBodyExited(Godot.Object body)
+    // {
+    //     if (body is Unit unit)
+    //     {
+    //         if (unit.CurrentUnitData.Player)
+    //         {
+    //             GetNode<Panel>("PnlInfo").Visible = false;
+    //         }
+    //     }
+    // }    
+    private void OnInteractableAreaAreaEntered(Godot.Object area)
     {
-        if (body is Unit unit)
+        if (area is Area2D a)
         {
-            if (unit.CurrentUnitData.Player)
+            if (a.Name == "NPCEnableInteractionArea")
             {
-                GetNode<Panel>("PnlInfo").Visible = true;
+                if (a.GetParent() is Unit unit)
+                {
+                    if (unit.CurrentControlState is PlayerUnitControlState)
+                    {
+                        // GetNode<Panel>("PnlInfo").Visible = true;
+                        SetHighlight(true);
+                    }
+                }
             }
         }
     }
-    private void OnInteractableAreaBodyExited(Godot.Object body)
+    private void OnInteractableAreaAreaExited(Godot.Object area)
     {
-        if (body is Unit unit)
+        if (area is Area2D a)
         {
-            if (unit.CurrentUnitData.Player)
+            if (a.Name == "NPCEnableInteractionArea")
             {
-                GetNode<Panel>("PnlInfo").Visible = false;
+                if (a.GetParent() is Unit unit)
+                {
+                    if (unit.CurrentControlState is PlayerUnitControlState)
+                    {
+                        // GetNode<Panel>("PnlInfo").Visible = false;
+                        GetNode<Sprite>("Sprite").Material = null;
+                    }
+                }
             }
+        }
+    }
+
+
+    public void SetHighlight(bool enable)
+    {
+        if (enable)
+        {
+            if (GetNode<Sprite>("Sprite").Material == null)
+            {
+                ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
+                shaderMaterial.SetShaderParam("speed", 12f);
+                shaderMaterial.SetShaderParam("flash_colour_original", new Color(1f,1f,1f));
+                shaderMaterial.SetShaderParam("flash_depth", 0.4f);
+                GetNode<Sprite>("Sprite").Material = shaderMaterial;
+            }
+        }
+        else
+        {
+            // make sure the player is not overlapping first
+            if (GetNode<Area2D>("InteractableArea").GetOverlappingAreas().Count > 0)
+            {
+                foreach (Godot.Object area in GetNode<Area2D>("InteractableArea").GetOverlappingAreas())
+                {
+                    if (area is Area2D a)
+                    {
+                        if (a.Name == "NPCEnableInteractionArea")
+                        {
+                            if (a.GetParent() is Unit unit)
+                            {
+                                if (unit.CurrentControlState is PlayerUnitControlState)
+                                {
+                                    return;
+                                    // GetNode<Panel>("PnlInfo").Visible = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            GetNode<Sprite>("Sprite").Material = null;
         }
     }
 }

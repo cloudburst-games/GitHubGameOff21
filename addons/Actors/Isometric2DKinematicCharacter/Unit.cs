@@ -152,6 +152,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[0] = _potionEquipped1;
         CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[1] = _potionEquipped2;
         CurrentUnitData.CurrentBattleUnitData.PotionsEquipped[2] = _potionEquipped3;
+        CurrentUnitData.CurrentBattleUnitData.BodyPath = CurrentUnitData.BodyPath;
         // ExperienceManager xpman = new ExperienceManager();
 
         // GD.Print("level: " + CurrentUnitData.CurrentBattleUnitData.Level + ", xp: " + xpman.GetExperienceNeeded(CurrentUnitData.CurrentBattleUnitData.Level));
@@ -166,6 +167,8 @@ public class Unit : KinematicBody2D
                 minionUnitData.CurrentBattleUnitData = new BattleUnitData();
                 minionUnitData.CurrentBattleUnitData.Combatant = combatant;
                 minionUnitData.CurrentBattleUnitData.Level = CurrentUnitData.CurrentBattleUnitData.Level - 1;
+                minionUnitData.BodyPath = CurrentUnitData.BodyPath;
+                minionUnitData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                 minionUnitData.SetAttributesByLevel(_favouredAttributes);
                 minionUnitData.UpdateDerivedStatsFromAttributes();
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
@@ -215,21 +218,96 @@ public class Unit : KinematicBody2D
 
     private void OnNPCInteractAreaBodyEntered(Godot.Object body)
     {
-        if (!CurrentUnitData.Active)
+        // if (!CurrentUnitData.Active)
+        // {
+        //     return;
+        // }
+        // if (body is Unit unit)
+        // {
+        //     if (unit.CurrentUnitData.Player)
+        //     {
+        //         if (CurrentUnitData.Hostile)
+        //         {
+        //             GD.Print("initiate battle");
+        //         }
+        //         else if (! CurrentUnitData.Companion)
+        //         {
+                    
+        //         }
+        //     }
+        // }
+    }
+
+    public void SetHighlight(bool enable)
+    {
+        if (enable)
         {
-            return;
-        }
-        if (body is Unit unit)
-        {
-            if (unit.CurrentUnitData.Player)
+            if (_sprite.Material == null)
             {
-                if (CurrentUnitData.Hostile)
+                ShaderMaterial shaderMaterial = (ShaderMaterial) GD.Load<ShaderMaterial>("res://Shaders/Flash/FlashShader.tres").Duplicate();
+                shaderMaterial.SetShaderParam("speed", 12f);
+                shaderMaterial.SetShaderParam("flash_colour_original", new Color(1f,1f,1f));
+                shaderMaterial.SetShaderParam("flash_depth", 0.4f);
+                _sprite.Material = shaderMaterial;
+            }
+        }
+        else
+        {
+            // make sure the player is not overlapping first
+            if (GetNode<Area2D>("NPCInteractArea").GetOverlappingAreas().Count > 0)
+            {
+                foreach (Godot.Object area in GetNode<Area2D>("NPCInteractArea").GetOverlappingAreas())
                 {
-                    GD.Print("initiate battle");
+                    if (area is Area2D a)
+                    {
+                        if (a.Name == "NPCEnableInteractionArea")
+                        {
+                            if (a.GetParent() is Unit unit)
+                            {
+                                if (unit.CurrentControlState is PlayerUnitControlState && ! CurrentUnitData.Companion)
+                                {
+                                    return;
+                                    // GetNode<Panel>("PnlInfo").Visible = true;
+                                }
+                            }
+                        }
+                    }
                 }
-                else if (! CurrentUnitData.Companion)
+            }
+            _sprite.Material = null;
+        }
+    }
+
+    private void OnNPCInteractAreaAreaEntered(Godot.Object area)
+    {
+        if (area is Area2D a)
+        {
+            if (a.Name == "NPCEnableInteractionArea")
+            {
+                if (a.GetParent() is Unit unit)
                 {
-                    GetNode<Panel>("PnlInfo").Visible = GetNode<Label>("PnlInfo/LblInteractInfo").Visible = true;
+                    if (unit.CurrentControlState is PlayerUnitControlState && ! CurrentUnitData.Companion)
+                    {
+                        SetHighlight(true);
+                        // GetNode<Panel>("PnlInfo").Visible = true;
+                    }
+                }
+            }
+        }
+    }
+
+    private void OnNPCInteractAreaAreaExited(Godot.Object area)
+    {
+        if (area is Area2D a)
+        {
+            if (a.Name == "NPCEnableInteractionArea")
+            {
+                if (a.GetParent() is Unit unit)
+                {
+                    if (unit.CurrentControlState is PlayerUnitControlState && ! CurrentUnitData.Companion)
+                    {
+                        _sprite.Material = null;
+                    }
                 }
             }
         }
@@ -237,28 +315,24 @@ public class Unit : KinematicBody2D
     
     private void OnNPCInteractAreaBodyExited(Godot.Object body)
     {   
-        if (!CurrentUnitData.Active)
-        {
-            return;
-        }  
-        if (body is Unit unit)
-        {
-            if (unit.CurrentUnitData.Player)
-            {
-                if (CurrentUnitData.Hostile)
-                {
-                    // GD.Print("initiate battle");
-                }
-                else if (! CurrentUnitData.Companion)
-                {
-                    GetNode<Panel>("PnlInfo").Visible = false;
-                    foreach (Label l in GetNode<Panel>("PnlInfo").GetChildren())
-                    {
-                        l.Visible = false;
-                    }
-                }
-            }
-        }
+        // if (!CurrentUnitData.Active)
+        // {
+        //     return;
+        // }  
+        // if (body is Unit unit)
+        // {
+        //     if (unit.CurrentUnitData.Player)
+        //     {
+        //         if (CurrentUnitData.Hostile)
+        //         {
+        //             // GD.Print("initiate battle");
+        //         }
+        //         else if (! CurrentUnitData.Companion)
+        //         {
+
+        //         }
+        //     }
+        // }
     }
 
     public void UpdateFromUnitData()
@@ -298,7 +372,6 @@ public class Unit : KinematicBody2D
         AddChild(sprite);
         AddChild(shape);
         AddChild(anim);
-
         oldSprite.QueueFree();
         oldshape.QueueFree();
         oldAnim.QueueFree();
@@ -306,7 +379,7 @@ public class Unit : KinematicBody2D
 
     }
 
-    public override void _UnhandledInput(InputEvent ev)
+    public override void _Input(InputEvent ev)
     {
         if (!CurrentUnitData.Active)
         {
@@ -330,11 +403,13 @@ public class Unit : KinematicBody2D
                 }
             }
         }
+        CurrentControlState.UpdateInputEvents(ev);
     }
+    
     ///
 
 
-	public enum ControlState { Player, AI }
+	public enum ControlState { Player, AI, PlayerMouse }
 	public UnitControlState CurrentControlState;
 
 	public enum ActionState { Idle, Moving, MeleeAttacking }
@@ -448,5 +523,10 @@ public class Unit : KinematicBody2D
 		// temp
 		
 	}
+
+    // public override void _UnhandledInput(InputEvent @event)
+    // {
+    //     base._UnhandledInput(@event);
+    // }
 
 }

@@ -29,11 +29,8 @@ Saturday:
 - Map symbols DONE
 - Placeholder art for every non-animated sprite (including spell icons!) DONE
 - Make multiple battle maps with different environments DONE kinda -await obstacles
-
---
 - Swappable NPC sprites/collisions/anims (similar to how we did in void warrior) DONE
-
-- Swappable battleunit sprites/anims (similar to code warrior)
+- Swappable battleunit sprites/anims (similar to void warrior) DONE
 
 
 Sunday:

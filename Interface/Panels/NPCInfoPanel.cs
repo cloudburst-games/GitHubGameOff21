@@ -38,10 +38,10 @@ public class NPCInfoPanel : Panel
         unitData.CurrentBattleUnitData.ArmourEquipped = PnlInventory.ItemMode.ObsidianPlate;
         unitData.CurrentBattleUnitData.PotionsEquipped = new PnlInventory.ItemMode[3] {PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ResiliencePot};
         unitData.Hostile = true;
-        Activate(unitData);
+        Activate(unitData, 3);
     }
 
-    public void Activate(UnitData unitData)
+    public void Activate(UnitData unitData, int difficulty)
     {
         RectGlobalPosition = new Vector2(Mathf.Clamp(GetGlobalMousePosition().x, 0, GetViewportRect().Size.x - RectSize.x), 
             Mathf.Clamp(GetGlobalMousePosition().y, 0, GetViewportRect().Size.y - RectSize.y));
@@ -74,7 +74,7 @@ public class NPCInfoPanel : Panel
         GetNode<Label>("VBoxLabels/PnlTitle/LblMainCombatant").Text = unitData.Name != "" ? unitData.Name :
             Enum.GetName(typeof(BattleUnit.Combatant), unitData.CurrentBattleUnitData.Combatant);
         GetNode<TextureRect>("VBoxLabels/PnlTitle/TexRectPortrait").Texture = GD.Load<Texture>(unitData.PortraitPathSmall);
-        GetNode<Label>("VBoxLabels/LblMinions").Text = unitData.Minions.Count == 0 ? "No minions." : "Minions:";
+        GetNode<Label>("VBoxLabels/LblMinions").Text = unitData.Minions.Count == 0 ? "No visible minions." : "Minions:";
 
 
         GetNode<Label>("VBoxLabels/LblLevel").Text = "Level: " + unitData.CurrentBattleUnitData.Level;
@@ -95,6 +95,11 @@ public class NPCInfoPanel : Panel
             {
                 GetNode<Label>("VBoxLabels/LblMinions").Text += GetFormattedCombatants(minion,combatantNumbers[minion]);
             }
+        }
+        if (difficulty >= 2)
+        {
+            GetNode<Label>("VBoxLabels/LblMinions").Text += String.Format("\nThere may {0}be minions hiding in ambush.", 
+                unitData.Minions.Count > 0 ? "also " : "");
         }
         GetNode<Label>("VBoxLabels/LblHostileStatus").Text = String.Format(unitData.Hostile? "Status: Hostile" : "Status: Friendly");
         GetNode<Label>("VBoxLabels/LblHostileStatus").AddColorOverride("font_color", unitData.Hostile? new Color(1,0,0) : new Color(0,1,0));

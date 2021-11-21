@@ -12,7 +12,7 @@ public class LblInteractInfo : Label
     {
         string interact = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
 
-        Text = String.Format("'{0}' to interact", interact);
+        Text = String.Format("'{0}' or click to interact", interact);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

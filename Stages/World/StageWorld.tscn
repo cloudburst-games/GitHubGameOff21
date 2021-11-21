@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -24,6 +24,35 @@
 [ext_resource path="res://Utils/Node/Camera/Cam2DRTS.tscn" type="PackedScene" id=24]
 
 [sub_resource type="Animation" id=1]
+resource_name = "DayNight"
+length = 240.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 4.6, 40, 70, 123, 180, 210, 240 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.509804 ), Color( 0, 0, 0, 0.403922 ), Color( 0, 0, 0, 0.0784314 ), Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.0784314 ), Color( 0, 0, 0, 0.403922 ), Color( 0, 0, 0, 0.513726 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../HUD/CtrlTheme/PnlUIBar/LblTime:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5, 40, 70, 120, 130, 170, 210, 235, 240.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "Midnight", "Night", "Dawn", "Morning", "Midday", "Afternoon", "Evening", "Dusk", "Midnight", "Midnight" ]
+}
+
+[sub_resource type="Animation" id=2]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -39,7 +68,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=3]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -66,7 +95,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -105,6 +134,21 @@ SoundType = 3
 
 [node name="LevelManager" type="Node2D" parent="."]
 script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+color = Color( 0, 0, 0, 0.513726 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimDayNight" type="AnimationPlayer" parent="CanvasLayer"]
+playback_speed = 0.17
+anims/DayNight = SubResource( 1 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 pause_mode = 2
@@ -176,8 +220,8 @@ margin_bottom = -2.83484
 rect_scale = Vector2( 0.375, 0.375 )
 
 [node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
-margin_left = 184.0
-margin_right = 1594.0
+margin_left = 325.968
+margin_right = 1606.97
 margin_bottom = 40.0
 script = ExtResource( 18 )
 __meta__ = {
@@ -186,7 +230,7 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents"]
 margin_left = 14.0
-margin_right = 1394.0
+margin_right = 1280.0
 margin_bottom = 40.0
 custom_constants/separation = 10
 __meta__ = {
@@ -194,7 +238,7 @@ __meta__ = {
 }
 
 [node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_right = 1268.0
+margin_right = 1162.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -203,13 +247,24 @@ valign = 1
 clip_text = true
 
 [node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_left = 1278.0
-margin_right = 1380.0
+margin_left = 1172.0
+margin_right = 1266.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.08
 text = "Events"
+
+[node name="LblTime" type="Label" parent="HUD/CtrlTheme/PnlUIBar"]
+margin_left = 156.503
+margin_right = 311.503
+margin_bottom = 49.0
+text = "Midnight"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Map" type="Control" parent="HUD/CtrlTheme"]
 visible = false
@@ -653,7 +708,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/ProgressAnim"]
-anims/Load = SubResource( 1 )
+anims/Load = SubResource( 2 )
 
 [node name="LblProgress" type="Label" parent="HUD/CtrlTheme/ProgressAnim"]
 margin_left = -21.3816
@@ -686,8 +741,8 @@ __meta__ = {
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblLog"]
 autoplay = "default"
-anims/LogEntry = SubResource( 2 )
-anims/default = SubResource( 3 )
+anims/LogEntry = SubResource( 3 )
+anims/default = SubResource( 4 )
 
 [node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 

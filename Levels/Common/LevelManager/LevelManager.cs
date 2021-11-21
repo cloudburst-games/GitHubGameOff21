@@ -170,6 +170,9 @@ public class LevelManager : Node2D
         return overlappingCount == companionCount;
     }
 
+    [Signal]
+    public delegate void StartedTransition();
+
     public async void OnTriedToTransitionTo(Level dest)
     {
         // do any checks needed (i.e. are we allowed to transition?)
@@ -178,6 +181,8 @@ public class LevelManager : Node2D
             EmitSignal(nameof(Announced), "You must gather your party before venturing forth.");
             return;
         }
+
+        EmitSignal(nameof(StartedTransition));
         
         // fade to black or do loading screen
         LoadingScreen loadingScreen = (LoadingScreen) GD.Load<PackedScene>("res://Interface/Transitions/LoadingScreen.tscn").Instance();
@@ -418,6 +423,7 @@ public class LevelManager : Node2D
 
 	private void SetNavigation()
 	{
+        List<CollisionPolygon2D> collisionPolys = new List<CollisionPolygon2D>();
 		foreach (Node n in GetLevelInTree().GetNode("All/Obstacles").GetChildren())
 		{
 			if (n is StaticBody2D body)
@@ -426,11 +432,27 @@ public class LevelManager : Node2D
 				{
 					if (bodyChild is CollisionPolygon2D poly)
 					{
-						GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").SingleUse(poly, CurrentLevel);
+                        collisionPolys.Add(poly);
+						// GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").SingleUse(poly, CurrentLevel);
+					}
+				}
+			}
+		}		
+        foreach (Node n in GetLevelInTree().GetNode("All/Shops").GetChildren())
+		{
+			if (n is StaticBody2D body)
+			{
+				foreach (Node bodyChild in body.GetChildren())
+				{
+					if (bodyChild is CollisionPolygon2D poly)
+					{
+                        collisionPolys.Add(poly);
+						// GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").SingleUse(poly, CurrentLevel);
 					}
 				}
 			}
 		}
+        GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").SingleUse(collisionPolys, CurrentLevel);
 		GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").Finalise();
 
         GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager").Connect
@@ -439,5 +461,11 @@ public class LevelManager : Node2D
         GetLevelInTree().GetNode<LevelNPCManager>("All/Units/LevelNPCManager").Connect
             (nameof(LevelNPCManager.AIPathToPlayerRequested), GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation"), 
             nameof(WorldNavigation.OnAIPathToPlayerRequested), new Godot.Collections.Array {GetPlayerInTree()});
+        
+
+        if (GetPlayerInTree().CurrentControlState is PlayerUnitControlState controlState)
+        {
+            controlState.Connect(nameof(PlayerUnitControlState.PathRequested), GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation"), nameof(WorldNavigation.OnPlayerPathRequested));
+        }
 	}
 }

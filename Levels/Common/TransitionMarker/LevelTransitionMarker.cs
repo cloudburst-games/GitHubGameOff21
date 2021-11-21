@@ -16,27 +16,39 @@ public class LevelTransitionMarker : Node2D
     public override void _Ready()
     {
         Visible = false;
-        string interact = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
-        GetNode<Label>("Sprite/Panel/Label").Text = String.Format("'{0}': {1}", interact, ButtonLabel);
+        // string interact = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
+        GetNode<Label>("Sprite/Panel/Label").Text = ButtonLabel;// String.Format("'{0}': {1}", interact, ButtonLabel);
     }
 
-    public void OnAreaPlayerDetectBodyEntered(Godot.Object body)
+    public void OnAreaPlayerDetectAreaEntered(Godot.Object area)
     {
-        if (body is Unit unit)
+        if (area is Area2D a)
         {
-            if (unit.GetControlState() == Unit.ControlState.Player)
+            if (a.Name == "NPCEnableInteractionArea")
             {
-                Visible = true;
+                if (a.GetParent() is Unit unit)
+                {
+                    if (unit.CurrentControlState is PlayerUnitControlState)
+                    {
+                        Visible = true;
+                    }
+                }
             }
         }
     }
-    public void OnAreaPlayerDetectBodyExited(Godot.Object body)
+    public void OnAreaPlayerDetectAreaExited(Godot.Object area)
     {
-        if (body is Unit unit)
+       if (area is Area2D a)
         {
-            if (unit.GetControlState() == Unit.ControlState.Player)
+            if (a.Name == "NPCEnableInteractionArea")
             {
-                Visible = false;
+                if (a.GetParent() is Unit unit)
+                {
+                    if (unit.CurrentControlState is PlayerUnitControlState)
+                    {
+                        Visible = false;
+                    }
+                }
             }
         }
     }
@@ -48,10 +60,22 @@ public class LevelTransitionMarker : Node2D
         {
             EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
         }
+        
+        if (ev is InputEventMouseButton btn)
+        {
+            if (btn.Pressed && !ev.IsEcho() && btn.ButtonIndex == (int) ButtonList.Left)
+            {
+                if (Visible)
+                {
+                    if (GetGlobalMousePosition().DistanceTo(GlobalPosition) < 0.5f*(GetNode<Sprite>("Sprite").Texture.GetSize().x*GetNode<Sprite>("Sprite").Scale.x))
+                    EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
+                }
+            }
+        }
     }
 
-    // public void OnBtnTransitionPressed()
-    // {
-    //     EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
-    // }
+    public void OnBtnTransitionPressed()
+    {
+        // EmitSignal(nameof(TriedToTransitionTo), DestinationLevel);
+    }
 }

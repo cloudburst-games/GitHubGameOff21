@@ -23,6 +23,7 @@ public class UnitData : IStoreable
             CurrentBattleUnitData.Name = value;
         }
     }
+    public float Time {get; set;} = 0;
     public Vector2 NPCPosition {get; set;}
     public string DefeatMessage {get; set;} = "You have defeated your foes in honourable combat!";
     private bool _companion = false;

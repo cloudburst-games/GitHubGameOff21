@@ -126,8 +126,10 @@ public class PnlCharacterManager : Panel
         // load unit data
         GetNode<Label>("LblCharacterName").Text = unitData.Name;
         GetNode<TextureRect>("TabContainer/Character/TexRectPortrait").Texture = GD.Load<Texture>(unitData.PortraitPath);
-        GetNode<Label>("TabContainer/Character/LblLevelExperience").Text = String.Format("Level: {0}\nExperience {1}",
-            unitData.CurrentBattleUnitData.Level, unitData.CurrentBattleUnitData.Experience);
+        GetNode<Label>("TabContainer/Character/LblLevelExperience").Text = String.Format("Level: {0}\nExperience {1}/{2}",
+            unitData.CurrentBattleUnitData.Level, unitData.CurrentBattleUnitData.Experience, 
+            unitData.ExperienceManager.GetTotalExperienceValueOfLevel(unitData.CurrentBattleUnitData.Level+1));
+        
         _pnlAttributes.Start(unitData);
         _pnlStats.Start(unitData.CurrentBattleUnitData.Stats, new SpellEffectManager.SpellMode[2] 
             {unitData.CurrentBattleUnitData.Spell1, unitData.CurrentBattleUnitData.Spell2});
