@@ -62,8 +62,9 @@ public class Steering
 		return targetLocation - _position;
 	}
 
-	private Vector2 GetSteeringForce(Vector2 desiredVelocity)
+	private Vector2 GetSteeringForce(Vector2 desiredVelocity)//, bool player = false)
 	{
+
 		return (desiredVelocity - CurrentVelocity).Clamped(MaximumForce);
 	}
 
@@ -148,28 +149,31 @@ public class Steering
 	}
 
 	// this can be customised to adjust weights
-	public Vector2 CalculateVelocity(Vector2 targetLocation, bool brake)
+	public Vector2 CalculateVelocity(Vector2 targetLocation, bool brake)//, bool player = false)
 	{
 		Vector2 separate = GetSeparateVelocity();
 		Vector2 seek = GetArriveVelocity(targetLocation, brake);
 		Vector2 cohesion = GetCohesionVelocity();
 		Vector2 align = GetAlignmentVelocity();
+
 		separate *= 2f;
 		cohesion *= 0f;
 		seek *= 1f;
 		IsAvoiding = separate.Length() > 0;
 		align *= 0f;
-		// if (Mathf.IsNaN(cohesion.x) || Mathf.IsNaN(cohesion.y))
-		// {
-		// 	GD.Print("seek is NOT a number");
-		// 	cohesion = new Vector2(0,0);
-		// }
-		// if (Mathf.IsNaN(separate.x) || Mathf.IsNaN(separate.y))
-		// {
-		// 	GD.Print("seek is NOT a number");
-		// 	separate = new Vector2(0,0);
-		// }
-		Vector2 totalSteeringForce = GetSteeringForce(separate + cohesion + seek);
+		if (Mathf.IsNaN(cohesion.x) || Mathf.IsNaN(cohesion.y))
+		{
+			GD.Print("seek is NOT a number");
+			cohesion = new Vector2(0,0);
+		}
+		if (Mathf.IsNaN(separate.x) || Mathf.IsNaN(separate.y))
+		{
+			GD.Print("seek is NOT a number");
+			separate = new Vector2(0,0);
+		}
+        // if (player)
+        // GD.Print(seek - CurrentVelocity);
+		Vector2 totalSteeringForce = GetSteeringForce(separate + cohesion + seek);//, player);
 		// GD.Print(Math.Round(totalSteeringForce.Length(),1));
 		// CurrentVelocity += totalSteeringForce;
 		CurrentVelocity = (CurrentVelocity + totalSteeringForce).Clamped(_maximumSpeed);

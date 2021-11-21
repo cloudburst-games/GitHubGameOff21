@@ -83,14 +83,13 @@
 [ext_resource path="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40008.png" type="Texture" id=81]
 [ext_resource path="res://Interface/Labels/LblInteract/LblInteractInfo.cs" type="Script" id=82]
 
-[sub_resource type="RectangleShape2D" id=11]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7.61682, 9.41382 )
 
-[sub_resource type="CircleShape2D" id=12]
+[sub_resource type="CircleShape2D" id=2]
 radius = 120.724
 
-[sub_resource type="Animation" id=1]
-resource_name = "IdleDown"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -116,8 +115,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "IdleDownRight"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -143,8 +141,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "IdleRight"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -170,8 +167,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "IdleUp"
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -197,8 +193,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "IdleUpRight"
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
 tracks/0/interp = 1
@@ -224,7 +219,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=8]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -251,7 +246,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -278,7 +273,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -305,7 +300,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -332,7 +327,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, -9 ) ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=12]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -360,7 +355,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=13]
-radius = 145.933
+radius = 68.5
 
 [node name="NPC" type="KinematicBody2D"]
 position = Vector2( 345.859, 194.344 )
@@ -376,29 +371,29 @@ region_rect = Rect2( 33, 462, 32, 22 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 11.2373 )
-shape = SubResource( 11 )
+shape = SubResource( 1 )
 
 [node name="UnitDetectArea" type="Area2D" parent="."]
 
 [node name="Shape" type="CollisionShape2D" parent="UnitDetectArea"]
-shape = SubResource( 12 )
+shape = SubResource( 2 )
 
 [node name="ActionAnim" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-anims/IdleDown = SubResource( 1 )
-anims/IdleDownRight = SubResource( 2 )
-anims/IdleRight = SubResource( 3 )
-anims/IdleUp = SubResource( 4 )
-anims/IdleUpRight = SubResource( 5 )
-anims/WalkDown = SubResource( 6 )
-anims/WalkDownRight = SubResource( 7 )
-anims/WalkRight = SubResource( 8 )
-anims/WalkUp = SubResource( 9 )
-anims/WalkUpRight = SubResource( 10 )
+anims/IdleDown = SubResource( 3 )
+anims/IdleDownRight = SubResource( 4 )
+anims/IdleRight = SubResource( 5 )
+anims/IdleUp = SubResource( 6 )
+anims/IdleUpRight = SubResource( 7 )
+anims/WalkDown = SubResource( 8 )
+anims/WalkDownRight = SubResource( 9 )
+anims/WalkRight = SubResource( 10 )
+anims/WalkUp = SubResource( 11 )
+anims/WalkUpRight = SubResource( 12 )
 
 [node name="NPCInteractArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NPCInteractArea"]
+[node name="Shape" type="CollisionShape2D" parent="NPCInteractArea"]
 shape = SubResource( 13 )
 
 [node name="PnlInfo" type="Panel" parent="."]
@@ -407,21 +402,21 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -55.5
-margin_top = -92.6783
-margin_right = 55.5
-margin_bottom = -52.6783
+margin_left = -55.0
+margin_top = -93.0
+margin_right = 83.0
+margin_bottom = -73.0
+
+[node name="LblInteractInfo" type="Label" parent="PnlInfo"]
+margin_right = 133.0
+margin_bottom = 41.0
+text = "'E' or click to interact"
+script = ExtResource( 82 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LblInteractInfo" type="Label" parent="PnlInfo"]
-margin_right = 109.0
-margin_bottom = 41.0
-text = "'E' to interact"
-align = 1
-valign = 1
-script = ExtResource( 82 )
-
+[connection signal="area_entered" from="NPCInteractArea" to="." method="OnNPCInteractAreaAreaEntered"]
+[connection signal="area_exited" from="NPCInteractArea" to="." method="OnNPCInteractAreaAreaExited"]
 [connection signal="body_entered" from="NPCInteractArea" to="." method="OnNPCInteractAreaBodyEntered"]
 [connection signal="body_exited" from="NPCInteractArea" to="." method="OnNPCInteractAreaBodyExited"]

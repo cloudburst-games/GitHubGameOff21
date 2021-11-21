@@ -119,7 +119,9 @@ public class HUD : CanvasLayer
     }
     public void OnNPCRightClicked(Unit npc)
     {
-        GetNode<NPCInfoPanel>("CtrlTheme/NPCInfoPanel").Activate(npc.CurrentUnitData);
+        int difficulty = GetNode<OptionButton>("CtrlTheme/CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected;
+        
+        GetNode<NPCInfoPanel>("CtrlTheme/NPCInfoPanel").Activate(npc.CurrentUnitData, difficulty);
     }
     public void OnDialogueEnded()
     {

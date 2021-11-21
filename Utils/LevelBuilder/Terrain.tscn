@@ -14,6 +14,7 @@ _gridSize = PoolIntArray( 32, 32 )
 [node name="Tilemaps" type="Node2D" parent="."]
 
 [node name="Level1" parent="Tilemaps" instance=ExtResource( 2 )]
+material = null
 tile_data = PoolIntArray(  )
 
 [node name="GridVisualiser" parent="." instance=ExtResource( 1 )]

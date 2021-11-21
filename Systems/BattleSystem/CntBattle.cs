@@ -1344,6 +1344,7 @@ public class CntBattle : Control
 
     private bool IsMouseCursorOverUIPanel()
     {
+        // GD.Print(GetGlobalMousePosition().y > GetNode<Panel>("Panel/BattleHUD/CtrlTheme/PnlUI").RectGlobalPosition.y);
         return GetGlobalMousePosition().y > GetNode<Panel>("Panel/BattleHUD/CtrlTheme/PnlUI").RectGlobalPosition.y;
     }
 

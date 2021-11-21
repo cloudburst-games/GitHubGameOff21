@@ -17,6 +17,23 @@ public class StageWorld : Stage
         {
             return;
         }
+        // wait for lvl to be loaded first
+        if (GetNode<LevelManager>("LevelManager").GetChildCount() == 0)
+        {
+            return;
+        }
+        if (GetNode<LevelManager>("LevelManager").GetChildCount() > 0)
+        {
+            if (GetNode<LevelManager>("LevelManager").GetChild(0).Name == "OldLevel")
+            {
+                return;
+            }
+        }
+        //
+        if (GetNode<HUD>("HUD").IsAnyWindowVisible())
+        {
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().SetProcessInput(false);
+        }
         
         if (ev.IsActionPressed("Party 1") && !ev.IsEcho())
         {
@@ -52,6 +69,35 @@ public class StageWorld : Stage
 
             // GetNode<Label>("HUD/CtrlTheme/Blah/Label2").Text = "I HAVE NOW SET BLAH FROM FALSE TO TRUE";
             // GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentDialogueData.Blah = true;
+        }
+
+        if (ev is InputEventMouseMotion m)
+        {
+            foreach (Unit npc in GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetActiveNonCompanionNPCs())
+            {
+                float distance = ((CircleShape2D)npc.GetNode<CollisionShape2D>("NPCInteractArea/Shape").Shape).Radius;
+                if (npc.GetGlobalMousePosition().DistanceTo(npc.GlobalPosition) < distance)
+                {
+                    npc.SetHighlight(true);
+                }
+                else
+                {
+                    npc.SetHighlight(false);
+                }
+            }            
+            
+            foreach (Shop shop in GetNode<LevelManager>("LevelManager").GetLevelInTree().GetNode<YSort>("All/Shops").GetChildren())
+            {
+                float distance = ((CircleShape2D)shop.GetNode<CollisionShape2D>("InteractableArea/Shape").Shape).Radius;
+                if (shop.GetGlobalMousePosition().DistanceTo(shop.GetNode<Area2D>("InteractableArea").GlobalPosition) < distance)
+                {
+                    shop.SetHighlight(true);
+                }
+                else
+                {
+                    shop.SetHighlight(false);
+                }
+            }
         }
         // if (ev.IsActionPressed("Interact"))
         // {
@@ -127,6 +173,7 @@ public class StageWorld : Stage
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.AutosaveAreaEntered), this, nameof(OnAutosaveTriggered));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.Announced), GetNode<HUD>("HUD"), nameof(HUD.LogEntry));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.LevelGenerated), this, nameof(OnLevelGenerated));
+        GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.StartedTransition), this, nameof(OnStartedLevelTransition));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCRightClicked), GetNode<HUD>("HUD"), nameof(HUD.OnNPCRightClicked));
         // // GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCGenerated), this, nameof(OnCompanionChanged));
         // GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
@@ -151,7 +198,11 @@ public class StageWorld : Stage
 // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
     }
 
+    public void OnStartedLevelTransition()
+    {
+        SetProcessInput(false);
 
+    }
 
     private void OnBtnMapPressed()
     {
@@ -162,6 +213,11 @@ public class StageWorld : Stage
 
     public void OnLevelGenerated()
     {
+        SetProcessInput(true);
+        if (GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentControlState is PlayerUnitControlState p)
+        {
+            p.CurrentPath.Clear();
+        }
        Node2D tilemaps = (Node2D) GetNode<LevelManager>("LevelManager").GetLevelInTree().GetNode("Terrain/Tilemaps").Duplicate();
        GetNode("HUD/CtrlTheme/Map/Panel/ViewportContainer/Viewport/Terrain/Tilemaps").Name = "OldTilemaps";
        GetNode("HUD/CtrlTheme/Map/Panel/ViewportContainer/Viewport/Terrain/OldTilemaps").QueueFree();
@@ -641,10 +697,10 @@ public class StageWorld : Stage
         string controlDown = ((InputEvent)InputMap.GetActionList("Move Down")[0]).AsText();
         string controlLeft = ((InputEvent)InputMap.GetActionList("Move Left")[0]).AsText();
         string controlRight = ((InputEvent)InputMap.GetActionList("Move Right")[0]).AsText();
-        // string controlInteract = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
+        string controlInteract = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
 
         GetNode<HUD>("HUD").LogEntry(String.Format("New world generated."));
-        GetNode<HUD>("HUD").LogEntry(String.Format("Hint: {0}, {1}, {2}, {3} to move. Find someone to talk to.", controlUp, controlDown, controlLeft, controlRight));
+        GetNode<HUD>("HUD").LogEntry(String.Format("Hint: {0}/{1}/{2}/{3} or click to move. {4} or click to interact. Find someone to talk to.", controlUp,controlLeft, controlDown, controlRight, controlInteract));
 
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);

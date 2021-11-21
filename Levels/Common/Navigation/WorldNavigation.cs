@@ -18,7 +18,7 @@ public class WorldNavigation : Navigation2D
 
 	}
 
-	public void SingleUse(CollisionPolygon2D collisionPolygon, LevelManager.Level level)
+	public void SingleUse(List<CollisionPolygon2D> collisionPolys, LevelManager.Level level)
 	{
         // to avoid E 0:00:04.006   make_polygons_from_outlines: NavigationPolygon: Convex partition failed! on reloading scene
         string navPolyPath = "res://RuntimeData/NavPolyInstance" + level.ToString() + ".tscn";
@@ -32,17 +32,23 @@ public class WorldNavigation : Navigation2D
             return;
         }
         //
+        NavigationPolygon polygon = _navPolygonInstance.Navpoly;
+        foreach (CollisionPolygon2D poly in collisionPolys)
+        {
 
-		List<Vector2> newPolygon = new List<Vector2>();
-		NavigationPolygon polygon = _navPolygonInstance.Navpoly;
-		Transform2D polygonTransform = collisionPolygon.GetGlobalTransform();
-		
-		Vector2[] polygonBlueprint = collisionPolygon.Polygon;
-		foreach (Vector2 point in polygonBlueprint)
-		{
-			newPolygon.Add(polygonTransform.Xform(point));
-		}
-		polygon.AddOutline(newPolygon.ToArray());
+            List<Vector2> newPolygon = new List<Vector2>();
+            
+            
+            
+            Transform2D polygonTransform = poly.GetGlobalTransform();
+            
+            Vector2[] polygonBlueprint = poly.Polygon;
+            foreach (Vector2 point in polygonBlueprint)
+            {
+                newPolygon.Add(polygonTransform.Xform(point));
+            }
+            polygon.AddOutline(newPolygon.ToArray());
+        }
 		polygon.MakePolygonsFromOutlines();
 
 		_navPolygonInstance.Navpoly = polygon;
@@ -86,6 +92,11 @@ public class WorldNavigation : Navigation2D
         //     GD.Print(point);
         // }
 	}
+
+    public void OnPlayerPathRequested(PlayerUnitControlState playerUnitControlState, Vector2 worldPos)
+    {
+        playerUnitControlState.CurrentPath = GetSimplePath(playerUnitControlState.Unit.Position, worldPos).ToList();
+    }
 
 
 	public void OnAIPathToPlayerRequested(AIUnitControlState aIUnitControlState, Unit player)

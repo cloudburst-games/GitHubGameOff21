@@ -1,30 +1,19 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
-[ext_resource path="res://Doodads/WorldObstacles/TestObstacle.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=8]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion3.PNG" type="Texture" id=9]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=10]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion4.PNG" type="Texture" id=11]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=12]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion4.PNG" type="Texture" id=13]
-[ext_resource path="res://Doodads/WorldObstacles/TestTreeObstacle.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion2.PNG" type="Texture" id=16]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion3.PNG" type="Texture" id=17]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion2.PNG" type="Texture" id=18]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion1.PNG" type="Texture" id=19]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=20]
 
 [sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 601.027, 775.031, 608.162, 687.03, 650.973, 677.516, 727.083, 668.002, 729.461, 839.248, 665.244, 912.979, -10.2261, 682.273, 53.9912, 658.489, 113.452, 658.489, 358.428, 789.301, 339.401, 834.491, 63.5049, 1281.63, -5.46924, 1236.44, -93.4706, 794.058, -93.4706, 732.219, -481.152, 981.953, -174.337, 1319.69, -155.309, 1393.42, -241.4, 1424.4, -281.365, 1429.1, -324.177, 1410.07, -550.126, 1069.95, -547.748, 1015.25, 391.726, 855.897, 620.054, 993.845, -545.37, 1293.53, -609.587, 1260.23, -604.83, 1229.31, -564.397, 1081.85, 603.405, 1077.09, 527.77, 1153.18, -619.1, 1115.14, 532.008, 1212.51, 464.203, 1250.65, 408.375, 1293.53, 165.777, 1329.2, -326.555, 901.087, -383.637, 1429.1, -438.341, 1414.82, -526.342, 1364.88 )
-polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5 ), PoolIntArray( 6, 7, 8, 9, 10, 11, 12, 13, 14 ), PoolIntArray( 15, 16, 17, 18, 19, 20, 21, 22 ), PoolIntArray( 23, 0, 5, 24 ), PoolIntArray( 25, 26, 27, 28, 21 ), PoolIntArray( 23, 24, 29, 30 ), PoolIntArray( 27, 31, 28 ), PoolIntArray( 30, 32, 33, 23 ), PoolIntArray( 10, 23, 33, 34, 35, 11 ), PoolIntArray( 36, 13, 12, 16, 15 ), PoolIntArray( 21, 20, 37, 38, 39, 25 ) ]
-outlines = [ PoolVector2Array( -10.2261, 682.273, -93.4706, 732.219, -93.4706, 794.058, -326.555, 901.087, -481.152, 981.953, -547.748, 1015.25, -550.126, 1069.95, -564.397, 1081.85, -619.1, 1115.14, -604.83, 1229.31, -609.587, 1260.23, -545.37, 1293.53, -526.342, 1364.88, -438.341, 1414.82, -383.637, 1429.1, -324.177, 1410.07, -281.365, 1429.1, -241.4, 1424.4, -155.309, 1393.42, -174.337, 1319.69, -5.46924, 1236.44, 63.5049, 1281.63, 165.777, 1329.2, 408.375, 1293.53, 464.203, 1250.65, 532.008, 1212.51, 527.77, 1153.18, 603.405, 1077.09, 620.054, 993.845, 665.244, 912.979, 729.461, 839.248, 727.083, 668.002, 650.973, 677.516, 608.162, 687.03, 601.027, 775.031, 391.726, 855.897, 339.401, 834.491, 358.428, 789.301, 113.452, 658.489, 53.9912, 658.489 ) ]
+vertices = PoolVector2Array( -1673.25, 1114.89, -1772.31, 1162.56, -1892.74, 1101.4, -1750.77, 1038.9, -1645.88, 1051.61, -1592.73, 1130.78, -1498.62, 1009.23, -1550.35, 1114.89, -1477.25, 1121.77, -1454.12, 1023, -1414.74, 1113.3, -1332.1, 1128.13, -1390.55, 990.16, -1263.42, 988.041, -1147.76, 1049.73, -1039.69, 1053.44, -1098.49, 1068.27, -989.015, 850.311, -837.334, 950.141, 396.762, 780.386, 402.06, 903.284, 332.843, 927.363, -356.516, 411.693, -570.349, 1057.15, -912.734, 747.543, -921.21, 688.213, -664.82, 562.137, -515.787, 1045.49, 334.432, 1001.53, 270.864, 1029.6, 195.642, 1016.89, 396.762, 564.256, 460.33, 587.564, 466.687, 661.727, 468.806, 738.008, -317.138, 1125.48, -659.522, 493.272, -475.176, 407.456, -255.689, 1112.24, 271.746, 437.121, 393.584, 498.569, -985.837, 786.743, -178.348, 1132.37, -105.009, 1083.37, 54.2039, 1081.51, -0.127441, 1094.6, 22.7718, 248.536, 253.735, 359.78, -41.8555, 253.833, -162.634, 251.714, -346.981, 338.59 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 0, 4, 6, 7 ), PoolIntArray( 8, 7, 6, 9, 10 ), PoolIntArray( 11, 10, 9, 12, 13, 14 ), PoolIntArray( 15, 16, 14, 13, 17, 18 ), PoolIntArray( 19, 20, 21, 22 ), PoolIntArray( 23, 18, 24, 25, 26, 27 ), PoolIntArray( 21, 28, 29, 30, 22 ), PoolIntArray( 31, 32, 33, 34, 19, 22 ), PoolIntArray( 35, 27, 26, 36, 37, 22, 38 ), PoolIntArray( 39, 40, 31, 22 ), PoolIntArray( 18, 17, 41, 24 ), PoolIntArray( 42, 38, 22, 43 ), PoolIntArray( 44, 45, 43, 22, 30 ), PoolIntArray( 46, 47, 39, 22, 48 ), PoolIntArray( 49, 48, 22, 50 ) ]
+outlines = [ PoolVector2Array( -1892.74, 1101.4, -1750.77, 1038.9, -1645.88, 1051.61, -1498.62, 1009.23, -1454.12, 1023, -1390.55, 990.16, -1263.42, 988.041, -989.015, 850.311, -985.837, 786.743, -912.734, 747.543, -921.21, 688.213, -664.82, 562.137, -659.522, 493.272, -475.176, 407.456, -356.516, 411.693, -346.981, 338.59, -162.634, 251.714, -41.8555, 253.833, 22.7718, 248.536, 253.735, 359.78, 271.746, 437.121, 393.584, 498.569, 396.762, 564.256, 460.33, 587.564, 466.687, 661.727, 468.806, 738.008, 396.762, 780.386, 402.06, 903.284, 332.843, 927.363, 334.432, 1001.53, 270.864, 1029.6, 195.642, 1016.89, 54.2039, 1081.51, -0.127441, 1094.6, -105.009, 1083.37, -178.348, 1132.37, -255.689, 1112.24, -317.138, 1125.48, -515.787, 1045.49, -570.349, 1057.15, -837.334, 950.141, -1039.69, 1053.44, -1098.49, 1068.27, -1147.76, 1049.73, -1332.1, 1128.13, -1414.74, 1113.3, -1477.25, 1121.77, -1550.35, 1114.89, -1592.73, 1130.78, -1673.25, 1114.89, -1772.31, 1162.56 ) ]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 4 )
@@ -38,93 +27,8 @@ script = ExtResource( 4 )
 [node name="LevelNPCManager" type="YSort" parent="All/Units"]
 script = ExtResource( 8 )
 
-[node name="Bob" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( 189.176, 1009.85 )
-_customBattleText = "Behold. It is I. Bob."
-ID = "Doomsayer"
-UnitName = "Bobz"
-PortraitPath = ExtResource( 20 )
-PortraitPathSmall = ExtResource( 19 )
-_startDirection = 2
-_startingBools = {
-"Companion": false,
-"Hostile": true,
-"InitiatesDialogue": false
-}
-_minions = {
-0: 0
-}
-_physicalDamageRange = 1.0
-
-[node name="Bob2" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -506.3, 1312.23 )
-ID = "bob2"
-UnitName = "Bobz brother"
-PortraitPath = ExtResource( 16 )
-PortraitPathSmall = ExtResource( 18 )
-_active = false
-_startingBools = {
-"Companion": false,
-"Hostile": false,
-"InitiatesDialogue": false
-}
-_minions = {
-1: 0
-}
-_itemsHeld = [ 1, 1, 1, 1, 0, 5, 2, 3, 4, 0, 6, 0, 12, 13, 9, 7 ]
-
-[node name="Jim" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -84.5477, 788.985 )
-ID = "Ammit"
-UnitName = "Jimmy"
-PortraitPath = ExtResource( 17 )
-PortraitPathSmall = ExtResource( 9 )
-_startDirection = 3
-_startingBools = {
-"Companion": false,
-"Hostile": false,
-"InitiatesDialogue": false
-}
-_mainCombatant = 1
-_combatLevel = 2
-_minions = {
-0: 0,
-1: 0
-}
-_potionEquipped1 = 0
-_potionEquipped3 = 4
-
-[node name="James" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -218.578, 1189.19 )
-ID = "test3416"
-UnitName = "James Reginald"
-PortraitPath = ExtResource( 11 )
-PortraitPathSmall = ExtResource( 13 )
-_startDirection = 2
-_minions = {
-1: 0
-}
-
-[node name="NeutralBill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( 108.628, 786.293 )
-_customBattleText = "hah! i am not neutral after all."
-ID = "Father"
-UnitName = "Bill Take-No-Sides"
-PortraitPath = ExtResource( 12 )
-PortraitPathSmall = ExtResource( 10 )
-_startDirection = 4
-_startingBools = {
-"Companion": false,
-"Hostile": true,
-"InitiatesDialogue": false
-}
-_minions = {
-0: 0
-}
-_physicalDamageRange = 1.0
-
 [node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -513.633, 1057.28 )
+position = Vector2( -472.621, 932.829 )
 ID = "NPC1"
 UnitName = "Evil Jill"
 PortraitPath = ExtResource( 12 )
@@ -139,6 +43,32 @@ position = Vector2( 311.302, 327.745 )
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
 position = Vector2( -51.6437, 74.3371 )
 
+[node name="Bandit0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -971.786, 904.773 )
+_customBattleText = "Sarah will figure this out"
+_defeatMessage = "An attack is unusual."
+ID = "bandit0"
+UnitName = "Bandit"
+PortraitPath = ExtResource( 12 )
+PortraitPathSmall = ExtResource( 10 )
+_startDirection = 6
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
+_minions = {
+0: 0
+}
+_physicalDamageRange = 1.0
+_startingGold = 10
+_itemsHeld = [ 1, 4 ]
+
+[node name="Child0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -1393.5, 1038.54 )
+ID = "Child"
+UnitName = "Little Scarab Child"
+
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
 [node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 2 )]
@@ -149,7 +79,7 @@ DestinationLevel = 1
 [node name="PositionMarkers" type="YSort" parent="All"]
 
 [node name="PlayerPositionMarker" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 589.062, 856.056 )
+position = Vector2( -1794.94, 1120.06 )
 
 [node name="CompanionPositionMarker1" type="Position2D" parent="All/PositionMarkers"]
 position = Vector2( 543.756, 811.704 )
@@ -177,25 +107,7 @@ _oneShot = false
 
 [node name="Obstacles" type="YSort" parent="All"]
 
-[node name="TestObstacle" parent="All/Obstacles" instance=ExtResource( 5 )]
-
-[node name="TestTreeObstacle" parent="All/Obstacles" instance=ExtResource( 14 )]
-position = Vector2( 292.253, 912.593 )
-
-[node name="TestTreeObstacle2" parent="All/Obstacles" instance=ExtResource( 14 )]
-position = Vector2( 245.109, 1008 )
-
-[node name="TestTreeObstacle3" parent="All/Obstacles" instance=ExtResource( 14 )]
-position = Vector2( 312.457, 1144.94 )
-
 [node name="Shops" type="YSort" parent="All"]
-
-[node name="Shop" parent="All/Shops" instance=ExtResource( 15 )]
-position = Vector2( -20.4878, 1096.57 )
-_startingItemsStocked = [ 4, 1, 9, 10, 11, 12, 13, 14 ]
-_introText = "Welcome! Please, peruse my humble wares."
-_shopTitle = "Abdul's Desert Merchandise"
-_stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

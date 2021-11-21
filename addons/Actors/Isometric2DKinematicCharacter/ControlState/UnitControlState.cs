@@ -11,6 +11,11 @@ public class UnitControlState : Reference
 
     }
 
+    public virtual void UpdateInputEvents(InputEvent ev)
+    {
+
+    }
+
     public void SetTargetAnimRotation(Vector2 target)
     {
 
