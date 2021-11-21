@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Interface/Panels/NPCInfoPanel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Interface/Map/Border.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Interface/Panels/PnlPreBattle.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=11]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=14]
@@ -51,6 +52,12 @@ tracks/1/keys = {
 "update": 1,
 "values": [ "Midnight", "Midnight", "Night", "Dusk", "Night", "Midnight", "Midnight" ]
 }
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 11 )
 
 [sub_resource type="Animation" id=2]
 length = 0.6
@@ -649,6 +656,7 @@ margin_left = -477.0
 margin_top = -256.5
 margin_right = 478.0
 margin_bottom = 297.5
+custom_fonts/normal_font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

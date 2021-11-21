@@ -19,6 +19,7 @@ outlines = [ PoolVector2Array( -1259.78, 996.986, -1247.77, 1013, -1215.73, 1027
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 4 )
+LevelName = "Level 1 namea"
 
 [node name="Terrain" parent="." instance=ExtResource( 1 )]
 

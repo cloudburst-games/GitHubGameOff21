@@ -174,6 +174,7 @@ public class StageWorld : Stage
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.Announced), GetNode<HUD>("HUD"), nameof(HUD.LogEntry));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.LevelGenerated), this, nameof(OnLevelGenerated));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.StartedTransition), this, nameof(OnStartedLevelTransition));
+        GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.CompletedTransition), this, nameof(OnCompletedLevelTransition));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCRightClicked), GetNode<HUD>("HUD"), nameof(HUD.OnNPCRightClicked));
         // // GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.NPCGenerated), this, nameof(OnCompanionChanged));
         // GetNode<CntBattle>("HUD/CtrlTheme/CntBattle").Connect(nameof(CntBattle.BattleEnded), this, nameof(OnBattleEnded));
@@ -201,7 +202,13 @@ public class StageWorld : Stage
     public void OnStartedLevelTransition()
     {
         SetProcessInput(false);
+        
 
+    }
+
+    public void OnCompletedLevelTransition()
+    {
+       GetNode<HUD>("HUD").LogEntry(String.Format("Entered {0}.", GetNode<LevelManager>("LevelManager").GetLevelInTree().LevelName));
     }
 
     private void OnBtnMapPressed()

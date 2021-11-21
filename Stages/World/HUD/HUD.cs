@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 public class HUD : CanvasLayer
 {
+    public Dictionary<LevelManager.Level, string> LevelNames {get; set;} = new Dictionary<LevelManager.Level, string>()
+    {
+        {LevelManager.Level.Level1, "level 1"},
+        {LevelManager.Level.Level2, "level 2"},
+        {LevelManager.Level.Level3, "level 3"},
+        {LevelManager.Level.Level4, "level 4"},
+        {LevelManager.Level.Level5, "level 5"},
+    };
     public bool Pausable {get; set;} = true;
     public override void _Ready()
     {

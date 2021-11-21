@@ -175,6 +175,8 @@ public class LevelManager : Node2D
 
     [Signal]
     public delegate void StartedTransition();
+    [Signal]
+    public delegate void CompletedTransition();
 
     public async void OnTriedToTransitionTo(Level dest)
     {
@@ -215,6 +217,8 @@ public class LevelManager : Node2D
         
         // fade from black
         loadingScreen.FadeOut();
+
+        EmitSignal(nameof(CompletedTransition));
     
     }
 

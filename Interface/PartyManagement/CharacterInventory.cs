@@ -11,7 +11,7 @@ public class CharacterInventory : Control
     public delegate void CharacterStatsChanged(Dictionary<BattleUnitData.DerivedStat, float> stats);
     
     [Signal]
-    public delegate void CharacterAttributesChanged(Dictionary<UnitData.Attribute, int> atts);
+    public delegate void CharacterAttributesChanged(Dictionary<UnitData.Attribute, int> atts, float armour);
 
     private PnlInventory _invAmulet;
     private PnlInventory _invArmour;
@@ -338,7 +338,7 @@ public class CharacterInventory : Control
         }
         _currentUnitData.UpdateDerivedStatsFromAttributes();
         EmitSignal(nameof(CharacterStatsChanged), _currentUnitData.CurrentBattleUnitData.Stats);
-        EmitSignal(nameof(CharacterAttributesChanged), _currentUnitData.Attributes);
+        EmitSignal(nameof(CharacterAttributesChanged), _currentUnitData.Attributes, _currentUnitData.GetArmourBonus());
     }
 
     // set all to defaults

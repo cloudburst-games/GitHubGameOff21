@@ -104,12 +104,13 @@ public class PnlCharacterManagementAttributes : Panel
             _attributePanels[a].GetNode<Label>("HBox/LblNum").Text = unitData.Attributes[a].ToString();
         }
     }
-    public void OnAttributesChanged(Dictionary<UnitData.Attribute, int> atts)
+    public void OnAttributesChanged(Dictionary<UnitData.Attribute, int> atts, float armour)
     {
         foreach (UnitData.Attribute a in atts.Keys)
         {
             _attributePanels[a].GetNode<Label>("HBox/LblNum").Text = atts[a].ToString();
         }
+        GetNode<Label>("LblArmour").Text = String.Format("Armour: {0}", armour);
     }
 
     public void Start(UnitData unitData)

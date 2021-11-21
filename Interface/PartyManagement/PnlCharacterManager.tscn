@@ -440,10 +440,26 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -315.5
-margin_top = -189.437
+margin_top = -147.058
 margin_right = 315.5
-margin_bottom = -154.437
+margin_bottom = -112.058
 text = "Points remaining: "
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LblArmour" type="Label" parent="TabContainer/Character/TabContainer/Attributes"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -315.5
+margin_top = -186.259
+margin_right = 315.5
+margin_bottom = -151.259
+text = "Armour: 0"
 align = 1
 valign = 1
 __meta__ = {
@@ -456,9 +472,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -319.0
-margin_top = -138.142
+margin_top = -111.0
 margin_right = 319.0
-margin_bottom = -14.1422
+margin_bottom = -7.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -469,9 +485,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -297.0
-margin_top = -60.0
+margin_top = -48.0
 margin_right = 297.0
-margin_bottom = 60.0
+margin_bottom = 48.0
 text = "explanation of the attributes explanation of the explanation of the attributes explanation of the attributes explanation of the attributes "
 align = 1
 valign = 1

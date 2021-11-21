@@ -9,4 +9,7 @@ public class LevelLocation : Node2D
     {
         GetNode<Position2D>("All/PositionMarkers/PlayerPositionMarker").GlobalPosition = levelData.PlayerPosition;
     }
+
+    [Export]
+    public string LevelName {get; set;} = "Level Name";
 }
