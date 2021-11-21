@@ -270,12 +270,12 @@ public class PnlShopScreen : Panel
         if (source == GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell"))
         {
             buyFor = _shopData.BuyMessage;
-            cost = Convert.ToInt32(Math.Floor(cost/2f));
+            cost = Convert.ToInt32(Math.Floor(cost/_shopData.Stinginess));
         }
         else
         {
             buyFor = _shopData.SellMessage;
-            cost = Convert.ToInt32(Math.Ceiling(cost*2f));
+            cost = Convert.ToInt32(Math.Ceiling(cost*_shopData.Stinginess));
         }
         if (item is InventoryItemEmpty)
         {

@@ -21,7 +21,7 @@ public class WorldNavigation : Navigation2D
 	public void SingleUse(List<CollisionPolygon2D> collisionPolys, LevelManager.Level level)
 	{
         // to avoid E 0:00:04.006   make_polygons_from_outlines: NavigationPolygon: Convex partition failed! on reloading scene
-        string navPolyPath = "res://RuntimeData/NavPolyInstance" + level.ToString() + ".tscn";
+        string navPolyPath = "user://RuntimeData/NavPolyInstance" + level.ToString() + ".tscn";
         if (ResourceLoader.Exists(navPolyPath))
         {
             _navPolygonInstance.Name = "NavPolyOld";
@@ -55,7 +55,7 @@ public class WorldNavigation : Navigation2D
 
         var packedScene = new PackedScene();
         packedScene.Pack(_navPolygonInstance);
-        System.IO.Directory.CreateDirectory(ProjectSettings.GlobalizePath("res://RuntimeData"));
+        System.IO.Directory.CreateDirectory(ProjectSettings.GlobalizePath("user://RuntimeData"));
         ResourceSaver.Save(navPolyPath, packedScene);
 
 	}
@@ -95,7 +95,7 @@ public class WorldNavigation : Navigation2D
 
     public void OnPlayerPathRequested(PlayerUnitControlState playerUnitControlState, Vector2 worldPos)
     {
-        playerUnitControlState.CurrentPath = GetSimplePath(playerUnitControlState.Unit.Position, worldPos).ToList();
+        playerUnitControlState.CurrentPath = GetSimplePath(playerUnitControlState.Unit.GlobalPosition, worldPos).ToList();
     }
 
 

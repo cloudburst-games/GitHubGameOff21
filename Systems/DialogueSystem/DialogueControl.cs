@@ -238,16 +238,12 @@ public class DialogueControl : Control
     {
         base._Input(ev);
         
-        if (ev.IsActionPressed("Enter") && !ev.IsEcho() && ContinueButton.Visible)
+        if (ev is InputEventKey key && !ev.IsEcho() && ContinueButton.Visible && Visible)
         {
-			OnContinueButtonPressed();
-			/* if (Tween.IsActive())
-			{
-				Tween.StopAll();
-				//Tween.Stop(MainText, "percent_visible");
-				MainText.PercentVisible = 1;
-				
-			} */
+            if (key.Scancode == (int) KeyList.Enter || key.Scancode == (int) KeyList.Space && key.Pressed)
+            {
+                OnContinueButtonPressed();
+            }
         }
 	}
 

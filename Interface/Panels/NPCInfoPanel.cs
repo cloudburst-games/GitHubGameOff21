@@ -109,7 +109,7 @@ public class NPCInfoPanel : Panel
 
     private string GetFormattedCombatants(BattleUnit.Combatant combatant, int num)
     {
-        return String.Format("\n{0} {1}{2}", num, Enum.GetName(typeof(BattleUnit.Combatant), combatant), num > 1 ? "s" : "");
+        return String.Format("\n{0} {1}{2}", num, "Scarab", num > 1 ? "s" : "");
     }
 
 }

@@ -23,7 +23,7 @@ public class Unit : KinematicBody2D
     [Export]
     private string _customBattleText {get; set;} = "";
     [Export]
-    private string _defeatMessage {get; set;} = "You have defeated your foes in honourable combat!";
+    private string _defeatMessage {get; set;} = "You have defeated your foe!";
     [Export]
     public Texture PortraitPath = GD.Load<Texture>("res://Interface/Cursors/Art/Hint.PNG");
     [Export]
@@ -73,7 +73,7 @@ public class Unit : KinematicBody2D
     private int _combatLevel = 1;
     [Export] // minions are set to combat level -1. use all of the data to generate battleunits
     private Dictionary<BattleUnit.Combatant, int> _minions = new Dictionary<BattleUnit.Combatant, int>() {
-        {BattleUnit.Combatant.Beetle, 1}
+        {BattleUnit.Combatant.Beetle, 0}
     };
     [Export]
     private List<UnitData.Attribute> _favouredAttributes = new List<UnitData.Attribute>();
@@ -102,6 +102,8 @@ public class Unit : KinematicBody2D
     private PnlInventory.ItemMode _armourEquipped = PnlInventory.ItemMode.Empty;
     [Export]
     private PnlInventory.ItemMode _amuletEquipped = PnlInventory.ItemMode.Empty;
+    [Export]
+    private bool _weak = false;
     //
 
     public UnitData CurrentUnitData {get; set;} = new UnitData();
@@ -132,7 +134,6 @@ public class Unit : KinematicBody2D
         CurrentUnitData.BodyPath = this._body.ResourcePath;
         CurrentUnitData.Gold = _startingGold;
         CurrentUnitData.Active = _active;
-
         CurrentUnitData.CurrentBattleUnitData = new BattleUnitData() {
             Combatant = _mainCombatant,
             Level = _combatLevel,
@@ -168,7 +169,9 @@ public class Unit : KinematicBody2D
                 minionUnitData.CurrentBattleUnitData.Combatant = combatant;
                 minionUnitData.CurrentBattleUnitData.Level = CurrentUnitData.CurrentBattleUnitData.Level - 1;
                 minionUnitData.BodyPath = CurrentUnitData.BodyPath;
+                minionUnitData.CurrentBattleUnitData.BodyPath = CurrentUnitData.BodyPath;
                 minionUnitData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
+                minionUnitData.CurrentBattleUnitData.Weak = _weak;
                 minionUnitData.SetAttributesByLevel(_favouredAttributes);
                 minionUnitData.UpdateDerivedStatsFromAttributes();
                 CurrentUnitData.Minions.Add(minionUnitData.CurrentBattleUnitData);
@@ -180,6 +183,7 @@ public class Unit : KinematicBody2D
         CurrentUnitData.CustomBattleText = _customBattleText;
         CurrentUnitData.DefeatMessage = _defeatMessage;
         CurrentUnitData.Companion = _startingBools["Companion"];
+        CurrentUnitData.CurrentBattleUnitData.Weak = _weak;
         
         CurrentUnitData.SetAttributesByLevel(_favouredAttributes);
         

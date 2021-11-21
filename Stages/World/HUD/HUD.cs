@@ -12,6 +12,7 @@ public class HUD : CanvasLayer
             GetNode<Panel>("CtrlTheme/PnlDefeat").Visible = GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible = false;
 
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.DialogueEnded), this, nameof(OnDialogueEnded));
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.JournalUpdatedSignal), this, nameof(OnJournalUpdated));
         GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Connect(nameof(Journal.ClosedJournal), this, nameof(OnBtnJournalClosePressed));
         // fix position bugs
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").RectPosition = new Vector2(-960,540);

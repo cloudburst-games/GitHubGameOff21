@@ -226,79 +226,93 @@ public class CntBattle : Control
             GD.Print("Error! Too many combatants passed into battle!");
             throw new Exception();
         }
+        // make temporary hostiles list (for difficulty adjustment without affecting XP reward)
+        List<BattleUnitData> tempHostiles = new List<BattleUnitData>();
+        foreach (BattleUnitData battleUnitData in _hostilesData)
+        {
+            tempHostiles.Add(battleUnitData);
+        }
+        //
 
          switch (difficulty)
         {
             case 0:
-                if (_hostilesData.Count > 3)
+                if (tempHostiles.Count > 3)
                 {
-                    _hostilesData.RemoveAt(_hostilesData.Count-1);
+                    tempHostiles.RemoveAt(tempHostiles.Count-1);
                 }
-                if (_hostilesData.Count > 2)
+                if (tempHostiles.Count > 2)
                 {
-                    _hostilesData.RemoveAt(_hostilesData.Count-1);
+                    tempHostiles.RemoveAt(tempHostiles.Count-1);
                 }
-                foreach (BattleUnitData battleUnitData in _hostilesData)
+                foreach (BattleUnitData battleUnitData in tempHostiles)
                 {
                     battleUnitData.ModulateStats(_rand.Next(-3,-1));
                 }
                 break;
             case 1:
-                if (_hostilesData.Count > 4)
+                if (tempHostiles.Count > 4)
                 {
-                    _hostilesData.RemoveAt(_hostilesData.Count-1);
+                    tempHostiles.RemoveAt(tempHostiles.Count-1);
                 }
-                foreach (BattleUnitData battleUnitData in _hostilesData)
+                foreach (BattleUnitData battleUnitData in tempHostiles)
                 {
                     battleUnitData.ModulateStats(_rand.Next(-2,0));
                 }
                 break;
             case 2:
-                if (_hostilesData.Count < 5)
+                if (tempHostiles.Count < 5)
                 {
                     UnitData newEnemyData = new UnitData();
                     newEnemyData.CurrentBattleUnitData = new BattleUnitData();
                     newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
                     newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = _rand.Next(0,2) == 1 ? _enemyCommanderData.Spell1 : SpellEffectManager.SpellMode.Empty;
-                    newEnemyData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
                     newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
                     newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
+                    newEnemyData.CurrentBattleUnitData.Weak = _enemyCommanderData.Weak;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = _rand.Next(0,2) == 1 ? _enemyCommanderData.Spell1 : SpellEffectManager.SpellMode.Empty;
+                    newEnemyData.CurrentBattleUnitData.Spell2 = SpellEffectManager.SpellMode.Empty;
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
-                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                    newEnemyData.CurrentBattleUnitData.Experience = 0;
+                    tempHostiles.Add(newEnemyData.CurrentBattleUnitData);
                 }
                 break;
             case 3:
-                if (_hostilesData.Count < 5)
+                if (tempHostiles.Count < 5)
                 {
                     UnitData newEnemyData = new UnitData();
                     newEnemyData.CurrentBattleUnitData = new BattleUnitData();
                     newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
                     newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
-                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
                     newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
+                    newEnemyData.CurrentBattleUnitData.Weak = _enemyCommanderData.Weak;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = !newEnemyData.CurrentBattleUnitData.Weak ? (SpellEffectManager.SpellMode) _rand.Next(0,10)
+                        : SpellEffectManager.SpellMode.Empty;
+                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
-                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                    
+                    tempHostiles.Add(newEnemyData.CurrentBattleUnitData);
                 }
-                if (_hostilesData.Count < 5)
+                if (tempHostiles.Count < 5)
                 {
                     UnitData newEnemyData = new UnitData();
                     newEnemyData.CurrentBattleUnitData = new BattleUnitData();
                     newEnemyData.CurrentBattleUnitData.Combatant = _enemyCommanderData.Combatant;
                     newEnemyData.CurrentBattleUnitData.Level = _enemyCommanderData.Level;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = (SpellEffectManager.SpellMode) _rand.Next(0,10);
-                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
                     newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
+                    newEnemyData.CurrentBattleUnitData.Weak = _enemyCommanderData.Weak;
+                    newEnemyData.CurrentBattleUnitData.Spell1 = !newEnemyData.CurrentBattleUnitData.Weak ? (SpellEffectManager.SpellMode) _rand.Next(0,10)
+                        : SpellEffectManager.SpellMode.Empty;
+                    newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
-                    _hostilesData.Add(newEnemyData.CurrentBattleUnitData);
+                    tempHostiles.Add(newEnemyData.CurrentBattleUnitData);
                 }
-                foreach (BattleUnitData battleUnitData in _hostilesData)
+                foreach (BattleUnitData battleUnitData in tempHostiles)
                 {
                     battleUnitData.ModulateStats(_rand.Next(0,2));
                 }
@@ -311,9 +325,9 @@ public class CntBattle : Control
             GenerateBattleUnit((StartPositionMode)i+1, _friendliesData[i]);
         }
         GenerateBattleUnit(StartPositionMode.Enemy1, _enemyCommanderData);
-        for (int i = 0; i < _hostilesData.Count; i++)
+        for (int i = 0; i < tempHostiles.Count; i++)
         {
-            GenerateBattleUnit((StartPositionMode)i+7, _hostilesData[i]);
+            GenerateBattleUnit((StartPositionMode)i+7, tempHostiles[i]);
         }
             
     }
@@ -331,7 +345,7 @@ public class CntBattle : Control
         newBattleUnit.CurrentBattleUnitData = data;
 
         newBattleUnit.CurrentBattleUnitData.Name = 
-            newBattleUnit.CurrentBattleUnitData.Name == "" ? Enum.GetName(typeof(BattleUnit.Combatant), data.Combatant) 
+            newBattleUnit.CurrentBattleUnitData.Name == "" ? "Scarab" 
             : newBattleUnit.CurrentBattleUnitData.Name;
 
         newBattleUnit.Direction = (data == _playerData || _friendliesData.Contains(data)) ? BattleUnit.DirectionFacingMode.UpRight

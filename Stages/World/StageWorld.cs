@@ -30,7 +30,7 @@ public class StageWorld : Stage
             }
         }
         //
-        if (GetNode<HUD>("HUD").IsAnyWindowVisible())
+        if (GetNode<HUD>("HUD").IsAnyWindowVisible() || GetNode<PopupMenu>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits/PopupMenu").Visible)
         {
             GetNode<LevelManager>("LevelManager").GetPlayerInTree().SetProcessInput(false);
         }
@@ -65,13 +65,13 @@ public class StageWorld : Stage
 
         if (ev.IsActionPressed("Battle Anim Speed 1"))
         {
-            OnCompanionJoining(new UnitDataSignalWrapper() {CurrentUnitData = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNode<Unit>("Bob").CurrentUnitData});
+            OnCompanionJoining(new UnitDataSignalWrapper() {CurrentUnitData = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNode<Unit>("Child0").CurrentUnitData});
 
             // GetNode<Label>("HUD/CtrlTheme/Blah/Label2").Text = "I HAVE NOW SET BLAH FROM FALSE TO TRUE";
             // GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentDialogueData.Blah = true;
         }
 
-        if (ev is InputEventMouseMotion m)
+        if (ev is InputEventMouseMotion)
         {
             foreach (Unit npc in GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetActiveNonCompanionNPCs())
             {
@@ -467,6 +467,7 @@ public class StageWorld : Stage
 
     public void OnPopupMenuIDPressed(int id, string unitID)// int portraitIndex)
     {
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().SetProcessInput(true);
         // 0 sheet // 1 inv // 2  talk // -1 keep the same tab
         Unit unit = unitID == GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.ID
             ? GetNode<LevelManager>("LevelManager").GetPlayerInTree()
@@ -563,6 +564,8 @@ public class StageWorld : Stage
         DataBinary dataBinary = new DataBinary();
         dataBinary.Data = saveDict;
 
+        // GD.Print("minions count: ", target.CurrentUnitData.Minions.Count);
+
         SceneManager.SimpleChangeScene(SceneData.Stage.Battle, new Dictionary<string,object>() {
             {"Data", dataBinary},
             {"PlayerData", GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData},
@@ -631,6 +634,7 @@ public class StageWorld : Stage
 
     public void OnBattleVictory(Unit enemyDefeated)
     {
+        // GD.Print("minions count: ", enemyDefeated.CurrentUnitData.Minions.Count);
         // GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory");
         // do victory stuff
         // GD.Print(enemyDefeated.CurrentUnitData.Name);
@@ -667,7 +671,7 @@ public class StageWorld : Stage
             PortraitPath = "res://Actors/PortraitPlaceholders/Big/Khepri.PNG",
             PortraitPathSmall = "res://Actors/PortraitPlaceholders/Small/Khepri.PNG"
         };
-        player.CurrentUnitData.Time = 80f; // start at 8am
+        player.CurrentUnitData.Time = 190; // start at 7pm
         player.CurrentUnitData.CurrentBattleUnitData.BattlePortraitPath = player.CurrentUnitData.PortraitPathSmall;
         player.CurrentUnitData.CurrentBattleUnitData.BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"; // todo - change this to PlayerBody when this is done
         // set starting attributes
@@ -681,15 +685,15 @@ public class StageWorld : Stage
         player.CurrentUnitData.CurrentBattleUnitData.SpellGainedAtHigherLevel = SpellEffectManager.SpellMode.SolarBlast;
 
         // set starting equipment
-        player.CurrentUnitData.EquipAmulet(PnlInventory.ItemMode.ScarabAmulet);
-        player.CurrentUnitData.EquipArmour(PnlInventory.ItemMode.RustedArmour);
-        player.CurrentUnitData.EquipWeapon(PnlInventory.ItemMode.RustedMace);
+        // player.CurrentUnitData.EquipAmulet(PnlInventory.ItemMode.ScarabAmulet);
+        // player.CurrentUnitData.EquipArmour(PnlInventory.ItemMode.RustedArmour);
+        // player.CurrentUnitData.EquipWeapon(PnlInventory.ItemMode.RustedMace);
         player.CurrentUnitData.CurrentBattleUnitData.PotionsEquipped = new PnlInventory.ItemMode[3] {
-            PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.ManaPot
+            PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.Empty
         };
-        player.CurrentUnitData.CurrentBattleUnitData.ItemsHeld = new List<PnlInventory.ItemMode>() {
-            PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot
-        };
+        // player.CurrentUnitData.CurrentBattleUnitData.ItemsHeld = new List<PnlInventory.ItemMode>() {
+        //     PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot
+        // };
         player.CurrentUnitData.UpdateDerivedStatsFromAttributes();
 
         
@@ -763,8 +767,8 @@ public class StageWorld : Stage
             GetNode<LevelManager>("LevelManager").CurrentLevel,
             player);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
-        GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
-        GD.Print("player tyime: ", player.CurrentUnitData.Time);
+        // GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
+        // GD.Print("player tyime: ", player.CurrentUnitData.Time);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);
         GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         OnCompanionChanged();

@@ -35,6 +35,30 @@ public class AutosaveArea : Area2D
         }
     }
 
+    public void OnAutosaveAreaAreaEntered(Godot.Object area)
+    {
+        if (area is Area2D a)
+        {
+            if (a.Name == "NPCEnableInteractionArea")
+            {
+                if (a.GetParent() is Unit unit)
+                {
+                    if (unit.CurrentControlState is PlayerUnitControlState)
+                    {
+                        if (!Active)
+                        {
+                            return;
+                        }
+                        if (_oneShot)
+                        {
+                            Active = false;
+                        }
+                        EmitSignal(nameof(AutosaveAreaPlayerEntered));
+                    }
+                }
+            }
+        }
+    }
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 //  public override void _Process(float delta)
 //  {

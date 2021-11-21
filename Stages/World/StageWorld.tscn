@@ -34,10 +34,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 4.6, 40, 70, 123, 180, 210, 240 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 4.6, 190, 200, 240 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0, 0, 0.509804 ), Color( 0, 0, 0, 0.403922 ), Color( 0, 0, 0, 0.0784314 ), Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.0784314 ), Color( 0, 0, 0, 0.403922 ), Color( 0, 0, 0, 0.513726 ) ]
+"values": [ Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.156863 ), Color( 0, 0, 0, 0.235294 ), Color( 0, 0, 0, 0.392157 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("../HUD/CtrlTheme/PnlUIBar/LblTime:text")
@@ -46,10 +46,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 5, 40, 70, 120, 130, 170, 210, 235, 240.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 5, 190, 200, 235, 240.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ "Midnight", "Night", "Dawn", "Morning", "Midday", "Afternoon", "Evening", "Dusk", "Midnight", "Midnight" ]
+"values": [ "Midnight", "Midnight", "Night", "Dusk", "Night", "Midnight", "Midnight" ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -141,7 +141,7 @@ layer = 0
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 margin_right = 1920.0
 margin_bottom = 1080.0
-color = Color( 0, 0, 0, 0.513726 )
+color = Color( 0, 0, 0, 0.392157 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

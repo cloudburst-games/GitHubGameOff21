@@ -12,8 +12,8 @@ public class ExperienceManager
 
     public float GetTotalExperienceFromVictory(float experienceValueOfDefeated, int numOfDefeated, int numOfCompanions)
     {
-        // add 2 xp per defeated opponent
-        experienceValueOfDefeated += numOfDefeated*2;
+        // add 5 xp per defeated opponent
+        experienceValueOfDefeated += numOfDefeated*5;
         // party bonus
         for (int i = 0; i < numOfCompanions; i++)
         {

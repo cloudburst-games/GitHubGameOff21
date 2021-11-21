@@ -1,19 +1,21 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
+[ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=8]
+[ext_resource path="res://Actors/NPC/Bodies/SphinxBody.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=10]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=12]
 
 [sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( -1673.25, 1114.89, -1772.31, 1162.56, -1892.74, 1101.4, -1750.77, 1038.9, -1645.88, 1051.61, -1592.73, 1130.78, -1498.62, 1009.23, -1550.35, 1114.89, -1477.25, 1121.77, -1454.12, 1023, -1414.74, 1113.3, -1332.1, 1128.13, -1390.55, 990.16, -1263.42, 988.041, -1147.76, 1049.73, -1039.69, 1053.44, -1098.49, 1068.27, -989.015, 850.311, -837.334, 950.141, 396.762, 780.386, 402.06, 903.284, 332.843, 927.363, -356.516, 411.693, -570.349, 1057.15, -912.734, 747.543, -921.21, 688.213, -664.82, 562.137, -515.787, 1045.49, 334.432, 1001.53, 270.864, 1029.6, 195.642, 1016.89, 396.762, 564.256, 460.33, 587.564, 466.687, 661.727, 468.806, 738.008, -317.138, 1125.48, -659.522, 493.272, -475.176, 407.456, -255.689, 1112.24, 271.746, 437.121, 393.584, 498.569, -985.837, 786.743, -178.348, 1132.37, -105.009, 1083.37, 54.2039, 1081.51, -0.127441, 1094.6, 22.7718, 248.536, 253.735, 359.78, -41.8555, 253.833, -162.634, 251.714, -346.981, 338.59 )
-polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 5, 0, 4, 6, 7 ), PoolIntArray( 8, 7, 6, 9, 10 ), PoolIntArray( 11, 10, 9, 12, 13, 14 ), PoolIntArray( 15, 16, 14, 13, 17, 18 ), PoolIntArray( 19, 20, 21, 22 ), PoolIntArray( 23, 18, 24, 25, 26, 27 ), PoolIntArray( 21, 28, 29, 30, 22 ), PoolIntArray( 31, 32, 33, 34, 19, 22 ), PoolIntArray( 35, 27, 26, 36, 37, 22, 38 ), PoolIntArray( 39, 40, 31, 22 ), PoolIntArray( 18, 17, 41, 24 ), PoolIntArray( 42, 38, 22, 43 ), PoolIntArray( 44, 45, 43, 22, 30 ), PoolIntArray( 46, 47, 39, 22, 48 ), PoolIntArray( 49, 48, 22, 50 ) ]
-outlines = [ PoolVector2Array( -1892.74, 1101.4, -1750.77, 1038.9, -1645.88, 1051.61, -1498.62, 1009.23, -1454.12, 1023, -1390.55, 990.16, -1263.42, 988.041, -989.015, 850.311, -985.837, 786.743, -912.734, 747.543, -921.21, 688.213, -664.82, 562.137, -659.522, 493.272, -475.176, 407.456, -356.516, 411.693, -346.981, 338.59, -162.634, 251.714, -41.8555, 253.833, 22.7718, 248.536, 253.735, 359.78, 271.746, 437.121, 393.584, 498.569, 396.762, 564.256, 460.33, 587.564, 466.687, 661.727, 468.806, 738.008, 396.762, 780.386, 402.06, 903.284, 332.843, 927.363, 334.432, 1001.53, 270.864, 1029.6, 195.642, 1016.89, 54.2039, 1081.51, -0.127441, 1094.6, -105.009, 1083.37, -178.348, 1132.37, -255.689, 1112.24, -317.138, 1125.48, -515.787, 1045.49, -570.349, 1057.15, -837.334, 950.141, -1039.69, 1053.44, -1098.49, 1068.27, -1147.76, 1049.73, -1332.1, 1128.13, -1414.74, 1113.3, -1477.25, 1121.77, -1550.35, 1114.89, -1592.73, 1130.78, -1673.25, 1114.89, -1772.31, 1162.56 ) ]
+vertices = PoolVector2Array( 462.036, 242.536, 671.183, 337.03, 634.645, 349.629, 543.931, 363.488, 528.812, 355.929, 499.834, 348.369, 401.56, 277.814, 99.3315, 667.515, 23.8215, 714.709, -30.9232, 714.709, -27.1477, 695.831, 34.923, 499.56, 138.237, 543.657, 288.167, 347.109, 305.806, 330.73, 406.6, 400.026, 288.167, 381.127, -605.117, 526.018, -608.897, 475.621, -505.583, 481.921, -226.615, 712.665, -852.062, 848.558, -873.48, 793.121, -796.625, 752.804, -230.619, 736.692, 288.167, 412.625, 409.12, 457.982, 344.864, 480.661, -729.849, 660.83, -744.968, 597.834, 233.99, 430.264, 354.943, 549.957, 274.892, 582.566, 232.731, 497.04, -806.704, 696.108, 165.403, 675.066, 173.514, 522.238, 286.219, 631.648, 273.004, 659.964, 180.505, 690.168, -1167.01, 930.911, -1131.76, 919.114, -998.82, 1000.32, -985.472, 1012.34, -994.148, 1043.04, -1045.54, 1063.73, -1087.59, 1075.07, -1129.63, 1069.07, -1165.01, 1055.05, -1215.73, 1027.69, -1222.41, 959.61, -1247.77, 1013, -1259.78, 996.986, -1252.72, 982.11, -1100.94, 908.219, -1054.91, 911.554, -1044.83, 922.893, -993.675, 969.555, -1004.51, 922.893, -974.793, 960.945, -960.415, 895.175, -943.424, 962.28, -873.345, 977.631, -931.41, 974.961, -862.666, 968.954, -851.32, 963.615, -828.729, 959.241, -292.022, 841.477, -281.343, 851.488, -288.685, 878.185, -496.252, 972.959, -65.8708, 514.679, -81.8923, 699.607, -285.097, 402.546, -125.311, 722.26, -192.576, 696.647, -392.19, 418.925, -293.357, 814.78, -536.965, 967.619, -582.621, 961.179, -807.27, 969.622, -654.039, 998.656, -699.815, 1012.34, -758.548, 996.986, -600.299, 965.422, -217.271, 754.713, -224.613, 786.081, -617.055, 976.963 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4 ), PoolIntArray( 0, 4, 5, 6 ), PoolIntArray( 7, 8, 9, 10, 11, 12 ), PoolIntArray( 13, 14, 6, 5, 15, 16 ), PoolIntArray( 17, 18, 19, 20 ), PoolIntArray( 21, 22, 23, 24 ), PoolIntArray( 25, 16, 15, 26, 27 ), PoolIntArray( 28, 29, 17, 20, 24 ), PoolIntArray( 30, 25, 27, 31, 32, 33 ), PoolIntArray( 23, 34, 28, 24 ), PoolIntArray( 35, 12, 36, 33, 32, 37, 38, 39 ), PoolIntArray( 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 ), PoolIntArray( 51, 52, 53, 50, 49 ), PoolIntArray( 42, 41, 54, 55, 56 ), PoolIntArray( 57, 42, 56, 58 ), PoolIntArray( 59, 57, 58, 60 ), PoolIntArray( 61, 59, 60, 21 ), PoolIntArray( 62, 63, 61, 21, 64 ), PoolIntArray( 65, 64, 21 ), PoolIntArray( 66, 65, 21, 24 ), PoolIntArray( 67, 68, 69, 70 ), PoolIntArray( 12, 35, 7 ), PoolIntArray( 71, 11, 10, 72 ), PoolIntArray( 73, 71, 72, 74, 75 ), PoolIntArray( 76, 73, 75, 20, 19 ), PoolIntArray( 77, 67, 70, 78, 79 ), PoolIntArray( 80, 66, 24 ), PoolIntArray( 81, 82, 83, 80, 24, 84 ), PoolIntArray( 85, 86, 77, 24 ), PoolIntArray( 24, 77, 79, 84 ), PoolIntArray( 81, 84, 87 ) ]
+outlines = [ PoolVector2Array( -1259.78, 996.986, -1247.77, 1013, -1215.73, 1027.69, -1165.01, 1055.05, -1129.63, 1069.07, -1087.59, 1075.07, -1045.54, 1063.73, -994.148, 1043.04, -985.472, 1012.34, -998.82, 1000.32, -993.675, 969.555, -974.793, 960.945, -943.424, 962.28, -931.41, 974.961, -873.345, 977.631, -862.666, 968.954, -851.32, 963.615, -828.729, 959.241, -807.27, 969.622, -758.548, 996.986, -699.815, 1012.34, -654.039, 998.656, -617.055, 976.963, -600.299, 965.422, -582.621, 961.179, -536.965, 967.619, -496.252, 972.959, -288.685, 878.185, -281.343, 851.488, -292.022, 841.477, -293.357, 814.78, -224.613, 786.081, -217.271, 754.713, -230.619, 736.692, -226.615, 712.665, -192.576, 696.647, -125.311, 722.26, -81.8923, 699.607, -27.1477, 695.831, -30.9232, 714.709, 23.8215, 714.709, 99.3315, 667.515, 165.403, 675.066, 180.505, 690.168, 273.004, 659.964, 286.219, 631.648, 274.892, 582.566, 354.943, 549.957, 344.864, 480.661, 409.12, 457.982, 406.6, 400.026, 499.834, 348.369, 528.812, 355.929, 543.931, 363.488, 634.645, 349.629, 671.183, 337.03, 462.036, 242.536, 401.56, 277.814, 305.806, 330.73, 288.167, 347.109, 288.167, 381.127, 288.167, 412.625, 233.99, 430.264, 232.731, 497.04, 173.514, 522.238, 138.237, 543.657, 34.923, 499.56, -65.8708, 514.679, -285.097, 402.546, -392.19, 418.925, -505.583, 481.921, -608.897, 475.621, -605.117, 526.018, -744.968, 597.834, -729.849, 660.83, -806.704, 696.108, -796.625, 752.804, -873.48, 793.121, -852.062, 848.558, -960.415, 895.175, -1004.51, 922.893, -1044.83, 922.893, -1054.91, 911.554, -1100.94, 908.219, -1131.76, 919.114, -1167.01, 930.911, -1222.41, 959.61, -1252.72, 982.11 ) ]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 4 )
@@ -27,24 +29,35 @@ script = ExtResource( 4 )
 [node name="LevelNPCManager" type="YSort" parent="All/Units"]
 script = ExtResource( 8 )
 
-[node name="EnemyJill" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -472.621, 932.829 )
-ID = "NPC1"
-UnitName = "Evil Jill"
+[node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -499.499, 505.094 )
+ID = "bandit1"
+UnitName = "Bandit"
 PortraitPath = ExtResource( 12 )
 PortraitPathSmall = ExtResource( 10 )
 _startDirection = 2
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
 _startingBehaviour = 2
-_combatLevel = 3
+_minions = {
+0: 0
+}
+_startingSpell1 = 2
+_startingGold = 10
+_itemsHeld = [ 1, 9 ]
+_weak = true
 
-[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
-position = Vector2( 311.302, 327.745 )
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit1"]
+position = Vector2( 177.573, -76.4614 )
 
-[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/EnemyJill"]
-position = Vector2( -51.6437, 74.3371 )
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit1"]
+position = Vector2( -217.34, 101.99 )
 
 [node name="Bandit0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -971.786, 904.773 )
+position = Vector2( -672.444, 817.465 )
 _customBattleText = "Sarah will figure this out"
 _defeatMessage = "An attack is unusual."
 ID = "bandit0"
@@ -54,7 +67,7 @@ PortraitPathSmall = ExtResource( 10 )
 _startDirection = 6
 _startingBools = {
 "Companion": false,
-"Hostile": false,
+"Hostile": true,
 "InitiatesDialogue": false
 }
 _minions = {
@@ -63,51 +76,80 @@ _minions = {
 _physicalDamageRange = 1.0
 _startingGold = 10
 _itemsHeld = [ 1, 4 ]
+_weak = true
 
 [node name="Child0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -1393.5, 1038.54 )
+position = Vector2( -899.942, 899.56 )
 ID = "Child"
 UnitName = "Little Scarab Child"
+PortraitPath = ExtResource( 12 )
+PortraitPathSmall = ExtResource( 10 )
+_startDirection = 6
+_minions = {
+0: 0
+}
+
+[node name="Sphinx" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
+position = Vector2( -250.673, 683.642 )
+ID = "Skull"
+UnitName = "Spirit in the Sphynx"
+PortraitPath = ExtResource( 12 )
+PortraitPathSmall = ExtResource( 10 )
+_body = ExtResource( 9 )
+_startDirection = 5
+_minions = {
+0: 0
+}
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
 [node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 2 )]
-position = Vector2( 704.883, 692.041 )
+position = Vector2( 477.932, 303.415 )
 ButtonLabel = "To Level2"
 DestinationLevel = 1
 
 [node name="PositionMarkers" type="YSort" parent="All"]
 
 [node name="PlayerPositionMarker" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( -1794.94, 1120.06 )
+position = Vector2( -1160.76, 989.27 )
 
 [node name="CompanionPositionMarker1" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 543.756, 811.704 )
+position = Vector2( 377.756, 355.704 )
 
 [node name="CompanionPositionMarker2" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 532.43, 868.336 )
+position = Vector2( 359.088, 379.632 )
 
 [node name="CompanionPositionMarker3" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 579.623, 913.642 )
+position = Vector2( 318.182, 371.545 )
 
 [node name="CompanionPositionMarker4" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 538.093, 953.285 )
+position = Vector2( 345.396, 342.444 )
 
 [node name="CompanionPositionMarker5" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 477.685, 879.663 )
+position = Vector2( 304.343, 394.297 )
 
 [node name="CompanionPositionMarker6" type="Position2D" parent="All/PositionMarkers"]
-position = Vector2( 477.685, 802.265 )
+position = Vector2( 311.685, 346.265 )
 
 [node name="AutosaveAreas" type="YSort" parent="All"]
 
 [node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 3 )]
-position = Vector2( -311.696, 986.988 )
-_oneShot = false
+position = Vector2( -596.864, 747.985 )
 
 [node name="Obstacles" type="YSort" parent="All"]
 
+[node name="InvisibleWall" type="StaticBody2D" parent="All/Obstacles"]
+position = Vector2( 562.354, 289.595 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="All/Obstacles/InvisibleWall"]
+polygon = PoolVector2Array( -89.4269, -53.4377, 115.841, 49.9455, 107.601, 55.9387, -99.915, -51.1902 )
+
 [node name="Shops" type="YSort" parent="All"]
+
+[node name="Shop" parent="All/Shops" instance=ExtResource( 5 )]
+position = Vector2( -46.8238, 501.21 )
+_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

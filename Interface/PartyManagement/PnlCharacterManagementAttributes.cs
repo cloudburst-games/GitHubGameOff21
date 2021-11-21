@@ -8,6 +8,7 @@ public class PnlCharacterManagementAttributes : Panel
     [Signal]
     public delegate void AttributePointSpent(Dictionary<BattleUnitData.DerivedStat, float> stats);
     private Dictionary<UnitData.Attribute, Panel> _attributePanels;
+    private Dictionary<UnitData.Attribute, Button> _attributeButtons;
     private Dictionary<UnitData.Attribute, string> _attributeExplanations = new Dictionary<UnitData.Attribute, string>()
     {
         {UnitData.Attribute.Vigour, "Physical prowess. Determines physical damage and health."},
@@ -28,11 +29,24 @@ public class PnlCharacterManagementAttributes : Panel
             {UnitData.Attribute.Charisma, GetNode<Panel>("VBoxAttributes/PnlCharisma")},
             {UnitData.Attribute.Intellect, GetNode<Panel>("VBoxAttributes/PnlIntellect")}
         };
+        _attributeButtons = new Dictionary<UnitData.Attribute, Button>() {
+            {UnitData.Attribute.Vigour, GetNode<Button>("VBoxAttributes/PnlVigour/HBox/BtnIncrease")},
+            {UnitData.Attribute.Resilience, GetNode<Button>("VBoxAttributes/PnlResilience/HBox/BtnIncrease")},
+            {UnitData.Attribute.Swiftness, GetNode<Button>("VBoxAttributes/PnlSwiftness/HBox/BtnIncrease")},
+            {UnitData.Attribute.Luck, GetNode<Button>("VBoxAttributes/PnlLuck/HBox/BtnIncrease")},
+            {UnitData.Attribute.Charisma, GetNode<Button>("VBoxAttributes/PnlCharisma/HBox/BtnIncrease")},
+            {UnitData.Attribute.Intellect, GetNode<Button>("VBoxAttributes/PnlIntellect/HBox/BtnIncrease")}
+        };
 
         foreach (UnitData.Attribute att in _attributePanels.Keys)
         {
             _attributePanels[att].Connect("mouse_entered", this, nameof(OnAttributePanelMouseEntered), new Godot.Collections.Array {att});
             _attributePanels[att].Connect("mouse_exited", this, nameof(OnAttributePanelMouseExited));
+        }
+        foreach (UnitData.Attribute att in _attributeButtons.Keys)
+        {
+            _attributeButtons[att].Connect("mouse_entered", this, nameof(OnAttributePanelMouseEntered), new Godot.Collections.Array {att});
+            _attributeButtons[att].Connect("mouse_exited", this, nameof(OnAttributePanelMouseExited));
         }
 
         SetStatusText("");

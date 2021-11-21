@@ -13,6 +13,7 @@ public class BattleUnitData : IStoreable
     public float Experience {get; set;} = 0;
     public bool PlayerFaction {get; set;} = false;
     public string BodyPath {get; set;}
+    public bool Weak {get; set;} = false;
 
     public enum DerivedStat { Health, TotalHealth, Mana, TotalMana, HealthRegen, ManaRegen, MagicResist,
         PhysicalResist, Dodge, PhysicalDamage, PhysicalDamageRange, SpellDamage, Speed, Initiative, Leadership, CriticalChance, CurrentAP}
@@ -52,10 +53,7 @@ public class BattleUnitData : IStoreable
         }
     }
 
-    public List<PnlInventory.ItemMode> ItemsHeld {get; set;} = new List<PnlInventory.ItemMode>() // all inventory items
-    {
-        PnlInventory.ItemMode.HealthPot, PnlInventory.ItemMode.ManaPot
-    };
+    public List<PnlInventory.ItemMode> ItemsHeld {get; set;} = new List<PnlInventory.ItemMode>(); // all inventory items
 
     public PnlInventory.ItemMode[] PotionsEquipped {get; set;} = new PnlInventory.ItemMode[3] { // in potion slots
         PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.Empty, PnlInventory.ItemMode.Empty

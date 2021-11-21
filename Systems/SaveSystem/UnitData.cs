@@ -48,12 +48,12 @@ public class UnitData : IStoreable
     
     public Dictionary<Attribute, int> Attributes {get; set;} = new Dictionary<Attribute, int>()
     {
-        {Attribute.Vigour, 0},
-        {Attribute.Resilience, 0},
-        {Attribute.Intellect, 0},
-        {Attribute.Swiftness, 0},
-        {Attribute.Charisma, 0},
-        {Attribute.Luck, 0}
+        {Attribute.Vigour, 2},
+        {Attribute.Resilience, 2},
+        {Attribute.Intellect, 2},
+        {Attribute.Swiftness, 2},
+        {Attribute.Charisma, 2},
+        {Attribute.Luck, 2}
     };
 
     public int AttributePoints {get; set;} = 0;
@@ -226,6 +226,10 @@ public class UnitData : IStoreable
         Random rand = new Random();
         UnitData unitData = this;
         int pool = 60;// CurrentUnitData.CurrentBattleUnitData.Level * 60;
+        if (CurrentBattleUnitData.Weak)
+        {
+            pool /= 2;
+        }
         if (unitData.CurrentBattleUnitData.Level >= 2)
         {
             for (int i = 2; i <= unitData.CurrentBattleUnitData.Level; i++)

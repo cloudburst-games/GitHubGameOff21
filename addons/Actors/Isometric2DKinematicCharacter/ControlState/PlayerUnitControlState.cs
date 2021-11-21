@@ -83,7 +83,7 @@ public class PlayerUnitControlState : UnitControlState
                     }
                     if (!unit.CurrentUnitData.Companion && !unit.CurrentUnitData.Player && !unit.CurrentUnitData.Hostile)
                     {
-                        float distance = ((CircleShape2D)unit.GetNode<CollisionShape2D>("NPCInteractArea/Shape").Shape).Radius;
+                        float distance = ((CircleShape2D)unit.GetNode<CollisionShape2D>("NPCInteractArea/Shape").Shape).Radius * 0.8f;
                         if (_talkOnArrive && _talkToHere.DistanceTo(unit.GlobalPosition) < distance && Unit.GlobalPosition.DistanceTo(unit.GlobalPosition) < distance || !_talkOnArrive)
                         {
                             CurrentPath.Clear();

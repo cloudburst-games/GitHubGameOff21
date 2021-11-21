@@ -7,7 +7,7 @@ public class LevelManager : Node2D
     public delegate void AutosaveAreaEntered();
 
     [Signal]
-    public delegate void Announced(string message);
+    public delegate void Announced(string message, bool record);
     [Signal]
     public delegate void NPCRightClicked(Unit npc);
     [Signal]
@@ -17,12 +17,15 @@ public class LevelManager : Node2D
     public delegate void LevelGenerated(Node2D terrainTilemaps);
 
     public enum Level {
-        Level1, Level2
+        Level1, Level2, Level3, Level4, Level5
     }
 
     private Dictionary<Level, PackedScene> _levelSceneDict = new Dictionary<Level, PackedScene>() {
         {Level.Level1, GD.Load<PackedScene>("res://Levels/Level1/Level1.tscn")},
-        {Level.Level2, GD.Load<PackedScene>("res://Levels/Level2/Level2.tscn")}
+        {Level.Level2, GD.Load<PackedScene>("res://Levels/Level2/Level2.tscn")},
+        {Level.Level3, GD.Load<PackedScene>("res://Levels/Level3/Level3.tscn")},
+        {Level.Level4, GD.Load<PackedScene>("res://Levels/Level4/Level4.tscn")},
+        {Level.Level5, GD.Load<PackedScene>("res://Levels/Level5/Level5.tscn")}
     };
 
     // Store all the level data whilst playing. when saving need to save all of this.
@@ -178,7 +181,7 @@ public class LevelManager : Node2D
         // do any checks needed (i.e. are we allowed to transition?)
         if (! AreCompanionsWithPlayer())
         {
-            EmitSignal(nameof(Announced), "You must gather your party before venturing forth.");
+            EmitSignal(nameof(Announced), "You must await your companions before travelling.", false);
             return;
         }
 
@@ -418,7 +421,7 @@ public class LevelManager : Node2D
 
     private void SetLevelDefaults(Unit player)
     {        
-        player.GlobalPosition = GetLevelInTree().GetNode<Position2D>("All/PositionMarkers/PlayerPositionMarker").GlobalPosition;
+        player.GlobalPosition = GetLevelInTree().GetNode<Position2D>("All/PositionMarkers/PlayerPositionMarker").Position;
     }
 
 	private void SetNavigation()
