@@ -8,7 +8,7 @@ public class SwiftnessPotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.SwiftnessPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 5f;
+        Magnitude = 8f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionAqua.png");
         Name = "Swiftness Potion";
         SpellEffect = SpellEffectManager.SpellMode.SwiftnessPotion;

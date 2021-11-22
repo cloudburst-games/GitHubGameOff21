@@ -359,8 +359,30 @@ public class CntBattle : Control
         OnBattleEnded(true);
     }
 
+    public void RemoveEffectsPostBattleInUnitGroup(List<BattleUnitData> units)
+    {
+        foreach (BattleUnitData battleUnit in units)
+        {
+            RemoveStatusEffectsPostBattle(battleUnit);
+        }
+    }
+
+    public void RemoveStatusEffectsPostBattle(BattleUnitData unit)
+    {
+        foreach (SpellEffectManager.SpellMode effect in unit.CurrentStatusEffects.Keys.ToList())
+        {
+            unit.CurrentStatusEffects.Remove(effect);
+        }
+    }
+
     public void OnBattleEnded(bool victory)
     {
+        // reset all effects
+        RemoveStatusEffectsPostBattle(_playerData);
+        RemoveStatusEffectsPostBattle(_enemyCommanderData);
+        RemoveEffectsPostBattleInUnitGroup(_hostilesData);
+        RemoveEffectsPostBattleInUnitGroup(_friendliesData);
+        
         // GD.Print("battle ended signal");        
         _active = false;
         // _turnList.Clear
@@ -424,6 +446,7 @@ public class CntBattle : Control
             //end combat here
         }
 
+        SetSelectedAction(ActionMode.Move);
         // if (_roundEnd)
         // {
         //     await ToSignal(this, nameof(EndOfRoundEffectsFinished));
@@ -472,7 +495,6 @@ public class CntBattle : Control
             return;
         }
         _firstTurn = false;
-        SetSelectedAction(ActionMode.Move);
     }
 
 
@@ -719,7 +741,7 @@ public class CntBattle : Control
             return;
         }
         
-
+        
         // UI - RELAYING INABILITY TO CAST SPELL TO PLAYER
 
         // APPROACH 1 - DISABLE BUTTONS:
@@ -1352,6 +1374,7 @@ public class CntBattle : Control
         EndTurn();
         if (!_endTurnEffectsInProgress)
         {
+            // SetSelectedAction(ActionMode.Move);
             OnActiveBattleUnitTurnStart();
         }
     }

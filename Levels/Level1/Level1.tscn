@@ -48,11 +48,12 @@ _startingBools = {
 }
 _startingBehaviour = 2
 _minions = {
-0: 0
+0: 1
 }
 _startingSpell1 = 2
 _startingGold = 10
 _itemsHeld = [ 1, 9 ]
+_weak = true
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit1"]
 position = Vector2( 177.573, -76.4614 )
@@ -80,6 +81,7 @@ _minions = {
 _physicalDamageRange = 1.0
 _startingGold = 10
 _itemsHeld = [ 1, 4 ]
+_weak = true
 
 [node name="Child0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -699.942, 889.56 )

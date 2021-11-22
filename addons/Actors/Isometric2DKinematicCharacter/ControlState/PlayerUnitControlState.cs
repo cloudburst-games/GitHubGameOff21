@@ -23,6 +23,11 @@ public class PlayerUnitControlState : UnitControlState
 		throw new InvalidOperationException();
 	}
 
+    public void OnAttributePointsUnspentVisible()
+    {
+
+    }
+
     public void OnInteractNPC(Unit unit)
     {
         this.Unit.EmitSignal(nameof(Unit.DialogueStarted), unit);
@@ -209,10 +214,10 @@ public class PlayerUnitControlState : UnitControlState
     {
         if (ev is InputEventMouseButton btn)
         {
-            if (Unit.GetViewport().GetMousePosition().y > 1080-48)
-            {
-                return;
-            }
+            // if (Unit.GetViewport().GetMousePosition().y > 1080-48)
+            // {
+            //     return;
+            // }
             // if (btn.ButtonIndex == (int) ButtonList.Left && btn.Pressed && !ev.IsEcho())
             // {
             //     foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())

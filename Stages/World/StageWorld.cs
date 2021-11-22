@@ -63,13 +63,13 @@ public class StageWorld : Stage
         }
 
 
-        if (ev.IsActionPressed("Battle Anim Speed 1"))
-        {
-            OnCompanionJoining(new UnitDataSignalWrapper() {CurrentUnitData = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNode<Unit>("Child0").CurrentUnitData});
+        // if (ev.IsActionPressed("Battle Anim Speed 1"))
+        // {
+        //     OnCompanionJoining(new UnitDataSignalWrapper() {CurrentUnitData = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNode<Unit>("Child0").CurrentUnitData});
 
-            // GetNode<Label>("HUD/CtrlTheme/Blah/Label2").Text = "I HAVE NOW SET BLAH FROM FALSE TO TRUE";
-            // GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentDialogueData.Blah = true;
-        }
+        //     // GetNode<Label>("HUD/CtrlTheme/Blah/Label2").Text = "I HAVE NOW SET BLAH FROM FALSE TO TRUE";
+        //     // GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentDialogueData.Blah = true;
+        // }
 
         if (ev is InputEventMouseMotion)
         {
@@ -195,6 +195,9 @@ public class StageWorld : Stage
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompletedQuest), this, nameof(OnCompletedQuest));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.NPCUnitDataRequested), this, nameof(OnNPCUnitDataRequested));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CreatedAmbush), this, nameof(OnCreatedAmbush));
+        GetNode<PnlCharacterManagementAttributes>("HUD/CtrlTheme/PnlCharacterManager/TabContainer/Character/TabContainer/Attributes").Connect(
+            nameof(PnlCharacterManagementAttributes.AllAttributePointsSpent), GetNode<HUD>("HUD"), nameof(HUD.OnSpentAttributePoints)
+        );
 
 // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
     }
@@ -209,6 +212,9 @@ public class StageWorld : Stage
     public void OnCompletedLevelTransition()
     {
        GetNode<HUD>("HUD").LogEntry(String.Format("Entered {0}.", GetNode<LevelManager>("LevelManager").GetLevelInTree().LevelName));
+       GetNode<Label>("HUD/CtrlTheme/LblShowLevelName").Text = GetNode<LevelManager>("LevelManager").GetLevelInTree().LevelName;
+       GetNode<Label>("HUD/CtrlTheme/LblShowLevelName").Visible = true;
+       GetNode<AnimationPlayer>("HUD/CtrlTheme/LblShowLevelName/Anim").Play("Start");
     }
 
     private void OnBtnMapPressed()
@@ -334,6 +340,7 @@ public class StageWorld : Stage
                     unitData.Name, learnedNewSpell ? " and learned a new spell!" : "!");
             GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits").SetToFlashIntensely(unitData.ID, lvlUpFloatLbl);
             GetNode<HUD>("HUD").LogEntry(String.Format("{0} gains a new level.", unitData.Name));
+            GetNode<HUD>("HUD").OnAttributePointsUnspent();
         }
 
         // Update stats
@@ -443,7 +450,7 @@ public class StageWorld : Stage
         unitDataSignalWrapper.CurrentUnitData.Hostile = false;
         unitDataSignalWrapper.CurrentUnitData.Companion = true;
         GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitDataSignalWrapper.CurrentUnitData.ID).UpdateFromUnitData();
-        
+        GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitDataSignalWrapper.CurrentUnitData.ID).SetHighlight(false);
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions.Add(unitDataSignalWrapper.CurrentUnitData);
         GetNode<HUD>("HUD").LogEntry(String.Format("{0} has joined the party.", unitDataSignalWrapper.CurrentUnitData.Name));
         // UpdatePlayerBattleCompanions();
@@ -461,6 +468,7 @@ public class StageWorld : Stage
         unitDataSignalWrapper.CurrentUnitData.StopCompanion();
         GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitDataSignalWrapper.CurrentUnitData.ID).UpdateFromUnitData();
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions.Remove(unitDataSignalWrapper.CurrentUnitData);
+        GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitDataSignalWrapper.CurrentUnitData.ID).SetHighlight(true);
         GetNode<HUD>("HUD").LogEntry(String.Format("{0} has left the party.", unitDataSignalWrapper.CurrentUnitData.Name));
         // UpdatePlayerBattleCompanions();
         OnCompanionChanged();
@@ -470,6 +478,25 @@ public class StageWorld : Stage
     {
         // GD.Print(unitID);
         OnPopupMenuIDPressed(-1, unitID);
+    }
+
+    public void OnBtnUnspentPointsPressed()
+    {
+        if (GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.AttributePoints > 0)
+        {
+            OnPopupMenuIDPressed(0, GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.ID);
+        }
+        else
+        {
+            foreach (UnitData companion in GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions)
+            {
+                if (companion.AttributePoints > 0)
+                {
+                    OnPopupMenuIDPressed(0, companion.ID);
+                    return;
+                }
+            }
+        }
     }
 
     public void OnPopupMenuIDPressed(int id, string unitID)// int portraitIndex)

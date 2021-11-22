@@ -21,15 +21,40 @@ public class HUD : CanvasLayer
 
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.DialogueEnded), this, nameof(OnDialogueEnded));
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.JournalUpdatedSignal), this, nameof(OnJournalUpdated));
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.GameEnded), this, nameof(OnGameEnded));
         GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Connect(nameof(Journal.ClosedJournal), this, nameof(OnBtnJournalClosePressed));
+        GetNode<DialogueControl>("CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.MainQuestChanged), this, nameof(OnMainQuestChanged));
         // fix position bugs
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").RectPosition = new Vector2(-960,540);
         GetNode<Journal>("CtrlTheme/DialogueControl/Journal").RectGlobalPosition = new Vector2(0,0);
         // connect journal updated to below
+        GetNode<Control>("CtrlTheme/CntBtnUnspentPoints").Visible = false;
+        GetNode<Panel>("CtrlTheme/PnlVictory").Visible = false;
+        GetNode<Label>("CtrlTheme/LblShowLevelName").Visible = false;
     }
     private void OnJournalUpdated()
     {
         LogEntry("Your journal has been updated.");
+    }
+
+    public async void OnMainQuestChanged(string mainQuest)
+    {
+        GetNode<AnimationPlayer>("CtrlTheme/LblMainQuest/Anim").Play("FadeOut");
+        await ToSignal(GetNode<AnimationPlayer>("CtrlTheme/LblMainQuest/Anim"), "animation_finished");
+
+        GetNode<Label>("CtrlTheme/LblMainQuest").Text = mainQuest;
+
+        GetNode<AnimationPlayer>("CtrlTheme/LblMainQuest/Anim").Play("FadeIn");
+
+    }
+
+    public void OnGameEnded(bool joinMahef)
+    {
+        PauseCommon(true);
+        Pausable = false;
+        GetNode<Label>("CtrlTheme/PnlVictory/LblBody0").Visible = joinMahef;
+        GetNode<Label>("CtrlTheme/PnlVictory/LblBody1").Visible = !joinMahef;
+        GetNode<AnimationPlayer>("CtrlTheme/PnlVictory/Anim").Play("Start");
     }
 
     private void OnBtnJournalClosePressed()
@@ -37,6 +62,16 @@ public class HUD : CanvasLayer
         Pausable = true;
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = false;
         PauseCommon(false);
+    }
+
+    public void OnAttributePointsUnspent()
+    {
+        GetNode<AnimationPlayer>("CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints/AnimAppear").Play("FadeIn");
+    }
+
+    public void OnSpentAttributePoints()
+    {
+        GetNode<AnimationPlayer>("CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints/AnimAppear").Play("FadeOut");
     }
 
     public void OnBtnEventsPressed()
@@ -195,7 +230,7 @@ public class HUD : CanvasLayer
         return GetNode<Panel>("CtrlTheme/PnlEventsBig").Visible || GetNode<PnlCharacterManager>("CtrlTheme/PnlCharacterManager").Visible || 
             GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible || 
             GetNode<FileDialog>("CtrlTheme/FileDialog").Visible || GetNode<Panel>("CtrlTheme/PnlBattleVictory").Visible ||
-            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible || GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible;
+            GetNode<Panel>("CtrlTheme/PnlDefeat").Visible || GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible || GetNode<Panel>("CtrlTheme/PnlVictory").Visible;
     }
 
     public override void _Input(InputEvent ev)

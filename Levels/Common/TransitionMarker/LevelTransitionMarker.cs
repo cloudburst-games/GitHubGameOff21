@@ -17,7 +17,7 @@ public class LevelTransitionMarker : Node2D
     {
         Visible = false;
         // string interact = ((InputEvent)InputMap.GetActionList("Interact")[0]).AsText();
-        GetNode<Label>("Sprite/Panel/Label").Text = ButtonLabel;// String.Format("'{0}': {1}", interact, ButtonLabel);
+        GetNode<Label>("Sprite/Label").Text = ButtonLabel;// String.Format("'{0}': {1}", interact, ButtonLabel);
     }
 
     public void OnAreaPlayerDetectAreaEntered(Godot.Object area)

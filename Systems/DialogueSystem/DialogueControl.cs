@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class DialogueControl : Control
 {
+    [Signal]
+    public delegate void GameEnded(bool joinMahef); // true or false
+    // EmitSignal(nameof(DialogueControl.GameEnded), true) // or , false)
+    [Signal]
+    public delegate void MainQuestChanged(string mainQuest); // when you emit this, it will change what is displayed as the current objective
 	[Signal] public delegate void JournalUpdatedSignal();
     [Signal]
     public delegate void CreatedAmbush(string idOfAmbusher);

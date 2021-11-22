@@ -84,12 +84,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 0,
                 Magnitude = 1,
                 AreaSquares = 0,
-                ManaCost = 4f,
+                ManaCost = 8f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                 Target = SpellEffect.TargetMode.Hostile,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/SolarBoltEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/SolarBolt.PNG"),
-                ToolTip = "Launch a bolt imbued with sunlight at the target! Range 5, Cost 4."
+                ToolTip = "Launch a bolt imbued with sunlight at the target! Range 5, Cost 8."
             }}
             },
             {SpellMode.SolarBlast, new List<SpellEffect>(){ new SpellEffect(){
@@ -98,12 +98,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 0,
                 Magnitude = 2,
                 AreaSquares = 1,
-                ManaCost = 12f,
+                ManaCost = 16f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                 Target = SpellEffect.TargetMode.Area,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/SolarBlastEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/SolarBlast.PNG"),
-                ToolTip = "Launch a monstrous blast of sunlight at the target area! Can hit allies! Range 4, Cost 12, Area 9."
+                ToolTip = "Launch a monstrous blast of sunlight at the target area! Can hit allies! Range 4, Cost 16, Area 9."
             }}
             },
             {SpellMode.ComingForthByDay, new List<SpellEffect>(){ new SpellEffect(){
@@ -112,12 +112,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = 2,
                 AreaSquares = 0,
-                ManaCost = 3f,
+                ManaCost = 5f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.TotalHealth, BattleUnitData.DerivedStat.Health, BattleUnitData.DerivedStat.PhysicalDamage},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/ComingForthByDayEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/ComingForthByDay.PNG"),
-                ToolTip = "Boost the vigour of an ally for 3 rounds! Cost 3."
+                ToolTip = "Boost the vigour of an ally for 3 rounds! Cost 5."
             }}
             },
             {SpellMode.Preservation, new List<SpellEffect>(){ new SpellEffect(){
@@ -126,12 +126,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = 1,
                 AreaSquares = 0,
-                ManaCost = 4f,
+                ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.HealthRegen, BattleUnitData.DerivedStat.ManaRegen, BattleUnitData.DerivedStat.MagicResist},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/PreservationEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/Preservation.PNG"),
-                ToolTip = "Boost the resilience of an ally for 3 rounds! Cost 4."
+                ToolTip = "Boost the resilience of an ally for 3 rounds! Cost 6."
             }}
             },
             {SpellMode.WeighingOfTheHeart, new List<SpellEffect>(){ new SpellEffect(){
@@ -140,12 +140,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = -1,
                 AreaSquares = 0,
-                ManaCost = 8f,
+                ManaCost = 10f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Dodge, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
                 Target = SpellEffect.TargetMode.Hostile,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/WeighingOfTheHeartEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/WeighingOfTheHeart.PNG"),
-                ToolTip = "Reduce the swiftness of a foe for 3 rounds! Cost 8."
+                ToolTip = "Reduce the swiftness of a foe for 3 rounds! Cost 10."
             }}
             },
             {SpellMode.GazeOfTheDead, new List<SpellEffect>(){ // duration effects first
@@ -193,14 +193,14 @@ public class SpellEffectManager : Reference
                     Name = "Lunar Blast",
                     RangeSquares = 6,
                     DurationRounds = 0,
-                    Magnitude = 6,
+                    Magnitude = 1,
                     AreaSquares = 1,
-                    ManaCost = 7f,
+                    ManaCost = 10f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                     Target = SpellEffect.TargetMode.Area,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/LunarBlastEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/LunarBlast.PNG"),
-                ToolTip = "Launch a bolt imbued with moonlight at the target area! Damages foes and heals allies! Range 6, Cost 15, Area 9."
+                ToolTip = "Launch a bolt imbued with moonlight at the target area! Damages foes and heals allies! Range 6, Cost 18, Area 9."
                 },
                 new SpellEffect(){
                     Name = "Lunar Blast",
@@ -208,7 +208,7 @@ public class SpellEffectManager : Reference
                     DurationRounds = 0,
                     Magnitude = 3,
                     AreaSquares = 1,
-                    ManaCost = 6f,
+                    ManaCost = 8f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                     Target = SpellEffect.TargetMode.Area,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/ComingForthByDayEffect.tscn")
@@ -221,20 +221,20 @@ public class SpellEffectManager : Reference
                     DurationRounds = 0,
                     Magnitude = 0,
                     AreaSquares = 1,
-                    ManaCost = 7f,
+                    ManaCost = 8f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {},//BattleUnitData.DerivedStat.Dodge, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
                     Target = SpellEffect.TargetMode.Empty,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/TeleportEffect.tscn"),
                     IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/HymnOfTheUnderworld.PNG"),
-                    ToolTip = "Teleport to the target unoccupied space, dealing damage around you before returning! Range 6, Cost 19, Area 8."
+                    ToolTip = "Teleport to the target unoccupied space, dealing damage around you before returning! Range 6, Cost 24, Area 8."
                 },
                 new SpellEffect(){ // do damage
                     Name = "Hymn of the Underworld",
                     RangeSquares = 6,
                     DurationRounds = 0,
-                    Magnitude = 5,
+                    Magnitude = 1,
                     AreaSquares = 1,
-                    ManaCost = 6f,
+                    ManaCost = 8f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                     Target = SpellEffect.TargetMode.Empty,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/HymnOfTheUnderworldEffect.tscn")
@@ -245,7 +245,7 @@ public class SpellEffectManager : Reference
                     DurationRounds = 0,
                     Magnitude = 0,
                     AreaSquares = 0,
-                    ManaCost = 6f,
+                    ManaCost = 8f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {},//BattleUnitData.DerivedStat.Dodge, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
                     Target = SpellEffect.TargetMode.Empty,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/TeleportEffect.tscn")
@@ -259,12 +259,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 0,
                 Magnitude = 0,
                 AreaSquares = 0,
-                ManaCost = 5f,
+                ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                 Target = SpellEffect.TargetMode.Hostile,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/PerilOfOsirisMissileEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/PerilOfOsiris.PNG"),
-                ToolTip = "Throw an enchanted poison dart at the opponent, dealing damage over 3 rounds! Range 5, Cost 9."
+                ToolTip = "Throw an enchanted poison dart at the opponent, dealing damage over 3 rounds! Range 5, Cost 12."
             }, 
                 new SpellEffect(){
                 Name = "Peril of Osiris",
@@ -272,7 +272,7 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = 0,
                 AreaSquares = 0,
-                ManaCost = 4f,
+                ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                 Target = SpellEffect.TargetMode.Hostile,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/PerilOfOsirisEffect.tscn")

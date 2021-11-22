@@ -8,7 +8,7 @@ public class IntellectPotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.IntellectPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 4f;
+        Magnitude = 8f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionBlue.png");
         Name = "Intellect Potion";
         SpellEffect = SpellEffectManager.SpellMode.IntellectPotion;

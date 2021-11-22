@@ -8,7 +8,7 @@ public class CharismaPotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.CharismaPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 5f;
+        Magnitude = 10f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionPurp.png");
         Name = "Charisma Potion";
         SpellEffect = SpellEffectManager.SpellMode.CharismaPotion;

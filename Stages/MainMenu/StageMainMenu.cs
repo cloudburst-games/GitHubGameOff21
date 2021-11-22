@@ -10,12 +10,14 @@ public class StageMainMenu : Stage
 	private Panel _popAbout;
 	private PnlSettings _pnlSettings;
 	private Button _firstLevelButton;
+    private AnimationPlayer _animPanels;
 
 	private bool _gameDataExists = false;
 
 	public override void _Ready()
 	{
 		base._Ready();
+        _animPanels = GetNode<AnimationPlayer>("AnimPanels");
 		_popAbout = GetNode<Panel>("PopAbout");
 		_pictureStory = GetNode<PictureStory>("PictureStory");
 		_pnlSettings = GetNode<PnlSettings>("PnlSettings");
@@ -78,11 +80,13 @@ public class StageMainMenu : Stage
 
 	private void OnBtnAboutPressed()
 	{
+        // _animPanels.Play("ShowAbout");
 		GetNode<Panel>("PopAbout").Visible = true;
 	}
 
 	private void OnBtnBackPressed()
 	{
+        // _animPanels.Play("HideAbout");
 		GetNode<Panel>("PopAbout").Visible = false;
 	}
 

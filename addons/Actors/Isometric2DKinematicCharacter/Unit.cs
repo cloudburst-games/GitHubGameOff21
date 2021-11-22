@@ -383,7 +383,7 @@ public class Unit : KinematicBody2D
 
     }
 
-    public override void _Input(InputEvent ev)
+    public override void _UnhandledInput(InputEvent ev)
     {
         if (!CurrentUnitData.Active)
         {

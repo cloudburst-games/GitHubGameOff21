@@ -146,7 +146,7 @@ public class BattleHUD : CanvasLayer
             }
             if (effect.Name == "Hymn of the Underworld")
             {
-                effectToolTips[effect] += " Base Damage: " + (5 + spellPower);
+                effectToolTips[effect] += " Base Damage: " + (1 + spellPower);
             }
         }
         GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1").SetMeta("Info", effect1.Name + ": " + effectToolTips[effect1]);

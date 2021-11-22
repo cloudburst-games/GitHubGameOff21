@@ -8,7 +8,7 @@ public class VigourPotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.VigourPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 5f;
+        Magnitude = 8f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionRed.png");
         Name = "Vigour Potion";
         SpellEffect = SpellEffectManager.SpellMode.VigourPotion;

@@ -7,6 +7,8 @@ public class PnlCharacterManagementAttributes : Panel
 {
     [Signal]
     public delegate void AttributePointSpent(Dictionary<BattleUnitData.DerivedStat, float> stats);
+    [Signal]
+    public delegate void AllAttributePointsSpent();
     private Dictionary<UnitData.Attribute, Panel> _attributePanels;
     private Dictionary<UnitData.Attribute, Button> _attributeButtons;
     private Dictionary<UnitData.Attribute, string> _attributeExplanations = new Dictionary<UnitData.Attribute, string>()
@@ -73,6 +75,10 @@ public class PnlCharacterManagementAttributes : Panel
         {
             p.GetNode<Button>("HBox/BtnIncrease").Visible = pointsRemaining > 0;
         }
+        if (pointsRemaining == 0)
+        {
+            EmitSignal(nameof(AllAttributePointsSpent));
+        }
     }
 
     public void OnAttributePanelMouseEntered(UnitData.Attribute att)
@@ -103,6 +109,7 @@ public class PnlCharacterManagementAttributes : Panel
         {
             _attributePanels[a].GetNode<Label>("HBox/LblNum").Text = unitData.Attributes[a].ToString();
         }
+        GetNode<Label>("LblArmour").Text = String.Format("Armour: {0}", unitData.GetArmourBonus());
     }
     public void OnAttributesChanged(Dictionary<UnitData.Attribute, int> atts, float armour)
     {
@@ -112,7 +119,6 @@ public class PnlCharacterManagementAttributes : Panel
         }
         GetNode<Label>("LblArmour").Text = String.Format("Armour: {0}", armour);
     }
-
     public void Start(UnitData unitData)
     {
         UpdateAttributesDisplay(unitData);

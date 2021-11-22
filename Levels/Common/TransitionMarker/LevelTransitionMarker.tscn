@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Map/Art/GHGO21MapSymbols/LevelTransition.PNG" type="Texture" id=2]
@@ -26,7 +26,23 @@ shader_param/speed = 12.0
 shader_param/flash_colour_original = Color( 1, 1, 1, 1 )
 shader_param/flash_depth = 0.15
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="Animation" id=3]
+resource_name = "LabelHover"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -98, -90 ), Vector2( -98, -100 ), Vector2( -98, -90 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=4]
 radius = 174.205
 
 [node name="LevelTransitionMarker" type="Node2D"]
@@ -37,6 +53,7 @@ material = SubResource( 2 )
 texture = ExtResource( 2 )
 
 [node name="Panel" type="Panel" parent="Sprite"]
+visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -177.5
@@ -47,15 +64,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Sprite/Panel"]
+[node name="Label" type="Label" parent="Sprite"]
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -95.0
-margin_top = -13.5
-margin_right = 95.0
-margin_bottom = 13.5
+margin_left = -162.0
+margin_top = -93.3892
+margin_right = 28.0
+margin_bottom = -66.3894
 text = "Test Transition to somewhere"
 align = 1
 valign = 1
@@ -63,11 +78,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Anim" type="AnimationPlayer" parent="Sprite/Label"]
+autoplay = "LabelHover"
+anims/LabelHover = SubResource( 3 )
+
 [node name="AreaPlayerDetect" type="Area2D" parent="."]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreaPlayerDetect"]
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [connection signal="area_entered" from="AreaPlayerDetect" to="." method="OnAreaPlayerDetectAreaEntered"]
 [connection signal="area_exited" from="AreaPlayerDetect" to="." method="OnAreaPlayerDetectAreaExited"]

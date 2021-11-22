@@ -225,7 +225,7 @@ public class UnitData : IStoreable
     {
         Random rand = new Random();
         UnitData unitData = this;
-        int pool = 60;// CurrentUnitData.CurrentBattleUnitData.Level * 60;
+        int pool = 48;// CurrentUnitData.CurrentBattleUnitData.Level * 60;
         if (CurrentBattleUnitData.Weak)
         {
             pool /= 2;

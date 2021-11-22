@@ -8,7 +8,7 @@ public class ResiliencePotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.ResiliencePot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 5f;
+        Magnitude = 8f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/PotionGreen.png");
         Name = "Resilience Potion";
         SpellEffect = SpellEffectManager.SpellMode.ResiliencePotion;
