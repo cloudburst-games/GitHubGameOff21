@@ -164,13 +164,14 @@ public class BattleUnitInfoPanel : Panel
         GetNode<Label>("VBoxLabels/LblEquipment").Text = equipmentNames.Count != 0 ? equippedString.Substring(0, equippedString.Length-2)
             : "Nothing equipped.";
 
-        if (portraitPath == "")
+        if (portraitPath == "" || portraitPath == null)
         {
             GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Visible = true;
             GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Texture = GD.Load<Texture>("res://Actors/PortraitPlaceholders/Small/NPC.PNG");
         }
         else
         {
+            GD.Print(portraitPath);
             GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Visible = true;
             GetNode<TextureRect>("VBoxLabels/Panel/TexRectPortrait").Texture = GD.Load<Texture>(portraitPath);
         }

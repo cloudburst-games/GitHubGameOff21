@@ -87,7 +87,7 @@ public class StageBattle : Stage
                 {BattleUnitData.DerivedStat.CriticalChance, 1},
                 {BattleUnitData.DerivedStat.CurrentAP, 6}
             },
-            Spell1 = SpellEffectManager.SpellMode.SolarBolt,
+            Spell1 = SpellEffectManager.SpellMode.WeighingOfTheHeart,
             Spell2 = SpellEffectManager.SpellMode.HymnOfTheUnderworld,
             BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"
             
