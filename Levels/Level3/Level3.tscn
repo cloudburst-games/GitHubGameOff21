@@ -20,6 +20,7 @@ outlines = [ PoolVector2Array( -155.135, 938.72, 5.19263, 1016.5, 87.7375, 972.0
 
 [node name="Level3" type="Node2D"]
 script = ExtResource( 3 )
+LevelName = "Upper Lunu"
 
 [node name="Terrain" parent="." instance=ExtResource( 6 )]
 
@@ -32,7 +33,7 @@ script = ExtResource( 1 )
 
 [node name="Ammit" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( 176.992, 337.049 )
-_defeatMessage = "AMBUSH! Followers of Apophis emerge from the sand dunes. You are surrounded. They chant a demonic melody and you are engulfed in smoke. In an instand, the dark mist disappears... along with your sun!"
+_defeatMessage = "The battle is bitter sweet. After the traitor takes his last breath, demons of the Netherworld emerge from the sand dunes. They chant a cursed melody and you are engulfed in smoke. In an instant, the dark mist disappears... along with your sun! You must find Mahef in Southern Lunu and travel to the Netherworld at once!"
 ID = "Ammit"
 UnitName = "Ammit the Devourer"
 PortraitPath = ExtResource( 8 )
@@ -53,17 +54,23 @@ position = Vector2( 136.558, 534.457 )
 _customBattleText = "A bandit!"
 ID = "Bandit3"
 UnitName = "Bandit"
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
 _minions = {
 0: 0
 }
 
 [node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( -205.933, 318.022 )
+_customBattleText = "A bandit! Prepare for battle!"
 ID = "Bandit4"
 UnitName = "Bandit"
 _startingBools = {
 "Companion": false,
-"Hostile": false,
+"Hostile": true,
 "InitiatesDialogue": false
 }
 _minions = {
@@ -72,12 +79,17 @@ _minions = {
 
 [node name="Ambush" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( -255.88, 503.538 )
-_customBattleText = "AMBUSH! Followers of Apophis emerge from the sand dunes. You are surrounded. They chant a demonic melody and you are engulfed in smoke. In an instand, the dark mist disappears... along with your sun!"
+_customBattleText = "AMBUSH! After the traitor takes his last breath, demons of the Netherworld emerge from the sand dunes. They chant a cursed melody and you are engulfed in smoke. In an instant, the dark mist disappears... along with your sun! You must find Mahef in Southern Lunu and travel to the Netherworld at once!"
 ID = "Ambush"
 UnitName = "Scarabs of the Netherworld"
 PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 11 )
 _active = false
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
 _combatLevel = 2
 _minions = {
 0: 1
@@ -90,7 +102,7 @@ _startingSpell2 = 9
 
 [node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 7 )]
 position = Vector2( -21.4723, 962.692 )
-ButtonLabel = "To Level 2"
+ButtonLabel = "To Central Lunu"
 DestinationLevel = 1
 
 [node name="PositionMarkers" type="YSort" parent="All"]

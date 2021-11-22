@@ -31,7 +31,7 @@ script = ExtResource( 7 )
 [node name="Mahef" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( 97.859, 250.344 )
 ID = "Mahef"
-UnitName = "Mahef"
+UnitName = "Mahef the Ferrybug"
 PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 8 )
 _combatLevel = 3

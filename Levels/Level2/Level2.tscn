@@ -22,6 +22,7 @@ outlines = [ PoolVector2Array( -1364.89, 689.17, -1525.4, 767.041, -1364.89, 846
 
 [node name="Level2" type="Node2D"]
 script = ExtResource( 4 )
+LevelName = "Central Lunu"
 
 [node name="Terrain" parent="." instance=ExtResource( 2 )]
 
@@ -77,8 +78,10 @@ position = Vector2( -119.38, -67.7083 )
 
 [node name="Bandit5" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -94.1475, 191.966 )
+_customBattleText = "A creature approaches you, and utters a disturbing greeting, \"I dream of crunching your shell between my teeth\". A cannibal! Prepare for battle!"
+_defeatMessage = "Victory is yours!"
 ID = "Bandit5"
-UnitName = "Bandit"
+UnitName = "Cannibal"
 PortraitPath = ExtResource( 13 )
 PortraitPathSmall = ExtResource( 14 )
 _startingBools = {
@@ -98,6 +101,8 @@ _weaponEquipped = 11
 
 [node name="Bandit6" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 1152.14, 824.624 )
+_customBattleText = "A creature approaches. You smile, until you see the glimmer of silver in their clutches. Prepare for battle!"
+_defeatMessage = "A glorious victory!"
 ID = "Bandit5"
 UnitName = "Bandit"
 PortraitPath = ExtResource( 13 )
@@ -119,6 +124,7 @@ _weaponEquipped = 11
 
 [node name="Bandit7" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 15.2595, 1267.01 )
+_customBattleText = "A blunt object falls upon your head. You stumble. Not before readying your mace. Prepare for battle!"
 ID = "Bandit5"
 UnitName = "Bandit"
 PortraitPath = ExtResource( 13 )
@@ -142,21 +148,21 @@ _weaponEquipped = 11
 
 [node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 1 )]
 position = Vector2( -1479.44, 765.283 )
-ButtonLabel = "To Level 1"
+ButtonLabel = "To Western Lunu"
 
 [node name="LevelTransitionMarker2" parent="All/TransitionMarkers" instance=ExtResource( 1 )]
 position = Vector2( -15.1527, 99.7278 )
-ButtonLabel = "To Level3"
+ButtonLabel = "To Upper Lunu"
 DestinationLevel = 2
 
 [node name="LevelTransitionMarker3" parent="All/TransitionMarkers" instance=ExtResource( 1 )]
 position = Vector2( 1335.48, 802.764 )
-ButtonLabel = "To Level4"
+ButtonLabel = "To Eastern Lunu"
 DestinationLevel = 3
 
 [node name="LevelTransitionMarker4" parent="All/TransitionMarkers" instance=ExtResource( 1 )]
 position = Vector2( 13.5908, 1472.12 )
-ButtonLabel = "To Level5"
+ButtonLabel = "To Southern Lunu"
 DestinationLevel = 4
 
 [node name="PositionMarkers" type="YSort" parent="All"]

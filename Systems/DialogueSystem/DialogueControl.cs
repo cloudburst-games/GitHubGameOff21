@@ -240,8 +240,10 @@ public class DialogueControl : Control
         
         if (ev is InputEventKey key && !ev.IsEcho() && ContinueButton.Visible && Visible)
         {
-            if (key.Scancode == (int) KeyList.Enter || key.Scancode == (int) KeyList.Space && key.Pressed)
-            {
+          //  if (key.Scancode == (int) KeyList.Enter || key.Scancode == (int) KeyList.Space && key.Pressed)
+            if (key.Scancode == (int) KeyList.Space && key.Pressed)
+
+			{
                 OnContinueButtonPressed();
             }
         }
