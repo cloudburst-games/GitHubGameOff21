@@ -53,7 +53,7 @@ tracks/1/keys = {
 "values": [ "Midnight", "Midnight", "Night", "Dusk", "Night", "Midnight", "Midnight" ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=2]
 resource_name = "FadeIn"
 length = 0.5
 tracks/0/type = "value"
@@ -69,7 +69,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=3]
 resource_name = "FadeOut"
 length = 0.5
 tracks/0/type = "value"
@@ -85,7 +85,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=4]
 resource_name = "Start"
 length = 5.0
 tracks/0/type = "value"
@@ -101,8 +101,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "default"
+[sub_resource type="Animation" id=5]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -129,8 +128,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 4, 4, 4, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "FadeIn"
+[sub_resource type="Animation" id=6]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -157,8 +155,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "FadeOut"
+[sub_resource type="Animation" id=7]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -185,7 +182,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 resource_name = "Start"
 length = 10.0
 tracks/0/type = "value"
@@ -237,13 +234,13 @@ tracks/3/keys = {
 "values": [ 0.0, 0.0, 1.0 ]
 }
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=9]
 size = 20
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=10]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -259,7 +256,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=11]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -286,7 +283,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=12]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -370,8 +367,8 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblMainQuest"]
-anims/FadeIn = SubResource( 10 )
-anims/FadeOut = SubResource( 11 )
+anims/FadeIn = SubResource( 2 )
+anims/FadeOut = SubResource( 3 )
 
 [node name="LblShowLevelName" type="Label" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
@@ -388,7 +385,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblShowLevelName"]
-anims/Start = SubResource( 12 )
+anims/Start = SubResource( 4 )
 
 [node name="PnlUIBar" type="Panel" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
@@ -614,11 +611,11 @@ __meta__ = {
 
 [node name="AnimDefault" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
 autoplay = "default"
-anims/default = SubResource( 2 )
+anims/default = SubResource( 5 )
 
 [node name="AnimAppear" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
-anims/FadeIn = SubResource( 3 )
-anims/FadeOut = SubResource( 4 )
+anims/FadeIn = SubResource( 6 )
+anims/FadeOut = SubResource( 7 )
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
 visible = false
@@ -702,7 +699,7 @@ margin_bottom = -10.7029
 text = "Exit To Main Menu"
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/PnlVictory"]
-anims/Start = SubResource( 9 )
+anims/Start = SubResource( 8 )
 
 [node name="NPCInfoPanel" parent="HUD/CtrlTheme" instance=ExtResource( 8 )]
 visible = false
@@ -971,7 +968,7 @@ margin_left = -477.0
 margin_top = -256.5
 margin_right = 478.0
 margin_bottom = 297.5
-custom_fonts/normal_font = SubResource( 5 )
+custom_fonts/normal_font = SubResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1031,7 +1028,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/ProgressAnim"]
-anims/Load = SubResource( 6 )
+anims/Load = SubResource( 10 )
 
 [node name="LblProgress" type="Label" parent="HUD/CtrlTheme/ProgressAnim"]
 margin_left = -21.3816
@@ -1064,8 +1061,8 @@ __meta__ = {
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblLog"]
 autoplay = "default"
-anims/LogEntry = SubResource( 7 )
-anims/default = SubResource( 8 )
+anims/LogEntry = SubResource( 11 )
+anims/default = SubResource( 12 )
 
 [node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 

@@ -37,18 +37,18 @@ public class Grid : TileMap
         //     ((CPUParticles2D)newParticles).Position = worldPos;
         //     AddChild(newParticles);
         // }
-        if (TileSet != null)
-        {
-            foreach (int id in TileSet.GetTilesIds())
-            {
-                if (TileSet.TileGetName(id) == "0000")
-                {
-                    // GD.Print("water");
-                    TileSet.TileSetMaterial(id, GD.Load<ShaderMaterial>("res://Shaders/topdownwater/water1.tres"));
+        // if (TileSet != null)
+        // {
+        //     foreach (int id in TileSet.GetTilesIds())
+        //     {
+        //         if (TileSet.TileGetName(id) == "0000")
+        //         {
+        //             // GD.Print("water");
+        //             TileSet.TileSetMaterial(id, GD.Load<ShaderMaterial>("res://Shaders/topdownwater/water1.tres"));
                     
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
         
 	}
 
