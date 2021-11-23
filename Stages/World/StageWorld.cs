@@ -800,6 +800,9 @@ public class StageWorld : Stage
         GetNode<LevelManager>("LevelManager").InitialiseLevel(
             GetNode<LevelManager>("LevelManager").CurrentLevel,
             player);
+
+        GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Load(null, player.CurrentUnitData);
+
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
         // GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         // GD.Print("player tyime: ", player.CurrentUnitData.Time);
