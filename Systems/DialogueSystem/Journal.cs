@@ -52,7 +52,7 @@ public class Journal : MarginContainer
     public void ShowJournal(UnitData khepriUnitData)
     {
         // UPDATE JOURNAL WITH KHEPRI DATA IN HERE
-        UpdateJournal();
+       // UpdateJournal();
         //TEST
        // GD.Print(khepriUnitData.CurrentDialogueData.JournalString);
         //
@@ -62,19 +62,8 @@ public class Journal : MarginContainer
 
     public void UpdateJournal() //@ SARAH ADD ALL THE VARIABLES THAT YOU WANT RECORDED IN THE JOURNAL HERE
 	{
-        JournalLabel.Text = "";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("intro");
-		JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("sphynx");
-		JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("sphynx2");
+		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal_text");
         JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("amulet");
-        JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("traitor");
-        JournalLabel.Text += "\n";
-		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("escape");
-		//_journalDict.Add()
 	}
 
 
@@ -87,7 +76,7 @@ public class Journal : MarginContainer
     }
     public void UpdateCompletedQuests(string completedquest)
 	{
-        if(completedquest == "amulet")
+/*         if(completedquest == "amulet")
         {
             Amulet = QuestContainer.GetNode<MarginContainer>("AmuletLabel");
             AmuletLabel = QuestContainer.GetNode<Label>("AmuletLabel/Label");
@@ -118,7 +107,7 @@ public class Journal : MarginContainer
             Escape = QuestContainer.GetNode<MarginContainer>("EscapeLabel");
             EscapeLabel = QuestContainer.GetNode<Label>("EscapeLabel/Label");
             EscapeLabel.Text = "u escaped!";
-        }
+        } */
 	}
 
     public void UpdateJournal(string journalUpdate)

@@ -81,7 +81,8 @@ public class DialogueControl : Control
     {
         DialogueContainer = GetNode<MarginContainer>("MarginContainer/DialogueContainer");
 		Journal = GetNode<Journal>("Journal");
-//		JournalLabel = GetNode<Label>("Journal/Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/Label");
+        JournalLabel = GetNode<Label>("Journal/Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/MarginContainer/Label");
+		//JournalLabel = GetNode<Label>("Journal/Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/Label");
 	    LoadInkStory();
 		MainText = GetNode<Label>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer2/MainText");
 		ButtonContainer = GetNode<VBoxContainer>("MarginContainer/DialogueContainer/HBoxContainer/VBoxContainer2/MarginContainer3/ScrollContainer/ButtonContainer");
@@ -134,12 +135,17 @@ public class DialogueControl : Control
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "SPHYNX") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ManaPot}, 10);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.PhantomArmour}, 10);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "CHARISMA") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ManaPot}, 50);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.SilverMace}, 50);
+			InkStory.SetVariable("quest_complete", "");
+		}
+		if ((string)InkStory.GetVariable("quest_complete") == "MAHEF") //
+		{
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.HealthPot}, 50);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((bool)InkStory.GetVariable("ambush")==true)
@@ -151,6 +157,18 @@ public class DialogueControl : Control
 		{
 			CurrentUnitData.Hostile= (bool)InkStory.GetVariable("hostile");
 			InkStory.SetVariable("hostile",false);
+		}
+		if ((bool)InkStory.GetVariable("journal_updated")==true)
+		{
+			Journal.UpdateJournal();
+			InkStory.SetVariable("journal_updated",false);
+		}
+		if ((bool)InkStory.GetVariable("main_quest_updated")==true)
+		{
+			EmitSignal(nameof(MainQuestChanged), (string)(InkStory.GetVariable("main_quest)")));
+			//GD.Print("Main quest changed");
+			InkStory.SetVariable("main_quest_updated",false);
+			
 		}
 	}
 
@@ -298,9 +316,6 @@ public class DialogueControl : Control
 					Button Button = (Button)ButtonContainer.GetChild(ChoiceNum);
 					Label Label = (Label)Button.GetChild(0); //new
 					Label.Text = ChoiceDict[ChoiceNum];
-				//	Button.Text = ChoiceDict[ChoiceNum];
-				//	CheckForJournalUpdates();
-				//	SaveVariables();
 					Button.Connect("ChoiceButtonPressedSignal", this, nameof(OnChoiceButtonPressed));
 				}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 			}
@@ -324,7 +339,6 @@ public class DialogueControl : Control
 	public void UpdateInkVariables(string inkyVariable, bool savedVariable)
 	{
 		InkStory.SetVariable(inkyVariable, savedVariable);
-		//GD.Print(inkyVariable + " " + savedVariable); //this is being transmitted as false
 	}
 
      public void OnChoiceButtonPressed(int n)  
@@ -335,11 +349,9 @@ public class DialogueControl : Control
 		foreach (Button b in ButtonContainer.GetChildren())
 			{
 				b.QueueFree();
-				GD.Print("This method works");
 			}
 		while (InkStory.CanContinue)
 		{
-			GD.Print("Inkstory can continue");
 			MakeDialogueDict();
 			return;
 		}
@@ -433,13 +445,13 @@ everything in DialogueData will be saved between levels and on save/load*/
 
 	public void Load(UnitData npcUnitData, UnitData khepriUnitData)
 	{
-		JournalUpdate = khepriUnitData.CurrentDialogueData.JournalString;
+		JournalLabel.Text = khepriUnitData.CurrentDialogueData.JournalText;
+		GD.Print(khepriUnitData.CurrentDialogueData.JournalText);
 		if (khepriUnitData.CurrentDialogueData.InkyString == "nil")
 		{
 			return;
 			
 		}
-		GD.Print("Error4");
 		InkStory.SetState(khepriUnitData.CurrentDialogueData.InkyString);
 	}
 
@@ -516,7 +528,8 @@ everything in DialogueData will be saved between levels and on save/load*/
 	// run this and save stuff before exiting dialogue
 	public void Save()
 	{
-		_khepriUnitData.CurrentDialogueData.JournalDict = _journalDict;
+		//_khepriUnitData.CurrentDialogueData.JournalDict = _journalDict;
+		_khepriUnitData.CurrentDialogueData.JournalText = JournalLabel.Text;
 		_khepriUnitData.CurrentDialogueData.InkyString = InkStory.GetState();
 	}
 
@@ -552,7 +565,7 @@ public class DialogueData : IStoreable
  */	public bool Modified {get; set;} = false;
 	public string JournalString{get;set;} = "";
 	public string InkyString {get; set;} = "nil";
-	public Dictionary<string, string> JournalDict;
 	public bool TalkAfterBattle = false;
+	public string JournalText = "";
 	//public List <string> JournalList {get; set;}
 }
