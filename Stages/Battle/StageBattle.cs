@@ -55,7 +55,8 @@ public class StageBattle : Stage
             ["Data"] = (DataBinary) SharedData["Data"],
             ["EnemyCommanderData"] = enemyCommanderData,
             ["Victory"] = victory,
-            ["Events"] = (string) SharedData["Events"]
+            ["Events"] = (string) SharedData["Events"],
+            ["MainQuestText"] = (string) SharedData["MainQuestText"]
         });
 
 

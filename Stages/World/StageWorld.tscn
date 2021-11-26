@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Levels/Common/LevelManager/LevelManager.cs" type="Script" id=3]
@@ -34,10 +34,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 4.6, 190, 200, 240 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 4.6, 50, 70.4, 120.2, 130.5, 170.4, 189.7, 200.3, 235, 240 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0, 0, 0.784314 ), Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.156863 ), Color( 0, 0, 0, 0.235294 ), Color( 0, 0, 0, 0.392157 ) ]
+"values": [ Color( 0, 0, 0, 0.705882 ), Color( 0, 0, 0, 0.470588 ), Color( 0, 0, 0, 0.235294 ), Color( 0, 0, 0, 0.156863 ), Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 0.156863 ), Color( 0, 0, 0, 0.235294 ), Color( 0, 0, 0, 0.313726 ), Color( 0, 0, 0, 0.470588 ), Color( 0, 0, 0, 0.705882 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("../HUD/CtrlTheme/PnlUIBar/LblTime:text")
@@ -46,22 +46,51 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3, 5, 190, 200, 235, 240.6 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 5.3, 50, 70.7, 120.2, 130.2, 190, 200, 235, 240.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ "Midnight", "Midnight", "Night", "Dusk", "Night", "Midnight", "Midnight" ]
+"values": [ "Midnight", "Midnight", "Night", "Dawn", "Morning", "Midday", "Afternoon", "Dusk", "Night", "Midnight", "Midnight" ]
 }
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="Animation" id=2]
+resource_name = "Night"
+length = 240.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4.6, 234.8, 240 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0.784314 ), Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.784314 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../HUD/CtrlTheme/PnlUIBar/LblTime:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 5, 235, 240.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "Midnight", "Midnight", "Night", "Midnight", "Midnight" ]
+}
+
+[sub_resource type="DynamicFont" id=3]
 size = 50
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxEmpty" id=2]
+[sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="StyleBoxEmpty" id=3]
+[sub_resource type="StyleBoxEmpty" id=5]
 
-[sub_resource type="StyleBoxFlat" id=22]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -69,7 +98,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=23]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -77,7 +106,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=24]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -85,12 +114,12 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=9]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
 border_width_left = 2
 border_width_top = 2
@@ -98,23 +127,23 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=11]
 size = 25
 font_data = ExtResource( 11 )
 
-[sub_resource type="Theme" id=14]
-default_font = SubResource( 13 )
+[sub_resource type="Theme" id=12]
+default_font = SubResource( 11 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 0
-Button/fonts/font = SubResource( 7 )
-Button/styles/disabled = SubResource( 2 )
-Button/styles/focus = SubResource( 3 )
-Button/styles/hover = SubResource( 22 )
-Button/styles/normal = SubResource( 23 )
-Button/styles/pressed = SubResource( 24 )
+Button/fonts/font = SubResource( 3 )
+Button/styles/disabled = SubResource( 4 )
+Button/styles/focus = SubResource( 5 )
+Button/styles/hover = SubResource( 6 )
+Button/styles/normal = SubResource( 7 )
+Button/styles/pressed = SubResource( 8 )
 Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -122,11 +151,17 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 4 )
+Label/fonts/font = SubResource( 9 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 5 )
+Panel/styles/panel = SubResource( 10 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="DynamicFont" id=13]
+size = 24
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="Animation" id=14]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -141,7 +176,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=15]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -156,7 +191,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=16]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -171,21 +206,21 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
+[sub_resource type="DynamicFont" id=17]
+size = 25
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=18]
+size = 25
+font_data = ExtResource( 11 )
+
+[sub_resource type="StyleBoxEmpty" id=19]
+
 [sub_resource type="DynamicFont" id=20]
-size = 25
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFont" id=21]
-size = 25
-font_data = ExtResource( 11 )
-
-[sub_resource type="StyleBoxEmpty" id=26]
-
-[sub_resource type="DynamicFont" id=25]
 size = 30
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=21]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -209,10 +244,10 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 4, 4, 4, 1 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1.26, 1.26, 1.26, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=22]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -239,7 +274,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=19]
+[sub_resource type="Animation" id=23]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -266,8 +301,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Start"
+[sub_resource type="Animation" id=24]
 length = 10.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -318,13 +352,13 @@ tracks/3/keys = {
 "values": [ 0.0, 0.0, 1.0 ]
 }
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=25]
 size = 20
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=26]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -340,7 +374,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=27]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -367,7 +401,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=28]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -414,7 +448,7 @@ layer = 0
 margin_right = 1920.0
 margin_bottom = 1080.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 0.784314 )
+color = Color( 0, 0, 0, 0.705882 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -422,6 +456,7 @@ __meta__ = {
 [node name="AnimDayNight" type="AnimationPlayer" parent="CanvasLayer"]
 playback_speed = 0.17
 anims/DayNight = SubResource( 1 )
+anims/Night = SubResource( 2 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 pause_mode = 2
@@ -432,7 +467,7 @@ margin_left = 960.0
 margin_top = 540.0
 margin_right = 960.0
 margin_bottom = 540.0
-theme = SubResource( 14 )
+theme = SubResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -445,14 +480,15 @@ margin_left = -593.5
 margin_top = -377.976
 margin_right = 593.5
 margin_bottom = -349.976
-text = "This displays the main quest. if this text shows that means sarah flopped and didnt emit any signal."
+custom_fonts/font = SubResource( 13 )
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblMainQuest"]
-anims/FadeIn = SubResource( 15 )
-anims/FadeOut = SubResource( 16 )
+anims/FadeIn = SubResource( 14 )
+anims/FadeOut = SubResource( 15 )
 
 [node name="LblShowLevelName" type="Label" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
@@ -469,7 +505,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblShowLevelName"]
-anims/Start = SubResource( 17 )
+anims/Start = SubResource( 16 )
 
 [node name="PnlUIBar" type="Panel" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
@@ -498,7 +534,7 @@ margin_right = 99.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 17 )
 text = "Map"
 
 [node name="BtnJournal" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
@@ -507,7 +543,7 @@ margin_right = 207.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 17 )
 text = "Journal"
 
 [node name="BtnMenu" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
@@ -515,7 +551,7 @@ margin_left = 211.0
 margin_right = 311.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 18 )
 text = "Menu"
 clip_text = true
 __meta__ = {
@@ -564,7 +600,7 @@ margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.08
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 17 )
 text = "Events"
 
 [node name="LblTime" type="Label" parent="HUD/CtrlTheme/PnlUIBar"]
@@ -692,8 +728,8 @@ margin_left = -960.0
 margin_top = 443.0
 margin_right = -573.0
 margin_bottom = 483.0
-custom_styles/normal = SubResource( 26 )
-custom_fonts/font = SubResource( 25 )
+custom_styles/normal = SubResource( 19 )
+custom_fonts/font = SubResource( 20 )
 text = "Unspent Attribute Points"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -701,11 +737,11 @@ __meta__ = {
 
 [node name="AnimDefault" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
 autoplay = "default"
-anims/default = SubResource( 18 )
+anims/default = SubResource( 21 )
 
 [node name="AnimAppear" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
-anims/FadeIn = SubResource( 6 )
-anims/FadeOut = SubResource( 19 )
+anims/FadeIn = SubResource( 22 )
+anims/FadeOut = SubResource( 23 )
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
 visible = false
@@ -789,7 +825,7 @@ margin_bottom = -10.7029
 text = "Exit To Main Menu"
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/PnlVictory"]
-anims/Start = SubResource( 8 )
+anims/Start = SubResource( 24 )
 
 [node name="NPCInfoPanel" parent="HUD/CtrlTheme" instance=ExtResource( 8 )]
 visible = false
@@ -1058,7 +1094,7 @@ margin_left = -477.0
 margin_top = -256.5
 margin_right = 478.0
 margin_bottom = 297.5
-custom_fonts/normal_font = SubResource( 9 )
+custom_fonts/normal_font = SubResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1118,7 +1154,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/ProgressAnim"]
-anims/Load = SubResource( 10 )
+anims/Load = SubResource( 26 )
 
 [node name="LblProgress" type="Label" parent="HUD/CtrlTheme/ProgressAnim"]
 margin_left = -21.3816
@@ -1151,8 +1187,8 @@ __meta__ = {
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblLog"]
 autoplay = "default"
-anims/LogEntry = SubResource( 11 )
-anims/default = SubResource( 12 )
+anims/LogEntry = SubResource( 27 )
+anims/default = SubResource( 28 )
 
 [node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 

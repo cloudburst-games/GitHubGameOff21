@@ -9,6 +9,7 @@ public class StageWorld : Stage
     private ItemBuilder _itemBuilder = new ItemBuilder();
     private int _difficulty = 1;
 
+
     
     public override void _Input(InputEvent ev)
     {
@@ -133,7 +134,6 @@ public class StageWorld : Stage
         GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Visible = false;
         ConnectSignals();
         // GetNode<Control>("CntBattle").Visible = false;
-        
         if (SharedData != null)
         {
             if (SharedData.ContainsKey("Load"))
@@ -153,6 +153,7 @@ public class StageWorld : Stage
                 BattleUnitData enemyCommanderData = (BattleUnitData) SharedData["EnemyCommanderData"];
                 bool victory = (bool) SharedData["Victory"];
                 GetNode<RichTextLabel>("HUD/CtrlTheme/PnlEventsBig/RichTextLabel").Text = (string) SharedData["Events"];
+                GetNode<HUD>("HUD").OnMainQuestChanged((string) SharedData["MainQuestText"]);
                 LoadWorldGen(unpackedData, true, enemyCommanderData, victory);
 
                 return;
@@ -190,6 +191,7 @@ public class StageWorld : Stage
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.ExperienceGained), this, nameof(OnExperienceGainedWrapped));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.FoundGold), this, nameof(OnFoundGold));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.FoundItems), this, nameof(OnFoundItems));
+        GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.SunStolen), this, nameof(OnSunStolen));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompanionJoining), this, nameof(OnCompanionJoining));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompanionLeaving), this, nameof(OnCompanionLeaving));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompletedQuest), this, nameof(OnCompletedQuest));
@@ -200,6 +202,14 @@ public class StageWorld : Stage
         );
 
 // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
+    }
+
+    public void OnSunStolen()
+    {
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle = "Night";
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Stop();        
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle);
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Time, true);
     }
 
     public void OnStartedLevelTransition()
@@ -229,7 +239,7 @@ public class StageWorld : Stage
         SetProcessInput(true);
         if (GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentControlState is PlayerUnitControlState p)
         {
-            p.CurrentPath.Clear();
+            p.ClearPath();
         }
        Node2D tilemaps = (Node2D) GetNode<LevelManager>("LevelManager").GetLevelInTree().GetNode("Terrain/Tilemaps").Duplicate();
        GetNode("HUD/CtrlTheme/Map/Panel/ViewportContainer/Viewport/Terrain/Tilemaps").Name = "OldTilemaps";
@@ -607,7 +617,8 @@ public class StageWorld : Stage
             {"FriendliesData", GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Minions},
             {"HostilesData", target.CurrentUnitData.Minions},
             {"Difficulty", _difficulty},
-            {"Events", GetNode<RichTextLabel>("HUD/CtrlTheme/PnlEventsBig/RichTextLabel").Text}
+            {"Events", GetNode<RichTextLabel>("HUD/CtrlTheme/PnlEventsBig/RichTextLabel").Text},
+            {"MainQuestText", GetNode<Label>("HUD/CtrlTheme/LblMainQuest").Text}
         });
 
     }
@@ -705,7 +716,7 @@ public class StageWorld : Stage
             PortraitPath = "res://Actors/PortraitPlaceholders/Big/Khepri.PNG",
             PortraitPathSmall = "res://Actors/PortraitPlaceholders/Small/Khepri.PNG"
         };
-        player.CurrentUnitData.Time = 190; // start at 7pm
+        player.CurrentUnitData.Time = 50; // start at 5am
         player.CurrentUnitData.CurrentBattleUnitData.BattlePortraitPath = player.CurrentUnitData.PortraitPathSmall;
         player.CurrentUnitData.CurrentBattleUnitData.BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"; // todo - change this to PlayerBody when this is done
         // set starting attributes
@@ -740,7 +751,7 @@ public class StageWorld : Stage
         GetNode<HUD>("HUD").LogEntry(String.Format("New world generated."));
         GetNode<HUD>("HUD").LogEntry(String.Format("Hint: {0}/{1}/{2}/{3} or click to move. {4} or click to interact. Find someone to talk to.", controlUp,controlLeft, controlDown, controlRight, controlInteract));
 
-        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);
         OnCompanionChanged();
     }
@@ -757,6 +768,7 @@ public class StageWorld : Stage
         );        
     }
 
+
     private Unit CommonPlayerGen()
     {
         Unit player = (Unit) GD.Load<PackedScene>("res://Actors/Player/Player.tscn").Instance();
@@ -768,7 +780,8 @@ public class StageWorld : Stage
         player.Connect(nameof(Unit.BattleStarted), this, nameof(OnBattleStarted));
         player.Connect(nameof(Unit.ShopAccessed), this, nameof(OnShopAccessed));
         player.Connect(nameof(Unit.NPCStartingDialogue), this, nameof(OnDialogueStarted));
-
+        player.Connect(nameof(Unit.PlayerPathCleared), GetNode<LevelManager>("LevelManager"), nameof(LevelManager.OnPlayerPathCleared));
+        player.Connect(nameof(Unit.PlayerPathSet), GetNode<LevelManager>("LevelManager"), nameof(LevelManager.OnPlayerPathSet));
         
 
         return player;
@@ -803,11 +816,11 @@ public class StageWorld : Stage
 
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Load(null, player.CurrentUnitData);
 
-        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play("DayNight");
+        GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle);
         // GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         // GD.Print("player tyime: ", player.CurrentUnitData.Time);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);
-        GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
+        // GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         OnCompanionChanged();
 
         // fade out
@@ -824,6 +837,10 @@ public class StageWorld : Stage
             {
                 Unit enemyNPC = GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromBattleUnitData(enemyCommanderData);
                 OnBattleVictory(enemyNPC);
+                if (player.CurrentUnitData.AttributePoints > 0)
+                {
+                    GetNode<HUD>("HUD").OnAttributePointsUnspent();
+                }
             }
             else
             {

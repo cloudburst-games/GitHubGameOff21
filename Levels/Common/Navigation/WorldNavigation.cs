@@ -95,7 +95,8 @@ public class WorldNavigation : Navigation2D
 
     public void OnPlayerPathRequested(PlayerUnitControlState playerUnitControlState, Vector2 worldPos)
     {
-        playerUnitControlState.CurrentPath = GetSimplePath(playerUnitControlState.Unit.GlobalPosition, worldPos).ToList();
+        playerUnitControlState.SetPath(GetSimplePath(playerUnitControlState.Unit.GlobalPosition, worldPos).ToList());
+        
     }
 
 

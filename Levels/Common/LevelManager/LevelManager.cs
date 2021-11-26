@@ -34,6 +34,7 @@ public class LevelManager : Node2D
     };
     public Level CurrentLevel;
     private Random _rand = new Random();
+    private Sprite _playerPathSprite;
 
     public override void _Ready()
     {
@@ -62,6 +63,7 @@ public class LevelManager : Node2D
 
     public void InitialiseLevel(Level dest, Unit player) // this is called on transitioning, loading, and making new world
     {
+
         CurrentLevel = dest;
         LevelLocation newLevelLocation = (LevelLocation) _levelSceneDict[dest].Instance();
         newLevelLocation.Level = dest;
@@ -75,6 +77,9 @@ public class LevelManager : Node2D
         // player.GlobalPosition = newLevelLocation.GetNode<Position2D>("All/PositionMarkers/PlayerPositionMarker").GlobalPosition;
         UnpackLevelData(dest, player);
         newLevelLocation.GetNode("All/Units").AddChild(player);
+        _playerPathSprite = (Sprite) GD.Load<PackedScene>("res://Interface/Markers/PlayerPathSprite.tscn").Instance();
+        newLevelLocation.GetNode("Terrain").AddChild(_playerPathSprite);
+        _playerPathSprite.Visible = false;
         GeneratePlayerCompanions(player);
         // 
         InitialiseNPCsAfterGen();
@@ -322,14 +327,14 @@ public class LevelManager : Node2D
         }
         return result;
     }
-    public List<Vector2> GetLevelTransitionPositions()
+    public List<Tuple<Vector2, string>> GetLevelTransitionPositions()
     {
-        List<Vector2> result = new List<Vector2>();
+        List<Tuple<Vector2, string>> result = new List<Tuple<Vector2, string>>();
         foreach (Node n in GetLevelInTree().GetNode("All/TransitionMarkers").GetChildren())
         {
             if (n is LevelTransitionMarker marker)
             {
-                result.Add(marker.Position);
+                result.Add(new Tuple<Vector2, string>(marker.Position, marker.ButtonLabel));
             }
         }
         return result;
@@ -475,4 +480,15 @@ public class LevelManager : Node2D
             controlState.Connect(nameof(PlayerUnitControlState.PathRequested), GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation"), nameof(WorldNavigation.OnPlayerPathRequested));
         }
 	}
+
+    public void OnPlayerPathSet(Vector2 finalWorldPosition)
+    {
+        _playerPathSprite.GlobalPosition = finalWorldPosition;
+        _playerPathSprite.Visible = true;
+    }
+
+    public void OnPlayerPathCleared()
+    {
+        _playerPathSprite.Visible = false;
+    }
 }

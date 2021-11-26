@@ -77,7 +77,7 @@ public class Map : Control
 
     // if performance is an issue consider object pooling (currently making up to 6000 objects which are reference counted and removed on free)
     public void Update(Vector2 playerPos, Unit.FacingDirection dir,  List<Tuple<Vector2, string>> npcPositions, List<Shop> shops, List<StaticBody2D> obstacles,
-        List<Vector2> transitionPositions)
+        List<Tuple<Vector2, string>> transitionPositions)
     {
         _playerPos = playerPos;
         ClearAll();
@@ -154,6 +154,10 @@ public class Map : Control
     {
         foreach (StaticBody2D obstacle in obstacles)
         {
+            if (!obstacle.HasNode("Sprite"))
+            {
+                continue;
+            }
             Sprite sprite = (Sprite) obstacle.GetNode<Sprite>("Sprite").Duplicate();
             sprite.Texture = obstacle.GetNode<Sprite>("Sprite").Texture;
             // sprite.Scale;
@@ -184,12 +188,12 @@ public class Map : Control
         }
     }
     
-    private void GenerateLevelTransitionSymbols(List<Vector2> transitionPositions)
+    private void GenerateLevelTransitionSymbols(List<Tuple<Vector2, string>> transitionPositions)
     {
-        foreach (Vector2 pos in transitionPositions)
+        foreach (Tuple<Vector2, string> transitionPos in transitionPositions)
         {
             TextureRect texRect = new TextureRect();
-            texRect.RectPosition = pos - new Vector2(32,32);
+            texRect.RectPosition = transitionPos.Item1 - new Vector2(32,32);
             texRect.Texture = _levelTransitionSymbol;
             texRect.RectSize = new Vector2(64,64);
             texRect.Expand = true;
@@ -199,7 +203,7 @@ public class Map : Control
             shaderMaterial.SetShaderParam("flash_depth", 0.25f);
             texRect.Material = shaderMaterial;
             _allContainer.AddChild(texRect);
-            texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {"Level Transition"});
+            texRect.Connect("mouse_entered", this, nameof(OnMouseEnteredSymbol), new Godot.Collections.Array {transitionPos.Item2});
         }
     }
 

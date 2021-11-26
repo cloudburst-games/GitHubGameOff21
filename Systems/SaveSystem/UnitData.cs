@@ -24,6 +24,7 @@ public class UnitData : IStoreable
         }
     }
     public float Time {get; set;} = 0;
+    public string DayNightCycle {get; set;} = "DayNight";
     public Vector2 NPCPosition {get; set;}
     public string DefeatMessage {get; set;} = "You have defeated your foes in honourable combat!";
     private bool _companion = false;

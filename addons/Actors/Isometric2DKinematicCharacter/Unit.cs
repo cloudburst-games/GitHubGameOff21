@@ -6,6 +6,12 @@ using System.Collections.Generic;
 public class Unit : KinematicBody2D
 {
     [Signal]
+    public delegate void PlayerPathSet(Vector2 finalWorldPosition);
+
+    [Signal]
+    public delegate void PlayerPathCleared();
+    
+    [Signal]
     public delegate void DialogueStarted(Unit target);
     [Signal]
     public delegate void BattleStarted(Unit target, string customBattleText);

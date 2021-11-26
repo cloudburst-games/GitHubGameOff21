@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class PlayerUnitControlState : UnitControlState
 {
+	[Signal]
+	public delegate void PathRequested(PlayerUnitControlState controlState, Vector2 worldPosition);
+
 
 	public PlayerUnitControlState(Unit unit)
 	{
@@ -31,6 +34,21 @@ public class PlayerUnitControlState : UnitControlState
     public void OnInteractNPC(Unit unit)
     {
         this.Unit.EmitSignal(nameof(Unit.DialogueStarted), unit);
+    }
+
+    public void ClearPath()
+    {
+        CurrentPath.Clear();
+        this.Unit.EmitSignal(nameof(Unit.PlayerPathCleared));
+    }
+
+    public void SetPath(List<Vector2> path)
+    {
+        CurrentPath = path;
+        if (CurrentPath.Count > 0)
+        {
+            this.Unit.EmitSignal(nameof(Unit.PlayerPathSet), path[path.Count-1]);
+        }
     }
 
     public override void Update(float delta)
@@ -91,7 +109,7 @@ public class PlayerUnitControlState : UnitControlState
                         float distance = ((CircleShape2D)unit.GetNode<CollisionShape2D>("NPCInteractArea/Shape").Shape).Radius * 0.8f;
                         if (_talkOnArrive && _talkToHere.DistanceTo(unit.GlobalPosition) < distance && Unit.GlobalPosition.DistanceTo(unit.GlobalPosition) < distance || !_talkOnArrive)
                         {
-                            CurrentPath.Clear();
+                            ClearPath();
                             OnInteractNPC(unit);
                             _talkOnArrive = false;
                             return;
@@ -103,10 +121,10 @@ public class PlayerUnitControlState : UnitControlState
             {
                 if (n is ShopInteractableArea shopEntranceArea)
                 {                        
-                    float distance = ((CircleShape2D)shopEntranceArea.GetNode<CollisionShape2D>("Shape").Shape).Radius*1.5f;
+                    float distance = ((CircleShape2D)shopEntranceArea.GetNode<CollisionShape2D>("Shape").Shape).Radius*1.35f;
                     if (_talkOnArrive && _talkToHere.DistanceTo(shopEntranceArea.GlobalPosition) < distance && Unit.GlobalPosition.DistanceTo(shopEntranceArea.GlobalPosition) < distance || !_talkOnArrive)
                     {
-                        CurrentPath.Clear();
+                        ClearPath();
                         // shopEntranceArea.CurrentShop.Start(Unit.CurrentUnitData);
                         this.Unit.EmitSignal(nameof(Unit.ShopAccessed), new ShopDataSignalWrapper() {CurrentShopData = shopEntranceArea.CurrentShop.CurrentShopData});
                         _talkOnArrive = false;
@@ -143,13 +161,14 @@ public class PlayerUnitControlState : UnitControlState
         if (up || down || left || right || Input.IsActionJustPressed("Interact"))
         {
             _talkOnArrive = false;
-            CurrentPath.Clear();
+            ClearPath();
             return;
         }
 
 
 		if (CurrentPath.Count == 0)
 		{
+            ClearPath();
 			this.Unit.CurrentVelocity = new Vector2(0,0);
             
             // if (_currentAIBehaviourState is PatrolAIBehaviourState)
@@ -174,7 +193,7 @@ public class PlayerUnitControlState : UnitControlState
             Unit.GetNode<CollisionShape2D>("Shape").Disabled = true;
 			if (CurrentPath.Count > 1)
 			{
-				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[1]) < 25*areaExtents)
+				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[1]) < 5*areaExtents)
 				{
 					CurrentPath.RemoveAt(0);//(this.Unit.Position.DistanceSquaredTo(CurrentPath[0]));
 				}
@@ -185,7 +204,7 @@ public class PlayerUnitControlState : UnitControlState
 			if (CurrentPath.Count == 1)
 			{
 					// GD.Print("is it this2?");
-				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[0]) < 25*areaExtents)
+				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[0]) < 5*areaExtents)
 				{
 					// this.Unit.CurrentVelocity = new Vector2(0,0);
 					CurrentPath.RemoveAt(0);
@@ -268,8 +287,6 @@ public class PlayerUnitControlState : UnitControlState
 	public Vector2 StartPosition {get; set;}
 	public bool IsAvoiding {get; set;} = false;
 
-	[Signal]
-	public delegate void PathRequested(PlayerUnitControlState controlState, Vector2 worldPosition);
 	
 	private void OnUnitDetectAreaEntered(PhysicsBody2D body)
 	{

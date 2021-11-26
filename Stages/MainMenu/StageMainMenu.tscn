@@ -26,21 +26,21 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=2]
 size = 50
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 9 )
 
-[sub_resource type="StyleBoxEmpty" id=2]
-
 [sub_resource type="StyleBoxEmpty" id=3]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="DynamicFont" id=5]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 9 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
 border_width_left = 2
 border_width_top = 2
@@ -48,20 +48,20 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 25
 font_data = ExtResource( 9 )
 
 [sub_resource type="Theme" id=8]
-default_font = SubResource( 6 )
+default_font = SubResource( 7 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 7 )
-Button/styles/disabled = SubResource( 2 )
-Button/styles/focus = SubResource( 3 )
+Button/fonts/font = SubResource( 2 )
+Button/styles/disabled = SubResource( 3 )
+Button/styles/focus = SubResource( 4 )
 Button/styles/hover = ExtResource( 15 )
 Button/styles/normal = ExtResource( 17 )
 Button/styles/pressed = ExtResource( 15 )
@@ -72,9 +72,9 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 4 )
+Label/fonts/font = SubResource( 5 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 5 )
+Panel/styles/panel = SubResource( 6 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 24

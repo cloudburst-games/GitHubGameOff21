@@ -165,7 +165,7 @@ public class DialogueControl : Control
 		}
 		if ((bool)InkStory.GetVariable("main_quest_updated")==true)
 		{
-			EmitSignal(nameof(MainQuestChanged), (string)(InkStory.GetVariable("main_quest)")));
+			EmitSignal(nameof(MainQuestChanged), (string)(InkStory.GetVariable("main_quest")));
 			//GD.Print("Main quest changed");
 			InkStory.SetVariable("main_quest_updated",false);
 			

@@ -18,12 +18,15 @@ public class PnlBattleVictory : Panel
     [Signal]
     public delegate void FoundItems(Godot.Collections.Array<PnlInventory.ItemMode> items);
 
+    [Signal]
+    public delegate void SunStolen();
+
     private Dictionary<string, Action<Unit>> _defeatNPCOutcomes;
     public override void _Ready()
     {
         Visible = false;
         _defeatNPCOutcomes = new Dictionary<string, Action<Unit>>() {
-        //    {"enemyjill1", OnEnemyJillDefeated},
+           {"Ammit", OnEnemyAmmitDefeated},
         //    {"NPC0", OnEnemyJillDefeated},
         //    {"NPC1", OnEnemyJillDefeated}
         };
@@ -119,25 +122,31 @@ public class PnlBattleVictory : Panel
     }
 
 
-    private void OnEnemyJillDefeated(Unit npcDefeated)
+    private void OnEnemyAmmitDefeated(Unit npcDefeated)
     {
-        // do something special
-        // lets try just making her neutral
+
+        // delete the NPC from the game
         npcDefeated.CurrentUnitData.Hostile = false;
+        npcDefeated.QueueFree();
 
-        // do some custom text
-        GetNode<Label>("LblDefeatMessage").Text = "blah blah u win ok!";
+        EmitSignal(nameof(SunStolen));
+        // // do something special
+        // // lets try just making her neutral
+        // npcDefeated.CurrentUnitData.Hostile = false;
 
-        // can make companion if we wish, but i dont think we will be using this to add companions
-        // EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
+        // // do some custom text
+        // GetNode<Label>("LblDefeatMessage").Text = "blah blah u win ok!";
 
-        // can also give custom item reward after battles
-        EmitSignal(nameof(FoundItems), new Godot.Collections.Array<PnlInventory.ItemMode>() {
-            PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.VigourPot
-        });
+        // // can make companion if we wish, but i dont think we will be using this to add companions
+        // // EmitSignal(nameof(TestCompanionJoining), new UnitDataSignalWrapper() {CurrentUnitData = npcDefeated.CurrentUnitData} );
 
-        // and custom gold
-        // EmitSignal(nameof(FoundGold), 34);
+        // // can also give custom item reward after battles
+        // EmitSignal(nameof(FoundItems), new Godot.Collections.Array<PnlInventory.ItemMode>() {
+        //     PnlInventory.ItemMode.CharismaPot, PnlInventory.ItemMode.VigourPot
+        // });
+
+        // // and custom gold
+        // // EmitSignal(nameof(FoundGold), 34);
     }
 
     // private List<IInventoryPlaceableSignalWrapper> GetItemsFromEnemy(UnitData defeatedNPCUnitData)
