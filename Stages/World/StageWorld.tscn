@@ -1,7 +1,6 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
-[ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
 [ext_resource path="res://Levels/Common/LevelManager/LevelManager.cs" type="Script" id=3]
 [ext_resource path="res://Stages/World/HUD/HUD.cs" type="Script" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
@@ -53,8 +52,81 @@ tracks/1/keys = {
 "values": [ "Midnight", "Midnight", "Night", "Dusk", "Night", "Midnight", "Midnight" ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "FadeIn"
+[sub_resource type="DynamicFont" id=7]
+size = 50
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxFlat" id=22]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=23]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=24]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 25
+font_data = ExtResource( 11 )
+
+[sub_resource type="Theme" id=14]
+default_font = SubResource( 13 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 0
+Button/fonts/font = SubResource( 7 )
+Button/styles/disabled = SubResource( 2 )
+Button/styles/focus = SubResource( 3 )
+Button/styles/hover = SubResource( 22 )
+Button/styles/normal = SubResource( 23 )
+Button/styles/pressed = SubResource( 24 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 4 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 5 )
+
+[sub_resource type="Animation" id=15]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -69,8 +141,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "FadeOut"
+[sub_resource type="Animation" id=16]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -85,8 +156,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "Start"
+[sub_resource type="Animation" id=17]
 length = 5.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -101,7 +171,21 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="DynamicFont" id=20]
+size = 25
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=21]
+size = 25
+font_data = ExtResource( 11 )
+
+[sub_resource type="StyleBoxEmpty" id=26]
+
+[sub_resource type="DynamicFont" id=25]
+size = 30
+font_data = ExtResource( 11 )
+
+[sub_resource type="Animation" id=18]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -155,7 +239,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=19]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -330,7 +414,7 @@ layer = 0
 margin_right = 1920.0
 margin_bottom = 1080.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 0.392157 )
+color = Color( 0, 0, 0, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -348,7 +432,7 @@ margin_left = 960.0
 margin_top = 540.0
 margin_right = 960.0
 margin_bottom = 540.0
-theme = ExtResource( 2 )
+theme = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -367,8 +451,8 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblMainQuest"]
-anims/FadeIn = SubResource( 2 )
-anims/FadeOut = SubResource( 3 )
+anims/FadeIn = SubResource( 15 )
+anims/FadeOut = SubResource( 16 )
 
 [node name="LblShowLevelName" type="Label" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
@@ -385,15 +469,15 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblShowLevelName"]
-anims/Start = SubResource( 4 )
+anims/Start = SubResource( 17 )
 
 [node name="PnlUIBar" type="Panel" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -960.0
-margin_top = 492.0
+margin_left = -959.0
+margin_top = 496.0
 margin_right = 960.0
 margin_bottom = 540.0
 __meta__ = {
@@ -401,34 +485,37 @@ __meta__ = {
 }
 
 [node name="HBoxBtns" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar"]
-margin_left = 1611.24
+margin_left = 1607.0
 margin_top = 1.0
-margin_right = 1899.24
-margin_bottom = 42.0
+margin_right = 1918.0
+margin_bottom = 44.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="BtnMap" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
-margin_right = 93.0
-margin_bottom = 41.0
+margin_right = 99.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 20 )
 text = "Map"
 
 [node name="BtnJournal" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
-margin_left = 97.0
-margin_right = 190.0
-margin_bottom = 41.0
+margin_left = 103.0
+margin_right = 207.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 20 )
 text = "Journal"
 
 [node name="BtnMenu" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
-margin_left = 194.0
-margin_right = 288.0
-margin_bottom = 41.0
+margin_left = 211.0
+margin_right = 311.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
+custom_fonts/font = SubResource( 21 )
 text = "Menu"
 clip_text = true
 __meta__ = {
@@ -436,16 +523,16 @@ __meta__ = {
 }
 
 [node name="HBoxPortraits" parent="HUD/CtrlTheme/PnlUIBar" instance=ExtResource( 17 )]
-margin_left = 5.03969
-margin_top = -2.83484
-margin_right = 5.03969
-margin_bottom = -2.83484
+margin_left = 5.0
+margin_top = -3.0
+margin_right = 5.0
+margin_bottom = -3.0
 rect_scale = Vector2( 0.375, 0.375 )
 
 [node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
-margin_left = 325.968
-margin_right = 1606.97
-margin_bottom = 40.0
+margin_left = 326.0
+margin_right = 1607.0
+margin_bottom = 44.0
 script = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -453,16 +540,17 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents"]
 margin_left = 14.0
-margin_right = 1280.0
-margin_bottom = 40.0
+margin_top = 1.0
+margin_right = 1275.0
+margin_bottom = 44.0
 custom_constants/separation = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_right = 1162.0
-margin_bottom = 40.0
+margin_right = 1158.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 align = 1
@@ -470,12 +558,13 @@ valign = 1
 clip_text = true
 
 [node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_left = 1172.0
-margin_right = 1266.0
-margin_bottom = 40.0
+margin_left = 1168.0
+margin_right = 1261.0
+margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.08
+custom_fonts/font = SubResource( 20 )
 text = "Events"
 
 [node name="LblTime" type="Label" parent="HUD/CtrlTheme/PnlUIBar"]
@@ -599,11 +688,12 @@ __meta__ = {
 }
 
 [node name="BtnUnspentPoints" type="Button" parent="HUD/CtrlTheme/CntBtnUnspentPoints"]
-modulate = Color( 3.49079, 3.49079, 3.49079, 1 )
 margin_left = -960.0
-margin_top = 440.509
-margin_right = -677.0
-margin_bottom = 481.509
+margin_top = 443.0
+margin_right = -573.0
+margin_bottom = 483.0
+custom_styles/normal = SubResource( 26 )
+custom_fonts/font = SubResource( 25 )
 text = "Unspent Attribute Points"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -611,11 +701,11 @@ __meta__ = {
 
 [node name="AnimDefault" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
 autoplay = "default"
-anims/default = SubResource( 5 )
+anims/default = SubResource( 18 )
 
 [node name="AnimAppear" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
 anims/FadeIn = SubResource( 6 )
-anims/FadeOut = SubResource( 7 )
+anims/FadeOut = SubResource( 19 )
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
 visible = false
@@ -726,7 +816,7 @@ visible = false
 visible = false
 
 [node name="Buy" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="0"]
-margin_top = 46.0
+margin_top = 50.0
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false

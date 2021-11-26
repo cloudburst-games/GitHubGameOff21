@@ -64,6 +64,7 @@ public class Journal : MarginContainer
 	{
 		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal_text");
         JournalLabel.Text += "\n";
+        DialogueControl.InkStory.SetVariable("journal_text","");
 	}
 
 
@@ -110,28 +111,28 @@ public class Journal : MarginContainer
         } */
 	}
 
-    public void UpdateJournal(string journalUpdate)
+ /*    public void UpdateJournal(string journalUpdate)
     {
         if (DialogueControl._journalList.Contains(journalUpdate)== false)
         {
             DialogueControl._journalList.Add(journalUpdate);
         /*     for(int i = 0; i < JournalList.Count; i++)
             { */
-                var instance = journalLabelScene.Instance();
+                /* var instance = journalLabelScene.Instance();
                 JournalContainer.AddChild(instance);
-                instance.GetNode<Label>("Label").Text = journalUpdate;
+                instance.GetNode<Label>("Label").Text = journalUpdate; */
 
                 //JournalLabel = JournalContainer.GetNode<Label>("JournalLabel/PanelContainer/Panel/Label");
                // instance.GetNode<Label>("PanelContainer/Panel/Label").Text = JournalList[i];
           //  }
-        }
+     //   } 
         
        
       // JournalContainer.AddChild(instance);
       // 
       // JournalLabel.Text = journalUpdate;
       //  GD.Print("journal update check" + journalUpdate);
-    }
+  //  }
 
     public void OnExitButtonPressed()
     {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Stages/MainMenu/StageMainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=2]
@@ -14,7 +14,10 @@
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=13]
 [ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=14]
+[ext_resource path="res://Interface/Themes/BTNMainMenuHover.tres" type="StyleBox" id=15]
 [ext_resource path="res://Interface/Themes/KhepriThemeMain.tres" type="Theme" id=16]
+[ext_resource path="res://Interface/Themes/BTNMainMenuNormal.tres" type="StyleBox" id=17]
+[ext_resource path="res://Interface/Themes/50Old50.tres" type="DynamicFont" id=18]
 
 [sub_resource type="DynamicFont" id=1]
 size = 104
@@ -23,28 +26,77 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=7]
+size = 50
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="DynamicFont" id=4]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 25
+font_data = ExtResource( 9 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 6 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = SubResource( 7 )
+Button/styles/disabled = SubResource( 2 )
+Button/styles/focus = SubResource( 3 )
+Button/styles/hover = ExtResource( 15 )
+Button/styles/normal = ExtResource( 17 )
+Button/styles/pressed = ExtResource( 15 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 4 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 5 )
+
+[sub_resource type="DynamicFont" id=9]
 size = 24
 outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=10]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=11]
 size = 27
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
-[sub_resource type="Animation" id=5]
-resource_name = "HideAbout"
+[sub_resource type="Animation" id=12]
 length = 0.1
 step = 0.05
 tracks/0/type = "value"
@@ -72,8 +124,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "ShowAbout"
+[sub_resource type="Animation" id=13]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("PopAbout:visible")
@@ -155,12 +206,12 @@ __meta__ = {
 
 [node name="BtnPlay" parent="." instance=ExtResource( 2 )]
 margin_left = 48.0
-margin_top = 922.0
+margin_top = 930.0
 margin_right = 466.0
-margin_bottom = 1007.0
+margin_bottom = 1001.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 16 )
+theme = SubResource( 8 )
 text = "NEW GAME"
 clip_text = true
 
@@ -183,6 +234,7 @@ margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = null
+custom_fonts/font = ExtResource( 18 )
 text = "LOAD"
 
 [node name="BtnSettings" parent="HBoxContainer" instance=ExtResource( 2 )]
@@ -193,6 +245,7 @@ margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = null
+custom_fonts/font = ExtResource( 18 )
 text = "SETTINGS"
 
 [node name="BtnAbout" parent="HBoxContainer" instance=ExtResource( 2 )]
@@ -203,6 +256,7 @@ margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = null
+custom_fonts/font = ExtResource( 18 )
 text = "ABOUT"
 
 [node name="BtnQuit1" parent="HBoxContainer" instance=ExtResource( 2 )]
@@ -213,6 +267,7 @@ margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = null
+custom_fonts/font = ExtResource( 18 )
 text = "QUIT"
 
 [node name="BtnToggleMute" parent="HBoxContainer" instance=ExtResource( 2 )]
@@ -252,7 +307,7 @@ margin_top = -164.0
 margin_right = 329.0
 margin_bottom = 17.0
 theme = ExtResource( 14 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 9 )
 custom_constants/line_spacing = 10
 text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Bosca Ceoli, Strofe, Audacity, jfxr.
 "
@@ -271,7 +326,7 @@ margin_left = -519.0
 margin_top = -80.048
 margin_right = 519.0
 margin_bottom = 79.952
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 9 )
 custom_constants/line_spacing = 10
 text = "On discord we are:
 SarahSage7#9089,
@@ -292,7 +347,7 @@ margin_left = -192.0
 margin_top = 131.0
 margin_right = 208.0
 margin_bottom = 176.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 10 )
 text = "PLAY OUR GAMES!"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -306,7 +361,7 @@ margin_top = 1.0
 margin_right = -3.0
 margin_bottom = 48.0
 theme = null
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 11 )
 text = "X"
 
 [node name="PnlSettings" parent="." instance=ExtResource( 7 )]
@@ -348,8 +403,8 @@ SoundType = 3
 [node name="CursorControl" parent="." instance=ExtResource( 12 )]
 
 [node name="AnimPanels" type="AnimationPlayer" parent="."]
-anims/HideAbout = SubResource( 5 )
-anims/ShowAbout = SubResource( 6 )
+anims/HideAbout = SubResource( 12 )
+anims/ShowAbout = SubResource( 13 )
 
 [connection signal="pressed" from="BtnTexBackground" to="." method="OnBtnTexBackgroundPressed"]
 [connection signal="pressed" from="BtnPlay" to="." method="OnBtnNewPressed"]

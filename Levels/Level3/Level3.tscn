@@ -32,10 +32,10 @@ LevelName = "Upper Lunu"
 script = ExtResource( 1 )
 
 [node name="Ammit" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
-position = Vector2( 176.992, 337.049 )
+position = Vector2( 176.992, 338.049 )
 _defeatMessage = "The battle is bitter sweet. After the traitor takes his last breath, demons of the Netherworld emerge from the sand dunes. They chant a cursed melody and you are engulfed in smoke. In an instant, the dark mist disappears... along with your sun! You must find Mahef in Southern Lunu and travel to the Netherworld at once!"
 ID = "Ammit"
-UnitName = "Ammit the Devourer"
+UnitName = "Ammut"
 PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 12 )
 _startDirection = 4
