@@ -30,7 +30,7 @@ public class DialogueControl : Control
 	public Dictionary<int, string> DialogueDict = new Dictionary <int, string>();
 	public Dictionary<int, string> ChoiceDict = new Dictionary <int, string>();
     public Dictionary<string, PackedScene> QuestDict = new Dictionary<string, PackedScene>();
-	public List<string> _journalList = new List<string>();
+	//JournalUpublic List<string> _journalList = new List<string>();
 	public Dictionary <string,string> _journalDict = new Dictionary<string,string>();
 	public List<string> QuestList = new List<string>();
     public int n;
@@ -51,7 +51,7 @@ public class DialogueControl : Control
 	Color EndColour;
 	public string Quest = " ";
 	public string QuestComplete = " ";
-	public string JournalUpdated = " ";
+	public string pdated = " ";
 	MarginContainer DialogueContainer;
 	Journal Journal;
 //	bool _nPC0Spoken;
