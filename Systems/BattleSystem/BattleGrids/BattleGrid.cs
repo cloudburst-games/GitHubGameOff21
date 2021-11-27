@@ -31,6 +31,10 @@ public class BattleGrid : Control
         {
             return new Vector2[0];
         }
+        if (!_pointIDs.ContainsKey(mapStart) || ! _pointIDs.ContainsKey(mapEnd))
+        {
+            return new Vector2[0];
+        }
         int startIndex = _pointIDs[mapStart];
         int endIndex = _pointIDs[mapEnd];
         // GD.Print("*");

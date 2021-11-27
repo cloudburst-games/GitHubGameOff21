@@ -13,6 +13,7 @@ public class UnitData : IStoreable
     public string CustomBattleText {get; set;} = "";
     public string ID {get; set;} = "";
     private string _name = "";
+    public string MainQuest {get; set;} = "";
     public Unit.FacingDirection StartDirectionFacing {get; set;} = Unit.FacingDirection.Down;
     public string Name {
         get {

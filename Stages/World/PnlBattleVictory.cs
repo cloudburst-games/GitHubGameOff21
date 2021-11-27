@@ -130,6 +130,8 @@ public class PnlBattleVictory : Panel
         // delete the NPC from the game
         npcDefeated.CurrentUnitData.Hostile = false;
         npcDefeated.QueueFree();
+        
+        OnBtnContinuePressed();
 
         EmitSignal(nameof(MahefKilled), false);
     }
@@ -139,6 +141,7 @@ public class PnlBattleVictory : Panel
         // delete the NPC from the game
         npcDefeated.CurrentUnitData.Hostile = false;
         npcDefeated.QueueFree();
+
 
         EmitSignal(nameof(SunStolen));
         // // do something special

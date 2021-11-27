@@ -67,7 +67,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 4.6, 234.8, 240 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0, 0, 0.784314 ), Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.392157 ), Color( 0, 0, 0, 0.784314 ) ]
+"values": [ Color( 0, 0, 0, 0.784314 ), Color( 0, 0, 0, 0.588235 ), Color( 0, 0, 0, 0.588235 ), Color( 0, 0, 0, 0.784314 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("../HUD/CtrlTheme/PnlUIBar/LblTime:text")
@@ -79,7 +79,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.3, 5, 235, 240.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ "Midnight", "Midnight", "Night", "Midnight", "Midnight" ]
+"values": [ "Midnight", "Night", "Night", "Midnight", "Midnight" ]
 }
 
 [sub_resource type="DynamicFont" id=3]
@@ -449,7 +449,7 @@ layer = 0
 margin_right = 1920.0
 margin_bottom = 1080.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 0.705882 )
+color = Color( 0, 0, 0, 0.784314 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -767,10 +767,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -271.0
-margin_top = -187.0
-margin_right = 272.0
-margin_bottom = 30.0
+margin_left = -439.0
+margin_top = -242.0
+margin_right = 439.0
+margin_bottom = 252.0
 theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -780,20 +780,26 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -115.0
-margin_right = 115.0
-margin_bottom = 28.0
-text = "Tne end... for now..."
+margin_top = 14.0
+margin_right = 140.0
+margin_bottom = 46.0
+text = "The end..."
 
 [node name="LblBody0" type="Label" parent="HUD/CtrlTheme/PnlVictory"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -250.5
-margin_top = -63.5
-margin_right = 250.5
-margin_bottom = 44.5
-text = "Khepri had finally found the lost Elixir of Charisma. Now, could he clothe his purse with gems and gold? "
+margin_left = -416.5
+margin_top = -133.0
+margin_right = 416.5
+margin_bottom = 133.0
+text = "You huddle next to Mahef as he rocks back and forth in the boat, forcing the paddles into the glistening sea.
+
+You are soon greeted by the scent of burning hair, stale flesh, and perspiration. You have made it to the Netherworld. 
+
+To be continued..."
 autowrap = true
 percent_visible = 0.0
 __meta__ = {
@@ -801,15 +807,22 @@ __meta__ = {
 }
 
 [node name="LblBody1" type="Label" parent="HUD/CtrlTheme/PnlVictory"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -250.5
-margin_top = -63.5
-margin_right = 250.5
-margin_bottom = 44.5
-text = "Khepri decided to kill eveyron1 oh no!!"
+margin_left = -411.5
+margin_top = -167.5
+margin_right = 411.5
+margin_bottom = 179.5
+text = "Your tears fall upon the body of your dear brother, Mahef. What have you done?
+
+You are now an outcast. All of Lunu despises you. The Sun God Ra will hunt you down.
+
+Only Apophis, snake of the Netherworld, would welcome you now...
+
+To be continued..."
 autowrap = true
 percent_visible = 0.0
 __meta__ = {

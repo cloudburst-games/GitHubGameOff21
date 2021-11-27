@@ -48,6 +48,7 @@ public class BattleInteractionHandler : Reference
         float reductionMultiplier = 1 - defender.Stats[BattleUnitData.DerivedStat.PhysicalResist] / 100;
         // damage = (float)Math.Ceiling((1 - defender.Stats[BattleUnitData.DerivedStat.PhysicalResist] / 100f));
         damage *= reductionMultiplier;
+        damage = (float)Math.Round(damage, 1);
         // reduce health by final damage
         defender.Stats[BattleUnitData.DerivedStat.Health] -= damage;
 
@@ -77,6 +78,7 @@ public class BattleInteractionHandler : Reference
         // apply flat reduction by magic resist
         float reductionMultiplier = 1 - defender.Stats[BattleUnitData.DerivedStat.MagicResist] / 100;
         damage *= reductionMultiplier;
+        damage = (float)Math.Round(damage, 1);
 
         // reduce health by final damage
         defender.Stats[BattleUnitData.DerivedStat.Health] -= damage;

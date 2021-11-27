@@ -138,15 +138,15 @@ public class BattleHUD : CanvasLayer
         {
             if (effect.Name == "Solar Bolt" || effect.Name == "Solar Blast" || effect.Name == "Lunar Blast" || effect.Name == "Peril of Osiris")
             {
-                effectToolTips[effect] += " Base Damage: " + (Math.Abs(effect.Magnitude) + spellPower);
+                effectToolTips[effect] += " Base Damage: " + Math.Round((Math.Abs(effect.Magnitude) + spellPower), 1);
             }
             if (effect.Name == "Gaze of the Dead")
             {
-                effectToolTips[effect] += " Base Damage: " + (3 + spellPower);
+                effectToolTips[effect] += " Base Damage: " + Math.Round((3 + spellPower),1);
             }
             if (effect.Name == "Hymn of the Underworld")
             {
-                effectToolTips[effect] += " Base Damage: " + (1 + spellPower);
+                effectToolTips[effect] += " Base Damage: " + Math.Round((1 + spellPower),1);
             }
         }
         GetNode<Button>("CtrlTheme/PnlUI/HBoxActions/BtnSpell1").SetMeta("Info", effect1.Name + ": " + effectToolTips[effect1]);
