@@ -8,6 +8,4 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
