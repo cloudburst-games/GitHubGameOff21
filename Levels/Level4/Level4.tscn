@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=8]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=9]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion4.PNG" type="Texture" id=11]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion4.PNG" type="Texture" id=12]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 204.023, 643.737, 92.47, 493.235, 289.497, 484.246, 306.728, 500.727, 308.673, 644.927, 291.43, 656.819, 217.699, 660.386, 347.557, 473.383, 336.319, 456.902, 475.162, 443.356, 490.622, 464.167, 487.054, 487.357, 476.351, 506.979, 285.002, 469.637, 90.9717, 474.881, 346.058, 491.363, -919.778, 556.925, -922.156, 562.276, -1020.27, 512.924, -875.182, 536.114, -905.507, 552.763, -852.587, 426.707, -847.236, 433.842, -864.479, 533.735, -859.128, 521.843, -822.857, 514.708, -829.993, 440.383, -800.857, 457.032, -781.83, 470.113, -815.127, 521.843, 149.32, 279.84, 156.455, 269.137, 230.78, 268.542, 298.565, 303.029, 290.835, 334.543, 283.105, 344.652, 89.0988, 468.513, 300.349, 370.22, 295.116, 457.276, 339.691, 502.6, 491.217, 526.6, 482.297, 561.682, 405.594, 597.953, 444.837, 374.977, 487.649, 396.977, 485.271, 428.491, 431.756, 372.598, 340.782, 374.977, 345.539, 366.057, 422.243, 363.679, 317.591, 450.908, 315.809, 374.977, -734.856, 531.357, -768.154, 534.925, -807.992, 532.546, -753.883, 473.086, -725.937, 516.492, -686.693, 517.681, -742.586, 464.762, -722.37, 463.572, -664.098, 462.978, -650.422, 472.492, -608.205, 529.573, -652.206, 534.33, -680.747, 528.979, -621.287, 472.492, -588.583, 519.465, -550.529, 500.438, -577.88, 518.276, -603.449, 455.248, -574.313, 442.761, -540.42, 498.059, -527.339, 419.572, -536.258, 485.573, -498.204, 483.194, -480.366, 395.193, -456.581, 383.301, -308.525, 652.062, -358.472, 624.115, -367.391, 605.088, -355.499, 589.034, -215.172, 644.927, -122.414, 281.029, -93.2787, 264.975, -23.6488, 423.939, -29.642, 435.551, -58.1099, 439.296, -104.183, 434.802, -118.417, 420.568, -21.9263, 677.035, -29.6562, 688.927, -99.2248, 691.306, -164.631, 660.386, -12.0369, 532.941, 5.56824, 535.188, -355.499, 564.655, -489.285, 498.654, -419.121, 364.274, -387.013, 348.814, -351.337, 331.57, -327.552, 316.111, -296.633, 303.624, -291.846, 440.046, 362.782, 619.359, 322.46, 504.847, 353.863, 628.278, 168.941, 648.494, 82.731, 498.48, 60.631, 507.844, 163.59, 655.63, 151.103, 662.765, 46.7716, 510.466, 135.644, 672.873, 112.454, 680.008, 38.531, 518.332, 20.1767, 532.941, 26.5445, 523.202, 96.3998, 690.117, 48.8315, 694.873, 22.669, 688.927, 13.7499, 675.846, -167.486, 495.108, -85.4539, 493.235, -64.1031, 502.6, -27.7691, 522.078, -174.145, 642.548, -172.356, 501.102, -190.335, 501.476, -207.566, 497.73, 121.968, 279.84, 26.5445, 438.173, 16.0563, 424.313, -37.386, 238.812, 36.3449, 238.218, 52.9938, 243.569, 99.3728, 266.759, 7.06648, 420.193, -172.956, 312.543, -153.928, 295.894, -150.63, 423.564, -206.253, 308.976, -158.871, 436.3, -194.83, 441.918, -232.288, 435.551, -242.402, 422.066, -212.199, 302.435, -264.876, 420.568, -277.612, 425.062, -283.231, 456.901, -269.371, 466.266, -215.058, 490.988, -257.389, 662.17, -301.985, 656.819, -224.686, 658.008 )
@@ -35,15 +37,15 @@ _customBattleText = "My precious potions! Get away! Get away!"
 _defeatMessage = "As you cast the spell that strikes her down, the Ancient Crone crumbles into skin and dust. You have gained her potions of charisma! Meri the Merchant will be pleased."
 ID = "AncientCrone"
 UnitName = "Ancient Alchemist"
-PortraitPath = ExtResource( 8 )
-PortraitPathSmall = ExtResource( 9 )
+PortraitPath = ExtResource( 12 )
+PortraitPathSmall = ExtResource( 11 )
 _startDirection = 6
 _startingBools = {
 "Companion": false,
 "Hostile": false,
 "InitiatesDialogue": false
 }
-_combatLevel = 3
+_combatLevel = 6
 _minions = {
 0: 1
 }
@@ -67,12 +69,14 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 0
+_combatLevel = 6
 _minions = {
 0: 0
 }
-_startingSpell1 = 0
+_startingSpell1 = 8
+_startingSpell2 = 6
 _startingGold = 20
-_itemsHeld = [ 4 ]
+_itemsHeld = [ 4, 10, 2 ]
 _potionEquipped1 = 2
 _weaponEquipped = 10
 _armourEquipped = 11
@@ -91,8 +95,9 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 0
+_combatLevel = 5
 _minions = {
-0: 0
+0: 1
 }
 _startingSpell1 = 9
 _startingGold = 20

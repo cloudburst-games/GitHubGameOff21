@@ -39,15 +39,17 @@ UnitName = "Ammut"
 PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 12 )
 _startDirection = 4
-_combatLevel = 3
+_combatLevel = 8
 _minions = {
 0: 2
 }
 _startingSpell1 = 7
 _spellGainedAtHigherLevel = 8
 _startingGold = 20
-_itemsHeld = [ 3, 3 ]
+_itemsHeld = [ 3, 11 ]
 _potionEquipped1 = 1
+_potionEquipped2 = 3
+_armourEquipped = 11
 
 [node name="Bandit" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( 136.558, 534.457 )
@@ -60,9 +62,13 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
+_combatLevel = 6
 _minions = {
-0: 0
+0: 1
 }
+_startingGold = 15
+_itemsHeld = [ 9, 4 ]
+_weaponEquipped = 9
 
 [node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( -205.933, 318.022 )
@@ -75,16 +81,20 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
+_combatLevel = 7
 _minions = {
-0: 0
+0: 3
 }
+_startingGold = 15
+_itemsHeld = [ 9, 1 ]
+_weaponEquipped = 9
 
 [node name="Ambush" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( -255.88, 503.538 )
 _customBattleText = "AMBUSH! Demons of the Netherworld emerge from the sand dunes. They chant a cursed melody and you are engulfed in smoke. In an instant, the smoke disappears... along with your sun! "
 _defeatMessage = "You have defeated all who remained but too many escaped. And your sun is in the hands of the demons beneath! You must find Mahef in Southern Lunu and travel to the Netherworld at once!"
 ID = "Ambush"
-UnitName = "Scarabs of the Netherworld"
+UnitName = "Scarab of the Netherworld"
 PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 11 )
 _active = false
@@ -93,13 +103,18 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
-_combatLevel = 2
+_combatLevel = 6
 _minions = {
-0: 1
+0: 3
 }
 _physicalDamageRange = 2.0
 _startingSpell1 = 6
 _startingSpell2 = 9
+_startingGold = 21
+_itemsHeld = [ 1, 2, 4, 5 ]
+_potionEquipped1 = 3
+_potionEquipped2 = 2
+_potionEquipped3 = 5
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -134,7 +149,7 @@ position = Vector2( -55.0999, 893.424 )
 [node name="AutosaveAreas" type="YSort" parent="All"]
 
 [node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 2 )]
-position = Vector2( -40.3148, 619.551 )
+position = Vector2( -52.2069, 648.092 )
 
 [node name="Obstacles" type="YSort" parent="All"]
 
@@ -148,7 +163,7 @@ polygon = PoolVector2Array( -96.6029, -53.3364, 68.399, 30.2871, 169.421, -21.90
 
 [node name="Shop" parent="All/Shops" instance=ExtResource( 4 )]
 position = Vector2( -60.1873, 449.092 )
-_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_startingItemsStocked = [ 1, 4, 2, 2, 2, 6, 10, 12, 14 ]
 _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Glittering Goods"
 _buyMessage = "Hmph. Trash. I'll take it of your hands for {0} gold."

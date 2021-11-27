@@ -49,13 +49,22 @@ public class HUD : CanvasLayer
 
     }
 
-    public void OnGameEnded(bool joinMahef)
+    public async void OnGameEnded(bool joinMahef)
     {
         PauseCommon(true);
         Pausable = false;
         GetNode<Label>("CtrlTheme/PnlVictory/LblBody0").Visible = joinMahef;
         GetNode<Label>("CtrlTheme/PnlVictory/LblBody1").Visible = !joinMahef;
         GetNode<AnimationPlayer>("CtrlTheme/PnlVictory/Anim").Play("Start");
+
+        Timer timer = new Timer();
+        timer.WaitTime = 0.1f;
+        AddChild(timer);
+        timer.Start();
+        await ToSignal(timer, "timeout");
+        timer.QueueFree();
+        PauseCommon(true);
+        Pausable = false;
     }
 
     private void OnBtnJournalClosePressed()
@@ -232,7 +241,7 @@ public class HUD : CanvasLayer
             GetNode<Map>("CtrlTheme/Map").Visible || GetNode<Journal>("CtrlTheme/DialogueControl/Journal").Visible || 
             GetNode<FileDialog>("CtrlTheme/FileDialog").Visible || GetNode<Panel>("CtrlTheme/PnlBattleVictory").Visible ||
             GetNode<Panel>("CtrlTheme/PnlDefeat").Visible || GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible || GetNode<Panel>("CtrlTheme/PnlVictory").Visible
-            || GetNode<PnlPreBattle>("CtrlTheme/PnlPreBattle").Visible;
+            || GetNode<PnlPreBattle>("CtrlTheme/PnlPreBattle").Visible || GetNode<Panel>("CtrlTheme/PnlVictory").Visible;
     }
 
     public override void _Input(InputEvent ev)
