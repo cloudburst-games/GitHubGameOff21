@@ -36,19 +36,22 @@ ID = "Mahef"
 UnitName = "Mahef the Ferrybug"
 PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 8 )
-_combatLevel = 3
+_combatLevel = 9
 _minions = {
 0: 2
 }
 _startingSpell1 = 1
-_itemsHeld = [ 4, 7 ]
+_startingGold = 50
+_itemsHeld = [ 4, 7, 10 ]
+_potionEquipped1 = 4
+_potionEquipped2 = 7
 _weaponEquipped = 10
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
 [node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 1 )]
 position = Vector2( 9.44716, 960.313 )
-ButtonLabel = "To Level 2"
+ButtonLabel = "To Central Lunu"
 DestinationLevel = 1
 
 [node name="PositionMarkers" type="YSort" parent="All"]
@@ -91,11 +94,10 @@ polygon = PoolVector2Array( -105.533, -52.3687, -1.4407, -0.190186, 171.252, -86
 
 [node name="Shop" parent="All/Shops" instance=ExtResource( 4 )]
 position = Vector2( 218.087, 565.634 )
-_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_startingItemsStocked = [ 1, 2, 3, 1, 4, 5, 6, 7, 12, 14, 10, 1, 4, 2 ]
 _introText = "Welcome! Please, peruse my humble wares."
 _shopTitle = "Watery Wares"
 _buyMessage = "Hmph. Trash. I'll take it of your hands for {0} gold."
-_stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

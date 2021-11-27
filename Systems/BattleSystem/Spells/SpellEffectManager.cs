@@ -257,7 +257,7 @@ public class SpellEffectManager : Reference
                 Name = "Peril of Osiris",
                 RangeSquares = 5,
                 DurationRounds = 0,
-                Magnitude = 0,
+                Magnitude = 1,
                 AreaSquares = 0,
                 ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
@@ -270,7 +270,7 @@ public class SpellEffectManager : Reference
                 Name = "Peril of Osiris",
                 RangeSquares = 5,
                 DurationRounds = 3,
-                Magnitude = 0,
+                Magnitude = 4,
                 AreaSquares = 0,
                 ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
@@ -870,6 +870,7 @@ public class SpellEffectManager : Reference
             if (spell == SpellMode.WeighingOfTheHeart)
             {
                 finalMagnitude = Math.Max(finalMagnitude, -1 * (target.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed]/1.5f));// finalMagnitude);
+                finalMagnitude = (float)Math.Round(finalMagnitude, 1);
             }
             // GD.Print("effect magnitude ", effect.Magnitude);
             // GD.Print("spelldamage help ", ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/2) 

@@ -110,6 +110,7 @@ Label/fonts/font = SubResource( 5 )
 Label/styles/normal = null
 Panel/styles/panel = SubResource( 6 )
 
+<<<<<<< HEAD
 [sub_resource type="DynamicFont" id=15]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
@@ -283,6 +284,9 @@ Label/styles/normal = null
 Panel/styles/panel = SubResource( 35 )
 
 [sub_resource type="StyleBoxFlat" id=14]
+=======
+[sub_resource type="StyleBoxFlat" id=9]
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -294,27 +298,32 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 24
 outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
+<<<<<<< HEAD
 [sub_resource type="DynamicFont" id=38]
 size = 20
+=======
+[sub_resource type="DynamicFont" id=12]
+size = 27
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.1
 step = 0.05
 tracks/0/type = "value"
@@ -342,7 +351,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=14]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("PopAbout:visible")
@@ -503,8 +512,13 @@ margin_left = -386.0
 margin_top = -212.0
 margin_right = 386.0
 margin_bottom = 212.0
+<<<<<<< HEAD
 theme = SubResource( 37 )
 custom_styles/panel = SubResource( 14 )
+=======
+theme = ExtResource( 11 )
+custom_styles/panel = SubResource( 9 )
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -518,7 +532,7 @@ margin_left = -329.0
 margin_top = -164.0
 margin_right = 329.0
 margin_bottom = 17.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_constants/line_spacing = 10
 text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Bosca Ceoli, Strofe, Audacity, jfxr.
 "
@@ -537,7 +551,7 @@ margin_left = -519.0
 margin_top = -80.048
 margin_right = 519.0
 margin_bottom = 79.952
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 custom_constants/line_spacing = 10
 text = "On discord we are:
 SarahSage7#9089,
@@ -558,7 +572,7 @@ margin_left = -192.0
 margin_top = 131.0
 margin_right = 208.0
 margin_bottom = 176.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 text = "PLAY OUR GAMES!"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -570,8 +584,14 @@ anchor_right = 1.0
 margin_left = -40.0
 margin_top = 1.0
 margin_right = -1.0
+<<<<<<< HEAD
 margin_bottom = 38.0
 custom_fonts/font = SubResource( 38 )
+=======
+margin_bottom = 48.0
+theme = null
+custom_fonts/font = SubResource( 12 )
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 text = "x"
 
 [node name="PnlSettings" parent="." instance=ExtResource( 7 )]
@@ -619,8 +639,8 @@ SoundType = 3
 [node name="CursorControl" parent="." instance=ExtResource( 12 )]
 
 [node name="AnimPanels" type="AnimationPlayer" parent="."]
-anims/HideAbout = SubResource( 12 )
-anims/ShowAbout = SubResource( 13 )
+anims/HideAbout = SubResource( 13 )
+anims/ShowAbout = SubResource( 14 )
 
 [connection signal="pressed" from="BtnTexBackground" to="." method="OnBtnTexBackgroundPressed"]
 [connection signal="pressed" from="BtnPlay" to="." method="OnBtnNewPressed"]

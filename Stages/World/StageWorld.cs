@@ -592,6 +592,7 @@ public class StageWorld : Stage
         {
              customBattleText = "{0} attacks!\n\nPrepare for battle.";
         }
+        GetNode<Label>("HUD/CtrlTheme/LblMainQuest").Visible = false;
         GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData, String.Format(customBattleText, target.CurrentUnitData.Name));
         GetNode<HUD>("HUD").PauseCommon(true);
         GetNode<HUD>("HUD").Pausable = false;
@@ -690,6 +691,8 @@ public class StageWorld : Stage
         // GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory");
         // do victory stuff
         // GD.Print(enemyDefeated.CurrentUnitData.Name);
+
+        GetNode<Label>("HUD/CtrlTheme/LblMainQuest").Visible = true;
         GetNode<HUD>("HUD").LogEntry(String.Format("Battle with {0} ended in victory.", enemyDefeated.CurrentUnitData.Name));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Start(enemyDefeated,
             GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData,
@@ -833,6 +836,7 @@ public class StageWorld : Stage
         // fade out
         loadingScreen.FadeOut();        
         GetNode<HUD>("HUD").TogglePauseMenu(false);
+        GetNode<HUD>("HUD").OnMainQuestChanged(player.CurrentUnitData.MainQuest);
 
         if (!fromBattle)
         {
@@ -881,6 +885,10 @@ public class StageWorld : Stage
         
         // update the time before saving
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Time = GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition; // start at 8am
+        
+        // save current quest objective
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.MainQuest = GetNode<Label>("HUD/CtrlTheme/LblMainQuest").Text;
+        
         // make the dict in which data will be saved - each object will pack and return data
         Dictionary<string, object> saveDict = PackDataPreSave();
 

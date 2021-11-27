@@ -1,11 +1,30 @@
 Minimum targets
 
+make quest label invis when prebattlepanel shows. and make it show post battle
+
+southern lunu sign
+
+southern lunu better goods
+
+round action points to whole number - ewighing of the heart
+
+too easy - increase crone enemies to 5
+
+increase north area enemies  to level 6 (serant of apophis) then 7 then  ammut to 8
+
+increase final area enemies to lvl 9
+
+quest text problem - on loading game. need to save and load quest text from khepri data
+
+make night darker
+
+defeating ferrybug should hide the victory panel right away so u see the end text
+
+ending texts x 2
+
+
 LEVELS
-- 2nd shop - enchanted mace
-- tweak/add autosaves per encounter
-- review bandit rewards
-- east luna - make them all level 2
-- buff peril of osiris slightly
+
 
 Next:
 Thursday:

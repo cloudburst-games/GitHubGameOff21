@@ -5,9 +5,9 @@
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=6]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion3.PNG" type="Texture" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion1.PNG" type="Texture" id=8]
+[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion3.PNG" type="Texture" id=8]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=9]
 [ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion4.PNG" type="Texture" id=11]
@@ -54,7 +54,7 @@ _weaponEquipped = 10
 _armourEquipped = 11
 
 [node name="Mari" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( 151.643, 461.614 )
+position = Vector2( 244.401, 578.156 )
 ID = "Meri"
 UnitName = "Meri the Merchant"
 PortraitPath = ExtResource( 11 )
@@ -71,7 +71,7 @@ _minions = {
 }
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Mari"]
-position = Vector2( 105.126, 74.8354 )
+position = Vector2( 64.693, 172.35 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Mari"]
 position = Vector2( -119.38, -67.7083 )
@@ -94,6 +94,7 @@ _minions = {
 0: 0
 }
 _startingSpell1 = 6
+_startingGold = 10
 _itemsHeld = [ 6 ]
 _potionEquipped1 = 1
 _potionEquipped2 = 3
@@ -117,7 +118,8 @@ _minions = {
 0: 0
 }
 _startingSpell1 = 3
-_itemsHeld = [ 6 ]
+_startingGold = 15
+_itemsHeld = [ 4 ]
 _potionEquipped1 = 1
 _potionEquipped2 = 3
 _weaponEquipped = 11
@@ -140,10 +142,12 @@ _minions = {
 0: 0
 }
 _startingSpell1 = 2
-_itemsHeld = [ 6 ]
+_startingGold = 12
+_itemsHeld = [ 10 ]
 _potionEquipped1 = 1
 _potionEquipped2 = 3
-_weaponEquipped = 11
+_weaponEquipped = 10
+_armourEquipped = 11
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -224,7 +228,7 @@ polygon = PoolVector2Array( 8.39282, -62.9871, 104.393, -13.4871, -255.107, 164.
 
 [node name="Shop" parent="All/Shops" instance=ExtResource( 10 )]
 position = Vector2( 370.306, 628.662 )
-_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 7, 12 ]
 _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Meri's Shop of Merriments"
 _buyMessage = "Hmph. Shabby thing. I'll take it of your hands for {0} gold."
