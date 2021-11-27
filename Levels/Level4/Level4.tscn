@@ -31,10 +31,10 @@ script = ExtResource( 1 )
 
 [node name="AncientCrone" parent="All/Units/LevelNPCManager" instance=ExtResource( 10 )]
 position = Vector2( 397.859, 454.344 )
-_customBattleText = "Away from my potions!"
-_defeatMessage = "As you cast the spell that strikes her down, the Ancient Crone vanishes into a dust of skin, and you have gained her potions of charisma. Meri the Merchant will be pleased."
+_customBattleText = "My precious potions! Get away! Get away!"
+_defeatMessage = "As you cast the spell that strikes her down, the Ancient Crone crumbles into skin and dust. You have gained her potions of charisma! Meri the Merchant will be pleased."
 ID = "AncientCrone"
-UnitName = "Ancient Crone"
+UnitName = "Ancient Alchemist"
 PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 9 )
 _startDirection = 6
@@ -55,9 +55,10 @@ _potionEquipped1 = 0
 
 [node name="Assassin" parent="All/Units/LevelNPCManager" instance=ExtResource( 10 )]
 position = Vector2( 19.859, 616.344 )
-_customBattleText = "Look out! Assassin! "
+_customBattleText = "A strange creature gazes at you with venom in his eyes. Prepare for battle!"
+_defeatMessage = "Another enemy defeated!"
 ID = "Assassin0"
-UnitName = "Assassin1"
+UnitName = "Servant of the Alchemist"
 PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 9 )
 _startingBools = {
@@ -78,10 +79,10 @@ _armourEquipped = 11
 
 [node name="Assassin2" parent="All/Units/LevelNPCManager" instance=ExtResource( 10 )]
 position = Vector2( -78.141, 328.344 )
-_customBattleText = "A scarab hobbles towards you. You step aside to let her pass. She somersaults into the air and thrusts a dagger in your back. Assassin!"
-_defeatMessage = "Victory is yours!"
+_customBattleText = "A scarab hobbles towards you. You step aside to let him pass. He mutters a chant you recognise... Demon! Prepare for battle!"
+_defeatMessage = "You have won, this time. How many more demons lie in wait?"
 ID = "Assassin0"
-UnitName = "Assassin1"
+UnitName = "Guardian of the Alchemist"
 PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 9 )
 _startingBools = {
@@ -148,6 +149,8 @@ polygon = PoolVector2Array( 77.7997, -134.303, -95.6239, -47.3924, 10.732, 6.579
 [node name="Shop" parent="All/Shops" instance=ExtResource( 4 )]
 position = Vector2( 121.229, 358.804 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_shopTitle = "Precious Pieces"
+_buyMessage = "Hmph. Shabby thing. I'll take it of your hands for {0} gold."
 _stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]

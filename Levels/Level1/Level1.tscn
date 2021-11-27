@@ -34,10 +34,10 @@ script = ExtResource( 8 )
 
 [node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -499.499, 505.094 )
-_customBattleText = "A group of bandits leap into your path! Draw your mace and prepare for battle!"
-_defeatMessage = "Victory is yours!"
+_customBattleText = "A ruffian taps you on the shoulder. 'Give me your gold, \"King\" Khepri', he says.  'You won't need it when you see what your future holds!'"
+_defeatMessage = "An easy scuffle. What has happened to make the citizens of Lunu disrespect their Lord?"
 ID = "bandit1"
-UnitName = "A Group of Bandits"
+UnitName = "Ruffian"
 PortraitPath = ExtResource( 12 )
 PortraitPathSmall = ExtResource( 10 )
 _startDirection = 2
@@ -63,10 +63,10 @@ position = Vector2( -217.34, 101.99 )
 
 [node name="Bandit0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -528.444, 757.465 )
-_customBattleText = "HALT! A creature leaps before you. A hired assassin. You brace for battle."
-_defeatMessage = "Victory!"
+_customBattleText = "HALT! A scarab leaps before you. He froths at the mouth and waves his dagger. Prepare for battle!"
+_defeatMessage = "The light your enemy's eyes fades to black. His spirit sinks beneath the ground. You wonder what possessed him to attack his king?"
 ID = "bandit0"
-UnitName = "Bandit"
+UnitName = "Crazed scarab"
 PortraitPath = ExtResource( 12 )
 PortraitPathSmall = ExtResource( 10 )
 _startDirection = 6
@@ -173,6 +173,9 @@ polygon = PoolVector2Array( -89.4269, -53.4377, 115.841, 49.9455, 107.601, 55.93
 [node name="Shop" parent="All/Shops" instance=ExtResource( 5 )]
 position = Vector2( -46.8238, 501.21 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_introText = "Welcome! Please, peruse my humble wares. "
+_shopTitle = "Travelling Trifles"
+_buyMessage = "Hmph. Tawdry item. I'll take it of your hands for {0} gold."
 _stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]

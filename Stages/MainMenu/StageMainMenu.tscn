@@ -10,10 +10,9 @@
 [ext_resource path="res://Stages/MainMenu/bg/BackgroundImage.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=9]
 [ext_resource path="res://Interface/PictureStory/PictureStory.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Interface/Fonts/PANELSTYLEBOX.tres" type="StyleBox" id=11]
+[ext_resource path="res://Interface/Themes/KhepriThemeSettings.tres" type="Theme" id=11]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=13]
-[ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=14]
 [ext_resource path="res://Interface/Themes/BTNMainMenuHover.tres" type="StyleBox" id=15]
 [ext_resource path="res://Interface/Themes/KhepriThemeMain.tres" type="Theme" id=16]
 [ext_resource path="res://Interface/Themes/BTNMainMenuNormal.tres" type="StyleBox" id=17]
@@ -75,6 +74,18 @@ Label/constants/shadow_offset_y = 1
 Label/fonts/font = SubResource( 5 )
 Label/styles/normal = null
 Panel/styles/panel = SubResource( 6 )
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="DynamicFont" id=9]
 size = 24
@@ -282,7 +293,6 @@ theme = null
 text = "MUTE"
 
 [node name="PopAbout" type="Panel" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -291,8 +301,8 @@ margin_left = -386.0
 margin_top = -212.0
 margin_right = 386.0
 margin_bottom = 212.0
-theme = ExtResource( 14 )
-custom_styles/panel = ExtResource( 11 )
+theme = ExtResource( 11 )
+custom_styles/panel = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -306,7 +316,6 @@ margin_left = -329.0
 margin_top = -164.0
 margin_right = 329.0
 margin_bottom = 17.0
-theme = ExtResource( 14 )
 custom_fonts/font = SubResource( 9 )
 custom_constants/line_spacing = 10
 text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Bosca Ceoli, Strofe, Audacity, jfxr.
@@ -356,16 +365,16 @@ __meta__ = {
 [node name="BtnBack1" parent="PopAbout" instance=ExtResource( 2 )]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -42.0
+margin_left = -40.0
 margin_top = 1.0
-margin_right = -3.0
+margin_right = -1.0
 margin_bottom = 48.0
 theme = null
 custom_fonts/font = SubResource( 11 )
-text = "X"
+text = "x"
 
 [node name="PnlSettings" parent="." instance=ExtResource( 7 )]
-visible = false
+theme = ExtResource( 11 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
 anchor_left = 0.5

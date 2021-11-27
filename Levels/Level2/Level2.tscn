@@ -78,10 +78,10 @@ position = Vector2( -119.38, -67.7083 )
 
 [node name="Bandit5" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -94.1475, 191.966 )
-_customBattleText = "A creature approaches you, and utters a disturbing greeting, \"I dream of crunching your shell between my teeth\". A cannibal! Prepare for battle!"
-_defeatMessage = "Victory is yours!"
+_customBattleText = "A scarab approaches you. Arms outstretched, she holds flowers in her claws. You smile. Finally, the welcome you deserve. As you approach, she crumples the petals between her pincers, and summons the spirits of the damned to rise up and encircle you both!"
+_defeatMessage = "A troubling victory. You prod your enemy's corpse and the scarab skin falls off easily. Beneath it you find a dog-faced human wearing the carcass of your deceased bretheren. What trickery is this?"
 ID = "Bandit5"
-UnitName = "Cannibal"
+UnitName = "Admirer"
 PortraitPath = ExtResource( 13 )
 PortraitPathSmall = ExtResource( 14 )
 _startingBools = {
@@ -101,8 +101,8 @@ _weaponEquipped = 11
 
 [node name="Bandit6" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 1152.14, 824.624 )
-_customBattleText = "A creature approaches. You smile, until you see the glimmer of silver in their clutches. Prepare for battle!"
-_defeatMessage = "A glorious victory!"
+_customBattleText = "You come upon group of scarabs carrying a box full of gleaming silver. The crate is marked \"Meri's Goods\". You poke one of the scarabs with your antennae, but, upon catching sight of you, the one holding the box runs! Bandits!"
+_defeatMessage = "Though you have defeated these bandits, you sense there are many more. How Lunu has degraded!"
 ID = "Bandit5"
 UnitName = "Bandit"
 PortraitPath = ExtResource( 13 )
@@ -124,9 +124,10 @@ _weaponEquipped = 11
 
 [node name="Bandit7" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 15.2595, 1267.01 )
-_customBattleText = "A blunt object falls upon your head. You stumble. Not before readying your mace. Prepare for battle!"
+_customBattleText = "You're leg catches upon something and you fall upon the sand. Your feet are bound! An assassin lowers a dagger to your heart. You call upon the might of Ra and fling them across the land."
+_defeatMessage = "Before the assassin rattles his final breath, you scream, \"Who sent you?\". The creature's mouth opens, \"A...\" he says, then his body siezes and stills forever."
 ID = "Bandit5"
-UnitName = "Bandit"
+UnitName = "Assassin"
 PortraitPath = ExtResource( 13 )
 PortraitPathSmall = ExtResource( 14 )
 _startingBools = {
@@ -224,6 +225,9 @@ polygon = PoolVector2Array( 8.39282, -62.9871, 104.393, -13.4871, -255.107, 164.
 [node name="Shop" parent="All/Shops" instance=ExtResource( 10 )]
 position = Vector2( 370.306, 628.662 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
+_introText = "Welcome! Please, peruse my humble wares. "
+_shopTitle = "Meri's Shop of Merriments"
+_buyMessage = "Hmph. Shabby thing. I'll take it of your hands for {0} gold."
 _stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]

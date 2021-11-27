@@ -1,6 +1,7 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
+[ext_resource path="res://Interface/Themes/KhepriThemeHUD.tres" type="Theme" id=2]
 [ext_resource path="res://Levels/Common/LevelManager/LevelManager.cs" type="Script" id=3]
 [ext_resource path="res://Stages/World/HUD/HUD.cs" type="Script" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
@@ -476,10 +477,10 @@ __meta__ = {
 modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -593.5
-margin_top = -377.976
-margin_right = 593.5
-margin_bottom = -349.976
+margin_left = -595.0
+margin_top = -449.0
+margin_right = 592.0
+margin_bottom = -401.0
 custom_fonts/font = SubResource( 13 )
 align = 1
 __meta__ = {
@@ -493,10 +494,10 @@ anims/FadeOut = SubResource( 15 )
 [node name="LblShowLevelName" type="Label" parent="HUD/CtrlTheme"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -593.5
-margin_top = -468.691
-margin_right = 593.5
-margin_bottom = -440.691
+margin_left = -593.0
+margin_top = -525.0
+margin_right = 594.0
+margin_bottom = -467.0
 text = "Level name"
 align = 1
 valign = 1
@@ -560,10 +561,10 @@ __meta__ = {
 
 [node name="HBoxPortraits" parent="HUD/CtrlTheme/PnlUIBar" instance=ExtResource( 17 )]
 margin_left = 5.0
-margin_top = -3.0
+margin_top = 2.65698
 margin_right = 5.0
-margin_bottom = -3.0
-rect_scale = Vector2( 0.375, 0.375 )
+margin_bottom = 2.65698
+rect_scale = Vector2( 0.3, 0.3 )
 
 [node name="PnlEvents" type="Panel" parent="HUD/CtrlTheme/PnlUIBar"]
 margin_left = 326.0
@@ -604,9 +605,10 @@ custom_fonts/font = SubResource( 17 )
 text = "Events"
 
 [node name="LblTime" type="Label" parent="HUD/CtrlTheme/PnlUIBar"]
-margin_left = 156.503
-margin_right = 311.503
-margin_bottom = 49.0
+margin_left = 157.0
+margin_top = 1.0
+margin_right = 312.0
+margin_bottom = 44.0
 text = "Midnight"
 align = 1
 valign = 1
@@ -769,6 +771,7 @@ margin_left = -271.0
 margin_top = -187.0
 margin_right = 272.0
 margin_bottom = 30.0
+theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -837,9 +840,11 @@ margin_left = -332.5
 margin_top = -246.5
 margin_right = 332.5
 margin_bottom = 246.5
+theme = null
 
 [node name="PnlPreBattle" parent="HUD/CtrlTheme" instance=ExtResource( 10 )]
 visible = false
+theme = null
 
 [node name="DialogueControl" parent="HUD/CtrlTheme" instance=ExtResource( 7 )]
 visible = false

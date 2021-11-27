@@ -135,12 +135,12 @@ public class DialogueControl : Control
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "SPHYNX") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.PhantomArmour}, 10);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.IntellectPot}, 10);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "CHARISMA") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.SilverMace}, 50);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.LuckPot}, 50);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "MAHEF") //
@@ -167,8 +167,11 @@ public class DialogueControl : Control
 		{
 			EmitSignal(nameof(MainQuestChanged), (string)(InkStory.GetVariable("main_quest")));
 			//GD.Print("Main quest changed");
-			InkStory.SetVariable("main_quest_updated",false);
-			
+			InkStory.SetVariable("main_quest_updated",false);	
+		}
+		if ((bool)InkStory.GetVariable("game_ended")==true)
+		{
+			EmitSignal(nameof(GameEnded), InkStory.GetVariable("mahef_in_party"));
 		}
 	}
 
