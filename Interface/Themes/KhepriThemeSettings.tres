@@ -11,7 +11,7 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxEmpty" id=2]
 
-[sub_resource type="StyleBoxEmpty" id=3]
+[sub_resource type="StyleBoxEmpty" id=27]
 
 [sub_resource type="DynamicFont" id=4]
 size = 25
@@ -19,11 +19,11 @@ outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
 [sub_resource type="DynamicFont" id=6]
@@ -39,7 +39,7 @@ Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 1 )
 Button/styles/disabled = SubResource( 2 )
-Button/styles/focus = SubResource( 3 )
+Button/styles/focus = SubResource( 27 )
 Button/styles/hover = ExtResource( 2 )
 Button/styles/normal = ExtResource( 3 )
 Button/styles/pressed = ExtResource( 2 )

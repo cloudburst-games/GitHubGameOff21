@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
+[ext_resource path="res://Interface/Themes/1BattleHUDTheme.tres" type="Theme" id=2]
 [ext_resource path="res://Systems/BattleSystem/BattleHUD.cs" type="Script" id=3]
 [ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=5]
@@ -14,17 +15,81 @@
 [ext_resource path="res://Systems/BattleSystem/BattleHUDPnlMenu.cs" type="Script" id=13]
 [ext_resource path="res://Interface/Fonts/SayDo/SayDo36.tres" type="DynamicFont" id=14]
 [ext_resource path="res://Systems/BattleSystem/PnlLog.cs" type="Script" id=15]
-[ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=16]
+[ext_resource path="res://Interface/Fonts/oldenburg16.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Interface/Fonts/HudButtonPressed.tres" type="StyleBox" id=17]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=18]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=39]
+size = 20
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 18 )
+
+[sub_resource type="StyleBoxEmpty" id=41]
+
+[sub_resource type="StyleBoxFlat" id=42]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=43]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=45]
 size = 18
-outline_size = 6
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 2
-extra_spacing_space = 5
-font_data = ExtResource( 16 )
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 18 )
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=46]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=47]
+size = 25
+font_data = ExtResource( 18 )
+
+[sub_resource type="Theme" id=10]
+default_font = SubResource( 47 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = SubResource( 39 )
+Button/styles/disabled = ExtResource( 17 )
+Button/styles/focus = SubResource( 41 )
+Button/styles/hover = SubResource( 42 )
+Button/styles/normal = SubResource( 43 )
+Button/styles/pressed = ExtResource( 17 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 45 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 46 )
+
+[sub_resource type="StyleBoxTexture" id=51]
+modulate_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="DynamicFont" id=49]
+font_data = ExtResource( 18 )
+
+[sub_resource type="StyleBoxFlat" id=11]
 expand_margin_left = 50.0
 expand_margin_right = 50.0
 expand_margin_top = 50.0
@@ -33,6 +98,7 @@ expand_margin_bottom = 50.0
 [node name="CntBattle" type="Control"]
 margin_right = 1920.0
 margin_bottom = 1080.0
+theme = SubResource( 10 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -50,6 +116,7 @@ layer = 2
 script = ExtResource( 3 )
 
 [node name="CtrlTheme" type="Control" parent="Panel/BattleHUD"]
+theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -72,10 +139,10 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -633.0
-margin_top = -21.0
-margin_right = 556.0
-margin_bottom = 26.0
-custom_fonts/font = SubResource( 1 )
+margin_top = -22.0
+margin_right = 488.0
+margin_bottom = 25.0
+custom_fonts/font = ExtResource( 16 )
 text = "This is where the log goesasdas asd as das das das das das das das as dsa dsa dfghdfrg drfrgdf gdf gdf gdf gdf gdfgdfgdf gdf gdfgdfgdf gdfgdfgdfgdfgdf gdfg dfg"
 align = 1
 valign = 1
@@ -123,7 +190,6 @@ __meta__ = {
 [node name="BtnMove" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions"]
 margin_right = 49.0
 margin_bottom = 39.0
-hint_tooltip = "Move"
 size_flags_horizontal = 3
 
 [node name="Move" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMove"]
@@ -135,6 +201,7 @@ margin_left = 53.0
 margin_right = 102.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
+custom_styles/disabled = SubResource( 51 )
 
 [node name="Attack" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnMelee"]
 position = Vector2( 25, 20 )
@@ -145,6 +212,7 @@ margin_left = 106.0
 margin_right = 155.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
+custom_styles/disabled = SubResource( 51 )
 
 [node name="Spell" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell1"]
 position = Vector2( 25, 20 )
@@ -156,6 +224,7 @@ margin_left = 159.0
 margin_right = 209.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
+custom_styles/disabled = SubResource( 51 )
 
 [node name="Spell2" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnSpell2"]
 position = Vector2( 25, 20 )
@@ -167,6 +236,7 @@ margin_left = 213.0
 margin_right = 262.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
+custom_styles/disabled = SubResource( 51 )
 
 [node name="Potion" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnPotion"]
 position = Vector2( 25, 20 )
@@ -178,68 +248,75 @@ margin_left = 266.0
 margin_right = 316.0
 margin_bottom = 39.0
 size_flags_horizontal = 3
+custom_styles/disabled = SubResource( 51 )
 
 [node name="Wait" type="Sprite" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn"]
 position = Vector2( 25, 20 )
 texture = ExtResource( 9 )
 
 [node name="HBoxAnimSpeed" type="HBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
-margin_left = 1526.22
-margin_right = 1723.22
-margin_bottom = 44.0
+margin_left = 1450.0
+margin_top = 2.0
+margin_right = 1723.0
+margin_bottom = 47.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LblSpeed" type="Label" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_top = 6.0
-margin_right = 66.0
-margin_bottom = 37.0
+margin_right = 94.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 12.0
+custom_fonts/font = ExtResource( 16 )
 text = "Animation Speed:"
 align = 2
 valign = 1
 autowrap = true
 
 [node name="BtnSpeed1" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 70.0
-margin_right = 92.0
-margin_bottom = 44.0
+margin_left = 98.0
+margin_right = 130.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+custom_fonts/font = SubResource( 49 )
 text = "1"
 
 [node name="BtnSpeed2" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 96.0
-margin_right = 118.0
-margin_bottom = 44.0
+margin_left = 134.0
+margin_right = 166.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+custom_fonts/font = SubResource( 49 )
 text = "2"
 
 [node name="BtnSpeed3" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 122.0
-margin_right = 144.0
-margin_bottom = 44.0
+margin_left = 170.0
+margin_right = 201.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+custom_fonts/font = SubResource( 49 )
 text = "3"
 
 [node name="BtnSpeed4" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 148.0
-margin_right = 170.0
-margin_bottom = 44.0
+margin_left = 205.0
+margin_right = 237.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+custom_fonts/font = SubResource( 49 )
 text = "4"
 
 [node name="BtnSpeed5" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 174.0
-margin_right = 197.0
-margin_bottom = 44.0
+margin_left = 241.0
+margin_right = 273.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
+custom_fonts/font = SubResource( 49 )
 text = "5"
 
 [node name="BtnEndTest" type="Button" parent="Panel/BattleHUD/CtrlTheme"]
@@ -262,7 +339,7 @@ margin_left = 960.0
 margin_top = 290.0
 margin_right = 1560.0
 margin_bottom = 790.0
-custom_styles/panel = SubResource( 2 )
+custom_styles/panel = SubResource( 11 )
 script = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -291,7 +368,6 @@ align = 1
 valign = 1
 
 [node name="PnlLog" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -438,10 +514,9 @@ margin_bottom = 31.0
 text = "X"
 
 [node name="BattleUnitInfoPanel" parent="Panel/BattleHUD/CtrlTheme" instance=ExtResource( 10 )]
-visible = false
+theme = null
 
 [node name="PnlMenu" type="Panel" parent="Panel/BattleHUD/CtrlTheme"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

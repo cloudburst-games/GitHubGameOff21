@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Map/Art/GHGO21MapSymbols/LevelTransition.PNG" type="Texture" id=2]
+[ext_resource path="res://Interface/Fonts/oldenburg16.tres" type="DynamicFont" id=3]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -71,6 +72,8 @@ margin_left = -162.0
 margin_top = -93.3892
 margin_right = 28.0
 margin_bottom = -66.3894
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 text = "Test Transition to somewhere"
 align = 1
 valign = 1

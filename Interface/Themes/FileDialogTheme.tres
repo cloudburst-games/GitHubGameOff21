@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=2]
+[gd_resource type="Theme" load_steps=12 format=2]
 
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=1]
 
@@ -7,31 +7,32 @@ size = 20
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxFlat" id=48]
+[sub_resource type="StyleBoxEmpty" id=40]
 
 [sub_resource type="StyleBoxEmpty" id=41]
 
-[sub_resource type="StyleBoxFlat" id=42]
-bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+[sub_resource type="StyleBoxFlat" id=50]
+bg_color = Color( 0.298039, 0.172549, 0.0235294, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=43]
+[sub_resource type="StyleBoxFlat" id=51]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 
-[sub_resource type="StyleBoxFlat" id=44]
+[sub_resource type="StyleBoxFlat" id=52]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
@@ -39,6 +40,9 @@ border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 size = 18
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=49]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 
 [sub_resource type="StyleBoxFlat" id=46]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
@@ -60,11 +64,19 @@ Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 39 )
-Button/styles/disabled = SubResource( 48 )
+Button/styles/disabled = SubResource( 40 )
 Button/styles/focus = SubResource( 41 )
-Button/styles/hover = SubResource( 42 )
-Button/styles/normal = SubResource( 43 )
-Button/styles/pressed = SubResource( 44 )
+Button/styles/hover = SubResource( 50 )
+Button/styles/normal = SubResource( 51 )
+Button/styles/pressed = SubResource( 52 )
+FileDialog/colors/file_icon_modulate = Color( 0, 0, 0, 1 )
+FileDialog/colors/files_disabled = Color( 0, 0, 0, 0.7 )
+FileDialog/colors/folder_icon_modulate = Color( 0, 0, 0, 1 )
+FileDialog/icons/file = null
+FileDialog/icons/folder = null
+FileDialog/icons/parent_folder = null
+FileDialog/icons/reload = null
+FileDialog/icons/toggle_hidden = null
 Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -73,5 +85,5 @@ Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/fonts/font = SubResource( 45 )
-Label/styles/normal = null
+Label/styles/normal = SubResource( 49 )
 Panel/styles/panel = SubResource( 46 )

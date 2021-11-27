@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Stages/MainMenu/StageMainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=2]
@@ -13,9 +13,8 @@
 [ext_resource path="res://Interface/Themes/KhepriThemeSettings.tres" type="Theme" id=11]
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=13]
-[ext_resource path="res://Interface/Themes/BTNMainMenuHover.tres" type="StyleBox" id=15]
+[ext_resource path="res://Interface/Themes/FileDialogTheme.tres" type="Theme" id=14]
 [ext_resource path="res://Interface/Themes/KhepriThemeMain.tres" type="Theme" id=16]
-[ext_resource path="res://Interface/Themes/BTNMainMenuNormal.tres" type="StyleBox" id=17]
 [ext_resource path="res://Interface/Themes/50Old50.tres" type="DynamicFont" id=18]
 
 [sub_resource type="DynamicFont" id=1]
@@ -33,6 +32,42 @@ font_data = ExtResource( 9 )
 [sub_resource type="StyleBoxEmpty" id=3]
 
 [sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxFlat" id=25]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=26]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=27]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [sub_resource type="DynamicFont" id=5]
 size = 25
@@ -61,9 +96,9 @@ Button/constants/hseparation = 2
 Button/fonts/font = SubResource( 2 )
 Button/styles/disabled = SubResource( 3 )
 Button/styles/focus = SubResource( 4 )
-Button/styles/hover = ExtResource( 15 )
-Button/styles/normal = ExtResource( 17 )
-Button/styles/pressed = ExtResource( 15 )
+Button/styles/hover = SubResource( 25 )
+Button/styles/normal = SubResource( 26 )
+Button/styles/pressed = SubResource( 27 )
 Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -75,7 +110,179 @@ Label/fonts/font = SubResource( 5 )
 Label/styles/normal = null
 Panel/styles/panel = SubResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=9]
+[sub_resource type="DynamicFont" id=15]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxFlat" id=18]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=19]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=20]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="DynamicFont" id=21]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=22]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=23]
+size = 25
+font_data = ExtResource( 9 )
+
+[sub_resource type="Theme" id=24]
+default_font = SubResource( 23 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = SubResource( 15 )
+Button/styles/disabled = SubResource( 16 )
+Button/styles/focus = SubResource( 17 )
+Button/styles/hover = SubResource( 18 )
+Button/styles/normal = SubResource( 19 )
+Button/styles/pressed = SubResource( 20 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 21 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 22 )
+
+[sub_resource type="DynamicFont" id=28]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxEmpty" id=55]
+
+[sub_resource type="StyleBoxEmpty" id=56]
+
+[sub_resource type="StyleBoxFlat" id=31]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=32]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=33]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="DynamicFont" id=34]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="StyleBoxFlat" id=35]
+bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=36]
+size = 25
+font_data = ExtResource( 9 )
+
+[sub_resource type="Theme" id=37]
+default_font = SubResource( 36 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = SubResource( 28 )
+Button/styles/disabled = SubResource( 55 )
+Button/styles/focus = SubResource( 56 )
+Button/styles/hover = SubResource( 31 )
+Button/styles/normal = SubResource( 32 )
+Button/styles/pressed = SubResource( 33 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 34 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 35 )
+
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -100,8 +307,8 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
-[sub_resource type="DynamicFont" id=12]
-size = 27
+[sub_resource type="DynamicFont" id=38]
+size = 20
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
@@ -231,7 +438,7 @@ margin_left = 476.0
 margin_top = 929.058
 margin_right = 1856.0
 margin_bottom = 1001.06
-theme = ExtResource( 16 )
+theme = SubResource( 24 )
 custom_constants/separation = 12
 __meta__ = {
 "_edit_use_anchors_": false
@@ -244,7 +451,6 @@ margin_right = 336.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = null
 custom_fonts/font = ExtResource( 18 )
 text = "LOAD"
 
@@ -255,7 +461,6 @@ margin_right = 684.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = null
 custom_fonts/font = ExtResource( 18 )
 text = "SETTINGS"
 
@@ -266,7 +471,6 @@ margin_right = 1032.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = null
 custom_fonts/font = ExtResource( 18 )
 text = "ABOUT"
 
@@ -277,7 +481,6 @@ margin_right = 1380.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = null
 custom_fonts/font = ExtResource( 18 )
 text = "QUIT"
 
@@ -289,7 +492,6 @@ margin_right = 1380.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = null
 text = "MUTE"
 
 [node name="PopAbout" type="Panel" parent="."]
@@ -301,8 +503,8 @@ margin_left = -386.0
 margin_top = -212.0
 margin_right = 386.0
 margin_bottom = 212.0
-theme = ExtResource( 11 )
-custom_styles/panel = SubResource( 9 )
+theme = SubResource( 37 )
+custom_styles/panel = SubResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -368,15 +570,17 @@ anchor_right = 1.0
 margin_left = -40.0
 margin_top = 1.0
 margin_right = -1.0
-margin_bottom = 48.0
-theme = null
-custom_fonts/font = SubResource( 12 )
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 38 )
 text = "x"
 
 [node name="PnlSettings" parent="." instance=ExtResource( 7 )]
+visible = false
 theme = ExtResource( 11 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
+visible = true
+modulate = Color( 0.94902, 0.67451, 0.341176, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -385,6 +589,9 @@ margin_left = -572.003
 margin_top = -346.0
 margin_right = 572.003
 margin_bottom = 346.0
+theme = ExtResource( 14 )
+custom_colors/folder_icon_modulate = Color( 0.94902, 0.67451, 0.341176, 1 )
+custom_colors/file_icon_modulate = Color( 0.94902, 0.67451, 0.341176, 1 )
 access = 1
 filters = PoolStringArray( "*.ksav; KSAV Files" )
 show_hidden_files = true

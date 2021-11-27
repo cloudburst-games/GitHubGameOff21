@@ -4,6 +4,12 @@
 [ext_resource path="res://Interface/Fonts/Bangers68.tres" type="DynamicFont" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -15,7 +21,7 @@ expand_margin_bottom = 25.0
 
 [node name="PnlInventory" type="Panel"]
 margin_left = 240.0
-margin_top = 200.0
+margin_top = 264.0
 margin_right = 1758.0
 margin_bottom = 1088.0
 custom_styles/panel = SubResource( 1 )

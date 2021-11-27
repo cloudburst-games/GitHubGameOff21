@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/KhepriThemeHUD.tres" type="Theme" id=2]
@@ -19,10 +19,12 @@
 [ext_resource path="res://Interface/PartyManagement/HBoxPortraits.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Stages/World/HUD/PnlEvents.cs" type="Script" id=18]
 [ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Interface/Fonts/oldenburg16.tres" type="DynamicFont" id=20]
 [ext_resource path="res://Props/Buildings/Shop/PnlShopScreen.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Interface/Map/Map.cs" type="Script" id=23]
 [ext_resource path="res://Utils/Node/Camera/Cam2DRTS.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Interface/Themes/Old25.tres" type="DynamicFont" id=25]
 
 [sub_resource type="Animation" id=1]
 resource_name = "DayNight"
@@ -215,6 +217,14 @@ font_data = ExtResource( 11 )
 size = 25
 font_data = ExtResource( 11 )
 
+[sub_resource type="StyleBoxEmpty" id=32]
+
+[sub_resource type="StyleBoxEmpty" id=33]
+
+[sub_resource type="StyleBoxEmpty" id=34]
+
+[sub_resource type="StyleBoxEmpty" id=35]
+
 [sub_resource type="StyleBoxEmpty" id=19]
 
 [sub_resource type="DynamicFont" id=20]
@@ -352,6 +362,17 @@ tracks/3/keys = {
 "update": 0,
 "values": [ 0.0, 0.0, 1.0 ]
 }
+
+[sub_resource type="DynamicFontData" id=30]
+font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
+
+[sub_resource type="DynamicFont" id=31]
+size = 25
+font_data = SubResource( 30 )
+
+[sub_resource type="DynamicFont" id=29]
+size = 30
+font_data = ExtResource( 11 )
 
 [sub_resource type="DynamicFont" id=25]
 size = 20
@@ -586,7 +607,7 @@ __meta__ = {
 }
 
 [node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_right = 1158.0
+margin_right = 1261.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -595,6 +616,7 @@ valign = 1
 clip_text = true
 
 [node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
+visible = false
 margin_left = 1168.0
 margin_right = 1261.0
 margin_bottom = 43.0
@@ -617,7 +639,6 @@ __meta__ = {
 }
 
 [node name="Map" type="Control" parent="HUD/CtrlTheme"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -673,7 +694,7 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="HUD/CtrlTheme/Map/Panel/ViewportContainer"]
 size = Vector2( 1440, 810 )
 handle_input_locally = false
-render_target_update_mode = 0
+render_target_update_mode = 3
 
 [node name="Terrain" parent="HUD/CtrlTheme/Map/Panel/ViewportContainer/Viewport" instance=ExtResource( 22 )]
 
@@ -684,8 +705,9 @@ render_target_update_mode = 0
 [node name="BtnClose" type="Button" parent="HUD/CtrlTheme/Map/Panel"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -23.0
+margin_left = -34.0
 margin_bottom = 34.0
+custom_fonts/font = ExtResource( 20 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -730,8 +752,14 @@ margin_left = -960.0
 margin_top = 443.0
 margin_right = -573.0
 margin_bottom = 483.0
+custom_styles/hover = SubResource( 32 )
+custom_styles/pressed = SubResource( 33 )
+custom_styles/focus = SubResource( 34 )
+custom_styles/disabled = SubResource( 35 )
 custom_styles/normal = SubResource( 19 )
 custom_fonts/font = SubResource( 20 )
+custom_colors/font_color = Color( 0.117647, 0.0666667, 0.00784314, 1 )
+custom_colors/font_color_hover = Color( 0.94902, 0.67451, 0.341176, 1 )
 text = "Unspent Attribute Points"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -856,7 +884,6 @@ margin_bottom = 246.5
 theme = null
 
 [node name="PnlPreBattle" parent="HUD/CtrlTheme" instance=ExtResource( 10 )]
-visible = false
 theme = null
 
 [node name="DialogueControl" parent="HUD/CtrlTheme" instance=ExtResource( 7 )]
@@ -867,10 +894,12 @@ margin_top = 540.0
 visible = false
 
 [node name="PnlShopScreen" parent="HUD/CtrlTheme" instance=ExtResource( 21 )]
-visible = false
 
-[node name="Buy" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="0"]
-margin_top = 50.0
+[node name="Sell" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="1"]
+margin_left = 1.0
+margin_top = 44.0
+margin_right = -1.0
+margin_bottom = -1.0
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false
@@ -878,10 +907,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -163.5
-margin_top = -190.5
-margin_right = 163.5
-margin_bottom = 190.5
+margin_left = -163.0
+margin_top = -190.0
+margin_right = 153.0
+margin_bottom = 191.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -904,6 +933,7 @@ margin_right = 284.0
 margin_bottom = 62.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 31 )
 text = "Resume"
 
 [node name="BtnSave" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -912,6 +942,7 @@ margin_right = 284.0
 margin_bottom = 129.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 31 )
 text = "Save"
 
 [node name="BtnLoad" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -920,6 +951,7 @@ margin_right = 284.0
 margin_bottom = 196.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 31 )
 text = "Load"
 
 [node name="BtnSettings" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -928,6 +960,7 @@ margin_right = 284.0
 margin_bottom = 263.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 31 )
 text = "Settings"
 
 [node name="BtnExit" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -936,6 +969,7 @@ margin_right = 284.0
 margin_bottom = 330.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 31 )
 text = "Main Menu"
 
 [node name="PnlDefeat" type="Panel" parent="HUD/CtrlTheme"]
@@ -953,7 +987,7 @@ __meta__ = {
 }
 
 [node name="LblTitle" type="Label" parent="HUD/CtrlTheme/PnlDefeat"]
-margin_right = 737.0
+margin_right = 745.0
 margin_bottom = 95.0
 text = "DEFEAT"
 align = 1
@@ -967,13 +1001,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -361.0
-margin_top = -182.589
-margin_right = 361.0
-margin_bottom = -59.5891
+margin_left = -372.5
+margin_top = -183.0
+margin_right = 368.5
+margin_bottom = -60.0
 text = "You have been defeated and your followers abandon you!"
 align = 1
 valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -992,10 +1027,11 @@ __meta__ = {
 }
 
 [node name="BtnLoad" type="Button" parent="HUD/CtrlTheme/PnlDefeat/VBoxBtns"]
-margin_right = 284.0
+margin_right = 301.0
 margin_bottom = 162.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 29 )
 text = "Load"
 
 [node name="BtnSettings" type="Button" parent="HUD/CtrlTheme/PnlDefeat/VBoxBtns"]
@@ -1009,10 +1045,11 @@ text = "Settings"
 
 [node name="BtnExit" type="Button" parent="HUD/CtrlTheme/PnlDefeat/VBoxBtns"]
 margin_top = 166.0
-margin_right = 284.0
+margin_right = 301.0
 margin_bottom = 329.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 29 )
 text = "Main Menu"
 
 [node name="PnlBattleVictory" type="Panel" parent="HUD/CtrlTheme"]
@@ -1087,10 +1124,13 @@ margin_left = -87.0
 margin_top = -75.6813
 margin_right = 87.0
 margin_bottom = -38.6813
+custom_fonts/font = ExtResource( 25 )
 text = "Proceed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PnlEventsBig" type="Panel" parent="HUD/CtrlTheme"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1131,8 +1171,14 @@ valign = 1
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -34.0
+margin_top = 2.0
+margin_right = -2.0
 margin_bottom = 34.0
+custom_fonts/font = ExtResource( 20 )
 text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CanvasLayer" type="CanvasLayer" parent="HUD/CtrlTheme"]
 layer = 3
