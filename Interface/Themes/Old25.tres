@@ -3,6 +3,5 @@
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 20
-outline_color = Color( 0, 0, 0, 1 )
+size = 25
 font_data = ExtResource( 1 )

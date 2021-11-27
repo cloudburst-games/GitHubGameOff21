@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Systems/SettingsManager/CntPanels.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.cs" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Interface/Fonts/oldenburgbutton.tres" type="DynamicFont" id=11]
 [ext_resource path="res://Interface/Buttons/BtnBase/SettingsTitle.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Interface/Buttons/BtnBase/CheckBTN.tres" type="StyleBox" id=13]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Systems/SettingsManager/Game/PnlSettingsGame.cs" type="Script" id=15]
 [ext_resource path="res://Interface/Themes/KhepriThemeSettings.tres" type="Theme" id=16]
@@ -20,9 +21,8 @@
 [ext_resource path="res://Interface/Themes/BTNMainMenuHover.tres" type="StyleBox" id=19]
 [ext_resource path="res://Interface/Themes/BTNMainMenuNormal.tres" type="StyleBox" id=20]
 [ext_resource path="res://Interface/Buttons/BtnBase/YellowButton.tres" type="StyleBox" id=21]
-[ext_resource path="res://Interface/Buttons/BtnBase/BTNDisabled.tres" type="StyleBox" id=22]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=28]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 10 )
@@ -40,7 +40,7 @@ border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 corner_radius_top_left = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=34]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 10 )
@@ -53,18 +53,18 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=36]
 size = 25
 font_data = ExtResource( 10 )
 
 [sub_resource type="Theme" id=17]
-default_font = SubResource( 6 )
+default_font = SubResource( 36 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 1 )
+Button/fonts/font = SubResource( 28 )
 Button/styles/disabled = SubResource( 30 )
 Button/styles/focus = SubResource( 29 )
 Button/styles/hover = ExtResource( 19 )
@@ -77,7 +77,7 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 4 )
+Label/fonts/font = SubResource( 34 )
 Label/styles/normal = null
 Panel/styles/panel = SubResource( 23 )
 
@@ -118,25 +118,65 @@ outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=21]
-size = 35
-outline_size = 5
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 9
-font_data = ExtResource( 10 )
+[sub_resource type="StyleBoxFlat" id=37]
+content_margin_left = 10.0
+content_margin_right = 10.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color( 0.670588, 0.47451, 0.239216, 1 )
+expand_margin_left = 20.0
+expand_margin_right = 10.0
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="Theme" id=38]
+CheckBox/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
+CheckBox/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckBox/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+CheckBox/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
+CheckBox/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckBox/constants/check_vadjust = 0
+CheckBox/constants/hseparation = 4
+CheckBox/fonts/font = null
+CheckBox/icons/checked = null
+CheckBox/icons/radio_checked = null
+CheckBox/icons/radio_unchecked = null
+CheckBox/icons/unchecked = null
+CheckBox/styles/disabled = null
+CheckBox/styles/focus = null
+CheckBox/styles/hover = null
+CheckBox/styles/hover_pressed = null
+CheckBox/styles/normal = SubResource( 37 )
+CheckBox/styles/pressed = null
+CheckButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
+CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
+CheckButton/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
+CheckButton/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
+CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckButton/constants/check_vadjust = 0
+CheckButton/constants/hseparation = 4
+CheckButton/fonts/font = null
+CheckButton/icons/off = null
+CheckButton/icons/off_disabled = null
+CheckButton/icons/on = null
+CheckButton/icons/on_disabled = null
+CheckButton/styles/disabled = null
+CheckButton/styles/focus = null
+CheckButton/styles/hover = null
+CheckButton/styles/hover_pressed = null
+CheckButton/styles/normal = null
+CheckButton/styles/pressed = null
 
 [sub_resource type="DynamicFont" id=22]
-size = 25
-outline_size = 5
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 6
+size = 30
+outline_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxEmpty" id=2]
+[sub_resource type="StyleBoxEmpty" id=55]
 
-[sub_resource type="StyleBoxEmpty" id=27]
+[sub_resource type="StyleBoxEmpty" id=56]
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=35]
 bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -144,16 +184,16 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="Theme" id=28]
-default_font = SubResource( 6 )
+[sub_resource type="Theme" id=57]
+default_font = SubResource( 36 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 1 )
-Button/styles/disabled = SubResource( 2 )
-Button/styles/focus = SubResource( 27 )
+Button/fonts/font = SubResource( 28 )
+Button/styles/disabled = SubResource( 55 )
+Button/styles/focus = SubResource( 56 )
 Button/styles/hover = ExtResource( 19 )
 Button/styles/normal = ExtResource( 20 )
 Button/styles/pressed = ExtResource( 19 )
@@ -164,34 +204,30 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 4 )
+Label/fonts/font = SubResource( 34 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 5 )
+Panel/styles/panel = SubResource( 35 )
 
-[sub_resource type="DynamicFont" id=8]
-size = 50
-font_data = ExtResource( 10 )
-
-[sub_resource type="DynamicFontData" id=9]
+[sub_resource type="DynamicFontData" id=58]
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=59]
+size = 30
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = SubResource( 58 )
+
+[sub_resource type="DynamicFont" id=60]
 size = 36
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-font_data = SubResource( 9 )
+font_data = SubResource( 58 )
 
-[sub_resource type="DynamicFont" id=11]
-size = 36
-outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-font_data = SubResource( 9 )
-
-[sub_resource type="StyleBoxFlat" id=36]
+[sub_resource type="StyleBoxFlat" id=61]
 bg_color = Color( 0.447059, 0.470588, 0.145098, 1 )
 
-[sub_resource type="DynamicFont" id=34]
+[sub_resource type="DynamicFont" id=62]
 
-[sub_resource type="Theme" id=35]
-default_font = SubResource( 34 )
+[sub_resource type="Theme" id=63]
+default_font = SubResource( 62 )
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -201,19 +237,122 @@ Button/fonts/font = null
 Button/styles/disabled = null
 Button/styles/focus = null
 Button/styles/hover = null
-Button/styles/normal = SubResource( 36 )
+Button/styles/normal = SubResource( 61 )
 Button/styles/pressed = null
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="StyleBoxFlat" id=39]
+bg_color = Color( 0.117647, 0.121569, 0.0392157, 1 )
+
+[sub_resource type="DynamicFont" id=40]
+size = 35
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=64]
 size = 35
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 10 )
 
+[sub_resource type="StyleBoxFlat" id=65]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="DynamicFont" id=33]
 size = 30
 font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=46]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="StyleBoxEmpty" id=47]
+
+[sub_resource type="StyleBoxFlat" id=48]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=49]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=50]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="DynamicFont" id=51]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="StyleBoxFlat" id=52]
+bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=53]
+size = 25
+font_data = ExtResource( 10 )
+
+[sub_resource type="Theme" id=54]
+default_font = SubResource( 53 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = SubResource( 46 )
+Button/styles/disabled = SubResource( 47 )
+Button/styles/focus = SubResource( 56 )
+Button/styles/hover = SubResource( 48 )
+Button/styles/normal = SubResource( 49 )
+Button/styles/pressed = SubResource( 50 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 51 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 52 )
 
 [sub_resource type="DynamicFont" id=15]
 size = 30
@@ -272,6 +411,7 @@ __meta__ = {
 }
 
 [node name="PnlAudio" type="Panel" parent="CntPanels"]
+visible = false
 margin_left = 30.0
 margin_top = -30.0
 margin_right = 1573.0
@@ -292,7 +432,7 @@ anchor_right = 0.5
 margin_left = -359.5
 margin_right = 359.5
 margin_bottom = 63.0
-custom_fonts/font = ExtResource( 11 )
+custom_fonts/font = ExtResource( 12 )
 text = "Audio"
 align = 1
 valign = 1
@@ -318,9 +458,9 @@ __meta__ = {
 
 [node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidVoice"]
 margin_left = -154.0
-margin_top = 18.0
+margin_top = 21.1748
 margin_right = -31.0
-margin_bottom = 50.0
+margin_bottom = 53.1748
 custom_fonts/font = SubResource( 18 )
 text = "Voice"
 valign = 1
@@ -394,9 +534,9 @@ __meta__ = {
 
 [node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidEffects"]
 margin_left = -151.269
-margin_top = 17.8189
+margin_top = 20.9937
 margin_right = -8.26929
-margin_bottom = 49.8189
+margin_bottom = 52.9937
 custom_fonts/font = SubResource( 19 )
 text = "Effects"
 valign = 1
@@ -470,9 +610,9 @@ __meta__ = {
 
 [node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidMusic"]
 margin_left = -151.269
-margin_top = 17.8189
+margin_top = 20.9937
 margin_right = -31.2697
-margin_bottom = 49.8189
+margin_bottom = 52.9937
 custom_fonts/font = SubResource( 3 )
 text = "Music"
 valign = 1
@@ -543,10 +683,10 @@ __meta__ = {
 }
 
 [node name="LblTitle" type="Label" parent="CntPanels/PnlAudio/HSlidMaster"]
-margin_left = -151.269
-margin_top = 17.8189
-margin_right = -12.2693
-margin_bottom = 49.8189
+margin_left = -152.856
+margin_top = 19.4063
+margin_right = -13.8567
+margin_bottom = 51.4063
 custom_fonts/font = SubResource( 20 )
 text = "Master"
 valign = 1
@@ -603,7 +743,6 @@ __meta__ = {
 }
 
 [node name="PnlGraphics" type="Panel" parent="CntPanels"]
-visible = false
 margin_left = 30.0
 margin_top = -30.0
 margin_right = 1573.0
@@ -619,7 +758,7 @@ anchor_right = 0.5
 margin_left = -364.5
 margin_right = 353.5
 margin_bottom = 63.0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = ExtResource( 12 )
 text = "Graphics"
 align = 1
 valign = 1
@@ -634,22 +773,32 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -616.5
 margin_top = -287.5
-margin_right = -373.5
-margin_bottom = -243.5
+margin_right = -335.5
+margin_bottom = -192.5
+theme = SubResource( 38 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/focus = ExtResource( 13 )
+custom_styles/disabled = ExtResource( 13 )
+custom_styles/hover_pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
 custom_fonts/font = SubResource( 22 )
-text = "FullScreen"
-align = 1
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0.0313726, 0.0196078, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
+text = "FULLSCREEN"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PnlGame" type="Panel" parent="CntPanels"]
-visible = false
 margin_left = 30.0
 margin_top = -30.0
 margin_right = 1565.0
 margin_bottom = 725.0
-theme = SubResource( 28 )
+theme = SubResource( 57 )
 script = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -662,7 +811,7 @@ margin_left = -364.5
 margin_right = 353.5
 margin_bottom = 131.0
 theme = ExtResource( 16 )
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = ExtResource( 12 )
 text = "Game
 "
 align = 1
@@ -677,7 +826,7 @@ margin_top = 111.0
 margin_right = 1469.0
 margin_bottom = 283.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 59 )
 text = "At medium difficulty, enemies put up a fight, but can be readily defeated with the right strategy."
 autowrap = true
 __meta__ = {
@@ -698,7 +847,7 @@ margin_top = 13.0
 margin_right = 209.0
 margin_bottom = 59.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 60 )
 text = "Difficulty"
 
 [node name="BtnDifficulty" type="OptionButton" parent="CntPanels/PnlGame/HBoxContainer"]
@@ -713,6 +862,7 @@ items = [ "Easy", null, false, 0, null, "Medium", null, false, 1, null, "Hard", 
 selected = 1
 
 [node name="PnlControls" type="Panel" parent="CntPanels"]
+visible = false
 margin_left = 30.0
 margin_top = -30.0
 margin_right = 1573.0
@@ -723,41 +873,42 @@ __meta__ = {
 }
 
 [node name="VBoxActions3" type="VBoxContainer" parent="CntPanels/PnlControls"]
-margin_left = 969.0
+margin_left = 991.0
 margin_top = 71.0
-margin_right = 1515.0
+margin_right = 1487.0
 margin_bottom = 671.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxActionRow19" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 82.0
 size_flags_vertical = 3
 custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow19"]
 margin_top = 22.0
-margin_right = 300.0
+margin_right = 319.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
-text = "Battle Potion"
+text = "Battle Potion         "
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow19" instance=ExtResource( 4 )]
-margin_left = 320.0
-margin_right = 546.0
+margin_left = 339.0
+margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Potion"
 
 [node name="HBoxActionRow26" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
 margin_top = 86.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 168.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -765,25 +916,26 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow26"]
 margin_top = 22.0
-margin_right = 300.0
+margin_right = 322.0
 margin_bottom = 60.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
-text = "Battle End Turn"
+text = "Battle End Turn      "
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow26" instance=ExtResource( 4 )]
-margin_left = 320.0
-margin_right = 546.0
+margin_left = 342.0
+margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle End Turn"
 
 [node name="HBoxActionRow21" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
 margin_top = 172.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 254.0
 size_flags_vertical = 3
 custom_constants/separation = 20
@@ -799,16 +951,17 @@ align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow21" instance=ExtResource( 4 )]
 margin_left = 337.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 1"
 
 [node name="HBoxActionRow22" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
 margin_top = 258.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 341.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -825,16 +978,17 @@ align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow22" instance=ExtResource( 4 )]
 margin_left = 347.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 83.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 2"
 
 [node name="HBoxActionRow23" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
 margin_top = 345.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 427.0
 size_flags_vertical = 3
 custom_constants/separation = 20
@@ -850,16 +1004,17 @@ align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow23" instance=ExtResource( 4 )]
 margin_left = 347.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 3"
 
 [node name="HBoxActionRow24" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
 margin_top = 431.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 513.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -876,16 +1031,17 @@ align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow24" instance=ExtResource( 4 )]
 margin_left = 347.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 4"
 
 [node name="HBoxActionRow25" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions3"]
 margin_top = 517.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -902,24 +1058,25 @@ align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions3/HBoxActionRow25" instance=ExtResource( 4 )]
 margin_left = 347.0
-margin_right = 546.0
+margin_right = 496.0
 margin_bottom = 83.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 5"
 
 [node name="VBoxActions2" type="VBoxContainer" parent="CntPanels/PnlControls"]
-margin_left = 350.419
+margin_left = 416.0
 margin_top = 71.0
-margin_right = 950.419
+margin_right = 951.0
 margin_bottom = 671.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxActionRow18" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 71.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -927,7 +1084,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow18"]
 margin_top = 16.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 54.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -935,17 +1092,18 @@ text = "Party 1"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow18" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Party 1"
 
 [node name="HBoxActionRow19" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 75.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 147.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -953,7 +1111,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow19"]
 margin_top = 17.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -961,17 +1119,18 @@ text = "Party 2"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow19" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Party 2"
 
 [node name="HBoxActionRow20" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 151.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 222.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -979,7 +1138,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow20"]
 margin_top = 16.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 54.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -987,17 +1146,18 @@ text = "Party 3"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow20" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Party 3"
 
 [node name="HBoxActionRow21" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 226.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 298.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1005,7 +1165,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow21"]
 margin_top = 17.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1013,17 +1173,18 @@ text = "Pause"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow21" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Pause"
 
 [node name="HBoxActionRow22" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 302.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 373.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1031,7 +1192,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow22"]
 margin_top = 16.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 54.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1039,17 +1200,18 @@ text = "Battle Move"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow22" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Move"
 
 [node name="HBoxActionRow23" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 377.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 449.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1057,7 +1219,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow23"]
 margin_top = 17.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1065,17 +1227,18 @@ text = "Battle Melee"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow23" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Melee"
 
 [node name="HBoxActionRow24" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 453.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 524.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1083,7 +1246,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow24"]
 margin_top = 16.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 54.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1091,17 +1254,18 @@ text = "Battle Spell 1"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow24" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Spell 1"
 
 [node name="HBoxActionRow25" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions2"]
 margin_top = 528.0
-margin_right = 600.0
+margin_right = 535.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1109,7 +1273,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow25"]
 margin_top = 17.0
-margin_right = 331.0
+margin_right = 294.0
 margin_bottom = 55.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1117,19 +1281,20 @@ text = "Battle Spell 2"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions2/HBoxActionRow25" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 314.0
+margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Spell 2"
 
 [node name="VBoxActions" type="VBoxContainer" parent="CntPanels/PnlControls"]
 anchor_bottom = 1.0
-margin_left = -185.439
+margin_left = 5.0
 margin_top = 71.0
-margin_right = 414.561
+margin_right = 414.0
 margin_bottom = -84.0
 theme = ExtResource( 8 )
 __meta__ = {
@@ -1137,7 +1302,7 @@ __meta__ = {
 }
 
 [node name="HBoxActionRow10" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1145,7 +1310,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow10"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1153,17 +1318,18 @@ text = "Up"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow10" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Up"
 
 [node name="HBoxActionRow11" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 67.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 130.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1171,7 +1337,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow11"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1179,17 +1345,18 @@ text = "Down"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow11" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Down"
 
 [node name="HBoxActionRow12" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 134.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 197.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1197,7 +1364,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow12"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1205,17 +1372,18 @@ text = "Left"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow12" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Left"
 
 [node name="HBoxActionRow13" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 201.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 264.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1223,7 +1391,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow13"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1231,17 +1399,18 @@ text = "Right"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow13" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Right"
 
 [node name="HBoxActionRow14" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 268.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 331.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1249,7 +1418,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow14"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1257,17 +1426,18 @@ text = "Interact"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow14" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Interact"
 
 [node name="HBoxActionRow15" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 335.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 398.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1275,7 +1445,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow15"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1283,17 +1453,18 @@ text = "Map"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow15" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Map"
 
 [node name="HBoxActionRow16" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 402.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 465.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1301,7 +1472,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow16"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1309,17 +1480,18 @@ text = "Journal"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow16" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Journal"
 
 [node name="HBoxActionRow18" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 469.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 532.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1327,7 +1499,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow18"]
 margin_top = 12.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 50.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1335,17 +1507,18 @@ text = "Inventory"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow18" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Inventory"
 
 [node name="HBoxActionRow17" type="HBoxContainer" parent="CntPanels/PnlControls/VBoxActions"]
 margin_top = 536.0
-margin_right = 600.0
+margin_right = 409.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 theme = ExtResource( 8 )
@@ -1353,7 +1526,7 @@ custom_constants/separation = 20
 
 [node name="LblAction" type="Label" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow17"]
 margin_top = 13.0
-margin_right = 331.0
+margin_right = 222.0
 margin_bottom = 51.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 11 )
@@ -1361,11 +1534,12 @@ text = "Event Log"
 align = 2
 
 [node name="BtnRemap" parent="CntPanels/PnlControls/VBoxActions/HBoxActionRow17" instance=ExtResource( 4 )]
-margin_left = 351.0
-margin_right = 600.0
+margin_left = 242.0
+margin_right = 409.0
 margin_bottom = 64.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 35 )
+theme = SubResource( 63 )
+custom_styles/normal = SubResource( 39 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Event Log"
 
@@ -1375,7 +1549,7 @@ anchor_right = 0.5
 margin_left = -359.0
 margin_right = 359.0
 margin_bottom = 63.0
-custom_fonts/font = ExtResource( 12 )
+custom_fonts/font = SubResource( 40 )
 text = "Controls"
 align = 1
 valign = 1
@@ -1392,7 +1566,7 @@ margin_left = -731.5
 margin_top = -66.0
 margin_right = 742.5
 margin_bottom = -21.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 64 )
 text = "test"
 align = 1
 valign = 1
@@ -1416,7 +1590,7 @@ margin_right = 185.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/disabled = ExtResource( 22 )
+custom_styles/disabled = SubResource( 65 )
 custom_fonts/font = SubResource( 33 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Game"
@@ -1428,7 +1602,7 @@ margin_bottom = 127.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/disabled = ExtResource( 22 )
+custom_styles/disabled = SubResource( 65 )
 custom_fonts/font = SubResource( 33 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Controls"
@@ -1440,7 +1614,7 @@ margin_bottom = 190.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/disabled = ExtResource( 22 )
+custom_styles/disabled = SubResource( 65 )
 custom_fonts/font = SubResource( 33 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Audio"
@@ -1453,7 +1627,7 @@ focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/pressed = ExtResource( 21 )
-custom_styles/disabled = ExtResource( 22 )
+custom_styles/disabled = SubResource( 65 )
 custom_fonts/font = SubResource( 33 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Graphics"
@@ -1463,7 +1637,7 @@ margin_left = 1457.16
 margin_top = 836.41
 margin_right = 1600.16
 margin_bottom = 894.41
-theme = null
+theme = SubResource( 54 )
 custom_fonts/font = SubResource( 15 )
 text = "Close"
 
@@ -1472,7 +1646,7 @@ margin_left = 1597.16
 margin_top = 836.41
 margin_right = 1732.16
 margin_bottom = 894.41
-theme = null
+theme = SubResource( 54 )
 custom_fonts/font = SubResource( 15 )
 text = "Apply"
 
@@ -1508,7 +1682,6 @@ margin_left = -260.0
 margin_top = -54.0
 margin_right = -15.0
 margin_bottom = -15.0
-theme = null
 custom_fonts/font = ExtResource( 9 )
 text = "Close"
 
@@ -1519,7 +1692,6 @@ margin_left = 16.0
 margin_top = -54.0
 margin_right = 261.0
 margin_bottom = -8.0
-theme = null
 custom_fonts/font = SubResource( 16 )
 text = "Cancel"
 

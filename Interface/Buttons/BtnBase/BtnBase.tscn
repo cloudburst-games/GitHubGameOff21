@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Interface/Themes/NotHeroTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.cs" type="Script" id=2]
 
 [node name="BtnBase" type="Button"]
@@ -9,7 +8,6 @@ margin_top = 250.127
 margin_right = 573.126
 margin_bottom = 308.127
 focus_mode = 0
-theme = ExtResource( 1 )
 enabled_focus_mode = 0
 text = "TEXT HERE"
 script = ExtResource( 2 )

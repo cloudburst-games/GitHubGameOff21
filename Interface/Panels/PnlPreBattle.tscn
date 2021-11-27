@@ -1,7 +1,91 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Interface/Panels/PnlPreBattle.cs" type="Script" id=1]
-[ext_resource path="res://Interface/Themes/Hospital.tres" type="Theme" id=2]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="DynamicFont" id=7]
+size = 25
+outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 25
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=10]
+default_font = SubResource( 9 )
+Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
+Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
+Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = SubResource( 1 )
+Button/styles/disabled = SubResource( 2 )
+Button/styles/focus = SubResource( 3 )
+Button/styles/hover = SubResource( 4 )
+Button/styles/normal = SubResource( 5 )
+Button/styles/pressed = SubResource( 6 )
+Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
+Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/constants/line_spacing = 3
+Label/constants/shadow_as_outline = 0
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/fonts/font = SubResource( 7 )
+Label/styles/normal = null
+Panel/styles/panel = SubResource( 8 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 30
+font_data = ExtResource( 2 )
 
 [node name="PnlPreBattle" type="Panel"]
 anchor_left = 0.5
@@ -12,7 +96,7 @@ margin_left = -609.0
 margin_top = -344.0
 margin_right = 609.0
 margin_bottom = 42.0
-theme = ExtResource( 2 )
+theme = SubResource( 10 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -39,10 +123,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -225.0
-margin_top = -155.818
-margin_right = 225.0
-margin_bottom = -29.8178
-text = "Proceed..."
+margin_left = -125.0
+margin_top = -78.0
+margin_right = 127.0
+margin_bottom = -30.0
+custom_fonts/font = SubResource( 11 )
+text = "Continue"
 
 [connection signal="pressed" from="BtnContinue" to="." method="OnBtnContinuePressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Interface/Icons/Water.png" type="Texture" id=1]
 [ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.cs" type="Script" id=2]
@@ -8,15 +8,53 @@
 [ext_resource path="res://Interface/Panels/Inventory/PnlInventory.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Interface/PartyManagement/CharacterInventory.cs" type="Script" id=7]
 [ext_resource path="res://Interface/PartyManagement/coin_placeholder.png" type="Texture" id=8]
-[ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://Interface/Themes/TabFGStyle.tres" type="StyleBox" id=9]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://Interface/Themes/1BattleHUDTheme.tres" type="Theme" id=11]
+[ext_resource path="res://Interface/Themes/Old40.tres" type="DynamicFont" id=12]
+[ext_resource path="res://Interface/Themes/TabBGStyle.tres" type="StyleBox" id=13]
+[ext_resource path="res://Interface/Themes/TabPanelStyle.tres" type="StyleBox" id=14]
+[ext_resource path="res://Interface/Buttons/BtnBase/SettingsTitle.tres" type="DynamicFont" id=15]
+[ext_resource path="res://Interface/Fonts/oldenburg16.tres" type="DynamicFont" id=16]
+[ext_resource path="res://Interface/Themes/0TabFG.tres" type="StyleBox" id=17]
+[ext_resource path="res://Interface/0TabBG.tres" type="StyleBox" id=18]
+[ext_resource path="res://Interface/0TabPanel.tres" type="StyleBox" id=19]
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.0745098, 0.0431373, 0.00784314, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
 [sub_resource type="DynamicFont" id=1]
-size = 56
-outline_size = 6
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 20
-extra_spacing_space = 20
-font_data = ExtResource( 9 )
+size = 30
+outline_size = 1
+outline_color = Color( 0.160784, 0.109804, 0.0588235, 1 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 22
+font_data = ExtResource( 10 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
 [node name="PnlCharacterManager" type="Panel"]
 anchor_left = 0.5
@@ -27,6 +65,8 @@ margin_left = -593.0
 margin_top = -513.445
 margin_right = 593.0
 margin_bottom = 463.555
+theme = ExtResource( 11 )
+custom_styles/panel = SubResource( 11 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -91,6 +131,12 @@ margin_left = -574.0
 margin_top = -368.6
 margin_right = 575.0
 margin_bottom = 442.4
+custom_styles/tab_fg = ExtResource( 9 )
+custom_styles/tab_bg = ExtResource( 13 )
+custom_styles/panel = ExtResource( 14 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_bg = Color( 0.535156, 0.457113, 0.384644, 1 )
+custom_colors/font_color_fg = Color( 0.94902, 0.67451, 0.341176, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -98,18 +144,20 @@ __meta__ = {
 [node name="Character" type="Control" parent="TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 1.0
+margin_top = 49.0
+margin_right = -1.0
+margin_bottom = -1.0
 
 [node name="LblLevelExperience" type="Label" parent="TabContainer/Character"]
-margin_right = 436.0
-margin_bottom = 48.0
+margin_left = 28.0
+margin_right = 454.0
+margin_bottom = 87.0
+custom_fonts/font = ExtResource( 15 )
 text = "Level: 
 Experience: "
-align = 1
 valign = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -131,6 +179,12 @@ margin_left = 455.0
 margin_top = 9.0
 margin_right = 1135.0
 margin_bottom = 666.0
+custom_styles/tab_fg = ExtResource( 17 )
+custom_styles/tab_bg = ExtResource( 18 )
+custom_styles/panel = ExtResource( 19 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_bg = Color( 0.492188, 0.391251, 0.330688, 1 )
+custom_colors/font_color_fg = Color( 0.94902, 0.67451, 0.341176, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -138,10 +192,8 @@ __meta__ = {
 [node name="Attributes" type="Panel" parent="TabContainer/Character/TabContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_top = 39.0
+custom_styles/panel = SubResource( 4 )
 script = ExtResource( 3 )
 
 [node name="LblExplain" type="Label" parent="TabContainer/Character/TabContainer/Attributes"]
@@ -190,18 +242,18 @@ __meta__ = {
 }
 
 [node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlVigour/HBox"]
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 157.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Vigour"
 align = 2
 
 [node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlVigour/HBox"]
 margin_left = 161.0
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 319.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "213"
 align = 1
@@ -234,18 +286,18 @@ __meta__ = {
 }
 
 [node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlResilience/HBox"]
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 157.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Resilience"
 align = 2
 
 [node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlResilience/HBox"]
 margin_left = 161.0
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 319.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "44"
 align = 1
@@ -278,18 +330,18 @@ __meta__ = {
 }
 
 [node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlIntellect/HBox"]
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 157.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Intellect"
 align = 2
 
 [node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlIntellect/HBox"]
 margin_left = 161.0
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 319.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "213"
 align = 1
@@ -322,18 +374,18 @@ __meta__ = {
 }
 
 [node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlSwiftness/HBox"]
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 157.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Swiftness"
 align = 2
 
 [node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlSwiftness/HBox"]
 margin_left = 161.0
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 319.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "33"
 align = 1
@@ -366,18 +418,18 @@ __meta__ = {
 }
 
 [node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlCharisma/HBox"]
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 157.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Charisma"
 align = 2
 
 [node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlCharisma/HBox"]
 margin_left = 161.0
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 319.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "213"
 align = 1
@@ -410,18 +462,18 @@ __meta__ = {
 }
 
 [node name="LblName" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlLuck/HBox"]
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 157.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "Luck"
 align = 2
 
 [node name="LblNum" type="Label" parent="TabContainer/Character/TabContainer/Attributes/VBoxAttributes/PnlLuck/HBox"]
 margin_left = 161.0
-margin_top = 10.0
+margin_top = 5.0
 margin_right = 319.0
-margin_bottom = 24.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 text = "213"
 align = 1
@@ -475,6 +527,7 @@ margin_left = -319.0
 margin_top = -111.0
 margin_right = 319.0
 margin_bottom = -7.0
+custom_styles/panel = SubResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -500,10 +553,8 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_top = 39.0
+custom_styles/panel = SubResource( 8 )
 script = ExtResource( 4 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)"]
@@ -541,7 +592,7 @@ __meta__ = {
 }
 
 [node name="LblStats1" type="Label" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlStats/HBoxStats"]
-margin_right = 338.0
+margin_right = 308.0
 margin_bottom = 209.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
@@ -558,7 +609,7 @@ __meta__ = {
 }
 
 [node name="LblStats2" type="Label" parent="TabContainer/Character/TabContainer/Derived Stats (Advanced)/VBoxContainer/PnlStats/HBoxStats"]
-margin_left = 342.0
+margin_left = 312.0
 margin_right = 597.0
 margin_bottom = 209.0
 size_flags_horizontal = 3
@@ -628,19 +679,21 @@ __meta__ = {
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 1.0
+margin_top = 49.0
+margin_right = -1.0
+margin_bottom = -1.0
 script = ExtResource( 7 )
 
 [node name="LblBag" type="Label" parent="TabContainer/Inventory"]
 margin_left = 472.0
 margin_right = 1130.0
 margin_bottom = 53.0
+custom_fonts/font = ExtResource( 16 )
 text = "Bag"
 align = 1
 valign = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -709,28 +762,28 @@ __meta__ = {
 }
 
 [node name="PnlInventoryAmulet" parent="TabContainer/Inventory" instance=ExtResource( 6 )]
-margin_left = 150.502
-margin_top = 24.0
-margin_right = 278.502
-margin_bottom = 152.0
+margin_left = 151.0
+margin_top = 108.0
+margin_right = 279.0
+margin_bottom = 154.0
 
 [node name="PnlInventoryWeapon" parent="TabContainer/Inventory" instance=ExtResource( 6 )]
 margin_left = 38.0
-margin_top = 245.0
-margin_right = 166.0
-margin_bottom = 373.0
+margin_top = 254.0
+margin_right = 158.0
+margin_bottom = 374.0
 
 [node name="PnlInventoryArmour" parent="TabContainer/Inventory" instance=ExtResource( 6 )]
 margin_left = 264.804
-margin_top = 245.0
-margin_right = 392.804
-margin_bottom = 373.0
+margin_top = 254.0
+margin_right = 384.804
+margin_bottom = 374.0
 
 [node name="PnlInventoryPotions" parent="TabContainer/Inventory" instance=ExtResource( 6 )]
 margin_left = 38.0
-margin_top = 473.724
+margin_top = 513.0
 margin_right = 422.0
-margin_bottom = 601.724
+margin_bottom = 593.0
 
 [node name="PanelStatus" type="Panel" parent="TabContainer/Inventory"]
 anchor_left = 0.5
@@ -773,14 +826,16 @@ __meta__ = {
 [node name="LblCharacterName" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -199.983
+anchor_bottom = 0.108
+margin_left = -200.0
 margin_top = 45.0
-margin_right = 560.017
-margin_bottom = 106.0
-custom_fonts/font = SubResource( 1 )
+margin_right = 225.0
+margin_bottom = 0.483994
+custom_fonts/font = ExtResource( 12 )
 text = "Character Name"
 align = 1
 valign = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

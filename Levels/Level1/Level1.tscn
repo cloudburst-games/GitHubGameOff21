@@ -64,7 +64,7 @@ position = Vector2( -217.34, 101.99 )
 [node name="Bandit0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -528.444, 757.465 )
 _customBattleText = "HALT! A scarab leaps before you. He froths at the mouth and waves his dagger. Prepare for battle!"
-_defeatMessage = "The light your enemy's eyes fades to black. His spirit sinks beneath the ground. You wonder what possessed him to attack his king?"
+_defeatMessage = "The light in your enemy's eyes fades to black. His spirit sinks beneath the ground. You wonder what possessed him to attack his king?"
 ID = "bandit0"
 UnitName = "Crazed scarab"
 PortraitPath = ExtResource( 12 )

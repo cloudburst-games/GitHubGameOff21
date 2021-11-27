@@ -1,6 +1,8 @@
 [gd_resource type="Theme" load_steps=12 format=2]
 
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Interface/Themes/0VScrollGrabber.tres" type="StyleBox" id=2]
+[ext_resource path="res://Interface/Themes/0Vscroll.tres" type="StyleBox" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 25
@@ -27,24 +29,6 @@ corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
-
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
-[sub_resource type="StyleBoxFlat" id=9]
-content_margin_left = 15.0
-content_margin_right = 15.0
-content_margin_top = 15.0
-content_margin_bottom = 15.0
-bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
 
 [sub_resource type="DynamicFont" id=10]
 size = 25
@@ -77,8 +61,8 @@ VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 8 )
+VScrollBar/styles/grabber = ExtResource( 2 )
 VScrollBar/styles/grabber_highlight = null
 VScrollBar/styles/grabber_pressed = null
-VScrollBar/styles/scroll = SubResource( 9 )
+VScrollBar/styles/scroll = ExtResource( 3 )
 VScrollBar/styles/scroll_focus = null
