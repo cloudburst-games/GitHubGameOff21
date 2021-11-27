@@ -265,7 +265,7 @@ public class UnitData : IStoreable
     {
         UnitData unitData = this; // clean this up when get time
         unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] = unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth]
-            = UpdateStat(unitData.Attributes[UnitData.Attribute.Vigour], 2f);
+            = UpdateStat(unitData.Attributes[UnitData.Attribute.Vigour], 3f);
         unitData.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.PhysicalDamage]
             =  UpdateStat(unitData.Attributes[UnitData.Attribute.Vigour], 0.5f) + GetWeaponDamage();
         

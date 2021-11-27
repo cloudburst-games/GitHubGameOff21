@@ -1,5 +1,12 @@
 Minimum targets
 
+LEVELS
+- 2nd shop - enchanted mace
+- tweak/add autosaves per encounter
+- review bandit rewards
+- east luna - make them all level 2
+- buff peril of osiris slightly
+
 Next:
 Thursday:
 - Make it so that NPCs flagged hostile will initiate dialogue with you, then after dialogue is finished will fight you

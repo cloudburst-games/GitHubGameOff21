@@ -20,6 +20,8 @@ public class PnlBattleVictory : Panel
 
     [Signal]
     public delegate void SunStolen();
+    [Signal]
+    public delegate void MahefKilled(bool joinMahef);
 
     private Dictionary<string, Action<Unit>> _defeatNPCOutcomes;
     public override void _Ready()
@@ -27,6 +29,7 @@ public class PnlBattleVictory : Panel
         Visible = false;
         _defeatNPCOutcomes = new Dictionary<string, Action<Unit>>() {
            {"Ammit", OnEnemyAmmitDefeated},
+           {"Mahef", OnEnemyMahefDefeated}
         //    {"NPC0", OnEnemyJillDefeated},
         //    {"NPC1", OnEnemyJillDefeated}
         };
@@ -122,6 +125,14 @@ public class PnlBattleVictory : Panel
     }
 
 
+    private void OnEnemyMahefDefeated(Unit npcDefeated)
+    {
+        // delete the NPC from the game
+        npcDefeated.CurrentUnitData.Hostile = false;
+        npcDefeated.QueueFree();
+
+        EmitSignal(nameof(MahefKilled), false);
+    }
     private void OnEnemyAmmitDefeated(Unit npcDefeated)
     {
 

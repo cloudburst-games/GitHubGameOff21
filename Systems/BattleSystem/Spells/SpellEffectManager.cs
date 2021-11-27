@@ -84,12 +84,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 0,
                 Magnitude = 1,
                 AreaSquares = 0,
-                ManaCost = 8f,
+                ManaCost = 10f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                 Target = SpellEffect.TargetMode.Hostile,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/SolarBoltEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/SolarBolt.PNG"),
-                ToolTip = "Launch a bolt imbued with sunlight at the target! Range 5, Cost 8."
+                ToolTip = "Launch a bolt imbued with sunlight at the target! Range 5, Cost 10."
             }}
             },
             {SpellMode.SolarBlast, new List<SpellEffect>(){ new SpellEffect(){
@@ -98,12 +98,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 0,
                 Magnitude = 2,
                 AreaSquares = 1,
-                ManaCost = 16f,
+                ManaCost = 18f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                 Target = SpellEffect.TargetMode.Area,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/SolarBlastEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/SolarBlast.PNG"),
-                ToolTip = "Launch a monstrous blast of sunlight at the target area! Can hit allies! Range 4, Cost 16, Area 9."
+                ToolTip = "Launch a monstrous blast of sunlight at the target area! Can hit allies! Range 4, Cost 18, Area 9."
             }}
             },
             {SpellMode.ComingForthByDay, new List<SpellEffect>(){ new SpellEffect(){
@@ -112,12 +112,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = 2,
                 AreaSquares = 0,
-                ManaCost = 5f,
+                ManaCost = 7f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.TotalHealth, BattleUnitData.DerivedStat.Health, BattleUnitData.DerivedStat.PhysicalDamage},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/ComingForthByDayEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/ComingForthByDay.PNG"),
-                ToolTip = "Boost the vigour of an ally for 3 rounds! Cost 5."
+                ToolTip = "Boost the vigour of an ally for 3 rounds! Cost 7."
             }}
             },
             {SpellMode.Preservation, new List<SpellEffect>(){ new SpellEffect(){
@@ -126,12 +126,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = 1,
                 AreaSquares = 0,
-                ManaCost = 6f,
+                ManaCost = 8f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.HealthRegen, BattleUnitData.DerivedStat.ManaRegen, BattleUnitData.DerivedStat.MagicResist},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/PreservationEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/Preservation.PNG"),
-                ToolTip = "Boost the resilience of an ally for 3 rounds! Cost 6."
+                ToolTip = "Boost the resilience of an ally for 3 rounds! Cost 8."
             }}
             },
             {SpellMode.WeighingOfTheHeart, new List<SpellEffect>(){ new SpellEffect(){
@@ -140,12 +140,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 3,
                 Magnitude = -1,
                 AreaSquares = 0,
-                ManaCost = 10f,
+                ManaCost = 12f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Dodge, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
                 Target = SpellEffect.TargetMode.Hostile,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/WeighingOfTheHeartEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/WeighingOfTheHeart.PNG"),
-                ToolTip = "Reduce the swiftness of a foe for 3 rounds! Cost 10."
+                ToolTip = "Reduce the swiftness of a foe for 3 rounds! Cost 12."
             }}
             },
             {SpellMode.GazeOfTheDead, new List<SpellEffect>(){ // duration effects first
@@ -801,8 +801,16 @@ public class SpellEffectManager : Reference
     public async void ApplyPotionEffect(BattleUnit origin, PotionEffect potionEffect) // the effect used is from above!
     {
         // make some lines for the log to display
-        string announceText =  String.Format("{0} uses {1}!",
-            origin.CurrentBattleUnitData.Name, potionEffect.Name);
+        string announceText =  String.Format("{0} uses {1}! {2}",
+            origin.CurrentBattleUnitData.Name, potionEffect.Name,
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.CharismaPot ? "Leadership increased." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.HealthPot ? potionEffect.Magnitude + " health restored." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.IntellectPot ? "Mana regen, mana capacity, and spell power increased." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.LuckPot ? "Dodge and critical chance increased." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.ManaPot ? potionEffect.Magnitude + " mana restored." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.ResiliencePot ? "Health, mana regen, and magic resist increased." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.SwiftnessPot ? "Speed, initiative, and dodge increased." :
+            potionEffect.CurrentItemMode == PnlInventory.ItemMode.VigourPot ? "Health and damage increased." : "");
         SpellEffect effect = SpellEffects[potionEffect.SpellEffect][0];
         // ApplyBuffDebuff(origin, origin, new List<BattleUnit>(), origin.GlobalPosition, potionEffect.SpellEffect, effect, multiEffect:true);
         EmitSignal(nameof(AnnouncingSpell), announceText);
@@ -837,8 +845,11 @@ public class SpellEffectManager : Reference
         SetToCastingState(origin, targetWorldPos);
         
         // make some lines for the log to display
-        string announceText =  String.Format("{0} casts {2} on {1}.",
-            origin.CurrentBattleUnitData.Name, target.CurrentBattleUnitData.Name, effect.Name);
+        string announceText =  String.Format("{0} casts {2} on {1}. {3}",
+            origin.CurrentBattleUnitData.Name, target.CurrentBattleUnitData.Name, effect.Name,
+            spell == SpellMode.ComingForthByDay ? "Vigour boosted, increasing damage and health." :
+            spell == SpellMode.Preservation ? "Resilience boosted, increasing health and mana regeneration, and magic resistance." :
+            spell == SpellMode.WeighingOfTheHeart ? "Swiftness sharply reduced, decreasing movement and initiative." : "");
         
         if (!multiEffect)
         {

@@ -288,8 +288,19 @@ public class CntBattle : Control
                     newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
                     newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                     newEnemyData.CurrentBattleUnitData.Weak = _enemyCommanderData.Weak;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = !newEnemyData.CurrentBattleUnitData.Weak ? (SpellEffectManager.SpellMode) _rand.Next(0,10)
-                        : SpellEffectManager.SpellMode.Empty;
+                    if (!newEnemyData.CurrentBattleUnitData.Weak)
+                    {
+                        SpellEffectManager.SpellMode newSpell = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                        while (newSpell == _enemyCommanderData.Spell1)
+                        {
+                            newSpell = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                        }
+                        newEnemyData.CurrentBattleUnitData.Spell1 = newSpell;
+                    }
+                    else
+                    {
+                        newEnemyData.CurrentBattleUnitData.Spell1 = SpellEffectManager.SpellMode.Empty;
+                    }
                     newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
@@ -305,8 +316,19 @@ public class CntBattle : Control
                     newEnemyData.CurrentBattleUnitData.BodyPath = _enemyCommanderData.BodyPath;
                     newEnemyData.CurrentBattleUnitData.BattlePortraitPath = "res://Actors/PortraitPlaceholders/Small/NPC.PNG";
                     newEnemyData.CurrentBattleUnitData.Weak = _enemyCommanderData.Weak;
-                    newEnemyData.CurrentBattleUnitData.Spell1 = !newEnemyData.CurrentBattleUnitData.Weak ? (SpellEffectManager.SpellMode) _rand.Next(0,10)
-                        : SpellEffectManager.SpellMode.Empty;
+                    if (!newEnemyData.CurrentBattleUnitData.Weak)
+                    {
+                        SpellEffectManager.SpellMode newSpell = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                        while (newSpell == _enemyCommanderData.Spell1)
+                        {
+                            newSpell = (SpellEffectManager.SpellMode) _rand.Next(0,10);
+                        }
+                        newEnemyData.CurrentBattleUnitData.Spell1 = newSpell;
+                    }
+                    else
+                    {
+                        newEnemyData.CurrentBattleUnitData.Spell1 = SpellEffectManager.SpellMode.Empty;
+                    }
                     newEnemyData.CurrentBattleUnitData.Spell2 = _enemyCommanderData.Spell1;
                     newEnemyData.SetAttributesByLevel(new List<UnitData.Attribute>());
                     newEnemyData.UpdateDerivedStatsFromAttributes();
@@ -447,6 +469,7 @@ public class CntBattle : Control
         }
 
         SetSelectedAction(ActionMode.Move);
+        // SetSelectedAction(ActionMode.Move);
         // if (_roundEnd)
         // {
         //     await ToSignal(this, nameof(EndOfRoundEffectsFinished));
@@ -495,6 +518,7 @@ public class CntBattle : Control
             return;
         }
         _firstTurn = false;
+        SetSelectedAction(ActionMode.Move);
     }
 
 
@@ -1332,7 +1356,7 @@ public class CntBattle : Control
                 OnMoveActionApRemaining();
             }
         }
-        else //if (PermittedAttack(mouseMapPos))
+        else if (GetUnitAP(GetActiveBattleUnit()) >= GetUnitSpeed(GetActiveBattleUnit())/2f)
         {
             OnLeftClickMelee(tarGridPos);
         }
@@ -1342,6 +1366,7 @@ public class CntBattle : Control
     {            
         GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
 
+        SetSelectedAction(ActionMode.Move);
         // _battleHUD.LogEntry(String.Format("{0}'s turn ends.", GetActiveBattleUnit().CurrentBattleUnitData.Name));
 
         // victory and defeat checks
@@ -1372,6 +1397,8 @@ public class CntBattle : Control
 
 
         EndTurn();
+
+        SetSelectedAction(ActionMode.Move);
         if (!_endTurnEffectsInProgress)
         {
             // SetSelectedAction(ActionMode.Move);
@@ -1399,7 +1426,7 @@ public class CntBattle : Control
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Move);
             }
-            else if (PermittedAttack(mouseMapPos))
+            else if (PermittedAttack(mouseMapPos) && GetUnitAP(GetActiveBattleUnit()) >= GetUnitSpeed(GetActiveBattleUnit())/2f)
             {
                 _cursorControl.SetCursor(CursorControl.CursorMode.Attack);
             }
@@ -1644,6 +1671,7 @@ public class CntBattle : Control
                         battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.HealthRegen],
                         battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.TotalHealth]);
                 battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
+                battleUnit.UpdateHealthManaBars();
             }
         }
         ApplyLeadershipBonus();

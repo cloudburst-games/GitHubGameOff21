@@ -8,6 +8,7 @@ public class StageWorld : Stage
 {
     private ItemBuilder _itemBuilder = new ItemBuilder();
     private int _difficulty = 1;
+    private bool _transitioningLevel = false;
 
 
     
@@ -192,6 +193,7 @@ public class StageWorld : Stage
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.FoundGold), this, nameof(OnFoundGold));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.FoundItems), this, nameof(OnFoundItems));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.SunStolen), this, nameof(OnSunStolen));
+        GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Connect(nameof(PnlBattleVictory.MahefKilled), GetNode<HUD>("HUD"), nameof(HUD.OnGameEnded));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompanionJoining), this, nameof(OnCompanionJoining));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompanionLeaving), this, nameof(OnCompanionLeaving));
         GetNode<DialogueControl>("HUD/CtrlTheme/DialogueControl").Connect(nameof(DialogueControl.CompletedQuest), this, nameof(OnCompletedQuest));
@@ -211,11 +213,10 @@ public class StageWorld : Stage
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Time, true);
     }
-
     public void OnStartedLevelTransition()
     {
         SetProcessInput(false);
-        
+        _transitioningLevel = true;
 
     }
 
@@ -225,6 +226,7 @@ public class StageWorld : Stage
        GetNode<Label>("HUD/CtrlTheme/LblShowLevelName").Text = GetNode<LevelManager>("LevelManager").GetLevelInTree().LevelName;
        GetNode<Label>("HUD/CtrlTheme/LblShowLevelName").Visible = true;
        GetNode<AnimationPlayer>("HUD/CtrlTheme/LblShowLevelName/Anim").Play("Start");
+       _transitioningLevel = false;
     }
 
     private void OnBtnMapPressed()
@@ -331,7 +333,7 @@ public class StageWorld : Stage
         }
 
         // IF REACH CERTAIN LEVEL, UNLOCK THE 2ND SPELL
-        if (unitData.CurrentBattleUnitData.Level >= 5 && 
+        if (unitData.CurrentBattleUnitData.Level >= 3 && 
             unitData.CurrentBattleUnitData.Spell2 == SpellEffectManager.SpellMode.Empty && 
             unitData.CurrentBattleUnitData.SpellGainedAtHigherLevel != SpellEffectManager.SpellMode.Empty)
         {
@@ -582,6 +584,10 @@ public class StageWorld : Stage
     }
     public async void OnBattleStarted(Unit target, string customBattleText)
     {
+        if (_transitioningLevel)
+        {
+            return;
+        }
         if (customBattleText == "")
         {
              customBattleText = "{0} attacks!\n\nPrepare for battle.";
@@ -591,6 +597,7 @@ public class StageWorld : Stage
         GetNode<HUD>("HUD").Pausable = false;
         await ToSignal(GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle"), nameof(PnlPreBattle.BattleConfirmed));
 
+        target.CurrentUnitData.UpdateDerivedStatsFromAttributes();
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.UpdateDerivedStatsFromAttributes();
         UpdatePlayerBattleCompanions();
         // GD.Print(_difficulty);
