@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Menu2.ogg-d9867ac5054c65c68e2811ace5b05af3.oggstr"
+
+[deps]
+
+source_file="res://Music/Music_GHGO/Menu_AI/Menu2.ogg"
+dest_files=[ "res://.import/Menu2.ogg-d9867ac5054c65c68e2811ace5b05af3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

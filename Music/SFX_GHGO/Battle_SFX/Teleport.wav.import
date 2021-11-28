@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Teleport.wav-7079e872cb9415e1082660b78cd393fa.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/Battle_SFX/Teleport.wav"
+dest_files=[ "res://.import/Teleport.wav-7079e872cb9415e1082660b78cd393fa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

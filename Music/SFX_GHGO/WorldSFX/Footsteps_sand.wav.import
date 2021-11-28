@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Footsteps_sand.wav-3c9d9452a070221a7911537852a7d046.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/WorldSFX/Footsteps_sand.wav"
+dest_files=[ "res://.import/Footsteps_sand.wav-3c9d9452a070221a7911537852a7d046.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
