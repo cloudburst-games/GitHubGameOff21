@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/2020.PNG-f00de319c75cf1b752dfca373ab8ebb8.stex"
+path="res://.import/2020.PNG-5f414d50626958737c978a2ddb00d618.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SOPHIA/Old/isotilev02/Output scaled/Dirt/2020.PNG"
-dest_files=[ "res://.import/2020.PNG-f00de319c75cf1b752dfca373ab8ebb8.stex" ]
+source_file="res://Utils/LevelBuilder/isotilev02/Output scaled/Dirt/2020.PNG"
+dest_files=[ "res://.import/2020.PNG-5f414d50626958737c978a2ddb00d618.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

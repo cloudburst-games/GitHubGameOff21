@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Diamond.PNG-f5a88deb16b0a34f10e2b5632a7cdec0.stex"
+path="res://.import/Diamond.PNG-d8c925b63db3a55ca22b491f9c13c9a2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SOPHIA/Old/isotilev02/Output scaled/Diamond.PNG"
-dest_files=[ "res://.import/Diamond.PNG-f5a88deb16b0a34f10e2b5632a7cdec0.stex" ]
+source_file="res://Utils/LevelBuilder/isotilev02/Output scaled/Diamond.PNG"
+dest_files=[ "res://.import/Diamond.PNG-d8c925b63db3a55ca22b491f9c13c9a2.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

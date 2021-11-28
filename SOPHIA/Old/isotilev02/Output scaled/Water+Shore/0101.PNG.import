@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/0101.PNG-9b51465498696d34ad16bc05659493a1.stex"
+path="res://.import/0101.PNG-6e077064dd376aa95cf51aff22ab9849.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SOPHIA/Old/isotilev02/Output scaled/Water+Shore/0101.PNG"
-dest_files=[ "res://.import/0101.PNG-9b51465498696d34ad16bc05659493a1.stex" ]
+source_file="res://Utils/LevelBuilder/isotilev02/Output scaled/Water+Shore/0101.PNG"
+dest_files=[ "res://.import/0101.PNG-6e077064dd376aa95cf51aff22ab9849.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

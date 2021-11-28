@@ -2,15 +2,24 @@
 
 importer="texture"
 type="StreamTexture"
+<<<<<<< HEAD
 path="res://.import/0010-b.PNG-e9bc96fcbaa7d2748b6ef52bd87df0d9.stex"
+=======
+path="res://.import/villager_walk_40004.png-ec25a4bd4288a3d21014e11bab6c320f.stex"
+>>>>>>> origin/art
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
+<<<<<<< HEAD
 source_file="res://SOPHIA/Old/isotilev02/Output scaled/Water and sand/0010-b.PNG"
 dest_files=[ "res://.import/0010-b.PNG-e9bc96fcbaa7d2748b6ef52bd87df0d9.stex" ]
+=======
+source_file="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_40004.png"
+dest_files=[ "res://.import/villager_walk_40004.png-ec25a4bd4288a3d21014e11bab6c320f.stex" ]
+>>>>>>> origin/art
 
 [params]
 

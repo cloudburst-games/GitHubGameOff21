@@ -2,15 +2,24 @@
 
 importer="texture"
 type="StreamTexture"
+<<<<<<< HEAD
 path="res://.import/0111.PNG-cb2212a68bd924646d8cda9efdbaa516.stex"
+=======
+path="res://.import/WhiteWoodFibreParticle.png-d81ceda80dc6df178f60a70a25e1846a.stex"
+>>>>>>> origin/art
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
+<<<<<<< HEAD
 source_file="res://SOPHIA/Old/isotilev02/Output scaled/Water and sand/0111.PNG"
 dest_files=[ "res://.import/0111.PNG-cb2212a68bd924646d8cda9efdbaa516.stex" ]
+=======
+source_file="res://Effects/SpellEffects/Art/WhiteWoodFibreParticle.png"
+dest_files=[ "res://.import/WhiteWoodFibreParticle.png-d81ceda80dc6df178f60a70a25e1846a.stex" ]
+>>>>>>> origin/art
 
 [params]
 
