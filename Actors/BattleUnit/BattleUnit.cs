@@ -65,6 +65,8 @@ public class BattleUnit : Node2D
         _sprite.QueueFree();
         _sprite = newSprite;
         _sprite.Scale = new Vector2(1.5f, 1.5f);
+        _sprite.Offset = new Vector2(0,90);
+        MoveChild(_sprite, 0);
         body.QueueFree();
     }
 

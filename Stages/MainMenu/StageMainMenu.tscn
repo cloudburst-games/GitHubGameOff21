@@ -3,7 +3,7 @@
 [ext_resource path="res://Stages/MainMenu/StageMainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Stages/MainMenu/BG.png" type="Texture" id=3]
-[ext_resource path="res://Music/Menu_AI/Computoser_6.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Music/Music_GHGO/Menu_AI/Menu2.ogg" type="AudioStream" id=4]
 [ext_resource path="res://Interface/Fonts/oldenburgbutton.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.tscn" type="PackedScene" id=7]
@@ -14,7 +14,7 @@
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=13]
 [ext_resource path="res://Interface/Themes/FileDialogTheme.tres" type="Theme" id=14]
-[ext_resource path="res://Music/Menu_AI/Menu2_Computoser.mp3" type="AudioStream" id=15]
+[ext_resource path="res://Music/Music_GHGO/Menu_AI/Menu1.ogg" type="AudioStream" id=15]
 [ext_resource path="res://Interface/Themes/KhepriThemeMain.tres" type="Theme" id=16]
 [ext_resource path="res://Interface/Themes/50Old50.tres" type="DynamicFont" id=18]
 
@@ -589,7 +589,7 @@ custom_fonts/font = ExtResource( 5 )
 [node name="AudioData" parent="." instance=ExtResource( 6 )]
 VolumeDb = -10.0
 StartPlaying = true
-Streams = [ ExtResource( 4 ), ExtResource( 15 ) ]
+Streams = [ ExtResource( 15 ), ExtResource( 4 ) ]
 Bus = 2
 SoundType = 3
 

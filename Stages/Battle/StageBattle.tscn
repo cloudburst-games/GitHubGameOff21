@@ -4,8 +4,8 @@
 [ext_resource path="res://Stages/Battle/StageBattle.cs" type="Script" id=2]
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Music/Battle_AI/Battle_Computoser.mp3" type="AudioStream" id=5]
-[ext_resource path="res://Music/Battle_AI/Battle_Computoser2.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Music/Music_GHGO/Battle_AI/Battle2.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Music/Music_GHGO/Battle_AI/Battle1.ogg" type="AudioStream" id=6]
 
 [node name="StageBattle" type="Node"]
 script = ExtResource( 2 )

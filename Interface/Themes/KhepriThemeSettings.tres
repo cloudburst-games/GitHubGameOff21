@@ -19,11 +19,11 @@ outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
 [sub_resource type="DynamicFont" id=6]

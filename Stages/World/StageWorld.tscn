@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/KhepriThemeHUD.tres" type="Theme" id=2]
@@ -15,7 +15,7 @@
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Stages/World/PnlBattleVictory.cs" type="Script" id=15]
-[ext_resource path="res://Music/World_AI/World_2_Computoser.mp3" type="AudioStream" id=16]
+[ext_resource path="res://Music/Music_GHGO/World_AI/World1.ogg" type="AudioStream" id=16]
 [ext_resource path="res://Interface/PartyManagement/HBoxPortraits.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Stages/World/HUD/PnlEvents.cs" type="Script" id=18]
 [ext_resource path="res://Interface/PartyManagement/PnlCharacterManager.tscn" type="PackedScene" id=19]
@@ -25,7 +25,6 @@
 [ext_resource path="res://Interface/Map/Map.cs" type="Script" id=23]
 [ext_resource path="res://Utils/Node/Camera/Cam2DRTS.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Interface/Themes/Old25.tres" type="DynamicFont" id=25]
-[ext_resource path="res://Music/World_AI/World1_Computoser.mp3" type="AudioStream" id=26]
 [ext_resource path="res://Interface/Themes/FileDialogTheme.tres" type="Theme" id=27]
 
 [sub_resource type="Animation" id=1]
@@ -464,7 +463,7 @@ script = ExtResource( 1 )
 [node name="AudioMusic" parent="." instance=ExtResource( 14 )]
 VolumeDb = -10.0
 PauseAndPlayMusic = true
-Streams = [ ExtResource( 26 ), ExtResource( 16 ) ]
+Streams = [ ExtResource( 16 ) ]
 Bus = 2
 SoundType = 3
 
