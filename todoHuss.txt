@@ -1,27 +1,16 @@
 Minimum targets
 
-make quest label invis when prebattlepanel shows. and make it show post battle
+- pull all
+- integrate animations (multiple bodies...)
+- make portraits from bug anims and integrate
+- integrate music
+- team colours in battle - red and green
+- give each enemy a unique spell
+- test and tweak levels
 
-southern lunu sign
 
-southern lunu better goods
-
-round action points to whole number - ewighing of the heart
-
-too easy - increase crone enemies to 5
-
-increase north area enemies  to level 6 (serant of apophis) then 7 then  ammut to 8
-
-increase final area enemies to lvl 9
-
-quest text problem - on loading game. need to save and load quest text from khepri data
-
-make night darker
-
-defeating ferrybug should hide the victory panel right away so u see the end text
-
-ending texts x 2
-
+no:
+- make pickupable items and gold, (area2d, settable exported inventoryitem, associated sprite) -> goes into inventory of khepri with floating text to show item name. would need to add to saved and loaded objects. would need to make a separate gold sprite -pile of gold - for gold pickup. would need to add a treasure icon for region map. e.g. gold scattered around potions.
 
 LEVELS
 
