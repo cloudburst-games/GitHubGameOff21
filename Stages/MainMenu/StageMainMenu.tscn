@@ -110,6 +110,7 @@ Label/fonts/font = SubResource( 5 )
 Label/styles/normal = null
 Panel/styles/panel = SubResource( 6 )
 
+<<<<<<< HEAD
 [sub_resource type="DynamicFont" id=15]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
@@ -283,6 +284,9 @@ Label/styles/normal = null
 Panel/styles/panel = SubResource( 35 )
 
 [sub_resource type="StyleBoxFlat" id=14]
+=======
+[sub_resource type="StyleBoxFlat" id=9]
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -307,8 +311,13 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
+<<<<<<< HEAD
 [sub_resource type="DynamicFont" id=38]
 size = 20
+=======
+[sub_resource type="DynamicFont" id=12]
+size = 27
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
@@ -503,8 +512,13 @@ margin_left = -386.0
 margin_top = -212.0
 margin_right = 386.0
 margin_bottom = 212.0
+<<<<<<< HEAD
 theme = SubResource( 37 )
 custom_styles/panel = SubResource( 14 )
+=======
+theme = ExtResource( 11 )
+custom_styles/panel = SubResource( 9 )
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -570,8 +584,14 @@ anchor_right = 1.0
 margin_left = -40.0
 margin_top = 1.0
 margin_right = -1.0
+<<<<<<< HEAD
 margin_bottom = 38.0
 custom_fonts/font = SubResource( 38 )
+=======
+margin_bottom = 48.0
+theme = null
+custom_fonts/font = SubResource( 12 )
+>>>>>>> d7ad0bb7dcfe0c0374f10b6412c7a6679a9604cd
 text = "x"
 
 [node name="PnlSettings" parent="." instance=ExtResource( 7 )]
