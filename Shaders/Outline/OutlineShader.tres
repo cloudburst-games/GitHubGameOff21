@@ -28,6 +28,6 @@ void fragment()
 
 [resource]
 shader = SubResource( 1 )
-shader_param/width = 0.8
+shader_param/width = 3.0
 shader_param/speed = 7.0
 shader_param/outline_color_origin = Color( 0.8, 0, 0, 1 )

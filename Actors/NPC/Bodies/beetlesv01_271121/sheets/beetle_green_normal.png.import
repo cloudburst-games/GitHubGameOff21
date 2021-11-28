@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/beetle_red.png-437534bf3a3e81b430e98b2919ccdf1a.stex"
+path="res://.import/beetle_green_normal.png-36b0a64df7d9b8244b0db0e08752b3d0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Actors/NPC/Bodies/beetlesv01_271121/sheets/beetle_red.png"
-dest_files=[ "res://.import/beetle_red.png-437534bf3a3e81b430e98b2919ccdf1a.stex" ]
+source_file="res://Actors/NPC/Bodies/beetlesv01_271121/sheets/beetle_green_normal.png"
+dest_files=[ "res://.import/beetle_green_normal.png-36b0a64df7d9b8244b0db0e08752b3d0.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=false
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

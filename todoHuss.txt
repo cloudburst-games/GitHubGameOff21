@@ -3,9 +3,9 @@ Minimum targets
 - integrate animations (multiple bodies...) d
 - team colours in battle - red and green d
 - make portraits from bug anims and integrate d
+- give each enemy a unique spell d
+- gained a level floating text is too small d
 
-- give each enemy a unique spell
-- gained a level floating text is too small
 - test and tweak levels
 
 

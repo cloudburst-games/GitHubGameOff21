@@ -39,7 +39,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.2, 0.2 ) ]
+"values": [ Vector2( 0.12, 0.12 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -78,7 +78,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.25, 0.25 ) ]
+"values": [ Vector2( 0.15, 0.15 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -105,7 +105,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.25, 0.25 ) ]
+"values": [ Vector2( 0.15, 0.15 ) ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -144,7 +144,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.2, 0.2 ) ]
+"values": [ Vector2( 0.12, 0.12 ) ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -183,7 +183,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.25, 0.25 ) ]
+"values": [ Vector2( 0.15, 0.15 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -222,7 +222,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.2, 0.2 ) ]
+"values": [ Vector2( 0.12, 0.12 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -262,7 +262,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.25, 0.25 ) ]
+"values": [ Vector2( 0.15, 0.15 ) ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -302,7 +302,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.25, 0.25 ) ]
+"values": [ Vector2( 0.15, 0.15 ) ]
 }
 
 [sub_resource type="Animation" id=9]
@@ -343,7 +343,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.2, 0.2 ) ]
+"values": [ Vector2( 0.12, 0.12 ) ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -383,13 +383,13 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0.25, 0.25 ) ]
+"values": [ Vector2( 0.15, 0.15 ) ]
 }
 
 [node name="NPCBodyGreen" type="Node"]
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.2, 0.2 )
+scale = Vector2( 0.12, 0.12 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 2760, 552, 552, 552 )
@@ -408,5 +408,5 @@ anims/WalkUp = SubResource( 9 )
 anims/WalkUpRight = SubResource( 10 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 15 )
+position = Vector2( 0, 12 )
 shape = ExtResource( 2 )

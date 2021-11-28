@@ -345,7 +345,7 @@ public class StageWorld : Stage
         // UI FEEDBACK
         if (levelledup)
         {
-            LblFloatScore lvlUpFloatLbl = new LblFloatScore();
+            LblFloatScore lvlUpFloatLbl = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
             lvlUpFloatLbl.FadeSpeed = 0.2f;
             lvlUpFloatLbl.Text = 
                 String.Format("{0} has gained a level{1}",

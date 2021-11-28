@@ -260,6 +260,10 @@ public class Unit : KinematicBody2D
                 shaderMaterial.SetShaderParam("flash_depth", 0.4f);
                 _sprite.Material = shaderMaterial;
             }
+            if (HasNode("PnlInfo"))
+            {
+                GetNode<Panel>("PnlInfo").Visible = true;
+            }
         }
         else
         {
@@ -283,6 +287,10 @@ public class Unit : KinematicBody2D
                         }
                     }
                 }
+            }
+            if (HasNode("PnlInfo"))
+            {
+                GetNode<Panel>("PnlInfo").Visible = false;
             }
             _sprite.Material = null;
         }
@@ -316,7 +324,7 @@ public class Unit : KinematicBody2D
                 {
                     if (unit.CurrentControlState is PlayerUnitControlState && ! CurrentUnitData.Companion)
                     {
-                        _sprite.Material = null;
+                        SetHighlight(false);
                     }
                 }
             }

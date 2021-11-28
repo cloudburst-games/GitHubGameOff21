@@ -68,6 +68,7 @@ _combatLevel = 6
 _minions = {
 0: 1
 }
+_startingSpell1 = 4
 _startingGold = 15
 _itemsHeld = [ 9, 4 ]
 _weaponEquipped = 9
@@ -87,6 +88,7 @@ _combatLevel = 7
 _minions = {
 0: 3
 }
+_startingSpell1 = 5
 _startingGold = 15
 _itemsHeld = [ 9, 1 ]
 _weaponEquipped = 9
