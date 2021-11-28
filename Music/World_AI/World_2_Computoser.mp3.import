@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/World_2_Computoser.mp3-7f3d45fade6be32c3adebd2f7584e696.mp3str"
+
+[deps]
+
+source_file="res://Music/World_AI/World_2_Computoser.mp3"
+dest_files=[ "res://.import/World_2_Computoser.mp3-7f3d45fade6be32c3adebd2f7584e696.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

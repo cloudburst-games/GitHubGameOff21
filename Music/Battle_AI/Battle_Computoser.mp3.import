@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Battle_Computoser.mp3-26c73d300af11290ab722d8b330fbefd.mp3str"
+
+[deps]
+
+source_file="res://Music/Battle_AI/Battle_Computoser.mp3"
+dest_files=[ "res://.import/Battle_Computoser.mp3-26c73d300af11290ab722d8b330fbefd.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

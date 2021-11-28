@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://Systems/SettingsManager/CntPanels.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.cs" type="Script" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://Systems/SettingsManager/Graphics/PnlGraphics.cs" type="Script" id=6]
 [ext_resource path="res://Systems/SettingsManager/Audio/Laser3.wav" type="AudioStream" id=7]
 [ext_resource path="res://Interface/Themes/35.tres" type="Theme" id=8]
-[ext_resource path="res://Interface/Fonts/Bangers32.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://Interface/Fonts/oldenburgbutton.tres" type="DynamicFont" id=11]
 [ext_resource path="res://Interface/Buttons/BtnBase/SettingsTitle.tres" type="DynamicFont" id=12]
@@ -22,15 +21,15 @@
 [ext_resource path="res://Interface/Themes/BTNMainMenuNormal.tres" type="StyleBox" id=20]
 [ext_resource path="res://Interface/Buttons/BtnBase/YellowButton.tres" type="StyleBox" id=21]
 
-[sub_resource type="DynamicFont" id=28]
+[sub_resource type="DynamicFont" id=1]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxFlat" id=30]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=29]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -40,12 +39,12 @@ border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 corner_radius_top_left = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="DynamicFont" id=34]
+[sub_resource type="DynamicFont" id=4]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxFlat" id=23]
+[sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.0313726, 0.0196078, 0, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -53,20 +52,20 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=36]
+[sub_resource type="DynamicFont" id=6]
 size = 25
 font_data = ExtResource( 10 )
 
-[sub_resource type="Theme" id=17]
-default_font = SubResource( 36 )
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 28 )
-Button/styles/disabled = SubResource( 30 )
-Button/styles/focus = SubResource( 29 )
+Button/fonts/font = SubResource( 1 )
+Button/styles/disabled = SubResource( 2 )
+Button/styles/focus = SubResource( 3 )
 Button/styles/hover = ExtResource( 19 )
 Button/styles/normal = ExtResource( 20 )
 Button/styles/pressed = ExtResource( 19 )
@@ -77,48 +76,48 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 34 )
+Label/fonts/font = SubResource( 4 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 23 )
+Panel/styles/panel = SubResource( 5 )
 
-[sub_resource type="StyleBoxFlat" id=31]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
 
-[sub_resource type="DynamicFontData" id=24]
+[sub_resource type="DynamicFontData" id=9]
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=25]
+[sub_resource type="DynamicFont" id=10]
 size = 50
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 4
-font_data = SubResource( 24 )
+font_data = SubResource( 9 )
 
-[sub_resource type="DynamicFont" id=18]
+[sub_resource type="DynamicFont" id=11]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=19]
+[sub_resource type="DynamicFont" id=12]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=13]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=14]
 size = 25
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxFlat" id=37]
+[sub_resource type="StyleBoxFlat" id=15]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
@@ -129,7 +128,7 @@ expand_margin_right = 10.0
 expand_margin_top = 2.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="Theme" id=38]
+[sub_resource type="Theme" id=16]
 CheckBox/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 CheckBox/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 CheckBox/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -146,7 +145,7 @@ CheckBox/styles/disabled = null
 CheckBox/styles/focus = null
 CheckBox/styles/hover = null
 CheckBox/styles/hover_pressed = null
-CheckBox/styles/normal = SubResource( 37 )
+CheckBox/styles/normal = SubResource( 15 )
 CheckBox/styles/pressed = null
 CheckButton/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 CheckButton/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
@@ -167,16 +166,16 @@ CheckButton/styles/hover_pressed = null
 CheckButton/styles/normal = null
 CheckButton/styles/pressed = null
 
-[sub_resource type="DynamicFont" id=22]
+[sub_resource type="DynamicFont" id=17]
 size = 30
 outline_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxEmpty" id=55]
+[sub_resource type="StyleBoxEmpty" id=18]
 
-[sub_resource type="StyleBoxEmpty" id=56]
+[sub_resource type="StyleBoxEmpty" id=19]
 
-[sub_resource type="StyleBoxFlat" id=35]
+[sub_resource type="StyleBoxFlat" id=20]
 bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -184,16 +183,16 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="Theme" id=57]
-default_font = SubResource( 36 )
+[sub_resource type="Theme" id=21]
+default_font = SubResource( 6 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 28 )
-Button/styles/disabled = SubResource( 55 )
-Button/styles/focus = SubResource( 56 )
+Button/fonts/font = SubResource( 1 )
+Button/styles/disabled = SubResource( 18 )
+Button/styles/focus = SubResource( 19 )
 Button/styles/hover = ExtResource( 19 )
 Button/styles/normal = ExtResource( 20 )
 Button/styles/pressed = ExtResource( 19 )
@@ -204,30 +203,30 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 34 )
+Label/fonts/font = SubResource( 4 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 35 )
+Panel/styles/panel = SubResource( 20 )
 
-[sub_resource type="DynamicFontData" id=58]
+[sub_resource type="DynamicFontData" id=22]
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=59]
+[sub_resource type="DynamicFont" id=23]
 size = 30
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-font_data = SubResource( 58 )
+font_data = SubResource( 22 )
 
-[sub_resource type="DynamicFont" id=60]
+[sub_resource type="DynamicFont" id=24]
 size = 36
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-font_data = SubResource( 58 )
+font_data = SubResource( 22 )
 
-[sub_resource type="StyleBoxFlat" id=61]
+[sub_resource type="StyleBoxFlat" id=25]
 bg_color = Color( 0.447059, 0.470588, 0.145098, 1 )
 
-[sub_resource type="DynamicFont" id=62]
+[sub_resource type="DynamicFont" id=26]
 
-[sub_resource type="Theme" id=63]
-default_font = SubResource( 62 )
+[sub_resource type="Theme" id=27]
+default_font = SubResource( 26 )
 Button/colors/font_color = Color( 0.88, 0.88, 0.88, 1 )
 Button/colors/font_color_disabled = Color( 0.9, 0.9, 0.9, 0.2 )
 Button/colors/font_color_hover = Color( 0.94, 0.94, 0.94, 1 )
@@ -237,26 +236,26 @@ Button/fonts/font = null
 Button/styles/disabled = null
 Button/styles/focus = null
 Button/styles/hover = null
-Button/styles/normal = SubResource( 61 )
+Button/styles/normal = SubResource( 25 )
 Button/styles/pressed = null
 
-[sub_resource type="StyleBoxFlat" id=39]
+[sub_resource type="StyleBoxFlat" id=28]
 bg_color = Color( 0.117647, 0.121569, 0.0392157, 1 )
 
-[sub_resource type="DynamicFont" id=40]
+[sub_resource type="DynamicFont" id=29]
 size = 35
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=64]
+[sub_resource type="DynamicFont" id=30]
 size = 35
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxFlat" id=65]
+[sub_resource type="StyleBoxFlat" id=31]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -266,18 +265,18 @@ border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 corner_radius_top_left = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="DynamicFont" id=33]
+[sub_resource type="DynamicFont" id=32]
 size = 30
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=46]
+[sub_resource type="DynamicFont" id=33]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxEmpty" id=47]
+[sub_resource type="StyleBoxEmpty" id=34]
 
-[sub_resource type="StyleBoxFlat" id=48]
+[sub_resource type="StyleBoxFlat" id=35]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -289,7 +288,7 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id=49]
+[sub_resource type="StyleBoxFlat" id=36]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -301,7 +300,7 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id=50]
+[sub_resource type="StyleBoxFlat" id=37]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -313,12 +312,12 @@ corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
-[sub_resource type="DynamicFont" id=51]
+[sub_resource type="DynamicFont" id=38]
 size = 25
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 10 )
 
-[sub_resource type="StyleBoxFlat" id=52]
+[sub_resource type="StyleBoxFlat" id=39]
 bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -326,23 +325,23 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=53]
+[sub_resource type="DynamicFont" id=40]
 size = 25
 font_data = ExtResource( 10 )
 
-[sub_resource type="Theme" id=54]
-default_font = SubResource( 53 )
+[sub_resource type="Theme" id=41]
+default_font = SubResource( 40 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 46 )
-Button/styles/disabled = SubResource( 47 )
-Button/styles/focus = SubResource( 56 )
-Button/styles/hover = SubResource( 48 )
-Button/styles/normal = SubResource( 49 )
-Button/styles/pressed = SubResource( 50 )
+Button/fonts/font = SubResource( 33 )
+Button/styles/disabled = SubResource( 34 )
+Button/styles/focus = SubResource( 19 )
+Button/styles/hover = SubResource( 35 )
+Button/styles/normal = SubResource( 36 )
+Button/styles/pressed = SubResource( 37 )
 Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -350,22 +349,24 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 51 )
+Label/fonts/font = SubResource( 38 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 52 )
+Panel/styles/panel = SubResource( 39 )
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=42]
 size = 30
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 4
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=16]
-size = 25
-outline_size = 5
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 10 )
+[sub_resource type="StyleBoxFlat" id=43]
+bg_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
 [node name="PnlSettings" type="Panel"]
 anchor_left = 0.5
@@ -376,8 +377,8 @@ margin_left = -837.0
 margin_top = -497.0
 margin_right = 906.0
 margin_bottom = 401.0
-theme = SubResource( 17 )
-custom_styles/panel = SubResource( 31 )
+theme = SubResource( 7 )
+custom_styles/panel = SubResource( 8 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -391,7 +392,7 @@ margin_left = -794.538
 margin_top = 4.0
 margin_right = 741.462
 margin_bottom = 65.816
-custom_fonts/font = SubResource( 25 )
+custom_fonts/font = SubResource( 10 )
 custom_colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 text = "SETTINGS"
 align = 1
@@ -461,7 +462,7 @@ margin_left = -154.0
 margin_top = 21.1748
 margin_right = -31.0
 margin_bottom = 53.1748
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 11 )
 text = "Voice"
 valign = 1
 __meta__ = {
@@ -475,7 +476,7 @@ margin_left = -8.49487
 margin_top = 5.10398
 margin_right = 24.5051
 margin_bottom = 33.104
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 11 )
 text = "0"
 align = 1
 valign = 1
@@ -492,7 +493,7 @@ margin_left = -16.5
 margin_top = 5.10398
 margin_right = 16.5
 margin_bottom = 33.104
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 11 )
 text = "50"
 align = 1
 valign = 1
@@ -508,7 +509,7 @@ anchor_bottom = 0.5
 margin_left = -33.0
 margin_top = 5.10398
 margin_bottom = 33.104
-custom_fonts/font = SubResource( 18 )
+custom_fonts/font = SubResource( 11 )
 text = "100"
 align = 1
 valign = 1
@@ -537,7 +538,7 @@ margin_left = -151.269
 margin_top = 20.9937
 margin_right = -8.26929
 margin_bottom = 52.9937
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 12 )
 text = "Effects"
 valign = 1
 __meta__ = {
@@ -551,7 +552,7 @@ margin_left = -8.49487
 margin_top = 5.10423
 margin_right = 24.5051
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 12 )
 text = "0"
 align = 1
 valign = 1
@@ -568,7 +569,7 @@ margin_left = -16.5
 margin_top = 5.10423
 margin_right = 16.5
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 12 )
 text = "50"
 align = 1
 valign = 1
@@ -584,7 +585,7 @@ anchor_bottom = 0.5
 margin_left = -33.0
 margin_top = 5.10423
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 12 )
 text = "100"
 align = 1
 valign = 1
@@ -613,7 +614,7 @@ margin_left = -151.269
 margin_top = 20.9937
 margin_right = -31.2697
 margin_bottom = 52.9937
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 13 )
 text = "Music"
 valign = 1
 __meta__ = {
@@ -627,7 +628,7 @@ margin_left = -8.49487
 margin_top = 5.10423
 margin_right = 24.5051
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 13 )
 text = "0"
 align = 1
 valign = 1
@@ -644,7 +645,7 @@ margin_left = -16.5
 margin_top = 5.10423
 margin_right = 16.5
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 13 )
 text = "50"
 align = 1
 valign = 1
@@ -660,7 +661,7 @@ anchor_bottom = 0.5
 margin_left = -33.0
 margin_top = 5.10423
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 13 )
 text = "100"
 align = 1
 valign = 1
@@ -687,7 +688,7 @@ margin_left = -152.856
 margin_top = 19.4063
 margin_right = -13.8567
 margin_bottom = 51.4063
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 14 )
 text = "Master"
 valign = 1
 __meta__ = {
@@ -701,7 +702,7 @@ margin_left = -8.49487
 margin_top = 5.1042
 margin_right = 24.5051
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 14 )
 text = "0"
 align = 1
 valign = 1
@@ -718,7 +719,7 @@ margin_left = -16.5
 margin_top = 5.1042
 margin_right = 16.5
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 14 )
 text = "50"
 align = 1
 valign = 1
@@ -734,7 +735,7 @@ anchor_bottom = 0.5
 margin_left = -33.0
 margin_top = 5.1042
 margin_bottom = 33.1042
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 14 )
 text = "100"
 align = 1
 valign = 1
@@ -775,14 +776,14 @@ margin_left = -616.5
 margin_top = -287.5
 margin_right = -335.5
 margin_bottom = -192.5
-theme = SubResource( 38 )
+theme = SubResource( 16 )
 custom_styles/hover = ExtResource( 13 )
 custom_styles/pressed = ExtResource( 13 )
 custom_styles/focus = ExtResource( 13 )
 custom_styles/disabled = ExtResource( 13 )
 custom_styles/hover_pressed = ExtResource( 13 )
 custom_styles/normal = ExtResource( 13 )
-custom_fonts/font = SubResource( 22 )
+custom_fonts/font = SubResource( 17 )
 custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0.0313726, 0.0196078, 0, 1 )
@@ -798,7 +799,7 @@ margin_left = 30.0
 margin_top = -30.0
 margin_right = 1565.0
 margin_bottom = 725.0
-theme = SubResource( 57 )
+theme = SubResource( 21 )
 script = ExtResource( 15 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -826,7 +827,7 @@ margin_top = 111.0
 margin_right = 1469.0
 margin_bottom = 283.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 59 )
+custom_fonts/font = SubResource( 23 )
 text = "At medium difficulty, enemies put up a fight, but can be readily defeated with the right strategy."
 autowrap = true
 __meta__ = {
@@ -847,7 +848,7 @@ margin_top = 13.0
 margin_right = 209.0
 margin_bottom = 59.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 60 )
+custom_fonts/font = SubResource( 24 )
 text = "Difficulty"
 
 [node name="BtnDifficulty" type="OptionButton" parent="CntPanels/PnlGame/HBoxContainer"]
@@ -901,8 +902,8 @@ margin_left = 339.0
 margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Potion"
 
@@ -928,8 +929,8 @@ margin_left = 342.0
 margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle End Turn"
 
@@ -954,8 +955,8 @@ margin_left = 337.0
 margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 1"
 
@@ -981,8 +982,8 @@ margin_left = 347.0
 margin_right = 496.0
 margin_bottom = 83.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 2"
 
@@ -1007,8 +1008,8 @@ margin_left = 347.0
 margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 3"
 
@@ -1034,8 +1035,8 @@ margin_left = 347.0
 margin_right = 496.0
 margin_bottom = 82.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 4"
 
@@ -1061,8 +1062,8 @@ margin_left = 347.0
 margin_right = 496.0
 margin_bottom = 83.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Anim Speed 5"
 
@@ -1096,8 +1097,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Party 1"
 
@@ -1123,8 +1124,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Party 2"
 
@@ -1150,8 +1151,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Party 3"
 
@@ -1177,8 +1178,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Pause"
 
@@ -1204,8 +1205,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Move"
 
@@ -1231,8 +1232,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Melee"
 
@@ -1258,8 +1259,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 71.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Spell 1"
 
@@ -1285,8 +1286,8 @@ margin_left = 314.0
 margin_right = 535.0
 margin_bottom = 72.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Battle Spell 2"
 
@@ -1322,8 +1323,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Up"
 
@@ -1349,8 +1350,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Down"
 
@@ -1376,8 +1377,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Left"
 
@@ -1403,8 +1404,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Move Right"
 
@@ -1430,8 +1431,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Interact"
 
@@ -1457,8 +1458,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Map"
 
@@ -1484,8 +1485,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Journal"
 
@@ -1511,8 +1512,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 63.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Inventory"
 
@@ -1538,8 +1539,8 @@ margin_left = 242.0
 margin_right = 409.0
 margin_bottom = 64.0
 size_flags_stretch_ratio = 0.75
-theme = SubResource( 63 )
-custom_styles/normal = SubResource( 39 )
+theme = SubResource( 27 )
+custom_styles/normal = SubResource( 28 )
 custom_fonts/font = ExtResource( 11 )
 Action = "Event Log"
 
@@ -1549,7 +1550,7 @@ anchor_right = 0.5
 margin_left = -359.0
 margin_right = 359.0
 margin_bottom = 63.0
-custom_fonts/font = SubResource( 40 )
+custom_fonts/font = SubResource( 29 )
 text = "Controls"
 align = 1
 valign = 1
@@ -1566,7 +1567,7 @@ margin_left = -731.5
 margin_top = -66.0
 margin_right = 742.5
 margin_bottom = -21.0
-custom_fonts/font = SubResource( 64 )
+custom_fonts/font = SubResource( 30 )
 text = "test"
 align = 1
 valign = 1
@@ -1590,8 +1591,8 @@ margin_right = 185.0
 margin_bottom = 64.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/disabled = SubResource( 65 )
-custom_fonts/font = SubResource( 33 )
+custom_styles/disabled = SubResource( 31 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Game"
 
@@ -1602,8 +1603,8 @@ margin_bottom = 127.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/disabled = SubResource( 65 )
-custom_fonts/font = SubResource( 33 )
+custom_styles/disabled = SubResource( 31 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Controls"
 
@@ -1614,8 +1615,8 @@ margin_bottom = 190.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/disabled = SubResource( 65 )
-custom_fonts/font = SubResource( 33 )
+custom_styles/disabled = SubResource( 31 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Audio"
 
@@ -1627,8 +1628,8 @@ focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/pressed = ExtResource( 21 )
-custom_styles/disabled = SubResource( 65 )
-custom_fonts/font = SubResource( 33 )
+custom_styles/disabled = SubResource( 31 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color_disabled = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 text = "Graphics"
 
@@ -1637,8 +1638,8 @@ margin_left = 1457.16
 margin_top = 836.41
 margin_right = 1600.16
 margin_bottom = 894.41
-theme = SubResource( 54 )
-custom_fonts/font = SubResource( 15 )
+theme = SubResource( 41 )
+custom_fonts/font = SubResource( 42 )
 text = "Close"
 
 [node name="BtnApply" parent="." instance=ExtResource( 14 )]
@@ -1646,12 +1647,11 @@ margin_left = 1597.16
 margin_top = 836.41
 margin_right = 1732.16
 margin_bottom = 894.41
-theme = SubResource( 54 )
-custom_fonts/font = SubResource( 15 )
+theme = SubResource( 41 )
+custom_fonts/font = SubResource( 42 )
 text = "Apply"
 
 [node name="PnlConfirmExit" type="Panel" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1681,8 +1681,8 @@ anchor_bottom = 1.0
 margin_left = -260.0
 margin_top = -54.0
 margin_right = -15.0
-margin_bottom = -15.0
-custom_fonts/font = ExtResource( 9 )
+margin_bottom = -9.0
+custom_styles/normal = SubResource( 43 )
 text = "Close"
 
 [node name="BtnCancel" parent="PnlConfirmExit" instance=ExtResource( 14 )]
@@ -1691,8 +1691,8 @@ anchor_bottom = 1.0
 margin_left = 16.0
 margin_top = -54.0
 margin_right = 261.0
-margin_bottom = -8.0
-custom_fonts/font = SubResource( 16 )
+margin_bottom = -9.0
+custom_styles/normal = SubResource( 43 )
 text = "Cancel"
 
 [connection signal="item_selected" from="CntPanels/PnlGame/HBoxContainer/BtnDifficulty" to="CntPanels/PnlGame" method="OnBtnDifficultyItemSelected"]

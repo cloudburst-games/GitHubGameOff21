@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Menu2_Computoser.mp3-00cc9a3f5bed930f8a252e67cda032d2.mp3str"
+
+[deps]
+
+source_file="res://Music/Menu_AI/Menu2_Computoser.mp3"
+dest_files=[ "res://.import/Menu2_Computoser.mp3-00cc9a3f5bed930f8a252e67cda032d2.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

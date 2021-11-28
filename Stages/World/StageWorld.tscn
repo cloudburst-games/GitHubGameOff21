@@ -522,6 +522,7 @@ margin_bottom = -467.0
 text = "Level name"
 align = 1
 valign = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -894,12 +895,6 @@ margin_top = 540.0
 visible = false
 
 [node name="PnlShopScreen" parent="HUD/CtrlTheme" instance=ExtResource( 21 )]
-
-[node name="Sell" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="1"]
-margin_left = 1.0
-margin_top = 44.0
-margin_right = -1.0
-margin_bottom = -1.0
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false

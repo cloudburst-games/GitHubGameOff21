@@ -42,8 +42,8 @@ public class Journal : MarginContainer
         this.Visible = false;
         JournalButton = GetNode<Button>("Panel/MarginContainer/VBoxContainer/HBoxContainer/JournalButton");
         QuestButton = GetNode<Button>("Panel/MarginContainer/VBoxContainer/HBoxContainer/QuestButton");
-        JournalButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
-        QuestButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
+       // JournalButton.AddColorOverride("font_color", new Color(0.99f, 0.96f, 0.9f, 1f));
+       // QuestButton.AddColorOverride("font_color", new Color(0.96f, 0.64f, 0.38f, 1 ));
         JournalLabel = GetNode<Label>("Panel/MarginContainer/VBoxContainer/Journal/ScrollContainer/JournalContainer/MarginContainer/Label");
         /* DialogueControl.JournalList.Add("xxxxxxxxxxxxxxxxxxxxxx");
         DialogueControl.JournalList.Add("YYYYYYYYYYYYYYYYYYYYY"); */
