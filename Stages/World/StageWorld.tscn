@@ -217,21 +217,21 @@ font_data = ExtResource( 11 )
 size = 25
 font_data = ExtResource( 11 )
 
-[sub_resource type="StyleBoxEmpty" id=32]
-
-[sub_resource type="StyleBoxEmpty" id=33]
-
-[sub_resource type="StyleBoxEmpty" id=34]
-
-[sub_resource type="StyleBoxEmpty" id=35]
-
 [sub_resource type="StyleBoxEmpty" id=19]
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="StyleBoxEmpty" id=22]
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="DynamicFont" id=24]
 size = 30
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=21]
+[sub_resource type="Animation" id=25]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_position")
@@ -258,7 +258,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1.26, 1.26, 1.26, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=22]
+[sub_resource type="Animation" id=26]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -285,7 +285,7 @@ tracks/1/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=23]
+[sub_resource type="Animation" id=27]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
@@ -312,7 +312,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=28]
 length = 10.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -363,24 +363,24 @@ tracks/3/keys = {
 "values": [ 0.0, 0.0, 1.0 ]
 }
 
-[sub_resource type="DynamicFontData" id=30]
+[sub_resource type="DynamicFontData" id=29]
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=31]
+[sub_resource type="DynamicFont" id=30]
 size = 25
-font_data = SubResource( 30 )
+font_data = SubResource( 29 )
 
-[sub_resource type="DynamicFont" id=29]
+[sub_resource type="DynamicFont" id=31]
 size = 30
 font_data = ExtResource( 11 )
 
-[sub_resource type="DynamicFont" id=25]
+[sub_resource type="DynamicFont" id=32]
 size = 20
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 11 )
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=33]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -396,7 +396,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=34]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -423,7 +423,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 
-[sub_resource type="Animation" id=28]
+[sub_resource type="Animation" id=35]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:visible")
@@ -522,6 +522,7 @@ margin_bottom = -467.0
 text = "Level name"
 align = 1
 valign = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -752,12 +753,12 @@ margin_left = -960.0
 margin_top = 443.0
 margin_right = -573.0
 margin_bottom = 483.0
-custom_styles/hover = SubResource( 32 )
-custom_styles/pressed = SubResource( 33 )
-custom_styles/focus = SubResource( 34 )
-custom_styles/disabled = SubResource( 35 )
-custom_styles/normal = SubResource( 19 )
-custom_fonts/font = SubResource( 20 )
+custom_styles/hover = SubResource( 19 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 21 )
+custom_styles/disabled = SubResource( 22 )
+custom_styles/normal = SubResource( 23 )
+custom_fonts/font = SubResource( 24 )
 custom_colors/font_color = Color( 0.117647, 0.0666667, 0.00784314, 1 )
 custom_colors/font_color_hover = Color( 0.94902, 0.67451, 0.341176, 1 )
 text = "Unspent Attribute Points"
@@ -767,11 +768,11 @@ __meta__ = {
 
 [node name="AnimDefault" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
 autoplay = "default"
-anims/default = SubResource( 21 )
+anims/default = SubResource( 25 )
 
 [node name="AnimAppear" type="AnimationPlayer" parent="HUD/CtrlTheme/CntBtnUnspentPoints/BtnUnspentPoints"]
-anims/FadeIn = SubResource( 22 )
-anims/FadeOut = SubResource( 23 )
+anims/FadeIn = SubResource( 26 )
+anims/FadeOut = SubResource( 27 )
 
 [node name="PauseRect" type="ColorRect" parent="HUD/CtrlTheme"]
 visible = false
@@ -869,7 +870,7 @@ margin_bottom = -10.7029
 text = "Exit To Main Menu"
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/PnlVictory"]
-anims/Start = SubResource( 24 )
+anims/Start = SubResource( 28 )
 
 [node name="NPCInfoPanel" parent="HUD/CtrlTheme" instance=ExtResource( 8 )]
 visible = false
@@ -894,12 +895,6 @@ margin_top = 540.0
 visible = false
 
 [node name="PnlShopScreen" parent="HUD/CtrlTheme" instance=ExtResource( 21 )]
-
-[node name="Sell" parent="HUD/CtrlTheme/PnlShopScreen/TabContainer" index="1"]
-margin_left = 1.0
-margin_top = 44.0
-margin_right = -1.0
-margin_bottom = -1.0
 
 [node name="PnlMenu" type="Panel" parent="HUD/CtrlTheme"]
 visible = false
@@ -933,7 +928,7 @@ margin_right = 284.0
 margin_bottom = 62.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 30 )
 text = "Resume"
 
 [node name="BtnSave" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -942,7 +937,7 @@ margin_right = 284.0
 margin_bottom = 129.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 30 )
 text = "Save"
 
 [node name="BtnLoad" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -951,7 +946,7 @@ margin_right = 284.0
 margin_bottom = 196.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 30 )
 text = "Load"
 
 [node name="BtnSettings" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -960,7 +955,7 @@ margin_right = 284.0
 margin_bottom = 263.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 30 )
 text = "Settings"
 
 [node name="BtnExit" type="Button" parent="HUD/CtrlTheme/PnlMenu/VBoxBtns"]
@@ -969,7 +964,7 @@ margin_right = 284.0
 margin_bottom = 330.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 30 )
 text = "Main Menu"
 
 [node name="PnlDefeat" type="Panel" parent="HUD/CtrlTheme"]
@@ -1031,7 +1026,7 @@ margin_right = 301.0
 margin_bottom = 162.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 29 )
+custom_fonts/font = SubResource( 31 )
 text = "Load"
 
 [node name="BtnSettings" type="Button" parent="HUD/CtrlTheme/PnlDefeat/VBoxBtns"]
@@ -1049,7 +1044,7 @@ margin_right = 301.0
 margin_bottom = 329.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 29 )
+custom_fonts/font = SubResource( 31 )
 text = "Main Menu"
 
 [node name="PnlBattleVictory" type="Panel" parent="HUD/CtrlTheme"]
@@ -1152,7 +1147,7 @@ margin_left = -477.0
 margin_top = -256.5
 margin_right = 478.0
 margin_bottom = 297.5
-custom_fonts/normal_font = SubResource( 25 )
+custom_fonts/normal_font = SubResource( 32 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1218,7 +1213,7 @@ __meta__ = {
 }
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/ProgressAnim"]
-anims/Load = SubResource( 26 )
+anims/Load = SubResource( 33 )
 
 [node name="LblProgress" type="Label" parent="HUD/CtrlTheme/ProgressAnim"]
 margin_left = -21.3816
@@ -1251,8 +1246,8 @@ __meta__ = {
 
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/LblLog"]
 autoplay = "default"
-anims/LogEntry = SubResource( 27 )
-anims/default = SubResource( 28 )
+anims/LogEntry = SubResource( 34 )
+anims/default = SubResource( 35 )
 
 [node name="CursorControl" parent="HUD" instance=ExtResource( 12 )]
 
