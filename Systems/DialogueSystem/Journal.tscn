@@ -16,7 +16,7 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id=13]
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.223529, 0.129412, 0.0156863, 1 )
 
 [sub_resource type="StyleBoxEmpty" id=3]
@@ -27,11 +27,18 @@ bg_color = Color( 0.223529, 0.129412, 0.0156863, 1 )
 
 [sub_resource type="StyleBoxEmpty" id=6]
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=7]
 size = 30
 font_data = ExtResource( 3 )
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 corner_radius_top_left = 7
 corner_radius_top_right = 7
@@ -39,13 +46,6 @@ corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
-corner_radius_top_left = 7
-corner_radius_top_right = 7
-corner_radius_bottom_right = 7
-corner_radius_bottom_left = 7
-
-[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.0745098, 0.0431373, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -57,7 +57,7 @@ corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 
-[sub_resource type="Theme" id=9]
+[sub_resource type="Theme" id=11]
 
 [node name="Journal" type="MarginContainer"]
 anchor_left = 0.5
@@ -113,12 +113,12 @@ margin_right = 1575.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/hover = SubResource( 13 )
+custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 3 )
 custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color_disabled = Color( 0.94902, 0.67451, 0.341176, 1 )
 custom_colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 custom_colors/font_color_hover = Color( 0.94902, 0.67451, 0.341176, 1 )
@@ -142,9 +142,9 @@ margin_right = 1680.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_vertical = 3
-custom_styles/hover = SubResource( 11 )
-custom_styles/pressed = SubResource( 10 )
-custom_colors/font_color_hover = Color( 0.94902, 0.67451, 0.341176, 1 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.223529, 0.129412, 0.0156863, 1 )
 text = "x"
 expand_icon = true
@@ -155,7 +155,7 @@ margin_right = 1680.0
 margin_bottom = 890.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 8 )
+custom_styles/panel = SubResource( 10 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/Journal"]
 anchor_right = 1.0
@@ -173,7 +173,7 @@ margin_right = 1680.0
 margin_bottom = 840.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = SubResource( 9 )
+theme = SubResource( 11 )
 custom_constants/separation = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -201,7 +201,7 @@ margin_right = 1680.0
 margin_bottom = 890.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 8 )
+custom_styles/panel = SubResource( 10 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/Quests"]
 anchor_right = 1.0

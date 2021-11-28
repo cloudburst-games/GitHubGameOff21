@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Interface/Themes/Test.tres" type="StyleBox" id=1]
 [ext_resource path="res://Interface/PartyManagement/coin_placeholder.png" type="Texture" id=2]
@@ -6,18 +6,18 @@
 [ext_resource path="res://Effects/SpellEffects/Art/WhiteSphericalParticle.png" type="Texture" id=4]
 [ext_resource path="res://Interface/PartyManagement/HBoxPortraits.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Props/Buildings/Shop/PnlShopScreen.cs" type="Script" id=6]
-[ext_resource path="res://Interface/Fonts/Bangers-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Interface/Fonts/oldenburg25.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Interface/Themes/0TabFG.tres" type="StyleBox" id=9]
 
-[sub_resource type="DynamicFont" id=39]
+[sub_resource type="DynamicFont" id=1]
 size = 20
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 8 )
 
-[sub_resource type="StyleBoxEmpty" id=41]
+[sub_resource type="StyleBoxEmpty" id=2]
 
-[sub_resource type="StyleBoxFlat" id=42]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -25,7 +25,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=44]
+[sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -33,12 +33,12 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="DynamicFont" id=45]
+[sub_resource type="DynamicFont" id=5]
 size = 18
 outline_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 font_data = ExtResource( 8 )
 
-[sub_resource type="StyleBoxFlat" id=46]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.14902, 0.0862745, 0.0117647, 0.54902 )
 border_width_left = 2
 border_width_top = 2
@@ -46,7 +46,7 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=49]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -58,7 +58,7 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="StyleBoxFlat" id=48]
+[sub_resource type="StyleBoxFlat" id=8]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 5.0
@@ -68,23 +68,23 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[sub_resource type="DynamicFont" id=47]
+[sub_resource type="DynamicFont" id=9]
 size = 25
 font_data = ExtResource( 8 )
 
-[sub_resource type="Theme" id=50]
-default_font = SubResource( 47 )
+[sub_resource type="Theme" id=10]
+default_font = SubResource( 9 )
 Button/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Button/colors/font_color_disabled = Color( 0.498039, 0.47451, 0.47451, 1 )
 Button/colors/font_color_hover = Color( 0.988235, 0.92549, 0.85098, 1 )
 Button/colors/font_color_pressed = Color( 0.745098, 0.305882, 0.0509804, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 39 )
+Button/fonts/font = SubResource( 1 )
 Button/styles/disabled = ExtResource( 1 )
-Button/styles/focus = SubResource( 41 )
-Button/styles/hover = SubResource( 42 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
 Button/styles/normal = ExtResource( 1 )
-Button/styles/pressed = SubResource( 44 )
+Button/styles/pressed = SubResource( 4 )
 Label/colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 0 )
 Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
@@ -92,32 +92,24 @@ Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
-Label/fonts/font = SubResource( 45 )
+Label/fonts/font = SubResource( 5 )
 Label/styles/normal = null
-Panel/styles/panel = SubResource( 46 )
+Panel/styles/panel = SubResource( 6 )
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/increment = null
 VScrollBar/icons/increment_highlight = null
-VScrollBar/styles/grabber = SubResource( 49 )
+VScrollBar/styles/grabber = SubResource( 7 )
 VScrollBar/styles/grabber_highlight = null
 VScrollBar/styles/grabber_pressed = null
-VScrollBar/styles/scroll = SubResource( 48 )
+VScrollBar/styles/scroll = SubResource( 8 )
 VScrollBar/styles/scroll_focus = null
 
-[sub_resource type="DynamicFont" id=51]
+[sub_resource type="DynamicFont" id=11]
 size = 40
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=52]
-size = 32
-outline_size = 6
-outline_color = Color( 0, 0, 0, 1 )
-extra_spacing_char = 2
-extra_spacing_space = 5
-font_data = ExtResource( 7 )
-
-[sub_resource type="StyleBoxFlat" id=56]
+[sub_resource type="StyleBoxFlat" id=12]
 content_margin_left = 10.0
 content_margin_right = 10.0
 content_margin_top = 10.0
@@ -125,18 +117,17 @@ bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
-border_width_bottom = 1
 border_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 
-[sub_resource type="StyleBoxFlat" id=57]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.192157, 0.152941, 0.129412, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
+border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=54]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -144,7 +135,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxFlat" id=55]
+[sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0.0823529, 0.0470588, 0.00392157, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -152,7 +143,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 
-[sub_resource type="StyleBoxEmpty" id=53]
+[sub_resource type="StyleBoxEmpty" id=16]
 
 [node name="PnlShopScreen" type="Panel"]
 anchor_left = 0.5
@@ -163,7 +154,7 @@ margin_left = -751.0
 margin_top = -459.5
 margin_right = 751.0
 margin_bottom = 459.5
-theme = SubResource( 50 )
+theme = SubResource( 10 )
 script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -181,19 +172,22 @@ anchor_right = 0.5
 margin_left = -741.0
 margin_right = 745.0
 margin_bottom = 86.0
-custom_fonts/font = SubResource( 51 )
+custom_fonts/font = SubResource( 11 )
 text = "Shop Title"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="LblSeller" type="Label" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = 264.174
-margin_top = 121.089
-margin_right = 738.174
-margin_bottom = 207.089
-custom_fonts/font = SubResource( 52 )
+margin_left = -134.0
+margin_top = 233.0
+margin_right = 186.0
+margin_bottom = 279.0
+custom_fonts/font = ExtResource( 7 )
 text = "Khepri"
 valign = 1
 __meta__ = {
@@ -206,8 +200,10 @@ margin_top = 236.014
 margin_right = 1397.0
 margin_bottom = 802.014
 custom_styles/tab_fg = ExtResource( 9 )
-custom_styles/tab_bg = SubResource( 56 )
-custom_styles/panel = SubResource( 57 )
+custom_styles/tab_bg = SubResource( 12 )
+custom_styles/panel = SubResource( 13 )
+custom_colors/font_color_bg = Color( 0.546875, 0.316406, 0.0427246, 1 )
+custom_colors/font_color_fg = Color( 0.94902, 0.67451, 0.341176, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -216,10 +212,10 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
-margin_top = 44.0
+margin_top = 43.0
 margin_right = -1.0
 margin_bottom = -1.0
-custom_styles/bg = SubResource( 54 )
+custom_styles/bg = SubResource( 14 )
 
 [node name="PnlInventoryBuy" parent="TabContainer/Buy" instance=ExtResource( 3 )]
 margin_left = 1.0
@@ -231,8 +227,11 @@ margin_bottom = 1.0
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 1.0
 margin_top = 43.0
-custom_styles/bg = SubResource( 55 )
+margin_right = -1.0
+margin_bottom = -1.0
+custom_styles/bg = SubResource( 15 )
 
 [node name="PnlInventorySell" parent="TabContainer/Sell" instance=ExtResource( 3 )]
 margin_left = 1.0
@@ -298,7 +297,7 @@ margin_left = 615.0
 margin_top = 807.0
 margin_right = 1315.0
 margin_bottom = 913.0
-custom_styles/panel = SubResource( 53 )
+custom_styles/panel = SubResource( 16 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
