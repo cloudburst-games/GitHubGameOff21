@@ -5,9 +5,9 @@
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion3.PNG" type="Texture" id=6]
+[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion2.PNG" type="Texture" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion3.PNG" type="Texture" id=8]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion2.PNG" type="Texture" id=8]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=9]
 [ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion4.PNG" type="Texture" id=11]
@@ -38,8 +38,8 @@ script = ExtResource( 3 )
 position = Vector2( -144.135, 992.589 )
 ID = "Father"
 UnitName = "High Priest Setna"
-PortraitPath = ExtResource( 6 )
-PortraitPathSmall = ExtResource( 8 )
+PortraitPath = ExtResource( 8 )
+PortraitPathSmall = ExtResource( 6 )
 _body = ExtResource( 15 )
 _startDirection = 6
 _combatLevel = 2

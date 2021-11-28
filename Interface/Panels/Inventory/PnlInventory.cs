@@ -368,14 +368,14 @@ public class PnlInventory : Panel
 		for (int x = 0; x <= _grid.Count; x++)
 		{
 			// draw a line from each column downwards (i.e. to the max rows * cell height)
-			DrawLine(new Vector2(x*_cellSize.x, 0), new Vector2(x*_cellSize.x, _grid[0].Count*_cellSize.y), new Color(0,0,0,0.05f), _lineThickness, true);
+			DrawLine(new Vector2(x*_cellSize.x, 0), new Vector2(x*_cellSize.x, _grid[0].Count*_cellSize.y), new Color(0.2f,0.2f,0.2f,0.15f), _lineThickness, true);
 
 			
 		}// loop through each col (y)
 		for (int y = 0; y <= _grid[0].Count; y++)
 		{
 			// draw a line from each row to the right (i.e. to the max cols * cell width)
-			DrawLine(new Vector2(0, y*_cellSize.y), new Vector2(_grid.Count * _cellSize.x, y*_cellSize.y), new Color(0,0,0,0.05f), _lineThickness, true);
+			DrawLine(new Vector2(0, y*_cellSize.y), new Vector2(_grid.Count * _cellSize.x, y*_cellSize.y), new Color(0.2f,0.2f,0.2f,0.15f), _lineThickness, true);
 		}
 	}
 

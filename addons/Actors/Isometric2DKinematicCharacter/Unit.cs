@@ -260,7 +260,7 @@ public class Unit : KinematicBody2D
                 shaderMaterial.SetShaderParam("flash_depth", 0.4f);
                 _sprite.Material = shaderMaterial;
             }
-            if (HasNode("PnlInfo"))
+            if (HasNode("PnlInfo") && !CurrentUnitData.Hostile)
             {
                 GetNode<Panel>("PnlInfo").Visible = true;
             }

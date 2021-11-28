@@ -473,10 +473,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -386.0
-margin_top = -265.0
-margin_right = 386.0
-margin_bottom = 265.0
+margin_left = -453.0
+margin_top = -328.0
+margin_right = 453.0
+margin_bottom = 328.0
 theme = SubResource( 31 )
 custom_styles/panel = SubResource( 32 )
 __meta__ = {
@@ -488,14 +488,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -329.0
-margin_top = -220.936
-margin_right = 329.0
-margin_bottom = 15.0643
+margin_left = -432.0
+margin_top = -297.0
+margin_right = 432.0
+margin_bottom = 46.0
 custom_fonts/font = SubResource( 33 )
 custom_constants/line_spacing = 10
 text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Computoser, Audacity, Inkscape.
-
+Tent - CC0 1.0:
+https://opengameart.org/content/tent
+Trees - CC-BY 3.0:
+https://opengameart.org/content/tree-collection-bleeds-game-art
 Computoser tracks - CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/"
 align = 1
 autowrap = true
@@ -509,9 +512,9 @@ anchor_top = 0.552
 anchor_right = 0.5
 anchor_bottom = 0.552
 margin_left = -519.0
-margin_top = -3.63434
+margin_top = 48.3657
 margin_right = 519.0
-margin_bottom = 156.366
+margin_bottom = 208.366
 custom_fonts/font = SubResource( 33 )
 custom_constants/line_spacing = 10
 text = "On discord we are:
@@ -530,9 +533,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -192.0
-margin_top = 213.407
+margin_top = 265.407
 margin_right = 208.0
-margin_bottom = 258.407
+margin_bottom = 310.407
 custom_fonts/font = SubResource( 34 )
 text = "PLAY OUR GAMES!"
 __meta__ = {

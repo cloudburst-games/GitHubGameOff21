@@ -29,10 +29,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 3312, 552, 552, 552 ), Rect2( 0, 1104, 552, 552 ) ]
+"values": [ Rect2( 2760, 552, 552, 552 ), Rect2( 3312, 552, 552, 552 ), Rect2( 0, 1104, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -69,10 +69,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 0, 552, 552, 552 ), Rect2( 552, 552, 552, 552 ) ]
+"values": [ Rect2( 3312, 0, 552, 552 ), Rect2( 0, 552, 552, 552 ), Rect2( 552, 552, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -109,10 +109,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 2760, 1104, 552, 552 ), Rect2( 3312, 1104, 552, 552 ) ]
+"values": [ Rect2( 0, 1656, 552, 552 ), Rect2( 2760, 1104, 552, 552 ), Rect2( 3312, 1104, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -149,10 +149,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 552, 0, 552, 552 ), Rect2( 1104, 0, 552, 552 ) ]
+"values": [ Rect2( 0, 0, 552, 552 ), Rect2( 552, 0, 552, 552 ), Rect2( 1104, 0, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -189,10 +189,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Rect2( 2208, 1656, 552, 552 ), Rect2( 2760, 1656, 552, 552 ) ]
+"values": [ Rect2( 3312, 1656, 552, 552 ), Rect2( 2208, 1656, 552, 552 ), Rect2( 2760, 1656, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -231,7 +231,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Rect2( 2760, 552, 552, 552 ) ]
+"values": [ Rect2( 552, 1104, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -294,7 +294,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Rect2( 3312, 0, 552, 552 ) ]
+"values": [ Rect2( 1104, 552, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -420,7 +420,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Rect2( 0, 0, 552, 552 ) ]
+"values": [ Rect2( 1656, 0, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -599,7 +599,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Rect2( 3312, 0, 552, 552 ) ]
+"values": [ Rect2( 1104, 552, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -703,7 +703,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Rect2( 0, 0, 552, 552 ) ]
+"values": [ Rect2( 1656, 0, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -843,7 +843,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Rect2( 3312, 0, 552, 552 ) ]
+"values": [ Rect2( 1104, 552, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -907,7 +907,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Rect2( 0, 0, 552, 552 ) ]
+"values": [ Rect2( 1656, 0, 552, 552 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:scale")
@@ -1240,7 +1240,7 @@ scale = Vector2( 0.375, 0.375 )
 texture = ExtResource( 2 )
 offset = Vector2( 0, 80 )
 region_enabled = true
-region_rect = Rect2( 1656, 1656, 552, 552 )
+region_rect = Rect2( 1104, 552, 552, 552 )
 
 [node name="ActionAnim" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
