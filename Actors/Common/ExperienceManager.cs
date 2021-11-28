@@ -19,8 +19,8 @@ public class ExperienceManager
         {
             experienceValueOfDefeated*=1.1f;
         }
-        // divide by 2
-        return experienceValueOfDefeated/2f;
+        // divide by 1.5
+        return experienceValueOfDefeated/1.5f;
     }
 
     public float GetExperienceNeededForNextLevel(int currentLevel)
