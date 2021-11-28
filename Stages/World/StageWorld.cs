@@ -728,7 +728,8 @@ public class StageWorld : Stage
         };
         player.CurrentUnitData.Time = 50; // start at 5am
         player.CurrentUnitData.CurrentBattleUnitData.BattlePortraitPath = player.CurrentUnitData.PortraitPathSmall;
-        player.CurrentUnitData.CurrentBattleUnitData.BodyPath = "res://Actors/NPC/Bodies/NPCBody.tscn"; // todo - change this to PlayerBody when this is done
+        player.CurrentUnitData.BodyPath = "res://Actors/NPC/Bodies/PlayerBody.tscn"; // todo - change this to PlayerBody when this is done
+        player.CurrentUnitData.CurrentBattleUnitData.BodyPath = "res://Actors/NPC/Bodies/PlayerBody.tscn"; // todo - change this to PlayerBody when this is done
         // set starting attributes
         foreach (UnitData.Attribute att in player.CurrentUnitData.Attributes.Keys.ToList())
         {
@@ -819,6 +820,9 @@ public class StageWorld : Stage
 
         Unit player = CommonPlayerGen();
         player.CurrentUnitData = (UnitData) unpackedData["PlayerData"];
+        player.CurrentUnitData.BodyPath = "res://Actors/NPC/Bodies/PlayerBody.tscn"; // todo - change this to PlayerBody when this is done
+        player.CurrentUnitData.CurrentBattleUnitData.BodyPath = "res://Actors/NPC/Bodies/PlayerBody.tscn"; // todo - change this to PlayerBody when this is done
+        player.BodySwap();
         // when we save player data we will not make a new player rather load player data into this variable?
         GetNode<LevelManager>("LevelManager").InitialiseLevel(
             GetNode<LevelManager>("LevelManager").CurrentLevel,

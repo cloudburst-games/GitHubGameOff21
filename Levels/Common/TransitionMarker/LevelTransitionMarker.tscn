@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Map/Art/GHGO21MapSymbols/LevelTransition.PNG" type="Texture" id=2]
-[ext_resource path="res://Interface/Fonts/oldenburg16.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Interface/Fonts/Oldenburg/oldenburg16.tres" type="DynamicFont" id=3]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -40,7 +40,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -98, -90 ), Vector2( -98, -100 ), Vector2( -98, -90 ) ]
+"values": [ Vector2( -150, -90 ), Vector2( -150, -100 ), Vector2( -150, -90 ) ]
 }
 
 [sub_resource type="CircleShape2D" id=4]
@@ -68,10 +68,10 @@ __meta__ = {
 [node name="Label" type="Label" parent="Sprite"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -162.0
-margin_top = -93.3892
-margin_right = 28.0
-margin_bottom = -66.3894
+margin_left = -214.0
+margin_top = -90.0
+margin_right = 86.0
+margin_bottom = -63.0
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0.94902, 0.67451, 0.341176, 1 )
 text = "Test Transition to somewhere"

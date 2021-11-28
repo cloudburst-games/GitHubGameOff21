@@ -65,8 +65,13 @@ public class PlayerUnitControlState : UnitControlState
         {
             Unit.GetNode<CollisionShape2D>("Shape").Disabled = false;
             SetTargetAnimRotation(this.Unit.Position + this.Unit.CurrentVelocity);
-        
-            this.Unit.CurrentVelocity = new Vector2( left ? -1 : (right ? 1 : 0), up ? -1 : (down ? 1 : 0)).Normalized();
+
+            this.Unit.CurrentVelocity = new Vector2( left ? -1 : (right ? 1 : 0), up ? -1 : (down ? 1 : 0));
+            if (up && left || up && right || down && left || down && right)
+            {
+                this.Unit.CurrentVelocity = new Vector2(this.Unit.CurrentVelocity.x, this.Unit.CurrentVelocity.y/2f);
+            }
+            this.Unit.CurrentVelocity = this.Unit.CurrentVelocity.Normalized();
             this.Unit.CurrentVelocity *= this.Unit.Speed;
             this.Unit.AnimRotation = TargetAnimRotation;
         }

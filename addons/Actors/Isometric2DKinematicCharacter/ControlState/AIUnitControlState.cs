@@ -118,6 +118,7 @@ public class AIUnitControlState : UnitControlState
 	public override void Update(float delta)
 	{
 		base.Update(delta);
+
 		_currentAIBehaviourState.Update(delta);
 		if (CurrentPath.Count == 0)
 		{
@@ -143,7 +144,7 @@ public class AIUnitControlState : UnitControlState
 		{
 			if (CurrentPath.Count > 1)
 			{
-				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[1]) < 25*areaExtents)
+				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[1]) < 125*areaExtents)
 				{
 					CurrentPath.RemoveAt(0);//(this.Unit.Position.DistanceSquaredTo(CurrentPath[0]));
 				}
@@ -154,7 +155,7 @@ public class AIUnitControlState : UnitControlState
 			if (CurrentPath.Count == 1)
 			{
 					// GD.Print("is it this2?");
-				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[0]) < 25*areaExtents)
+				if (this.Unit.Position.DistanceSquaredTo(CurrentPath[0]) < 125*areaExtents)
 				{
 					// this.Unit.CurrentVelocity = new Vector2(0,0);
 					CurrentPath.RemoveAt(0);

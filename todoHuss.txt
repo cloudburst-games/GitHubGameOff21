@@ -1,11 +1,11 @@
 Minimum targets
 
-- pull all
-- integrate animations (multiple bodies...)
-- make portraits from bug anims and integrate
-- integrate music
-- team colours in battle - red and green
+- integrate animations (multiple bodies...) d
+- team colours in battle - red and green d
+- make portraits from bug anims and integrate d
+
 - give each enemy a unique spell
+- gained a level floating text is too small
 - test and tweak levels
 
 

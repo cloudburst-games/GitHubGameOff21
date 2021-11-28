@@ -27,29 +27,45 @@ public class BattleUnitActionState : Reference
         BattleUnit.EmitSignal(nameof(BattleUnit.CurrentActionCompleted));
         BattleUnit.SetActionState(BattleUnit.ActionStateMode.Idle);
     }
-    public void CalculateDirection(Vector2 worldPos)
+    public void CalculateDirection(Vector2 worldPos, bool move = false)
     {
         if (worldPos == BattleUnit.GlobalPosition)
         {
             return;
         }
-        // GD.Print(BattleUnit.GlobalPosition.AngleToPoint(worldPos));
-        if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 2.5f)
+        if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 3.1f)
+        {
+            BattleUnit.Direction = BattleUnit.DirectionFacingMode.Right;
+        }
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 2.6f)
         {
             BattleUnit.Direction = BattleUnit.DirectionFacingMode.UpRight;
         }
-        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 0.4f)
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 1.52f && !move)
+        {
+            BattleUnit.Direction = BattleUnit.DirectionFacingMode.Up;
+        }
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > 0.46f)
         {
             BattleUnit.Direction = BattleUnit.DirectionFacingMode.UpLeft;
         }
-        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > -0.54f)
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > -0.1f && !move)
+        {
+            BattleUnit.Direction = BattleUnit.DirectionFacingMode.Left;
+        }
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > -0.47f)
         {
             BattleUnit.Direction = BattleUnit.DirectionFacingMode.DownLeft;
         }
-        else// if (BattleUnit.GlobalPosition.AngleToPoint(BattleUnit.CurrentPath[0]) > -0.54f)
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > -1.6f && !move)
+        {
+            BattleUnit.Direction = BattleUnit.DirectionFacingMode.Down;
+        }
+        else if (BattleUnit.GlobalPosition.AngleToPoint(worldPos) > -2.7f)
         {
             BattleUnit.Direction = BattleUnit.DirectionFacingMode.DownRight;
         }
+        // GD.Print(BattleUnit.GlobalPosition.AngleToPoint(worldPos));
     }
 
     public BattleUnitActionState(BattleUnit battleUnit)
@@ -59,7 +75,6 @@ public class BattleUnitActionState : Reference
 
     public virtual void Update(float delta)
     {
-
     }
 
     // public void Start()

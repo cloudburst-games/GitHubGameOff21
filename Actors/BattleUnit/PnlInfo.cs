@@ -19,6 +19,6 @@ public class PnlInfo : Panel
 
     public void SetFaction(bool player)
     {
-        GetNode<Panel>("PnlFaction").SelfModulate = player ? new Color(1,1,1) : new Color(0.6f,0,0);
+        GetNode<Panel>("PnlFaction").SelfModulate = player ? new Color(0,0.6f,0) : new Color(0.6f,0,0);
     }
 }

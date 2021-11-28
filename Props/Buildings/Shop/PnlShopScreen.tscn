@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Interface/Themes/Test.tres" type="StyleBox" id=1]
 [ext_resource path="res://Interface/PartyManagement/coin_placeholder.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Interface/Fonts/oldenburg25.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Interface/Themes/0TabFG.tres" type="StyleBox" id=9]
+[ext_resource path="res://Interface/Fonts/Oldenburg/oldenburg16.tres" type="DynamicFont" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
@@ -290,7 +291,10 @@ margin_right = 587.0
 margin_bottom = 897.0
 texture = ExtResource( 4 )
 expand = true
-stretch_mode = 1
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PnlStatus" type="Panel" parent="."]
 margin_left = 615.0
@@ -337,6 +341,7 @@ margin_left = -34.0
 margin_top = 2.35678
 margin_right = -2.0
 margin_bottom = 20.2478
+custom_fonts/font = ExtResource( 10 )
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false

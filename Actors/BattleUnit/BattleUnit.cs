@@ -21,7 +21,7 @@ public class BattleUnit : Node2D
     public delegate void CurrentActionCompleted();
     public BattleUnitData CurrentBattleUnitData {get; set;}
 
-    public enum DirectionFacingMode {UpRight, DownRight, DownLeft, UpLeft} // { 45, 135, 225, 315 }
+    public enum DirectionFacingMode {UpRight, DownRight, DownLeft, UpLeft, Up, Left, Down, Right} // { 45, 135, 225, 315 }
     public DirectionFacingMode Direction {get; set;} = DirectionFacingMode.UpRight;
 
     public List<Vector2> CurrentPath {get; set;}
@@ -108,7 +108,21 @@ public class BattleUnit : Node2D
             EmitSignal(nameof(ReachedHalfwayAnimation));
             DetectingHalfway = false;
         }
+        
     }
+
+    // public override void _Input(InputEvent @event)
+    // {
+    //     base._Input(@event);
+    //     if (@event is InputEventMouseButton btn)
+    //     {
+    //         if (btn.ButtonIndex == (int) ButtonList.Right && btn.Pressed && !@event.IsEcho())
+    //         {
+    //             if (CurrentBattleUnitData.Name == "Khepri sun")
+    //             GD.Print(GlobalPosition.AngleToPoint(GetGlobalMousePosition()));
+    //         }
+    //     }
+    // }
 
     public void PlayActionAnim(string animState)//, bool replay=false)
     {
@@ -123,11 +137,11 @@ public class BattleUnit : Node2D
         {
             case DirectionFacingMode.UpRight:
                 anim += "UpRight";
-                _sprite.FlipH = false;
+                _sprite.FlipH = true;
                 break;
             case DirectionFacingMode.UpLeft:
                 anim += "UpRight";
-                _sprite.FlipH = true;
+                _sprite.FlipH = false;
                 break;
             case DirectionFacingMode.DownRight:
                 anim += "DownRight";
@@ -135,6 +149,22 @@ public class BattleUnit : Node2D
                 break;
             case DirectionFacingMode.DownLeft:
                 anim += "DownRight";
+                _sprite.FlipH = true;
+                break;
+            case DirectionFacingMode.Up:
+                anim += "Up";
+                _sprite.FlipH = false;
+                break;
+            case DirectionFacingMode.Down:
+                anim += "Down";
+                _sprite.FlipH = false;
+                break;
+            case DirectionFacingMode.Left:
+                anim += "Right";
+                _sprite.FlipH = false;
+                break;
+            case DirectionFacingMode.Right:
+                anim += "Right";
                 _sprite.FlipH = true;
                 break;
         }

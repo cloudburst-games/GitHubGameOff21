@@ -39,7 +39,7 @@ public class MovingBattleUnitActionState : BattleUnitActionState
     {
         if (BattleUnit.CurrentPath.Count > 0)
         {
-            CalculateDirection(BattleUnit.CurrentPath[0]);
+            CalculateDirection(BattleUnit.CurrentPath[0], true);
             _moveTween.InterpolateProperty(BattleUnit, "global_position", null, BattleUnit.CurrentPath[0], 1/BattleUnit.AnimSpeed, Tween.TransitionType.Linear);
             BattleUnit.CurrentPath.RemoveAt(0);
             _moveTween.SetActive(true);

@@ -1,0 +1,13 @@
+[remap]
+
+importer="ink"
+type="Resource"
+valid=false
+
+[deps]
+
+source_file="res://Actors/NPC/Bodies/beetlesv01_271121/sheets/beetle_green.json"
+[params]
+
+is_master_file=true
+compress=true

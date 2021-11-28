@@ -2,24 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-<<<<<<< HEAD
 path="res://.import/3330.PNG-f084db3c88eaf4f57c11e276b5e46264.stex"
-=======
-path="res://.import/villager_death_70001.png-92b7c975b843e0453e7c467aa6443ab3.stex"
->>>>>>> origin/art
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<< HEAD
 source_file="res://SOPHIA/Old/isotilev02/Output scaled/Snow/3330.PNG"
 dest_files=[ "res://.import/3330.PNG-f084db3c88eaf4f57c11e276b5e46264.stex" ]
-=======
-source_file="res://addons/Actors/Isometric2DKinematicCharacter/Art/Death/villager_death_70001.png"
-dest_files=[ "res://.import/villager_death_70001.png-92b7c975b843e0453e7c467aa6443ab3.stex" ]
->>>>>>> origin/art
 
 [params]
 

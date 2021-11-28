@@ -1,9 +1,9 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Stages/MainMenu/StageMainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Buttons/BtnBase/BtnBase.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Stages/MainMenu/BG.png" type="Texture" id=3]
-[ext_resource path="res://Stages/MainMenu/Music/UnderTheBridge_Menu.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Music/Menu_AI/Computoser_6.mp3" type="AudioStream" id=4]
 [ext_resource path="res://Interface/Fonts/oldenburgbutton.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Systems/SettingsManager/PnlSettings.tscn" type="PackedScene" id=7]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Interface/Cursors/CursorControl.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Systems/SaveSystem/FileDialogFixed.cs" type="Script" id=13]
 [ext_resource path="res://Interface/Themes/FileDialogTheme.tres" type="Theme" id=14]
+[ext_resource path="res://Music/Menu_AI/Menu2_Computoser.mp3" type="AudioStream" id=15]
 [ext_resource path="res://Interface/Themes/KhepriThemeMain.tres" type="Theme" id=16]
 [ext_resource path="res://Interface/Themes/50Old50.tres" type="DynamicFont" id=18]
 
@@ -308,6 +309,7 @@ extra_spacing_char = 9
 font_data = ExtResource( 9 )
 
 [sub_resource type="DynamicFont" id=35]
+size = 20
 outline_size = 5
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 9
@@ -420,7 +422,7 @@ __meta__ = {
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 336.0
-margin_bottom = 74.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 18 )
@@ -430,7 +432,7 @@ text = "LOAD"
 margin_left = 348.0
 margin_top = 0.0
 margin_right = 684.0
-margin_bottom = 74.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 18 )
@@ -440,7 +442,7 @@ text = "SETTINGS"
 margin_left = 696.0
 margin_top = 0.0
 margin_right = 1032.0
-margin_bottom = 74.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 18 )
@@ -450,7 +452,7 @@ text = "ABOUT"
 margin_left = 1044.0
 margin_top = 0.0
 margin_right = 1380.0
-margin_bottom = 74.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 18 )
@@ -472,9 +474,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -386.0
-margin_top = -212.0
+margin_top = -265.0
 margin_right = 386.0
-margin_bottom = 212.0
+margin_bottom = 265.0
 theme = SubResource( 31 )
 custom_styles/panel = SubResource( 32 )
 __meta__ = {
@@ -487,13 +489,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -329.0
-margin_top = -164.0
+margin_top = -220.936
 margin_right = 329.0
-margin_bottom = 17.0
+margin_bottom = 15.0643
 custom_fonts/font = SubResource( 33 )
 custom_constants/line_spacing = 10
-text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Bosca Ceoli, Strofe, Audacity, jfxr.
-"
+text = "Made for GitHub Gameoff 2021 Jam using Godot, Krita, GIMP, Computoser, Audacity, Inkscape.
+
+Computoser tracks - CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/"
 align = 1
 autowrap = true
 __meta__ = {
@@ -506,9 +509,9 @@ anchor_top = 0.552
 anchor_right = 0.5
 anchor_bottom = 0.552
 margin_left = -519.0
-margin_top = -80.048
+margin_top = -3.63434
 margin_right = 519.0
-margin_bottom = 79.952
+margin_bottom = 156.366
 custom_fonts/font = SubResource( 33 )
 custom_constants/line_spacing = 10
 text = "On discord we are:
@@ -527,9 +530,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -192.0
-margin_top = 131.0
+margin_top = 213.407
 margin_right = 208.0
-margin_bottom = 176.0
+margin_bottom = 258.407
 custom_fonts/font = SubResource( 34 )
 text = "PLAY OUR GAMES!"
 __meta__ = {
@@ -551,7 +554,6 @@ visible = false
 theme = ExtResource( 11 )
 
 [node name="FileDialog" type="FileDialog" parent="."]
-visible = true
 modulate = Color( 0.94902, 0.67451, 0.341176, 1 )
 anchor_left = 0.5
 anchor_top = 0.5
@@ -584,7 +586,7 @@ custom_fonts/font = ExtResource( 5 )
 [node name="AudioData" parent="." instance=ExtResource( 6 )]
 VolumeDb = -10.0
 StartPlaying = true
-Streams = [ ExtResource( 4 ) ]
+Streams = [ ExtResource( 4 ), ExtResource( 15 ) ]
 Bus = 2
 SoundType = 3
 

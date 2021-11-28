@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=10]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=11]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion2.PNG" type="Texture" id=12]
+[ext_resource path="res://Actors/NPC/Bodies/NPCBodyGreen.tscn" type="PackedScene" id=13]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 30.5911, 935.545, 5.19263, 1016.5, -155.135, 938.72, -96.401, 910.147, 25.8289, 899.035, 87.7375, 972.056, 29.0037, 873.637, -96.401, 879.986, 22.6541, 849.826, -96.401, 840.301, 89.3249, 778.393, 89.3249, 802.204, 70.2761, 822.84, -96.401, 799.029, -90.0514, 759.344, 16.3044, 743.47, 149.646, 595.842, 155.996, 654.575, 84.5627, 684.736, 32.1785, 700.61, -75.7648, 260.9, -24.968, 246.613, 46.4651, 249.788, -97.9884, 741.882, -290.064, 646.638, -282.127, 589.492, 343.309, 432.339, 349.659, 489.486, 275.051, 364.081, 165.52, 270.424, 206.793, 270.424, 275.051, 298.998, 148.059, 283.124, -121.799, 238.676, -350.385, 556.157, -350.385, 497.423, -183.708, 256.138, 340.134, 395.829, 117.898, 284.711, -396.42, 295.823, -331.336, 264.075, -259.903, 241.851, -415.469, 452.975, -412.294, 375.193, -420.231, 318.046 )
@@ -38,6 +39,7 @@ ID = "Ammit"
 UnitName = "Ammut"
 PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 12 )
+_body = ExtResource( 13 )
 _startDirection = 4
 _combatLevel = 8
 _minions = {

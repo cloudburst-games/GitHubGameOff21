@@ -359,7 +359,7 @@ public class Unit : KinematicBody2D
 
     private bool _bodySwapped = false;
 
-    private void BodySwap()
+    public void BodySwap()
     {
         if (_bodySwapped)
         {
@@ -403,7 +403,7 @@ public class Unit : KinematicBody2D
                 {
                     Vector2 clickPos = GetViewport().GetMousePosition();
                     Vector2 canvasPos = GetNode<Sprite>("Sprite").GetGlobalTransformWithCanvas().origin;
-                    Vector2 size = GetNode<Sprite>("Sprite").Texture.GetSize() * GetNode<Sprite>("Sprite").Scale;
+                    Vector2 size = GetNode<Sprite>("Sprite").RegionRect.Size * GetNode<Sprite>("Sprite").Scale;
                     Vector2 topLeft = canvasPos - size / 2f;
                     Rect2 area = new Rect2(topLeft, size);
                     if (area.HasPoint(clickPos))
@@ -515,7 +515,7 @@ public class Unit : KinematicBody2D
 		{
 			return;
 		}
-		_sprite.FlipH = (DirectionAnim == FacingDirection.Left || DirectionAnim == FacingDirection.DownLeft || DirectionAnim == FacingDirection.UpLeft);
+		_sprite.FlipH = (DirectionAnim == FacingDirection.Right || DirectionAnim == FacingDirection.DownLeft || DirectionAnim == FacingDirection.UpRight);
 		_actionAnim.Play(animation);
 	}
 

@@ -1,0 +1,765 @@
+{
+  "frames": [
+    {
+      "filename": "Beetlesv01_271121_01.png",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_02.png",
+      "frame": {
+        "x": 552,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_03.png",
+      "frame": {
+        "x": 1104,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_04.png",
+      "frame": {
+        "x": 1656,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_05.png",
+      "frame": {
+        "x": 2208,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_06.png",
+      "frame": {
+        "x": 2760,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_07.png",
+      "frame": {
+        "x": 3312,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_08.png",
+      "frame": {
+        "x": 0,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_09.png",
+      "frame": {
+        "x": 552,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_10.png",
+      "frame": {
+        "x": 1104,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_11.png",
+      "frame": {
+        "x": 1656,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_12.png",
+      "frame": {
+        "x": 2208,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_13.png",
+      "frame": {
+        "x": 2760,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_14.png",
+      "frame": {
+        "x": 3312,
+        "y": 552,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_15.png",
+      "frame": {
+        "x": 0,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_16.png",
+      "frame": {
+        "x": 552,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_17.png",
+      "frame": {
+        "x": 1104,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_18.png",
+      "frame": {
+        "x": 1656,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_19.png",
+      "frame": {
+        "x": 2208,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_20.png",
+      "frame": {
+        "x": 2760,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_21.png",
+      "frame": {
+        "x": 3312,
+        "y": 1104,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_22.png",
+      "frame": {
+        "x": 0,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_23.png",
+      "frame": {
+        "x": 552,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_24.png",
+      "frame": {
+        "x": 1104,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_25.png",
+      "frame": {
+        "x": 1656,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_26.png",
+      "frame": {
+        "x": 2208,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_27.png",
+      "frame": {
+        "x": 2760,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_28.png",
+      "frame": {
+        "x": 3312,
+        "y": 1656,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_29.png",
+      "frame": {
+        "x": 0,
+        "y": 2208,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "Beetlesv01_271121_30.png",
+      "frame": {
+        "x": 552,
+        "y": 2208,
+        "w": 552,
+        "h": 552
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 552,
+        "h": 552
+      },
+      "sourceSize": {
+        "w": 552,
+        "h": 552
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  ],
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "beetle_green.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 3864,
+      "h": 2760
+    },
+    "scale": 1
+  }
+}

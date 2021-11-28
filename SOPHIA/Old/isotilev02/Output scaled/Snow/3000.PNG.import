@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/3000.PNG-5821a3f0b8d47324af8fb34bf4810e6c.stex"
+path="res://.import/3000.PNG-f5daeac698bee09503131781f5305966.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Utils/LevelBuilder/isotilev02/Output scaled/Snow/3000.PNG"
-dest_files=[ "res://.import/3000.PNG-5821a3f0b8d47324af8fb34bf4810e6c.stex" ]
+source_file="res://SOPHIA/Old/isotilev02/Output scaled/Snow/3000.PNG"
+dest_files=[ "res://.import/3000.PNG-f5daeac698bee09503131781f5305966.stex" ]
 
 [params]
 
@@ -28,7 +28,6 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
-process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

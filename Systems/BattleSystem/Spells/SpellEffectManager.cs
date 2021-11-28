@@ -580,8 +580,9 @@ public class SpellEffectManager : Reference
         // SpellMissile(origin, target, unitsAtArea, targetWorldPos, SpellMode.PerilOfOsiris, SpellEffects[SpellMode.PerilOfOsiris][0], multiEffect:true);
         // await ToSignal(this, nameof(MultiSpellEffectFinished));
         // generate the missile and send to target
+        
         GenerateMissile(SpellEffects[SpellMode.PerilOfOsiris][0], origin.GlobalPosition, target.GlobalPosition);
-        await ToSignal(_currentMissileMoveTween, "tween_all_completed");
+        // await ToSignal(_currentMissileMoveTween, "tween_all_completed");
         _effectsOngoing = 1;
         ApplyBuffDebuff(origin, target, unitsAtArea, targetWorldPos, SpellMode.PerilOfOsiris, SpellEffects[SpellMode.PerilOfOsiris][1], multiEffect:true);
         // then set the target to hit state or dying state

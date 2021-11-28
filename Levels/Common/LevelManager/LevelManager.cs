@@ -395,9 +395,9 @@ public class LevelManager : Node2D
     private void GenerateNPC(UnitData unitData)
     {
         Unit npc = (Unit)GD.Load<PackedScene>("res://Actors/NPC/NPC.tscn").Instance();
-        GetNPCManagerInTree().AddChild(npc);
         npc.CurrentUnitData = unitData;
         npc.UpdateFromUnitData();
+        GetNPCManagerInTree().AddChild(npc);
         //Position
         if (!CurrentLevelData.ContainsKey(CurrentLevel))
         {

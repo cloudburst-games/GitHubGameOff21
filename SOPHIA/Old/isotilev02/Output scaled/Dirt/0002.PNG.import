@@ -2,24 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-<<<<<<< HEAD
 path="res://.import/0002.PNG-d3b5d11f3d69e814084116456f97fb45.stex"
-=======
-path="res://.import/villager_walk_10000.png-33dd870020998d23fd9c30f00303885d.stex"
->>>>>>> origin/art
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-<<<<<<< HEAD
 source_file="res://SOPHIA/Old/isotilev02/Output scaled/Dirt/0002.PNG"
 dest_files=[ "res://.import/0002.PNG-d3b5d11f3d69e814084116456f97fb45.stex" ]
-=======
-source_file="res://addons/Actors/Isometric2DKinematicCharacter/Art/Walk/villager_walk_10000.png"
-dest_files=[ "res://.import/villager_walk_10000.png-33dd870020998d23fd9c30f00303885d.stex" ]
->>>>>>> origin/art
 
 [params]
 
