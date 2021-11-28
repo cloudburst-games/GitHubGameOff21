@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Battle2.ogg-3d610d4ed156a9efaff0b513b6facade.oggstr"
+
+[deps]
+
+source_file="res://Music/Music_GHGO/Battle_AI/Battle2.ogg"
+dest_files=[ "res://.import/Battle2.ogg-3d610d4ed156a9efaff0b513b6facade.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

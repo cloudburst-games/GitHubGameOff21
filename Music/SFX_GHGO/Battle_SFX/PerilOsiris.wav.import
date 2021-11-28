@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/PerilOsiris.wav-45d2be292845df8d0168eda0714fcba2.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/Battle_SFX/PerilOsiris.wav"
+dest_files=[ "res://.import/PerilOsiris.wav-45d2be292845df8d0168eda0714fcba2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
