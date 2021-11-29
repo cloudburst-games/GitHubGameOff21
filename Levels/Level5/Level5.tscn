@@ -38,6 +38,7 @@ UnitName = "Mahef the Ferrybug"
 PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 8 )
 _body = ExtResource( 11 )
+_startingBehaviour = 2
 _combatLevel = 9
 _minions = {
 0: 2
@@ -48,6 +49,12 @@ _itemsHeld = [ 4, 7, 10 ]
 _potionEquipped1 = 4
 _potionEquipped2 = 7
 _weaponEquipped = 10
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Mahef"]
+position = Vector2( -170, -2 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Mahef"]
+position = Vector2( 164, 60 )
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -99,7 +106,7 @@ position = Vector2( 218.087, 565.634 )
 _startingItemsStocked = [ 1, 2, 3, 1, 4, 5, 6, 7, 12, 14, 10, 1, 4, 2 ]
 _introText = "Welcome! Please, peruse my humble wares."
 _shopTitle = "Watery Wares"
-_buyMessage = "Hmph. Trash. I'll take it of your hands for {0} gold."
+_buyMessage = "Hmph. Trash. I'll take it off your hands for {0} gold."
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

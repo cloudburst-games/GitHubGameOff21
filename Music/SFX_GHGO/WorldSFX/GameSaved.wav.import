@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/GameSaved.wav-906bf8ecec25b13ef5fa24da431da919.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/WorldSFX/GameSaved.wav"
+dest_files=[ "res://.import/GameSaved.wav-906bf8ecec25b13ef5fa24da431da919.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

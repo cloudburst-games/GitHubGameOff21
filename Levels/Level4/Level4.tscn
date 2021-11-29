@@ -47,6 +47,7 @@ _startingBools = {
 "Hostile": false,
 "InitiatesDialogue": false
 }
+_startingBehaviour = 2
 _combatLevel = 6
 _minions = {
 0: 1
@@ -56,6 +57,12 @@ _startingSpell2 = 6
 _startingGold = 20
 _itemsHeld = [ 0, 1 ]
 _potionEquipped1 = 0
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/AncientCrone"]
+position = Vector2( -152, -90 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/AncientCrone"]
+position = Vector2( 74, 100 )
 
 [node name="Assassin" parent="All/Units/LevelNPCManager" instance=ExtResource( 10 )]
 position = Vector2( 19.859, 616.344 )
@@ -157,7 +164,7 @@ polygon = PoolVector2Array( 77.7997, -134.303, -95.6239, -47.3924, 10.732, 6.579
 position = Vector2( 121.229, 358.804 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
 _shopTitle = "Precious Pieces"
-_buyMessage = "Hmph. Shabby thing. I'll take it of your hands for {0} gold."
+_buyMessage = "Hmph. Shabby thing. I'll take it off your hands for {0} gold."
 _stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]

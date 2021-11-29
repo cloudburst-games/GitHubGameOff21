@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BattleDefeat.wav-b2190c0e0ea950e4df33f08ea2c9fdda.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/WorldSFX/BattleDefeat.wav"
+dest_files=[ "res://.import/BattleDefeat.wav-b2190c0e0ea950e4df33f08ea2c9fdda.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

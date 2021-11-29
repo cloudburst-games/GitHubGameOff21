@@ -20,7 +20,7 @@ public class ExperienceManager
             experienceValueOfDefeated*=1.1f;
         }
         // divide by 1.5
-        return experienceValueOfDefeated/1.5f;
+        return (float)Math.Ceiling(experienceValueOfDefeated/1.5f);
     }
 
     public float GetExperienceNeededForNextLevel(int currentLevel)

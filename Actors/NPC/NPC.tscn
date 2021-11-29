@@ -420,6 +420,7 @@ anims/WalkUpRight = SubResource( 12 )
 shape = SubResource( 13 )
 
 [node name="PnlInfo" type="Panel" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_right = 0.5
