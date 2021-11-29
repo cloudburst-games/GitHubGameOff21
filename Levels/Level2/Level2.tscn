@@ -42,6 +42,7 @@ PortraitPath = ExtResource( 8 )
 PortraitPathSmall = ExtResource( 6 )
 _body = ExtResource( 15 )
 _startDirection = 6
+_startingBehaviour = 2
 _combatLevel = 2
 _minions = {
 0: 1
@@ -56,10 +57,10 @@ _weaponEquipped = 10
 _armourEquipped = 11
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Setna"]
-position = Vector2( 134, 94 )
+position = Vector2( 174, 130 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Setna"]
-position = Vector2( -166, -112 )
+position = Vector2( -204, -130 )
 
 [node name="Mari" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 244.401, 578.156 )
