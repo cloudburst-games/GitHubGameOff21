@@ -119,7 +119,8 @@ public class BattleUnitInfoPanel : Panel
             string currentEffectsStr = "Effects: ";
             foreach (SpellEffectManager.SpellMode spell in currentEffects.Keys)
             {
-                currentEffectsStr += effectNames[spell] + ", ";
+                currentEffectsStr += effectNames[spell] + (spell == SpellEffectManager.SpellMode.LeadershipBonus ? "" : " (" + (currentEffects[spell].Item1-1) + ")")
+                     + ", ";
             }
             // currentEffectsStr.TrimEnd(new char[] {',', ' '});
             // currentEffectsStr.Remove(currentEffectsStr.Length-4, 2);

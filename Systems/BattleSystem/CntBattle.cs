@@ -468,6 +468,13 @@ public class CntBattle : Control
             //end combat here
         }
 
+        while (!AreAllUnitsIdle())
+        {
+
+            await ToSignal(GetTree(), "idle_frame");
+            // GD.Print("waiting");
+        }
+
         SetSelectedAction(ActionMode.Move);
         // SetSelectedAction(ActionMode.Move);
         // if (_roundEnd)
@@ -491,6 +498,7 @@ public class CntBattle : Control
         // GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed];
         HighlightMoveableSquares();
 
+
         if (!GetActiveBattleUnit().CurrentBattleUnitData.PlayerFaction)
         {
             if (_firstTurn)
@@ -506,11 +514,7 @@ public class CntBattle : Control
             // GD.Print("do AI stuff here");
             
             // don't allow click action if units are not idle or if mouse is over the UI
-            while (!AreAllUnitsIdle())
-            {
-                await ToSignal(GetTree(), "idle_frame");
-                // GD.Print("waiting");
-            }
+
             // GD.Print("ok rdy");
             _aiTurnHandler.SetAITurnState(GetActiveBattleUnit().CurrentBattleUnitData.CurrentAITurnStateMode);
             _aiTurnHandler.OnAITurn(this);
@@ -1301,6 +1305,10 @@ public class CntBattle : Control
             await ToSignal(GetActiveBattleUnit(), nameof(BattleUnit.ReachedHalfwayAnimation));
             // GD.Print("reached halfway through animation");
             BattleUnit targetUnit = GetBattleUnitAtGridPosition(targetGridPos);
+            if (targetUnit == null)
+            {
+                return;
+            }
             targetUnit.TargetWorldPos = CurrentBattleGrid.GetCentredWorldPosFromWorldPos(GetActiveBattleUnit().GlobalPosition);
             
             // do battle calculations
@@ -1393,11 +1401,11 @@ public class CntBattle : Control
         // defeat: no player units left
         if (GetBattleUnits().FindAll(x => x.CurrentBattleUnitData.PlayerFaction).Count == 0)
         {
-            if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename) //TEST
-            {
-                GD.Print("DEFEAT");
-                GetTree().Quit();
-            }
+            // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename) //TEST
+            // {
+            //     GD.Print("DEFEAT");
+            //     GetTree().Quit();
+            // }
             // EmitSignal(nameof(BattleEnded), false, false);
             OnBattleEnded(false);
             return;
@@ -1406,11 +1414,11 @@ public class CntBattle : Control
         else if (GetBattleUnits().FindAll(x => !x.CurrentBattleUnitData.PlayerFaction).Count == 0 &&
             GetBattleUnits().FindAll(x => x.CurrentBattleUnitData.PlayerFaction).Count > 0)
         {
-            if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
-            {
-                GD.Print("VICTORY");
-                GetTree().Quit();
-            }
+            // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+            // {
+            //     GD.Print("VICTORY");
+            //     GetTree().Quit();
+            // }
             OnBattleEnded(true);
             return;
         }
@@ -1651,6 +1659,36 @@ public class CntBattle : Control
         }
     }
     
+    public bool VictoryOrDefeat()
+    {
+                // victory and defeat checks
+        // defeat: no player units left
+        if (GetBattleUnits().FindAll(x => x.CurrentBattleUnitData.PlayerFaction).Count == 0)
+        {
+            // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename) //TEST
+            // {
+            //     GD.Print("DEFEAT");
+            //     GetTree().Quit();
+            // }
+            // EmitSignal(nameof(BattleEnded), false, false);
+            OnBattleEnded(false);
+            return true;
+        }
+        // victory: no enemyuntis left AND at least 1 player unit left
+        else if (GetBattleUnits().FindAll(x => !x.CurrentBattleUnitData.PlayerFaction).Count == 0 &&
+            GetBattleUnits().FindAll(x => x.CurrentBattleUnitData.PlayerFaction).Count > 0)
+        {
+            // if (GetParent() == GetTree().Root && ProjectSettings.GetSetting("application/run/main_scene") != Filename)
+            // {
+            //     GD.Print("VICTORY");
+            //     GetTree().Quit();
+            // }
+            OnBattleEnded(true);
+            return true;
+        }
+        return false;
+    }
+
     private async void UpdateSpellDurationsAndRegen()
     {
         foreach (BattleUnit battleUnit in GetBattleUnits())
@@ -1660,6 +1698,8 @@ public class CntBattle : Control
                 if (spell == SpellEffectManager.SpellMode.PerilOfOsiris) // this is bad but its the only dot in the game so...
                 {
                     battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] += battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2;
+                    _battleHUD.LogEntry(String.Format("{0} takes {1} damage from Peril of Osiris.", battleUnit.CurrentBattleUnitData.Name, 
+                        battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2));
                     // i am here -- implement player death if health drop low
                     if (battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f)
                     {
@@ -1668,7 +1708,12 @@ public class CntBattle : Control
                     _endTurnEffectsInProgress = true;
                     battleUnit.SetActionState(battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f 
                         ? BattleUnit.ActionStateMode.Dying : BattleUnit.ActionStateMode.Hit);
+                        
                     await ToSignal(battleUnit, nameof(BattleUnit.CurrentActionCompleted));
+                    if (VictoryOrDefeat())
+                    {
+                        return;
+                    }
                 }
                 battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell] = new Tuple<int, float>(
                     battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item1 - 1,
@@ -1676,6 +1721,8 @@ public class CntBattle : Control
                 );
                 if (battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item1 == 0)
                 {
+                    _battleHUD.LogEntry(String.Format("{0}'s {1} has expired.", battleUnit.CurrentBattleUnitData.Name, 
+                        CurrentSpellEffectManager.SpellEffects[spell][0].Name));
                     CurrentSpellEffectManager.ReverseEffect(battleUnit, spell, battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2);
                     battleUnit.CurrentBattleUnitData.CurrentStatusEffects.Remove(spell);
                 }

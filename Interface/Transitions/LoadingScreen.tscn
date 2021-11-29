@@ -1,10 +1,17 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Interface/Transitions/LoadingScreen.cs" type="Script" id=2]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Interface/Themes/1BattleHUDTheme.tres" type="Theme" id=4]
 
-[sub_resource type="Animation" id=1]
-resource_name = "default"
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="Animation" id=2]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -19,8 +26,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "FadeIn"
+[sub_resource type="Animation" id=3]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect:modulate")
@@ -35,8 +41,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "FadeOut"
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect:modulate")
@@ -65,7 +70,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("ColorRect:modulate")
@@ -96,28 +101,29 @@ __meta__ = {
 [node name="LoadingSprite" type="Sprite" parent="ColorRect"]
 self_modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 1727.09, 854.022 )
-scale = Vector2( 5, 5 )
 texture = ExtResource( 1 )
 
 [node name="Panel" type="Panel" parent="ColorRect/LoadingSprite"]
-margin_left = -32.0
-margin_top = 25.0
-margin_right = 37.0
-margin_bottom = 44.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -41.7698
+margin_top = 106.728
+margin_right = 124.23
+margin_bottom = 155.728
+theme = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LoadAnim" type="AnimationPlayer" parent="ColorRect/LoadingSprite"]
-autoplay = "default"
-anims/default = SubResource( 1 )
-
-[node name="Label" type="Label" parent="ColorRect/LoadingSprite"]
-margin_left = -27.3033
-margin_top = 28.5732
-margin_right = 33.6967
-margin_bottom = 42.5732
+[node name="Label" type="Label" parent="ColorRect/LoadingSprite/Panel"]
+margin_left = 4.69666
+margin_top = 3.57318
+margin_right = 157.697
+margin_bottom = 44.5732
 rect_pivot_offset = Vector2( 30, 7 )
+custom_fonts/font = SubResource( 1 )
 text = "Loading..."
 align = 1
 valign = 1
@@ -125,8 +131,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="LoadAnim" type="AnimationPlayer" parent="ColorRect/LoadingSprite"]
+autoplay = "default"
+anims/default = SubResource( 2 )
+
 [node name="FadeAnim" type="AnimationPlayer" parent="."]
 autoplay = "default"
-anims/FadeIn = SubResource( 2 )
-anims/FadeOut = SubResource( 3 )
-anims/default = SubResource( 4 )
+anims/FadeIn = SubResource( 3 )
+anims/FadeOut = SubResource( 4 )
+anims/default = SubResource( 5 )

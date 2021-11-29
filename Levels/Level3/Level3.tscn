@@ -42,12 +42,12 @@ PortraitPathSmall = ExtResource( 12 )
 _body = ExtResource( 13 )
 _startDirection = 4
 _startingBehaviour = 2
-_combatLevel = 8
+_combatLevel = 5
 _minions = {
 0: 2
 }
 _startingSpell1 = 7
-_spellGainedAtHigherLevel = 8
+_startingSpell2 = 8
 _startingGold = 20
 _itemsHeld = [ 3, 11 ]
 _potionEquipped1 = 1
@@ -72,7 +72,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 2
-_combatLevel = 6
+_combatLevel = 4
 _minions = {
 0: 1
 }
@@ -99,7 +99,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 2
-_combatLevel = 7
+_combatLevel = 4
 _minions = {
 0: 3
 }
@@ -128,7 +128,7 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
-_combatLevel = 6
+_combatLevel = 4
 _minions = {
 0: 3
 }

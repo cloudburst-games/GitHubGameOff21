@@ -659,7 +659,7 @@ __meta__ = {
 }
 
 [node name="LblEvents" type="Label" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-margin_right = 1261.0
+margin_right = 1158.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -668,7 +668,6 @@ valign = 1
 clip_text = true
 
 [node name="BtnEvents" type="Button" parent="HUD/CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer"]
-visible = false
 margin_left = 1168.0
 margin_right = 1261.0
 margin_bottom = 43.0

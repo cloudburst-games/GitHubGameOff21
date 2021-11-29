@@ -123,7 +123,7 @@ public class SpellEffectManager : Reference
             {SpellMode.ComingForthByDay, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Coming Forth By Day",
                 RangeSquares = 20,
-                DurationRounds = 3,
+                DurationRounds = 6,
                 Magnitude = 2,
                 AreaSquares = 0,
                 ManaCost = 7f,
@@ -131,27 +131,27 @@ public class SpellEffectManager : Reference
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/ComingForthByDayEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/ComingForthByDay.PNG"),
-                ToolTip = "Boost the vigour of an ally for 3 rounds! Cost 7."
+                ToolTip = "Boost the vigour of an ally for 5 rounds! Cost 7."
             }}
             },
             {SpellMode.Preservation, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Preservation",
                 RangeSquares = 20,
-                DurationRounds = 3,
-                Magnitude = 1,
+                DurationRounds = 6,
+                Magnitude = 2,
                 AreaSquares = 0,
                 ManaCost = 8f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.HealthRegen, BattleUnitData.DerivedStat.ManaRegen, BattleUnitData.DerivedStat.MagicResist},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/PreservationEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/Preservation.PNG"),
-                ToolTip = "Boost the resilience of an ally for 3 rounds! Cost 8."
+                ToolTip = "Boost the resilience of an ally for 5 rounds! Cost 8."
             }}
             },
             {SpellMode.WeighingOfTheHeart, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Weighing of the Heart",
                 RangeSquares = 20,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = -1,
                 AreaSquares = 0,
                 ManaCost = 12f,
@@ -235,12 +235,12 @@ public class SpellEffectManager : Reference
                     DurationRounds = 0,
                     Magnitude = 0,
                     AreaSquares = 1,
-                    ManaCost = 8f,
+                    ManaCost = 7f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {},//BattleUnitData.DerivedStat.Dodge, BattleUnitData.DerivedStat.Speed, BattleUnitData.DerivedStat.Initiative, BattleUnitData.DerivedStat.CurrentAP},
                     Target = SpellEffect.TargetMode.Empty,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/TeleportEffect.tscn"),
                     IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/HymnOfTheUnderworld.PNG"),
-                    ToolTip = "Teleport to the target unoccupied space, dealing damage around you before returning! Range 6, Cost 24, Area 8."
+                    ToolTip = "Teleport to the target unoccupied space, dealing damage around you before returning! Range 6, Cost 22, Area 8."
                 },
                 new SpellEffect(){ // do damage
                     Name = "Hymn of the Underworld",
@@ -248,7 +248,7 @@ public class SpellEffectManager : Reference
                     DurationRounds = 0,
                     Magnitude = 1,
                     AreaSquares = 1,
-                    ManaCost = 8f,
+                    ManaCost = 7f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
                     Target = SpellEffect.TargetMode.Empty,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/HymnOfTheUnderworldEffect.tscn")
@@ -283,7 +283,7 @@ public class SpellEffectManager : Reference
                 new SpellEffect(){
                 Name = "Peril of Osiris",
                 RangeSquares = 5,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = -2,
                 AreaSquares = 0,
                 ManaCost = 6f,
@@ -295,7 +295,7 @@ public class SpellEffectManager : Reference
             {SpellMode.CharismaPotion, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Charisma Potion",
                 RangeSquares = 0,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
@@ -319,7 +319,7 @@ public class SpellEffectManager : Reference
             {SpellMode.IntellectPotion, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Intellect Potion",
                 RangeSquares = 0,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
@@ -331,7 +331,7 @@ public class SpellEffectManager : Reference
             {SpellMode.LuckPotion, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Luck Potion",
                 RangeSquares = 0,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
@@ -355,7 +355,7 @@ public class SpellEffectManager : Reference
             {SpellMode.ResiliencePotion, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Resilience Potion",
                 RangeSquares = 0,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
@@ -367,7 +367,7 @@ public class SpellEffectManager : Reference
             {SpellMode.SwiftnessPotion, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Swiftness Potion",
                 RangeSquares = 0,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
@@ -379,7 +379,7 @@ public class SpellEffectManager : Reference
             {SpellMode.VigourPotion, new List<SpellEffect>(){ new SpellEffect(){
                 Name = "Vigour Potion",
                 RangeSquares = 0,
-                DurationRounds = 3,
+                DurationRounds = 4,
                 Magnitude = 0,
                 AreaSquares = 0,
                 ManaCost = 0f,
@@ -518,18 +518,18 @@ public class SpellEffectManager : Reference
             await ToSignal(this, nameof(MultiSpellEffectFinished));
         }
 
-        // wait for caster to finish their animation, and units if they are affected
+        // wait for caster to finish their animation
         if (origin.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
         {
             await ToSignal(origin, nameof(BattleUnit.CurrentActionCompleted));
         }
-        foreach (BattleUnit unit in unitsAtArea)
-        {
-            if (unit.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
-            {
-                await ToSignal(unit, nameof(BattleUnit.CurrentActionCompleted));
-            }
-        }
+        // foreach (BattleUnit unit in unitsAtArea)
+        // {
+        //     if (unit.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
+        //     {
+        //         await ToSignal(unit, nameof(BattleUnit.CurrentActionCompleted));
+        //     }
+        // }
 
         EmitSignal(nameof(SpellEffectFinished), 
             String.Format("{0} casts {2}! {1} creatures are affected!",

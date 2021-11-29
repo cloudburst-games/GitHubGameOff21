@@ -39,11 +39,12 @@ PortraitPath = ExtResource( 10 )
 PortraitPathSmall = ExtResource( 8 )
 _body = ExtResource( 11 )
 _startingBehaviour = 2
-_combatLevel = 9
+_combatLevel = 5
 _minions = {
 0: 2
 }
 _startingSpell1 = 1
+_startingSpell2 = 3
 _startingGold = 50
 _itemsHeld = [ 4, 7, 10 ]
 _potionEquipped1 = 4

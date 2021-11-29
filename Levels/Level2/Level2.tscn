@@ -48,7 +48,7 @@ _minions = {
 }
 _physicalDamageRange = 2.0
 _startingSpell1 = 5
-_spellGainedAtHigherLevel = 3
+_spellGainedAtHigherLevel = 2
 _startingGold = 10
 _itemsHeld = [ 2, 4 ]
 _potionEquipped1 = 4
@@ -164,11 +164,10 @@ _minions = {
 }
 _startingSpell1 = 2
 _startingGold = 12
-_itemsHeld = [ 10 ]
+_itemsHeld = [ 9 ]
 _potionEquipped1 = 1
 _potionEquipped2 = 3
 _weaponEquipped = 10
-_armourEquipped = 11
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
 position = Vector2( 0, 136 )

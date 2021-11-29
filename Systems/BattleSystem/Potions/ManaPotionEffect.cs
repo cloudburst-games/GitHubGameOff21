@@ -8,7 +8,7 @@ public class ManaPotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.ManaPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Mana);
-        Magnitude = 8f;
+        Magnitude = 20f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/Water.png");
         Name = "Water";
         SpellEffect = SpellEffectManager.SpellMode.ManaPotion;

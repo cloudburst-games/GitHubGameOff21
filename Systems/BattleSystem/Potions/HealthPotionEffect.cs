@@ -8,7 +8,7 @@ public class HealthPotionEffect : PotionEffect
     {
         CurrentItemMode = PnlInventory.ItemMode.HealthPot;
         StatsAffected.Add(BattleUnitData.DerivedStat.Health);
-        Magnitude = 6f;
+        Magnitude = 15f;
         IconTexture = GD.Load<Texture>("res://Interface/Icons/Food.png");
         Name = "Food";
         SpellEffect = SpellEffectManager.SpellMode.HealthPotion;
