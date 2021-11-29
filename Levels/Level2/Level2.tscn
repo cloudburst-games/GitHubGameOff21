@@ -145,36 +145,6 @@ position = Vector2( -194, -28 )
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit6"]
 position = Vector2( 148, -16 )
 
-[node name="Bandit7" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( 15.2595, 1267.01 )
-_customBattleText = "You're leg catches upon something and you fall upon the sand. Your feet are bound! An assassin lowers a dagger to your heart. You call upon the might of Ra and fling them across the land."
-_defeatMessage = "Before the assassin rattles his final breath, you scream, \"Who sent you?\". The creature's mouth opens, \"A...\" he says, then his body siezes and stills forever."
-ID = "Bandit5"
-UnitName = "Assassin"
-PortraitPath = ExtResource( 13 )
-PortraitPathSmall = ExtResource( 14 )
-_startingBools = {
-"Companion": false,
-"Hostile": true,
-"InitiatesDialogue": false
-}
-_startingBehaviour = 2
-_minions = {
-0: 0
-}
-_startingSpell1 = 2
-_startingGold = 12
-_itemsHeld = [ 9 ]
-_potionEquipped1 = 1
-_potionEquipped2 = 3
-_weaponEquipped = 10
-
-[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
-position = Vector2( 0, 136 )
-
-[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
-position = Vector2( 2, -158 )
-
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
 [node name="LevelTransitionMarker" parent="All/TransitionMarkers" instance=ExtResource( 1 )]

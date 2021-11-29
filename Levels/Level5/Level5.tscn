@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Level5/TerrainLevel5.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=10]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyRed.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=12]
+[ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=13]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 225.121, 479.153, 424.91, 430.938, 492.101, 461.858, 481.398, 500.507, 466.533, 500.507, -1, 1020.75, -102.5, 969.5, -90.0167, 966.082, 133.555, 920.297, 169.25, 937, 115.716, 914.351, -73.9624, 954.189, -37.097, 944.676, 97.8784, 904.838, -33.5293, 924.459, 442.748, 518.94, 421.937, 521.913, 411.829, 538.562, 220.359, 497.408, 411.234, 408.938, 207.66, 445.817, 223.534, 422.8, 93.7162, 888.189, -42.4484, 910.783, -42.4484, 894.729, -35.9077, 884.621, -153.474, 332.318, -159.824, 371.21, -171.729, 371.21, 358.315, 330.45, 407.072, 360.775, 423.721, 389.911, 216.391, 393.433, 222.74, 345.017, 333.341, 325.693, 423.721, 364.343, 288.746, 295.963, 325.017, 312.612, 215.597, 322.794, 178.744, 245.422, 168.768, 322.794, -37.097, 853.107, 86.5809, 838.836, 104.419, 844.783, 102.635, 876.297, 71.1212, 826.35, 43.1749, 815.647, -104.264, 663.291, 27.1206, 793.647, -104.287, 818.025, -118.558, 802.566, -136.013, 664.085, 27.1206, 206.178, 78.2565, 203.8, 113.933, 209.151, 160.831, 337.08, 139.402, 345.017, 98.1292, 341.049, 28.2835, 309.301, 15.5843, 290.252, 15.8231, 216.881, -158.991, 818.62, -185.748, 826.35, -230.938, 819.809, -233.911, 809.106, -233.716, 799.29, -227.965, 787.7, -151.855, 807.322, -309.039, 505.345, -283.641, 529.949, -293.959, 568.047, -345.55, 495.82, 424.316, 554.616, 421.937, 592.67, 379.72, 614.076, 352.369, 622.995, 140.195, 535.506, 172.737, 513.282, 347.612, 636.671, 318.476, 709.213, 301.233, 710.997, -151.887, 294.221, -163.792, 310.888, -483.05, 382.775, -495.536, 347.694, -486.617, 336.991, -266.614, 221.638, -231.532, 208.557, -154.233, 204.394, -135.801, 216.881, -229.221, 759.959, -410.891, 659.947, -422.503, 659.947, -429.62, 649.085, -432.616, 636.724, -421.211, 618.238, 289.341, 722.889, 267.935, 726.456, 216.204, 724.078, 204.907, 705.645, -6.77182, 215.097, -22.5134, 293.427, -97.1515, 204.394, -90.0163, 203.205, -29.3667, 204.394, -31.244, 306.92, -59.0236, 310.095, -106.646, 305.332, -116.17, 290.252, -117.368, 216.881, -483.05, 397.64, -342.375, 387.877, -549.645, 467.804, -560.67, 449.442, -554.997, 435.695, -538.348, 423.803, 361.288, 652.131, 355.936, 688.996, 85.4299, 587.096, 93.3669, 560.11, 117.178, 541.855, 171.015, 709.213, 94.9543, 609.32, 83.8425, 633.924, 156.744, 724.672, 121.663, 741.916, 87.1755, 757.376, 62.4126, 633.924, 59.2292, 774.619, 37.2289, 781.755, -76.485, 638.687, -40.7685, 626.781, 35.4268, 622.813, -155.855, 654.561, -234.84, 748.722, -239.335, 735.612, -228.097, 719.505, -201.89, 389.465, -222.526, 401.37, -262.211, 408.513, -297.134, 399.783, -303.484, 387.083, -367.44, 659.198, -393.286, 662.569, -420.616, 596.238, -352.831, 658.077, -343.318, 647.374, -357.455, 410.101, -343.962, 434.705, -347.137, 450.579, -359.836, 467.247, -283.641, 591.858, -309.425, 644.996, -531.13, 543.079, -547.611, 533.715, -554.354, 526.223, -555.477, 513.862, -548.735, 498.879, -495.17, 561.059, -527.034, 414.124, -449.097, 582.035, -235.963, 726.247, -178.079, 637.893, -229.154, 690.78, -207.446, 627.575, -297.533, 659.266, -231.257, 616.463, -257.449, 598.208, -186.016, 383.909 )
@@ -56,6 +58,60 @@ position = Vector2( -170, -2 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Mahef"]
 position = Vector2( 164, 60 )
+
+[node name="Bandit7" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
+position = Vector2( -300.741, 307.01 )
+_customBattleText = "You're leg catches upon something and you fall upon the sand. Your feet are bound! An assassin lowers a dagger to your heart. You call upon the might of Ra and fling them across the land."
+_defeatMessage = "Before the assassin rattles his final breath, you scream, \"Who sent you?\". The creature's mouth opens, \"A...\" he says, then his body seizes and stills forever."
+ID = "Bandit5"
+UnitName = "Assassin"
+PortraitPath = ExtResource( 12 )
+PortraitPathSmall = ExtResource( 13 )
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
+_startingBehaviour = 2
+_minions = {
+0: 0
+}
+_startingSpell1 = 2
+_startingGold = 12
+_itemsHeld = [ 9 ]
+_potionEquipped1 = 1
+_potionEquipped2 = 3
+_weaponEquipped = 10
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
+position = Vector2( 154, -66 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
+position = Vector2( -142, 100 )
+
+[node name="Assassin2" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
+position = Vector2( 349.859, 432.344 )
+_customBattleText = "A scarab hobbles towards you. You step aside to let him pass. He mutters a chant you recognise... Demon! Prepare for battle!"
+_defeatMessage = "You have won, this time. How many more demons lie in wait?"
+ID = "Assassin0"
+UnitName = "Guardian of the Sea"
+PortraitPath = ExtResource( 12 )
+PortraitPathSmall = ExtResource( 13 )
+_startingBools = {
+"Companion": false,
+"Hostile": true,
+"InitiatesDialogue": false
+}
+_startingBehaviour = 0
+_combatLevel = 2
+_minions = {
+0: 1
+}
+_startingSpell1 = 9
+_startingGold = 20
+_itemsHeld = [ 4 ]
+_potionEquipped1 = 2
+_weaponEquipped = 9
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
