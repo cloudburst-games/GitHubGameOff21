@@ -790,10 +790,12 @@ public class CntBattle : Control
         {
             if (spellTryingToCast == SpellEffectManager.SpellMode.Empty)
             {
+                GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
                 return;
             }
             if (!SufficientManaToCastSpell(spellTryingToCast))
             {
+                GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
                  LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
                 floatLabel.Text = "Insufficient mana";
                  _battleHUD.ActionButtons[actionMode].AddChild(floatLabel);
@@ -803,6 +805,7 @@ public class CntBattle : Control
             }
             else if (!AnyValidTargetsWithinRangeToCastSpell(spellTryingToCast))
             {
+                GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
                  LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
                 floatLabel.Text = "No valid targets in range";
                  _battleHUD.ActionButtons[actionMode].AddChild(floatLabel);
@@ -1074,12 +1077,16 @@ public class CntBattle : Control
 
         if (spellMode == SpellEffectManager.SpellMode.Empty)
         {
+            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
             return;
         }
         if (PermittedSpell(spellMode, targetMapPos))
         {
             // GD.Print("is path straight: ", CurrentBattleGrid.IsPathStraight(startingMapPos, targetMapPos));
-
+            if (CurrentSpellEffectManager.SpellSounds.ContainsKey(spellMode))
+            {
+                GetActiveBattleUnit().PlaySoundEffect(CurrentSpellEffectManager.SpellSounds[spellMode]);
+            }
             CurrentSpellEffectManager.SpellMethods[spellMode]
                 (GetActiveBattleUnit(),
                 GetBattleUnitAtGridPosition(targetMapPos),
@@ -1087,6 +1094,10 @@ public class CntBattle : Control
                 CurrentBattleGrid.GetCorrectedWorldPosition(targetMapPos));            
 
             // GD.Print(_spellEffectManager.SpellEffects[spellMode].RangeSquares);
+        }
+        else
+        {
+            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
         }
     }
 
@@ -1294,6 +1305,7 @@ public class CntBattle : Control
             
             // do battle calculations
             float[] result = _battleInteractionHandler.CalculateMelee(GetActiveBattleUnit().CurrentBattleUnitData, targetUnit.CurrentBattleUnitData);
+            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/BugMelee.wav"));
             targetUnit.UpdateHealthManaBars();
             // _battleHUD.LogMeleeEntry(GetActiveBattleUnit().CurrentBattleUnitData.Name, targetUnit.CurrentBattleUnitData.Name, result,
             //     targetUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f);
@@ -1311,6 +1323,10 @@ public class CntBattle : Control
             }
             // GetActiveBattleUnit().CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.CurrentAP] = 0;
             OnBtnEndTurnPressed();
+        }
+        else
+        {
+            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
         }
         
     }
@@ -1359,6 +1375,10 @@ public class CntBattle : Control
         else if (GetUnitAP(GetActiveBattleUnit()) >= GetUnitSpeed(GetActiveBattleUnit())/2f)
         {
             OnLeftClickMelee(tarGridPos);
+        }
+        else
+        {
+            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ButtonFailed.wav"));
         }
     }
     

@@ -223,6 +223,10 @@ public class AggressiveAITurnState : AITurnState
                         {
                             if (cntBattle.PermittedSpell(spell, cell))
                             {
+                                if (cntBattle.CurrentSpellEffectManager.SpellSounds.ContainsKey(spell))
+                                {
+                                    cntBattle.GetActiveBattleUnit().PlaySoundEffect(cntBattle.CurrentSpellEffectManager.SpellSounds[spell]);
+                                }
                                 cntBattle.CurrentSpellEffectManager.SpellMethods[spell]
                                     (cntBattle.GetActiveBattleUnit(),
                                     cntBattle.GetBattleUnitAtGridPosition(cell),
@@ -281,6 +285,11 @@ public class AggressiveAITurnState : AITurnState
                         {
                             if (cntBattle.PermittedSpell(spell, cell))
                                 {
+
+                                    if (cntBattle.CurrentSpellEffectManager.SpellSounds.ContainsKey(spell))
+                                    {
+                                        cntBattle.GetActiveBattleUnit().PlaySoundEffect(cntBattle.CurrentSpellEffectManager.SpellSounds[spell]);
+                                    }
                                     cntBattle.CurrentSpellEffectManager.SpellMethods[spell]
                                     (cntBattle.GetActiveBattleUnit(),
                                     cntBattle.GetBattleUnitAtGridPosition(cell),
@@ -305,6 +314,10 @@ public class AggressiveAITurnState : AITurnState
                         {
                             if (cntBattle.PermittedSpell(spell, gridPos))
                             {
+                                if (cntBattle.CurrentSpellEffectManager.SpellSounds.ContainsKey(spell))
+                                {
+                                    cntBattle.GetActiveBattleUnit().PlaySoundEffect(cntBattle.CurrentSpellEffectManager.SpellSounds[spell]);
+                                }
                                 cntBattle.CurrentSpellEffectManager.SpellMethods[spell]
                                 (cntBattle.GetActiveBattleUnit(),
                                 cntBattle.GetBattleUnitAtGridPosition(gridPos),
@@ -328,6 +341,10 @@ public class AggressiveAITurnState : AITurnState
                         {
                             if (cntBattle.PermittedSpell(spell, gridPos))
                             {
+                                if (cntBattle.CurrentSpellEffectManager.SpellSounds.ContainsKey(spell))
+                                {
+                                    cntBattle.GetActiveBattleUnit().PlaySoundEffect(cntBattle.CurrentSpellEffectManager.SpellSounds[spell]);
+                                }
                                 cntBattle.CurrentSpellEffectManager.SpellMethods[spell]
                                 (cntBattle.GetActiveBattleUnit(),
                                 cntBattle.GetBattleUnitAtGridPosition(gridPos),

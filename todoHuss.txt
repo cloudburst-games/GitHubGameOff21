@@ -5,8 +5,13 @@ Minimum targets
 - make portraits from bug anims and integrate d
 - give each enemy a unique spell d
 - gained a level floating text is too small d
+- sun? d
+
+- integrate sfx d1
 
 - test and tweak levels
+
+PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/EnemyEncountered.wav"));
 
 
 no:

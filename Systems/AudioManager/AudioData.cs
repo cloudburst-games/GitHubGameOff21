@@ -32,6 +32,8 @@ public class AudioData : Node
 	private Node _lastSoundPlayer {get; set;}
 	private AudioManager _audioManager;
 	private Random _rand = new Random();
+
+    public bool Loop {get; set;} = false;
 	
 	public override void _Ready()
 	{
@@ -61,6 +63,10 @@ public class AudioData : Node
 	public void OnFinished()
 	{
 		EmitSignal(nameof(Finished));
+        if (Loop)
+        {
+            StartPlaying = true;
+        }
 	}
 
 	public void StopLastSoundPlayer()
@@ -114,6 +120,27 @@ public class AudioData : Node
 		}
 		return false;
 	}
+
+    public void UpdateVolume(float newVolume)
+    {
+        VolumeDb = newVolume;
+        if (_lastSoundPlayer == null)
+        {
+            return;
+        }
+		if (_lastSoundPlayer is AudioStreamPlayer audio)
+		{
+            audio.VolumeDb = newVolume;
+		}
+		if (_lastSoundPlayer is AudioStreamPlayer2D audioStreamPlayer2D)
+		{
+            audioStreamPlayer2D.VolumeDb = newVolume;
+		}
+		if (_lastSoundPlayer is AudioStreamPlayer3D audioStreamPlayer3D)
+		{
+            audioStreamPlayer3D.UnitDb = newVolume;
+		}
+    }
 
 	public override void _Process(float delta)
 	{

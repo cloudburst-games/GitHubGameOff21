@@ -35,6 +35,7 @@ public class HUD : CanvasLayer
     private void OnJournalUpdated()
     {
         LogEntry("Your journal has been updated.");
+        GetNode<AudioData>("CtrlTheme/DialogueControl/AudioData").StartPlaying = true;
     }
 
     public void OnMainQuestChanged(string mainQuest)

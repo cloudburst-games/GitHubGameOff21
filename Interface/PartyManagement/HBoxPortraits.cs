@@ -20,6 +20,7 @@ public class HBoxPortraits : Control
     private string _idOver = null;
     public bool InCharacterManager {get; set;} = false;
     private string _IDPopUpSelected = null;
+    private int _numFloatingLabels = 0;
 
     public override void _Ready()
     {
@@ -68,7 +69,8 @@ public class HBoxPortraits : Control
             _unitBtnsByID[id].Material = shaderMaterial;
             lvlUpFloatLbl.RectScale = new Vector2(3,3);
             _unitBtnsByID[id].AddChild(lvlUpFloatLbl);
-            lvlUpFloatLbl.Start(_unitBtnsByID[id].RectGlobalPosition);
+            lvlUpFloatLbl.Start(_unitBtnsByID[id].RectGlobalPosition + new Vector2(0, -50*_numFloatingLabels));
+            _numFloatingLabels += 1;
         }
     }
 
@@ -77,6 +79,7 @@ public class HBoxPortraits : Control
         timer.QueueFree();
         if (_unitBtnsByID.ContainsKey(id))
         {
+            _numFloatingLabels = Math.Max(_numFloatingLabels-1, 0);
             _unitBtnsByID[id].Material = null;
         }
     }

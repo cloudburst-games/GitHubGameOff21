@@ -70,6 +70,12 @@ public class BattleUnit : Node2D
         body.QueueFree();
     }
 
+    public void PlaySoundEffect(AudioStreamSample sound)
+    {
+        GetNode<AudioData>("AudioData").Streams = new List<AudioStream>() {sound};
+        GetNode<AudioData>("AudioData").StartPlaying = true;
+    }
+
     public void SetActionState(ActionStateMode actionStateMode)
     {
         CurrentActionStateMode = actionStateMode;

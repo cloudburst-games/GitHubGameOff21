@@ -18,6 +18,14 @@ public class MovingBattleUnitActionState : BattleUnitActionState
 
          BattleUnit.CurrentPath.RemoveAt(0);
          TweenMovement();
+        if (this.BattleUnit.HasNode("AudioDataMove"))
+        {
+            // if (!this.Unit.GetNode<AudioData>("AudioData").Playing())
+            // {
+            this.BattleUnit.GetNode<AudioData>("AudioDataMove").Loop = true;
+            this.BattleUnit.GetNode<AudioData>("AudioDataMove").StartPlaying = true;
+            // }
+        }
     }
 
     public override void Update(float delta)
@@ -48,6 +56,10 @@ public class MovingBattleUnitActionState : BattleUnitActionState
         }
         else
         {
+            if (this.BattleUnit.HasNode("AudioDataMove"))
+            {
+                this.BattleUnit.GetNode<AudioData>("AudioDataMove").StopLastSoundPlayer();
+            }
             BattleUnit.EmitSignal(nameof(BattleUnit.CurrentActionCompleted));
             BattleUnit.SetActionState(BattleUnit.ActionStateMode.Idle);
         }

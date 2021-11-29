@@ -51,6 +51,20 @@ public class SpellEffectManager : Reference
     public Dictionary<SpellMode, Action<BattleUnit,BattleUnit, List<BattleUnit>, Vector2>> SpellMethods;
     private Tween _currentMissileMoveTween;
 
+    public Dictionary<SpellMode, AudioStreamSample> SpellSounds = new Dictionary<SpellMode, AudioStreamSample>()
+    {
+        {SpellMode.SolarBolt, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/SolarBolt.wav")},
+        {SpellMode.SolarBlast, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/SolarBlast.wav")},
+        {SpellMode.ComingForthByDay, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/ProtectionByDay.wav")},
+        {SpellMode.Preservation, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/Resilience.wav")},
+        {SpellMode.WeighingOfTheHeart, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/SlowTheHeart.wav")},
+        {SpellMode.GazeOfTheDead, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/GazeOfDead.wav")},
+        {SpellMode.Teleport, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/Teleport.wav")},
+        {SpellMode.LunarBlast, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/LunarBolt.wav")},
+        {SpellMode.HymnOfTheUnderworld, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/HymnUnderworld.wav")},
+        {SpellMode.PerilOfOsiris, GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/PerilOsiris.wav")},
+    };
+
     public SpellMode GetRandomSpell()
     {
         return (SpellMode) _rand.Next(0,10);
@@ -257,7 +271,7 @@ public class SpellEffectManager : Reference
                 Name = "Peril of Osiris",
                 RangeSquares = 5,
                 DurationRounds = 0,
-                Magnitude = 1,
+                Magnitude = -1,
                 AreaSquares = 0,
                 ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
@@ -270,7 +284,7 @@ public class SpellEffectManager : Reference
                 Name = "Peril of Osiris",
                 RangeSquares = 5,
                 DurationRounds = 3,
-                Magnitude = 4,
+                Magnitude = -2,
                 AreaSquares = 0,
                 ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
@@ -504,10 +518,17 @@ public class SpellEffectManager : Reference
             await ToSignal(this, nameof(MultiSpellEffectFinished));
         }
 
-        // wait for caster to finish their animation
+        // wait for caster to finish their animation, and units if they are affected
         if (origin.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
         {
             await ToSignal(origin, nameof(BattleUnit.CurrentActionCompleted));
+        }
+        foreach (BattleUnit unit in unitsAtArea)
+        {
+            if (unit.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
+            {
+                await ToSignal(unit, nameof(BattleUnit.CurrentActionCompleted));
+            }
         }
 
         EmitSignal(nameof(SpellEffectFinished), 

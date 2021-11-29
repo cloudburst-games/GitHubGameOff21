@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://Stages/World/StageWorld.cs" type="Script" id=1]
 [ext_resource path="res://Interface/Themes/KhepriThemeHUD.tres" type="Theme" id=2]
@@ -25,7 +25,9 @@
 [ext_resource path="res://Interface/Map/Map.cs" type="Script" id=23]
 [ext_resource path="res://Utils/Node/Camera/Cam2DRTS.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Interface/Themes/Old25.tres" type="DynamicFont" id=25]
+[ext_resource path="res://Music/SFX_GHGO/WorldSFX/GameVictory.wav" type="AudioStream" id=26]
 [ext_resource path="res://Interface/Themes/FileDialogTheme.tres" type="Theme" id=27]
+[ext_resource path="res://Music/SFX_GHGO/JournalDialogue/JournalButtonPressed.wav" type="AudioStream" id=28]
 
 [sub_resource type="Animation" id=1]
 resource_name = "DayNight"
@@ -369,6 +371,35 @@ tracks/3/keys = {
 "update": 0,
 "values": [ 0.0, 0.0, 1.0 ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath("../../../AudioMusic")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 3.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ -20.0 ],
+"method": "UpdateVolume"
+}, {
+"args": [ -10.0 ],
+"method": "UpdateVolume"
+} ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("AudioData:StartPlaying")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="DynamicFontData" id=30]
 font_path = "res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf"
@@ -459,6 +490,12 @@ tracks/1/keys = {
 
 [node name="StageWorld" type="Node"]
 script = ExtResource( 1 )
+
+[node name="AudioSfx" parent="." instance=ExtResource( 14 )]
+pause_mode = 2
+VolumeDb = 10.0
+SoundType = 2
+SoundParent = NodePath("..")
 
 [node name="AudioMusic" parent="." instance=ExtResource( 14 )]
 VolumeDb = -10.0
@@ -576,6 +613,12 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 18 )
 text = "Journal"
+
+[node name="AudioData" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnJournal" instance=ExtResource( 14 )]
+VolumeDb = 10.0
+Streams = [ ExtResource( 28 ) ]
+SoundType = 2
+SoundParent = NodePath("..")
 
 [node name="BtnMenu" type="Button" parent="HUD/CtrlTheme/PnlUIBar/HBoxBtns"]
 margin_left = 211.0
@@ -880,6 +923,12 @@ text = "Exit To Main Menu"
 [node name="Anim" type="AnimationPlayer" parent="HUD/CtrlTheme/PnlVictory"]
 anims/Start = SubResource( 29 )
 
+[node name="AudioData" parent="HUD/CtrlTheme/PnlVictory" instance=ExtResource( 14 )]
+VolumeDb = 10.0
+Streams = [ ExtResource( 26 ) ]
+SoundType = 2
+SoundParent = NodePath("..")
+
 [node name="NPCInfoPanel" parent="HUD/CtrlTheme" instance=ExtResource( 8 )]
 visible = false
 anchor_left = 0.5
@@ -898,6 +947,13 @@ theme = null
 [node name="DialogueControl" parent="HUD/CtrlTheme" instance=ExtResource( 7 )]
 visible = false
 margin_top = 540.0
+
+[node name="AudioData" parent="HUD/CtrlTheme/DialogueControl" instance=ExtResource( 14 )]
+pause_mode = 2
+VolumeDb = 10.0
+Streams = [ ExtResource( 28 ) ]
+SoundType = 2
+SoundParent = NodePath("..")
 
 [node name="PnlCharacterManager" parent="HUD/CtrlTheme" instance=ExtResource( 19 )]
 visible = false

@@ -1,9 +1,11 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Actors/BattleUnit/BattleUnit.cs" type="Script" id=1]
 [ext_resource path="res://Actors/NPC/Bodies/beetlesv01_271121/sheets/beetle_orange.png" type="Texture" id=2]
 [ext_resource path="res://Interface/Fonts/HudButtonPressed.tres" type="StyleBox" id=3]
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Music/SFX_GHGO/WorldSFX/Footsteps_sand.wav" type="AudioStream" id=6]
 [ext_resource path="res://Interface/Themes/BarStyleBoxBase.tres" type="StyleBox" id=82]
 [ext_resource path="res://Actors/BattleUnit/PnlInfo.cs" type="Script" id=83]
 
@@ -1323,3 +1325,12 @@ custom_styles/panel = SubResource( 34 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioData" parent="." instance=ExtResource( 5 )]
+VolumeDb = 10.0
+SoundParent = NodePath("..")
+
+[node name="AudioDataMove" parent="." instance=ExtResource( 5 )]
+VolumeDb = 10.0
+Streams = [ ExtResource( 6 ) ]
+SoundParent = NodePath("..")

@@ -209,6 +209,7 @@ public class StageWorld : Stage
     public void OnSunStolen()
     {
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle = "Night";
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().GetNode<Particles2D>("Sprite/KhepriSunParticles").Visible = false;
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Stop();        
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Play(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Time, true);
@@ -353,6 +354,7 @@ public class StageWorld : Stage
             GetNode<HBoxPortraits>("HUD/CtrlTheme/PnlUIBar/HBoxPortraits").SetToFlashIntensely(unitData.ID, lvlUpFloatLbl);
             GetNode<HUD>("HUD").LogEntry(String.Format("{0} gains a new level.", unitData.Name));
             GetNode<HUD>("HUD").OnAttributePointsUnspent();
+            PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/LevelUp.wav"));
         }
 
         // Update stats
@@ -401,12 +403,13 @@ public class StageWorld : Stage
         {
             OnFoundItems(itemrewards);
         }
-
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/QuestComplete.wav"));
         OnExperienceGained(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData);
     }
 
     private void OnBtnJournalPressed()
     {
+        GetNode<AudioData>("HUD/CtrlTheme/PnlUIBar/HBoxBtns/BtnJournal/AudioData").StartPlaying = true;
         GetNode<HUD>("HUD").PauseCommon(true);
         GetNode<HUD>("HUD").Pausable = false;
         GetNode<Journal>("HUD/CtrlTheme/DialogueControl/Journal").ShowJournal(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData);
@@ -458,7 +461,8 @@ public class StageWorld : Stage
             GD.Print("2 many minions! something went wrong! this companion shouldntbe trying to join! StageWorld.cs OnCompanionJoin");
             return;
         }
-
+        
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/CompanionJoin.wav"));
         unitDataSignalWrapper.CurrentUnitData.Hostile = false;
         unitDataSignalWrapper.CurrentUnitData.Companion = true;
         GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitDataSignalWrapper.CurrentUnitData.ID).UpdateFromUnitData();
@@ -477,6 +481,7 @@ public class StageWorld : Stage
             GD.Print("error in StageWorld.cs OnDismissCompanion: is not a companion");
             return;
         }
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/CompanionLeave.wav"));
         unitDataSignalWrapper.CurrentUnitData.StopCompanion();
         GetNode<LevelManager>("LevelManager").GetNPCManagerInTree().GetNPCFromUnitDataID(unitDataSignalWrapper.CurrentUnitData.ID).UpdateFromUnitData();
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions.Remove(unitDataSignalWrapper.CurrentUnitData);
@@ -592,6 +597,7 @@ public class StageWorld : Stage
         {
              customBattleText = "{0} attacks!\n\nPrepare for battle.";
         }
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/EnemyEncountered.wav"));
         GetNode<Label>("HUD/CtrlTheme/LblMainQuest").Visible = false;
         GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Start(target.CurrentUnitData, String.Format(customBattleText, target.CurrentUnitData.Name));
         GetNode<HUD>("HUD").PauseCommon(true);
@@ -692,6 +698,7 @@ public class StageWorld : Stage
         // do victory stuff
         // GD.Print(enemyDefeated.CurrentUnitData.Name);
 
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/BattleVictory.wav"));
         GetNode<Label>("HUD/CtrlTheme/LblMainQuest").Visible = true;
         GetNode<HUD>("HUD").LogEntry(String.Format("Battle with {0} ended in victory.", enemyDefeated.CurrentUnitData.Name));
         GetNode<PnlBattleVictory>("HUD/CtrlTheme/PnlBattleVictory").Start(enemyDefeated,
@@ -702,7 +709,17 @@ public class StageWorld : Stage
 
     public void OnDefeat()
     {
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/BattleDefeat.wav"));
         GetNode<HUD>("HUD").ShowDefeatMenu();
+    }
+
+    public async void PlaySingleSoundEffect(AudioStreamSample sfx)
+    {
+        GetNode<AudioData>("AudioMusic").UpdateVolume(-20);
+        GetNode<AudioData>("AudioSfx").Streams = new List<AudioStream>() {sfx};
+        GetNode<AudioData>("AudioSfx").StartPlaying = true;
+        await ToSignal(GetNode<AudioData>("AudioSfx"), nameof(AudioData.Finished));
+        GetNode<AudioData>("AudioMusic").UpdateVolume(-10);
     }
 
     // public void OnPortraitBtnPressed(int index)
@@ -834,6 +851,8 @@ public class StageWorld : Stage
         // GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         // GD.Print("player tyime: ", player.CurrentUnitData.Time);
         GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").Seek(player.CurrentUnitData.Time, true);
+        player.GetNode<Particles2D>("Sprite/KhepriSunParticles").Visible = 
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.DayNightCycle == "DayNight";
         // GD.Print(GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition);
         OnCompanionChanged();
 
@@ -886,7 +905,8 @@ public class StageWorld : Stage
     {
         // show save animation - need to know how to detect progress of save first
         // GetNode<HUD>("HUD").PlayProgressAnim("Saving...");
-        
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/GameSaved.wav"));
+
         // update the time before saving
         GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Time = GetNode<AnimationPlayer>("CanvasLayer/AnimDayNight").CurrentAnimationPosition; // start at 8am
         

@@ -8,6 +8,14 @@ public class MovingUnitActionState : UnitActionState
 	{
 		this.Unit = unit;
 		// GD.Print("entering moving action state");
+        if (this.Unit.HasNode("AudioData"))
+        {
+            // if (!this.Unit.GetNode<AudioData>("AudioData").Playing())
+            // {
+            this.Unit.GetNode<AudioData>("AudioData").Loop = true;
+            this.Unit.GetNode<AudioData>("AudioData").StartPlaying = true;
+            // }
+        }
 	}
     
 	public MovingUnitActionState()
@@ -21,8 +29,16 @@ public class MovingUnitActionState : UnitActionState
         base.Update(delta);
 		this.Unit.SetActionAnim(this.Unit.WalkAnimationsByDirection[this.Unit.DirectionAnim]);
 
-		if (this.Unit.CurrentVelocity.LengthSquared() <= 1)
+
+		if (this.Unit.CurrentVelocity.LengthSquared() <= (this.Unit.GetControlState() == Unit.ControlState.Player ? 1 : 13000))
 		{
+            if (this.Unit.HasNode("AudioData"))
+            {
+                // if (this.Unit.GetNode<AudioData>("AudioData").Playing())
+                // {
+                    this.Unit.GetNode<AudioData>("AudioData").StopLastSoundPlayer();
+                // }
+            }
 			this.Unit.SetActionState(Unit.ActionState.Idle);
 		}
 		this.Unit.MoveAndSlide(this.Unit.CurrentVelocity);
