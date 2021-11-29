@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Interface/Labels/FloatScoreLabel/LblFloatScore.cs" type="Script" id=1]
-[ext_resource path="res://Interface/Fonts/from the internet/new_dynamicfo2nt.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Interface/Themes/LabelThemeGWJ35.tres" type="Theme" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
 
 [node name="LblFloatScore" type="Label"]
 anchor_right = 1.0
@@ -11,11 +16,10 @@ margin_top = 382.0
 margin_right = -1484.0
 margin_bottom = -640.0
 theme = ExtResource( 3 )
-custom_fonts/font = ExtResource( 2 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.14902, 0.0862745, 0.0117647, 1 )
 text = "+1 Maximum Health"
-align = 1
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-_fadeSpeed = 0.25

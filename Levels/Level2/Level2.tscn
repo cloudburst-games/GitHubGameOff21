@@ -55,6 +55,12 @@ _potionEquipped1 = 4
 _weaponEquipped = 10
 _armourEquipped = 11
 
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Setna"]
+position = Vector2( 134, 94 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Setna"]
+position = Vector2( -166, -112 )
+
 [node name="Mari" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 244.401, 578.156 )
 ID = "Meri"
@@ -77,10 +83,10 @@ _minions = {
 position = Vector2( 64.693, 172.35 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Mari"]
-position = Vector2( -119.38, -67.7083 )
+position = Vector2( -145.38, -131.708 )
 
 [node name="Bandit5" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -94.1475, 191.966 )
+position = Vector2( -38.1475, 195.966 )
 _customBattleText = "A scarab approaches you. Arms outstretched, she holds flowers in her claws. You smile. Finally, the welcome you deserve. As you approach, she crumples the petals between her pincers, and summons the spirits of the damned to rise up and encircle you both!"
 _defeatMessage = "A troubling victory. You prod your enemy's corpse and the scarab skin falls off easily. Beneath it you find a dog-faced human wearing the carcass of your deceased bretheren. What trickery is this?"
 ID = "Bandit5"
@@ -92,7 +98,7 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
-_startingBehaviour = 0
+_startingBehaviour = 2
 _minions = {
 0: 0
 }
@@ -102,6 +108,12 @@ _itemsHeld = [ 6 ]
 _potionEquipped1 = 1
 _potionEquipped2 = 3
 _weaponEquipped = 11
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit5"]
+position = Vector2( 4.00001, 134 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit5"]
+position = Vector2( 14, -130 )
 
 [node name="Bandit6" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 1152.14, 824.624 )
@@ -116,7 +128,7 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
-_startingBehaviour = 0
+_startingBehaviour = 2
 _minions = {
 0: 0
 }
@@ -126,6 +138,12 @@ _itemsHeld = [ 4 ]
 _potionEquipped1 = 1
 _potionEquipped2 = 3
 _weaponEquipped = 11
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit6"]
+position = Vector2( -194, -28 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit6"]
+position = Vector2( 148, -16 )
 
 [node name="Bandit7" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( 15.2595, 1267.01 )
@@ -140,7 +158,7 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
-_startingBehaviour = 0
+_startingBehaviour = 2
 _minions = {
 0: 0
 }
@@ -151,6 +169,12 @@ _potionEquipped1 = 1
 _potionEquipped2 = 3
 _weaponEquipped = 10
 _armourEquipped = 11
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
+position = Vector2( 0, 136 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
+position = Vector2( 2, -158 )
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -234,7 +258,7 @@ position = Vector2( 370.306, 628.662 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 7, 12 ]
 _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Meri's Shop of Merriments"
-_buyMessage = "Hmph. Shabby thing. I'll take it of your hands for {0} gold."
+_buyMessage = "Hmph. Shabby thing. I'll take it off your hands for {0} gold."
 _stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]

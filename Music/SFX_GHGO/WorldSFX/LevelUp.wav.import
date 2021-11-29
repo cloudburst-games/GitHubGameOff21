@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/LevelUp.wav-ee1a25d83365c361cac381345e96e8dd.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/WorldSFX/LevelUp.wav"
+dest_files=[ "res://.import/LevelUp.wav-ee1a25d83365c361cac381345e96e8dd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

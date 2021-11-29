@@ -66,6 +66,7 @@ public class HBoxPortraits : Control
             shaderMaterial.SetShaderParam("flash_colour_original", new Color(.5f,.5f,.5f));
             shaderMaterial.SetShaderParam("flash_depth", 1f);
             _unitBtnsByID[id].Material = shaderMaterial;
+            lvlUpFloatLbl.RectScale = new Vector2(3,3);
             _unitBtnsByID[id].AddChild(lvlUpFloatLbl);
             lvlUpFloatLbl.Start(_unitBtnsByID[id].RectGlobalPosition);
         }

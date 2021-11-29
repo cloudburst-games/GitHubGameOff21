@@ -76,6 +76,7 @@ _startingBools = {
 "Hostile": true,
 "InitiatesDialogue": false
 }
+_startingBehaviour = 2
 _minions = {
 0: 0
 }
@@ -83,6 +84,12 @@ _physicalDamageRange = 1.0
 _startingGold = 10
 _itemsHeld = [ 1, 4 ]
 _weak = true
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit0"]
+position = Vector2( 160, 120 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit0"]
+position = Vector2( -209, -66 )
 
 [node name="Child0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -699.942, 889.56 )
@@ -92,9 +99,16 @@ PortraitPath = ExtResource( 12 )
 PortraitPathSmall = ExtResource( 10 )
 _body = ExtResource( 11 )
 _startDirection = 6
+_startingBehaviour = 2
 _minions = {
 0: 0
 }
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Child0"]
+position = Vector2( -1, 121 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Child0"]
+position = Vector2( -20, -162 )
 
 [node name="Sphinx" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -250.673, 683.642 )
@@ -116,6 +130,7 @@ PortraitPath = ExtResource( 20 )
 PortraitPathSmall = ExtResource( 19 )
 _body = ExtResource( 11 )
 _startDirection = 4
+_startingBehaviour = 2
 _minions = {
 0: 0
 }
@@ -127,6 +142,12 @@ _itemsHeld = [ 1 ]
 _potionEquipped1 = 1
 _weaponEquipped = 9
 _armourEquipped = 11
+
+[node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Thoth"]
+position = Vector2( 193, -51 )
+
+[node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Thoth"]
+position = Vector2( -137, 36 )
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -178,7 +199,7 @@ position = Vector2( -46.8238, 501.21 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
 _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Travelling Trifles"
-_buyMessage = "Hmph. Tawdry item. I'll take it of your hands for {0} gold."
+_buyMessage = "Hmph. Tawdry item. I'll take it off your hands for {0} gold."
 _stinginess = 1.5
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
