@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/GivePotion.wav-a9dc408844dac810d5f864faf6984943.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/WorldSFX/GivePotion.wav"
+dest_files=[ "res://.import/GivePotion.wav-a9dc408844dac810d5f864faf6984943.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

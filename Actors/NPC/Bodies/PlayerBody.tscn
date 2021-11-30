@@ -544,7 +544,7 @@ region_rect = Rect2( 3312, 1656, 552, 552 )
 
 [node name="KhepriSunParticles" type="Particles2D" parent="Sprite"]
 material = SubResource( 1 )
-position = Vector2( 0, -34.3362 )
+position = Vector2( 0, -207.67 )
 amount = 75
 randomness = 1.0
 process_material = SubResource( 4 )

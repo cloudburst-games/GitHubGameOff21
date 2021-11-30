@@ -161,6 +161,7 @@ public class DialogueControl : Control
 		if ((bool)InkStory.GetVariable("journal_updated")==true)
 		{
 			Journal.UpdateJournal();
+			EmitSignal(nameof(JournalUpdatedSignal));
 			InkStory.SetVariable("journal_updated",false);
 		}
 		if ((bool)InkStory.GetVariable("main_quest_updated")==true)

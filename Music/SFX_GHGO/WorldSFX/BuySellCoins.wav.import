@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BuySellCoins.wav-589343af6e25c7cb29fe6f8f881ac64c.sample"
+
+[deps]
+
+source_file="res://Music/SFX_GHGO/WorldSFX/BuySellCoins.wav"
+dest_files=[ "res://.import/BuySellCoins.wav-589343af6e25c7cb29fe6f8f881ac64c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

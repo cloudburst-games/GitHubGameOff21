@@ -65,6 +65,7 @@ public class Journal : MarginContainer
 		JournalLabel.Text += (string)DialogueControl.InkStory.GetVariable("journal_text");
         JournalLabel.Text += "\n";
         DialogueControl.InkStory.SetVariable("journal_text","");
+        
 	}
 
 
