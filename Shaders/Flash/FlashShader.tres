@@ -20,5 +20,5 @@ void fragment()
 [resource]
 shader = SubResource( 1 )
 shader_param/speed = 12.0
-shader_param/flash_colour_original = Color( 1, 1, 1, 1 )
-shader_param/flash_depth = 0.25
+shader_param/flash_colour_original = Color( 0.921569, 1, 0, 1 )
+shader_param/flash_depth = 1.0

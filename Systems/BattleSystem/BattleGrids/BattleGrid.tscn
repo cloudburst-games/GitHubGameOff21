@@ -29,8 +29,8 @@ void fragment()
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/speed = 6.0
-shader_param/flash_colour_original = Color( 0, 1, 0.670588, 1 )
+shader_param/speed = 12.0
+shader_param/flash_colour_original = Color( 0.921569, 1, 0, 1 )
 shader_param/flash_depth = 1.0
 
 [sub_resource type="Shader" id=3]
@@ -83,7 +83,7 @@ mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
 format = 1
-tile_data = PoolIntArray( 196616, 4, 0, 196617, 4, 0, 262152, 4, 0, 262153, 4, 0 )
+tile_data = PoolIntArray( 131077, 4, 0, 196616, 4, 0, 196617, 4, 0, 262151, 4, 0, 262152, 4, 0, 262153, 4, 0 )
 
 [node name="TileMapShadedTilesLong" type="TileMap" parent="."]
 material = ExtResource( 1 )
@@ -91,7 +91,7 @@ mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
 format = 1
-tile_data = PoolIntArray( 65546, 6, 0, 65547, 6, 0, 131083, 6, 0 )
+tile_data = PoolIntArray( 65546, 6, 0, 65547, 6, 0, 131083, 6, 0, 196614, 4, 0, 196615, 4, 0 )
 
 [node name="TileMapShadedTilesPath" type="TileMap" parent="."]
 material = SubResource( 4 )
@@ -99,7 +99,7 @@ mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
 format = 1
-tile_data = PoolIntArray( -196601, 6, 0, -196600, 6, 0, -196599, 6, 0, -131064, 6, 0, -131063, 6, 0, -65530, 6, 0, -65529, 6, 0, -65528, 6, 0, -65527, 6, 0 )
+tile_data = PoolIntArray( -196601, 6, 0, -196600, 6, 0, -196599, 6, 0, -131064, 6, 0, -131063, 6, 0, -65532, 4, 0, -65530, 6, 0, -65529, 6, 0, -65528, 6, 0, -65527, 6, 0 )
 
 [node name="TileMapShadedTilesAOE" type="TileMap" parent="."]
 material = SubResource( 5 )
