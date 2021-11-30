@@ -865,6 +865,7 @@ margin_top = 14.0
 margin_right = 140.0
 margin_bottom = 46.0
 text = "The end..."
+align = 1
 
 [node name="LblBody0" type="Label" parent="HUD/CtrlTheme/PnlVictory"]
 visible = false

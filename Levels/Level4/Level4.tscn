@@ -48,7 +48,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 2
-_combatLevel = 2
+_combatLevel = 3
 _minions = {
 0: 1
 }
@@ -78,7 +78,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 0
-_combatLevel = 2
+_combatLevel = 3
 _minions = {
 0: 0
 }
