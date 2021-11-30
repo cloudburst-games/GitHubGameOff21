@@ -22,6 +22,8 @@ public class BattleGrid : Control
         GetNode<TileMap>("TileMapShadedTilesLong").Clear();
         GetNode<TileMap>("TileMapShadedTilesPath").Clear();
         GetNode<TileMap>("TileMapShadedTilesAOE").Clear();
+        GetNode<TileMap>("TileMapAll").Visible = GetNode<TileMap>("TileMapGreenConsistencyDisplay").Visible = 
+            GetNode<TileMap>("TileMapDisabledDisplay").Visible = false;
 
     }
 

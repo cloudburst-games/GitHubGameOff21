@@ -42,7 +42,7 @@ PortraitPathSmall = ExtResource( 12 )
 _body = ExtResource( 13 )
 _startDirection = 4
 _startingBehaviour = 2
-_combatLevel = 5
+_combatLevel = 6
 _minions = {
 0: 2
 }

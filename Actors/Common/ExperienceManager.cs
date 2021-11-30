@@ -12,15 +12,15 @@ public class ExperienceManager
 
     public float GetTotalExperienceFromVictory(float experienceValueOfDefeated, int numOfDefeated, int numOfCompanions)
     {
-        // add 5 xp per defeated opponent
-        experienceValueOfDefeated += numOfDefeated*5;
+        // add 6 xp per defeated opponent
+        experienceValueOfDefeated += numOfDefeated*6;
         // party bonus
         for (int i = 0; i < numOfCompanions; i++)
         {
             experienceValueOfDefeated*=1.1f;
         }
-        // divide by 1.2
-        return (float)Math.Ceiling(experienceValueOfDefeated/1.2f);
+        // divide by 1.2?
+        return experienceValueOfDefeated;// (float)Math.Ceiling(experienceValueOfDefeated/1.2f);
     }
 
     public float GetExperienceNeededForNextLevel(int currentLevel)

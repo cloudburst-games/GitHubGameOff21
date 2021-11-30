@@ -18,6 +18,9 @@ make food restore 15 health d
 log dot damage d
 is leadership bonus bugged? n
 
+
+redo terrain ... for bahuf
+
 PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/EnemyEncountered.wav"));
 
 

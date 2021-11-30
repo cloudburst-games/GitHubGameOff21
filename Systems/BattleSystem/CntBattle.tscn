@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Systems/BattleSystem/CntBattle.cs" type="Script" id=1]
 [ext_resource path="res://Systems/BattleSystem/BattleHUD.cs" type="Script" id=3]
@@ -168,6 +168,9 @@ VScrollBar/styles/grabber_pressed = null
 VScrollBar/styles/scroll = SubResource( 15 )
 VScrollBar/styles/scroll_focus = null
 
+[sub_resource type="DynamicFont" id=21]
+font_data = ExtResource( 18 )
+
 [sub_resource type="StyleBoxTexture" id=18]
 modulate_color = Color( 1, 1, 1, 0 )
 
@@ -225,7 +228,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -633.0
 margin_top = -22.0
-margin_right = 488.0
+margin_right = 486.0
 margin_bottom = 25.0
 custom_fonts/font = ExtResource( 16 )
 text = "This is where the log goesasdas asd as das das das das das das das as dsa dsa dfghdfrg drfrgdf gdf gdf gdf gdf gdfgdfgdf gdf gdfgdfgdf gdfgdfgdfgdfgdf gdfg dfg"
@@ -241,10 +244,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -92.3674
-margin_top = -45.9136
-margin_right = -3.36743
-margin_bottom = -2.91357
+margin_left = -79.5339
+margin_top = -45.633
+margin_right = -1.53394
+margin_bottom = -0.632961
 text = "Menu"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -255,11 +258,27 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -188.779
-margin_top = -45.9136
-margin_right = -99.7786
-margin_bottom = -2.91357
+margin_left = -156.509
+margin_top = -46.0
+margin_right = -79.5093
+margin_bottom = -1.0
 text = "Log"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnToggleGrid" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -234.0
+margin_top = -46.0
+margin_right = -157.0
+margin_bottom = -1.0
+custom_fonts/font = SubResource( 21 )
+text = "Grid On"
+clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -339,17 +358,27 @@ custom_styles/disabled = SubResource( 18 )
 position = Vector2( 25, 20 )
 texture = ExtResource( 9 )
 
+[node name="Panel" type="Panel" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
+margin_left = 1446.0
+margin_top = 1.0
+margin_right = 1540.0
+margin_bottom = 48.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HBoxAnimSpeed" type="HBoxContainer" parent="Panel/BattleHUD/CtrlTheme/PnlUI"]
 margin_left = 1450.0
 margin_top = 2.0
-margin_right = 1723.0
+margin_right = 1686.0
 margin_bottom = 47.0
+custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LblSpeed" type="Label" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_right = 94.0
+margin_right = 88.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 12.0
@@ -360,8 +389,8 @@ valign = 1
 autowrap = true
 
 [node name="BtnSpeed1" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 98.0
-margin_right = 130.0
+margin_left = 88.0
+margin_right = 118.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -369,8 +398,8 @@ custom_fonts/font = SubResource( 19 )
 text = "1"
 
 [node name="BtnSpeed2" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 134.0
-margin_right = 166.0
+margin_left = 118.0
+margin_right = 147.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -378,8 +407,8 @@ custom_fonts/font = SubResource( 19 )
 text = "2"
 
 [node name="BtnSpeed3" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 170.0
-margin_right = 201.0
+margin_left = 147.0
+margin_right = 177.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -387,8 +416,8 @@ custom_fonts/font = SubResource( 19 )
 text = "3"
 
 [node name="BtnSpeed4" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 205.0
-margin_right = 237.0
+margin_left = 177.0
+margin_right = 206.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -396,8 +425,8 @@ custom_fonts/font = SubResource( 19 )
 text = "4"
 
 [node name="BtnSpeed5" type="Button" parent="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxAnimSpeed"]
-margin_left = 241.0
-margin_right = 273.0
+margin_left = 206.0
+margin_right = 236.0
 margin_bottom = 45.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
@@ -650,6 +679,7 @@ text = "Quit to Main Menu"
 
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnMenu" to="." method="OnBtnMenuPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnLog" to="Panel/BattleHUD" method="ShowLog"]
+[connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/BtnToggleGrid" to="." method="OnBtnToggleGridPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlUI/HBoxActions/BtnEndTurn" to="." method="OnBtnEndTurnPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/BtnEndTest" to="." method="OnBtnEndTestPressed"]
 [connection signal="pressed" from="Panel/BattleHUD/CtrlTheme/PnlPotion/BtnCancel" to="." method="OnPnlPotionBtnCancelPressed"]

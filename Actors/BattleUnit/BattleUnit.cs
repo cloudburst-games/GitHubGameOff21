@@ -70,8 +70,9 @@ public class BattleUnit : Node2D
         body.QueueFree();
     }
 
-    public void PlaySoundEffect(AudioStreamSample sound)
+    public void PlaySoundEffect(AudioStreamSample sound, AudioManager.AudioBus bus = AudioManager.AudioBus.Effects)
     {
+        GetNode<AudioData>("AudioData").Bus = bus;
         GetNode<AudioData>("AudioData").Streams = new List<AudioStream>() {sound};
         GetNode<AudioData>("AudioData").StartPlaying = true;
     }

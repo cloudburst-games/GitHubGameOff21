@@ -5,7 +5,7 @@
 
 [node name="BattleUnitInfoPanel" type="Panel"]
 margin_right = 799.0
-margin_bottom = 435.0
+margin_bottom = 441.0
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -17,16 +17,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -374.5
-margin_top = -198.5
+margin_top = -203.54
 margin_right = 378.5
-margin_bottom = 198.5
+margin_bottom = 207.46
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Panel" type="Panel" parent="VBoxLabels"]
 margin_right = 753.0
-margin_bottom = 76.0
+margin_bottom = 73.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.5
@@ -63,9 +63,9 @@ __meta__ = {
 }
 
 [node name="HBoxStats" type="Control" parent="VBoxLabels"]
-margin_top = 80.0
+margin_top = 77.0
 margin_right = 753.0
-margin_bottom = 262.0
+margin_bottom = 252.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.95
 
@@ -107,9 +107,9 @@ __meta__ = {
 }
 
 [node name="LblEquipment" type="Label" parent="VBoxLabels"]
-margin_top = 266.0
+margin_top = 256.0
 margin_right = 753.0
-margin_bottom = 327.0
+margin_bottom = 314.0
 size_flags_vertical = 7
 size_flags_stretch_ratio = 2.0
 text = "Equipped: "
@@ -119,9 +119,9 @@ autowrap = true
 clip_text = true
 
 [node name="LblSpellsLearned" type="Label" parent="VBoxLabels"]
-margin_top = 331.0
+margin_top = 318.0
 margin_right = 753.0
-margin_bottom = 362.0
+margin_bottom = 348.0
 size_flags_vertical = 7
 text = "Effects: asdasdas as das das dasdasd as das dsa dasdasdasdas dsa dsadasd asd asd"
 align = 1
@@ -130,10 +130,11 @@ autowrap = true
 clip_text = true
 
 [node name="LblEffects" type="Label" parent="VBoxLabels"]
-margin_top = 366.0
+margin_top = 352.0
 margin_right = 753.0
-margin_bottom = 397.0
+margin_bottom = 411.0
 size_flags_vertical = 7
+size_flags_stretch_ratio = 2.0
 text = "Effects: asdasdas as das das dasdasd as das dsa dasdasdasdas dsa dsadasd asd asd"
 align = 1
 valign = 1

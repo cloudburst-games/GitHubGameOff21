@@ -157,6 +157,7 @@ public class HUD : CanvasLayer
         {
             btn.Disabled = pause;
         }
+        GetNode<Button>("CtrlTheme/PnlUIBar/PnlEvents/HBoxContainer/BtnEvents").Disabled = pause;
     }
 
     public void ShowDefeatMenu()

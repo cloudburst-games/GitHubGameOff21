@@ -140,12 +140,12 @@ public class SpellEffectManager : Reference
                 DurationRounds = 6,
                 Magnitude = 2,
                 AreaSquares = 0,
-                ManaCost = 8f,
+                ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.HealthRegen, BattleUnitData.DerivedStat.ManaRegen, BattleUnitData.DerivedStat.MagicResist},
                 Target = SpellEffect.TargetMode.Ally,
                 ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/PreservationEffect.tscn"),
                 IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/Preservation.PNG"),
-                ToolTip = "Boost the resilience of an ally for 5 rounds! Cost 8."
+                ToolTip = "Boost the resilience of an ally for 5 rounds! Cost 6."
             }}
             },
             {SpellMode.WeighingOfTheHeart, new List<SpellEffect>(){ new SpellEffect(){
@@ -174,7 +174,7 @@ public class SpellEffectManager : Reference
                     Target = SpellEffect.TargetMode.Hostile,
                     ArtEffectScn = GD.Load<PackedScene>("res://Effects/SpellEffects/GazeOfTheDeadEffect.tscn"),
                     IconTex = GD.Load<Texture>("res://Interface/Icons/SpellIconPlaceholders/ghgo21spelliconplaceholders/GazeOfTheDead.PNG"),
-                    ToolTip = "Paralyse a foe, dealing damage and causing them to lose their next turn! Range 3, Cost 16."
+                    ToolTip = "Paralyse a foe at close range, dealing damage and causing them to lose their next turn! Range 3, Cost 16."
                 },
                 new SpellEffect(){
                     Name = "Gaze of the Dead",
@@ -207,7 +207,7 @@ public class SpellEffectManager : Reference
                     Name = "Lunar Blast",
                     RangeSquares = 6,
                     DurationRounds = 0,
-                    Magnitude = 1,
+                    Magnitude = 2,
                     AreaSquares = 1,
                     ManaCost = 10f,
                     TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
@@ -284,7 +284,7 @@ public class SpellEffectManager : Reference
                 Name = "Peril of Osiris",
                 RangeSquares = 5,
                 DurationRounds = 4,
-                Magnitude = -2,
+                Magnitude = -3,
                 AreaSquares = 0,
                 ManaCost = 6f,
                 TargetStats = new List<BattleUnitData.DerivedStat> {BattleUnitData.DerivedStat.Health},
@@ -503,20 +503,22 @@ public class SpellEffectManager : Reference
                 _effectsOngoing += 1;
             }
         }
-        bool furtherCastingToHappen = _effectsOngoing > 0;
+        // bool furtherCastingToHappen = _effectsOngoing > 0;
         foreach (BattleUnit unit in unitsAtArea)
         {
             if (unit.CurrentBattleUnitData.PlayerFaction == origin.CurrentBattleUnitData.PlayerFaction)
             {
                 ApplyBuffDebuff(origin, unit, unitsAtArea, unit.GlobalPosition, SpellMode.LunarBlast, 
                     SpellEffects[SpellMode.LunarBlast][1], multiEffect:true);
+                EmitSignal(nameof(AnnouncingSpell), String.Format("{0} absorbs health from Lunar Blast!",
+                        unit.CurrentBattleUnitData.Name));
             }
         }
         // if no creatures to heal, then don't need to wait        
-        if (furtherCastingToHappen)
-        {
-            await ToSignal(this, nameof(MultiSpellEffectFinished));
-        }
+        // if (furtherCastingToHappen)
+        // {
+        //     await ToSignal(this, nameof(MultiSpellEffectFinished));
+        // }
 
         // wait for caster to finish their animation
         if (origin.CurrentActionStateMode != BattleUnit.ActionStateMode.Idle)
@@ -883,33 +885,36 @@ public class SpellEffectManager : Reference
         PlayStaticAnim(effect, targetWorldPos);
         
         // do the spell effect
-        if (!target.CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
+        if (target.CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
         {
-            bool casterIsAlly = origin.CurrentBattleUnitData.PlayerFaction == target.CurrentBattleUnitData.PlayerFaction;
-            float finalMagnitude = effect.Magnitude + 
-                    ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/3) 
-                        * (casterIsAlly ? 1 : -1));
-            if (spell == SpellMode.WeighingOfTheHeart)
-            {
-                finalMagnitude = Math.Max(finalMagnitude, -1 * (target.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed]/1.5f));// finalMagnitude);
-                finalMagnitude = (float)Math.Round(finalMagnitude, 1);
-            }
-            // GD.Print("effect magnitude ", effect.Magnitude);
-            // GD.Print("spelldamage help ", ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/2) 
-                        // * (casterIsAlly ? 1 : -1)));
-            // GD.Print("finalMagnitude magnitude ", finalMagnitude);
-            foreach (BattleUnitData.DerivedStat stat in effect.TargetStats)
-            {
-                target.CurrentBattleUnitData.Stats[stat] = target.CurrentBattleUnitData.Stats[stat] + finalMagnitude;// += finalMagnitude;
-            }
-            if (effect.DurationRounds > 0)
-            {
-                target.CurrentBattleUnitData.CurrentStatusEffects.Add(spell, 
-                    new Tuple<int,float>(effect.DurationRounds,finalMagnitude));
-            }
-            
-            target.UpdateHealthManaBars();
+            ReverseEffect(target, spell, target.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2);
+            target.CurrentBattleUnitData.CurrentStatusEffects.Remove(spell);
         }
+        bool casterIsAlly = origin.CurrentBattleUnitData.PlayerFaction == target.CurrentBattleUnitData.PlayerFaction;
+        float finalMagnitude = effect.Magnitude + 
+                ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/3) 
+                    * (casterIsAlly ? 1 : -1));
+        if (spell == SpellMode.WeighingOfTheHeart)
+        {
+            finalMagnitude = Math.Max(finalMagnitude, -1 * (target.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Speed]/1.5f));// finalMagnitude);
+            finalMagnitude = (float)Math.Round(finalMagnitude, 1);
+        }
+        // GD.Print("effect magnitude ", effect.Magnitude);
+        // GD.Print("spelldamage help ", ((float) Math.Floor(origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.SpellDamage]/2) 
+                    // * (casterIsAlly ? 1 : -1)));
+        // GD.Print("finalMagnitude magnitude ", finalMagnitude);
+        foreach (BattleUnitData.DerivedStat stat in effect.TargetStats)
+        {
+            target.CurrentBattleUnitData.Stats[stat] = target.CurrentBattleUnitData.Stats[stat] + finalMagnitude;// += finalMagnitude;
+        }
+        if (effect.DurationRounds > 0)
+        {
+            target.CurrentBattleUnitData.CurrentStatusEffects.Add(spell, 
+                new Tuple<int,float>(effect.DurationRounds,finalMagnitude));
+        }
+        
+        target.UpdateHealthManaBars();
+        
         if (!multiEffect)
         {
             origin.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Mana] -= effect.ManaCost;

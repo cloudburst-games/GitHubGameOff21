@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Interface/Themes/Test.tres" type="StyleBox" id=1]
 [ext_resource path="res://Interface/PartyManagement/coin_placeholder.png" type="Texture" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://Interface/Themes/0TabFG.tres" type="StyleBox" id=9]
 [ext_resource path="res://Interface/Fonts/Oldenburg/oldenburg16.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Systems/AudioManager/AudioData.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Music/SFX_GHGO/WorldSFX/BuySellCoins.wav" type="AudioStream" id=12]
 
 [sub_resource type="DynamicFont" id=1]
 size = 20
@@ -346,3 +348,8 @@ text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="AudioDataBuySellCoins" parent="." instance=ExtResource( 11 )]
+Streams = [ ExtResource( 12 ) ]
+SoundType = 2
+SoundParent = NodePath("..")

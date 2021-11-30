@@ -306,6 +306,7 @@ public class PnlShopScreen : Panel
             _activeBuyerUnitData.CurrentBattleUnitData.ItemsHeld.Remove(item.CurrentItemMode);
             UpdateGoldDisplay(_currentBuyersUnitData[0].Gold);
             UpdateInventoryFromStock(_shopData.ItemsStocked, GetNode<PnlInventory>("TabContainer/Buy/PnlInventoryBuy"));
+            GetNode<AudioData>("AudioDataBuySellCoins").StartPlaying = true;
         }
         // buying items
         else
@@ -320,6 +321,7 @@ public class PnlShopScreen : Panel
                 _activeBuyerUnitData.CurrentBattleUnitData.ItemsHeld.Add(item.CurrentItemMode);
                 UpdateGoldDisplay(_currentBuyersUnitData[0].Gold);
                 UpdateInventoryFromStock(_activeBuyerUnitData.CurrentBattleUnitData.ItemsHeld, GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell"));
+                GetNode<AudioData>("AudioDataBuySellCoins").StartPlaying = true;
             }
             else
             {

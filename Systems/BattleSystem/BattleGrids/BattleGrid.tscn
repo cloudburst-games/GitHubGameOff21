@@ -10,7 +10,7 @@
 [ext_resource path="res://Systems/BattleSystem/BattleGridPlaceholder.png" type="Texture" id=8]
 [ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_05.png" type="Texture" id=9]
 
-[sub_resource type="Shader" id=1]
+[sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 
 uniform float speed : hint_range(0.0, 20.0);
@@ -27,8 +27,8 @@ void fragment()
 	COLOR = vec4(final_color.rgb, clamp(abs(alpha) + sprite_color.a, 0.0, 1.0));
 }"
 
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 shader_param/speed = 12.0
 shader_param/flash_colour_original = Color( 0.921569, 1, 0, 1 )
 shader_param/flash_depth = 1.0
@@ -50,13 +50,13 @@ void fragment()
 	COLOR = vec4(final_color.rgb, clamp(abs(alpha) + sprite_color.a, 0.0, 1.0));
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=6]
 shader = SubResource( 3 )
 shader_param/speed = 9.0
 shader_param/flash_colour_original = Color( 1, 0, 0, 0.403922 )
 shader_param/flash_depth = 2.0
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=7]
 shader = SubResource( 3 )
 shader_param/speed = 15.0
 shader_param/flash_colour_original = Color( 1, 0.960784, 0, 0.403922 )
@@ -78,7 +78,7 @@ __meta__ = {
 }
 
 [node name="TileMapShadedTiles" type="TileMap" parent="."]
-material = SubResource( 2 )
+material = SubResource( 5 )
 mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
@@ -94,7 +94,7 @@ format = 1
 tile_data = PoolIntArray( 65546, 6, 0, 65547, 6, 0, 131083, 6, 0, 196614, 4, 0, 196615, 4, 0 )
 
 [node name="TileMapShadedTilesPath" type="TileMap" parent="."]
-material = SubResource( 4 )
+material = SubResource( 6 )
 mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
@@ -102,7 +102,7 @@ format = 1
 tile_data = PoolIntArray( -196601, 6, 0, -196600, 6, 0, -196599, 6, 0, -131064, 6, 0, -131063, 6, 0, -65532, 4, 0, -65530, 6, 0, -65529, 6, 0, -65528, 6, 0, -65527, 6, 0 )
 
 [node name="TileMapShadedTilesAOE" type="TileMap" parent="."]
-material = SubResource( 5 )
+material = SubResource( 7 )
 mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )

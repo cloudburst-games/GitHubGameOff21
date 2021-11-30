@@ -24,6 +24,10 @@ public class BattleUnitActionState : Reference
     {
         BattleUnit.PlayActionAnim(animName);
         await ToSignal(BattleUnit.ActionAnim, "animation_finished");
+        if (animName == "Die")
+        {
+            BattleUnit.Visible = false;
+        }
         BattleUnit.EmitSignal(nameof(BattleUnit.CurrentActionCompleted));
         BattleUnit.SetActionState(BattleUnit.ActionStateMode.Idle);
     }

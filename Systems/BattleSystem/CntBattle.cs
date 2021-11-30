@@ -468,6 +468,7 @@ public class CntBattle : Control
             //end combat here
         }
 
+        SetSelectedAction(ActionMode.Move);
         while (!AreAllUnitsIdle())
         {
 
@@ -839,10 +840,18 @@ public class CntBattle : Control
         _pnlPotion.Visible = false;
         // remove item from inventory
         GetActiveBattleUnit().CurrentBattleUnitData.DeleteEquippedPotion(potionMode);
+        GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/GivePotion.wav"));
         // GetActiveBattleUnit().CurrentBattleUnitData.Potions.Remove(potionMode);
         // use the spell code to apply the potion
         CurrentSpellEffectManager.ApplyPotionEffect(GetActiveBattleUnit(), _pnlPotion.PotionBuilder.BuildPotion(potionMode));
         // OnSpellEffectFinished is now called, ending the turn after LogEntry
+    }
+    public void OnBtnToggleGridPressed()
+    {
+        CurrentBattleGrid.GetNode<TileMap>("TileMapAll").Visible = CurrentBattleGrid.GetNode<TileMap>("TileMapGreenConsistencyDisplay").Visible = 
+            CurrentBattleGrid.GetNode<TileMap>("TileMapDisabledDisplay").Visible = !CurrentBattleGrid.GetNode<TileMap>("TileMapAll").Visible;
+        GetNode<Button>("Panel/BattleHUD/CtrlTheme/PnlUI/BtnToggleGrid").Text = CurrentBattleGrid.GetNode<TileMap>("TileMapAll").Visible ?
+            "Grid Off" : "Grid on";
     }
 
     public void OnPnlPotionBtnCancelPressed()
@@ -1313,7 +1322,7 @@ public class CntBattle : Control
             
             // do battle calculations
             float[] result = _battleInteractionHandler.CalculateMelee(GetActiveBattleUnit().CurrentBattleUnitData, targetUnit.CurrentBattleUnitData);
-            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/BugMelee.wav"));
+            GetActiveBattleUnit().PlaySoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/Battle_SFX/BugMelee.wav"), AudioManager.AudioBus.Voice);
             targetUnit.UpdateHealthManaBars();
             // _battleHUD.LogMeleeEntry(GetActiveBattleUnit().CurrentBattleUnitData.Name, targetUnit.CurrentBattleUnitData.Name, result,
             //     targetUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f);
@@ -1614,6 +1623,8 @@ public class CntBattle : Control
         {
             OnNewRound();
         }
+
+        SetSelectedAction(ActionMode.Move);
     }
 
     private void OnNewRound()
@@ -1698,8 +1709,10 @@ public class CntBattle : Control
                 if (spell == SpellEffectManager.SpellMode.PerilOfOsiris) // this is bad but its the only dot in the game so...
                 {
                     battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] += battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2;
-                    _battleHUD.LogEntry(String.Format("{0} takes {1} damage from Peril of Osiris.", battleUnit.CurrentBattleUnitData.Name, 
-                        battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2));
+                    _battleHUD.LogEntry(String.Format("{0} takes {1} damage from Peril of Osiris.{2}", battleUnit.CurrentBattleUnitData.Name, 
+                        Math.Abs(battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2),
+                        battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f ? 
+                        String.Format(" {0} perishes.", battleUnit.CurrentBattleUnitData.Name) : ""));
                     // i am here -- implement player death if health drop low
                     if (battleUnit.CurrentBattleUnitData.Stats[BattleUnitData.DerivedStat.Health] < 0.1f)
                     {
@@ -1721,8 +1734,11 @@ public class CntBattle : Control
                 );
                 if (battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item1 == 0)
                 {
-                    _battleHUD.LogEntry(String.Format("{0}'s {1} has expired.", battleUnit.CurrentBattleUnitData.Name, 
+                    if (spell != SpellEffectManager.SpellMode.LeadershipBonus)
+                    {
+                        _battleHUD.LogEntry(String.Format("{0}'s {1} has expired.", battleUnit.CurrentBattleUnitData.Name, 
                         CurrentSpellEffectManager.SpellEffects[spell][0].Name));
+                    }
                     CurrentSpellEffectManager.ReverseEffect(battleUnit, spell, battleUnit.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2);
                     battleUnit.CurrentBattleUnitData.CurrentStatusEffects.Remove(spell);
                 }
