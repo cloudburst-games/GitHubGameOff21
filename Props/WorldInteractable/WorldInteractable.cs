@@ -18,6 +18,8 @@ public class WorldInteractable : StaticBody2D
     [Export]
     private int _gold = 0;
     [Export]
+    private int _attributePoints = 0;
+    [Export]
     private Godot.Collections.Array<PnlInventory.ItemMode> _startingItems = new Godot.Collections.Array<PnlInventory.ItemMode>();
     [Export]
     private bool _dieOnActivate = false;
@@ -46,6 +48,7 @@ public class WorldInteractable : StaticBody2D
         CurrentWorldInteractableData.DieOnActivate = _dieOnActivate;
         CurrentWorldInteractableData.FlavourText = _flavourText;
         CurrentWorldInteractableData.EventText = _eventText;
+        CurrentWorldInteractableData.AttributePoints = _attributePoints;
 
         SetBody();
     }
@@ -207,14 +210,17 @@ public class WorldInteractable : StaticBody2D
         }
         CurrentWorldInteractableData.Active = false;
 
+        if (CurrentWorldInteractableData.DieOnActivate)
+        {
+            GetNode<CollisionPolygon2D>("CollisionPolygon2D").Disabled = true;
+        }
         GetNode<AnimationPlayer>("AnimationPlayer").Play("Activate");
         SetSpriteShader(false);
 
         EmitSignal(nameof(Interacted), new WorldInteractableDataSignalWrapper() {CurrentWorldInteractableData = this.CurrentWorldInteractableData});
 
-        if (_dieOnActivate)
+        if (CurrentWorldInteractableData.DieOnActivate)
         {
-            GetNode<CollisionPolygon2D>("CollisionPolygon2D").Disabled = true;
             await ToSignal(GetNode<AnimationPlayer>("AnimationPlayer"), "animation_finished");
             QueueFree();
         }

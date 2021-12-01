@@ -1,6 +1,7 @@
 Minimum targets
 
-- make a third weapon type
+- make a third weapon type d
+
 - integrate sprites - especially adventure map objects and their collision shapes
 - do a once over on level design - from levels 1 to 5
 - ( have shop only in level 2) (add adventure map objects as much as possible)
@@ -13,10 +14,14 @@ Minimum targets
 - then placeholder everything missing
 - then do another upload
 
-
+bonus:
+- show gold or item animation or xp animation or attributepoint animation bottom right on gaining
 
 ****
-
+Treasure chest plundered.
+Obelisk activated.
+Pyramid explored.
+Loyalist home visited.
 
 - integrate animations (multiple bodies...) d
 - team colours in battle - red and green d

@@ -328,6 +328,10 @@ public class LevelManager : Node2D
         {
             if (n is WorldInteractable worldInteractable)
             {
+                if (worldInteractable.CurrentWorldInteractableData.DieOnActivate && !worldInteractable.CurrentWorldInteractableData.Active)
+                {
+                    continue;
+                }
                 sourceLevelData.WorldInteractableDatas.Add(worldInteractable.CurrentWorldInteractableData);// GetShopData());
             }
         }

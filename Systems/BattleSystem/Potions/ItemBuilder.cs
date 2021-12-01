@@ -39,6 +39,8 @@ public class ItemBuilder
                 return new RustedMaceWeaponItem();
             case PnlInventory.ItemMode.SilverMace:
                 return new SilverMaceWeaponItem();
+            case PnlInventory.ItemMode.AshenMace:
+                return new AshenMaceWeaponItem();
             default:
                 return new WeaponItem();
         }
@@ -100,7 +102,7 @@ public class ItemBuilder
     }
     public bool IsWeapon(PnlInventory.ItemMode itemMode)
     {
-        return itemMode == PnlInventory.ItemMode.RustedMace || itemMode == PnlInventory.ItemMode.SilverMace;
+        return itemMode == PnlInventory.ItemMode.RustedMace || itemMode == PnlInventory.ItemMode.SilverMace || itemMode == PnlInventory.ItemMode.AshenMace;
     }
     public bool IsArmour(PnlInventory.ItemMode itemMode)
     {

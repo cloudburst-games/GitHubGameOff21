@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Level2/TerrainLevel2.tscn" type="PackedScene" id=2]
@@ -15,8 +15,13 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=13]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=14]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyGreen.tscn" type="PackedScene" id=15]
-[ext_resource path="res://Props/WorldInteractable/WorldInteractable.cs" type="Script" id=16]
+[ext_resource path="res://Doodads/WorldObstacles/PalmShrub1.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Doodads/WorldObstacles/PalmTree1.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Props/WorldInteractable/Bodies/ChestBody.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Props/WorldInteractable/Bodies/PyramidBody.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Props/WorldInteractable/Bodies/HomeBody.tscn" type="PackedScene" id=21]
+[ext_resource path="res://Doodads/WorldObstacles/PalmTreePair1.tscn" type="PackedScene" id=22]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 28.8777, 461.352, 219.004, 459.796, 233.837, 460.855, 238.075, 466.682, 19.8979, 471.454, -34.7368, 1455.16, 96.1069, 1417.02, 163.913, 1449.86, -1.89346, 1527.2, -93.0073, 1481.65, -1525.4, 767.041, -1364.89, 689.17, -1370.72, 714.066, -1376.02, 719.893, 206.821, 443.904, 179.275, 437.547, 105.642, 400.466, 143.783, 416.358, 28.3164, 439.464, 94.5416, 1046.72, 79.3883, 1026.51, 216.886, 1012.84, 233.307, 1035.08, 228.01, 1065.28, 219.004, 1080.11, -1377.8, 736.178, -1364.89, 846.501, -1362.65, 755.821, -1356.95, 841.733, -34.7368, 1431.85, 90.8095, 1395.3, -1344.23, 838.555, -1339.46, 759.623, -1319.86, 823.192, -1311.39, 822.133, -1324.63, 759.623, -1301.32, 805.182, 217.945, 1139.44, 92.2966, 1071.97, 234.896, 1102.89, 228.01, 1135.2, 91.3392, 331.071, 104.053, 332.13, 97.6959, 365.504, 91.8689, 377.687, 7.55087, 423.189, 1422.02, 729.429, 1522.67, 768.099, 284.108, 782.074, 282.326, 754.902, 1294.89, 727.84, 741.849, 849.678, 730.725, 853.916, 719.601, 837.494, -1243.58, 712.477, -1190.08, 686.521, -1178.43, 810.479, -1180.02, 820.543, -1208.09, 822.662, -1257.89, 819.484, -1268.48, 804.122, -1272.19, 727.31, -0.834015, 6.3456, 29.3607, 20.1186, 27.7715, 29.1241, -99.3641, 76.2701, -101.483, 57.1998, -112.607, 97.9891, -108.899, 83.6864, 48.9607, 52.4322, 77.5662, 60.3782, 107.231, 79.4486, 97.696, 108.584, 90.8094, 119.708, -99.3641, 117.589, -924.156, 809.949, -927.864, 822.662, -937.929, 822.662, -975.009, 693.937, -942.166, 696.056, -148.099, 220.357, -163.991, 184.335, -163.991, 172.152, -153.926, 168.973, -98.3045, 245.255, -290.076, 709.911, -279.386, 717.929, -292.304, 763.365, 282.042, 464.034, 364.151, 465.623, 391.697, 474.099, 426.129, 497.407, 420.832, 523.364, 411.827, 532.899, 269.329, 473.569, -1316.69, 750.088, -1307.15, 745.321, -1291.26, 731.548, 1431.03, 722.013, -247.759, 795.438, -215.241, 813.701, -217.468, 837.755, -226.823, 855.128, -276.268, 787.865, -102.542, 1395.83, -113.137, 1371.99, -100.424, 1357.69, 106.702, 1361.4, 98.7555, 1390, -101.483, 1332.26, 89.7501, 1333.32, 907.655, 875.635, 999.829, 869.808, 995.061, 882.521, 953.212, 886.759, 912.953, 882.521, -933.161, 687.58, -853.701, 684.402, -847.874, 694.996, -877.01, 806.77, -904.026, 802.532, -291.656, 411.06, -238.154, 363.385, -216.964, 361.266, -211.137, 370.271, -292.186, 430.661, 1177.29, 720.423, 1258.34, 717.775, 1263.11, 725.721, 1169.34, 727.31, -361.051, 487.342, -355.754, 463.504, -346.219, 460.326, -356.813, 502.174, -170.348, 1296.77, -176.175, 1275.05, -167.17, 1265.52, -163.991, 1257.57, 155.966, 1242.21, 166.561, 1260.22, 161.264, 1297.3, -216.577, 623.049, -220.586, 657.348, -288.295, 689.866, -228.605, 610.576, -420.381, 598.585, -433.624, 573.688, -426.738, 561.504, -409.786, 554.618, 86.7736, 887.645, 91.2281, 880.073, 166.954, 876.064, 184.772, 888.091, 190.399, 1221.02, 162.323, 1230.03, 83.8782, 1080.39, 231.718, 1164.34, 226.421, 1199.3, 683.049, 836.964, 674.573, 849.678, 603.06, 851.267, 538.962, 820.543, 531.546, 808.359, 1167.22, 942.381, 1102.07, 906.889, -814.501, 696.056, -793.312, 809.949, -799.139, 819.484, -840.988, 822.662, -870.123, 817.895, 150.918, 690.757, 144.237, 673.83, 158.491, 651.112, 200.809, 712.584, -163.462, 1172.28, -227.559, 1142.62, -233.386, 1137.32, -239.743, 1118.25, -228.089, 1101.3, 30.5612, 1060.19, 56.9391, 1082.64, -163.991, 1243.8, -169.818, 1233.2, -175.116, 1213.6, -164.521, 1199.83, 411.297, 854.975, 425.07, 880.932, 418.184, 914.305, 49.0818, 1027.63, -292.716, 980.522, 209.718, 886.309, 657.622, 665.332, 668.217, 651.559, 740.79, 651.029, 752.974, 659.505, 219.072, 855.573, 208.827, 839.091, 208.827, 826.173, 248.472, 794.992, 275.199, 787.419, -1160.42, 803.592, -1111.68, 683.872, -1140.29, 803.592, -1097.38, 695.526, -1124.92, 822.662, -1075.66, 696.585, -1078.31, 840.673, -951.702, 831.668, -988.783, 847.56, -1013.68, 856.035, -1070.36, 850.738, -1066.65, 693.937, -984.015, 683.872, -299.602, 398.877, -305.429, 387.223, -304.37, 378.747, -293.246, 364.974, -271.527, 364.974, -98.3046, 141.427, 105.112, 142.487, 99.8149, 175.86, 91.3392, 182.746, 82.3337, 182.746, 62.2039, 198.638, 50.5499, 198.108, -125.321, 155.2, 25.1227, 212.941, -229.148, 1076.4, 31.6837, 1045.59, 1041.68, 727.84, 1050.68, 716.715, 1126.43, 715.656, 1143.92, 726.78, 808.596, 838.554, 801.179, 849.148, 751.385, 853.386, -1060.3, 685.991, -776.891, 804.122, -753.582, 803.062, -807.614, 687.58, -726.036, 685.461, -712.792, 696.056, -741.399, 820.543, -682.068, 696.056, -692.663, 844.381, -607.377, 852.327, -643.398, 856.565, -683.658, 849.679, -599.431, 841.733, -588.306, 838.024, -676.241, 684.931, -666.176, 680.164, -654.522, 669.569, -631.214, 665.331, -561.29, 837.495, -612.673, 652.618, -542.219, 652.088, -520.5, 664.802, -551.225, 850.738, -496.132, 664.272, -474.943, 648.91, -452.165, 631.958, -437.862, 633.018, -419.322, 622.423, -292.716, 1047.27, -299.602, 1035.08, -292.186, 1013.37, 1303.89, 718.834, 1383.35, 720.953, 356.205, 458.736, 412.886, 544.023, -172.467, 375.568, -165.58, 363.914, -157.634, 361.795, -139.492, 424.872, -163.063, 437.781, 1048.56, 882.521, 1034.26, 866.1, -164.521, 214, -170.878, 202.876, -167.699, 189.103, -138.564, 155.2, 40.485, 238.898, 37.3066, 267.503, 28.3012, 282.865, -99.3639, 278.628, -106.78, 298.228, -104.132, 283.925, 42.6039, 303.525, -100.953, 312.53, -2.5513, 422.066, -51.3784, 388.954, -100.953, 334.779, 75.4473, 316.768, 437.784, 839.613, 219.963, 875.618, 490.227, 807.829, -328.208, 442.315, -312.846, 440.196, -355.754, 527.601, 38.6651, 518.814, 29.3106, 533.959, -7.21623, 549.55, -179.16, 581.622, -209.896, 579.395, -133.879, 472.577, -110.869, 470.332, -0.867615, 473.138, -102.45, 464.158, -22.7556, 461.352, -403.43, 545.612, 924.077, 720.953, 1001.42, 718.305, 1020.49, 729.959, 910.834, 728.37, -127.969, 348.552, -88.4196, 391.198, -96.2769, 404.107, -145.451, 351.731, -59.7793, 575.386, -98.5333, 592.758, -160.005, 593.649, -265.7, 360.736, -252.986, 358.087, -194.186, 375.568, 519.892, 801.473, 804.358, 685.461, -162.502, 446.199, 150.027, 616.367, 155.818, 594.54, 155.373, 564.695, 603.59, 648.91, 637.492, 664.272, 871.634, 859.743, 853.623, 848.089, 846.736, 838.024, 90.7826, 533.068, 75.6373, 513.468, -76.7063, 844.882, -24.1433, 846.219, 1.69275, 855.128, 8.3745, 861.364, -121.697, 856.018, -36.7864, 405.79, -225.041, 595.876, -156.887, 872.945, 29.3106, 873.836, -171.361, 888.208, 57.3739, 888.982, 839.85, 835.375, 435.135, 566.802, -219.696, 875.173, 828.725, 694.997, 885.407, 727.84, 560.681, 625.072, -199.65, 886.755 )
@@ -224,27 +229,86 @@ position = Vector2( 1422.11, 781.987 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="All/Obstacles/InvisibleWall3"]
 polygon = PoolVector2Array( 8.39282, -62.9871, 104.393, -13.4871, -255.107, 164.513, -248.607, 166.513, 113.393, -13.4871, 9.87207, -65.0988 )
 
+[node name="PalmShrub1" parent="All/Obstacles" instance=ExtResource( 16 )]
+position = Vector2( -1012.19, 815.572 )
+
+[node name="PalmShrub2" parent="All/Obstacles" instance=ExtResource( 16 )]
+position = Vector2( 150.13, 1207.99 )
+
+[node name="PalmTree1" parent="All/Obstacles" instance=ExtResource( 18 )]
+position = Vector2( -373.915, 472.775 )
+
+[node name="PalmTree2" parent="All/Obstacles" instance=ExtResource( 18 )]
+position = Vector2( 514.892, 646.049 )
+
+[node name="PalmTreePair1" parent="All/Obstacles" instance=ExtResource( 22 )]
+position = Vector2( 30.8674, 726.266 )
+
 [node name="Shops" type="YSort" parent="All"]
 
 [node name="Shop" parent="All/Shops" instance=ExtResource( 10 )]
 position = Vector2( 370.306, 628.662 )
-_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 7, 12 ]
+_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 7, 12, 14, 15, 10, 9, 1, 4 ]
 _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Meri's Shop of Merriments"
 _buyMessage = "Hmph. Shabby thing. I'll take it off your hands for {0} gold."
-_stinginess = 1.5
+_stinginess = 3.0
 
 [node name="WorldInteractables" type="YSort" parent="All"]
 
-[node name="WorldInteractable" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 17 )]
-position = Vector2( -1122.11, 962.6 )
-script = ExtResource( 16 )
-_experience = 100.0
-_gold = 500
-_startingItems = [ 0 ]
+[node name="Obelisk" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( 716.904, 687.289 )
+_attributePoints = 3
+_flavourText = "A mysterious shrine. I feel my power growing!"
+_eventText = "Obelisk activated."
+
+[node name="Obelisk2" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( 60.6455, 921.025 )
+_attributePoints = 1
+_flavourText = "A mysterious shrine. I feel my power growing!"
+_eventText = "Obelisk activated."
+
+[node name="Home" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( -921.026, 729.667 )
+_bodyScn = ExtResource( 21 )
+_startingItems = [ 1, 4 ]
+_flavourText = "A worthy tribute for their King!"
+_eventText = "Loyalist home visited."
+
+[node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( 38.1545, 357.6 )
+_bodyScn = ExtResource( 19 )
+_gold = 25
+_startingItems = [ 9, 11 ]
 _dieOnActivate = true
-_flavourText = "TEST FLA asd as das d asd as das sa das d"
-_eventText = "TEST EVENT"
+_flavourText = "A blessing from my fellow gods."
+_eventText = "Treasure chest plundered."
+
+[node name="Chest2" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( 6.37061, 1355.61 )
+_bodyScn = ExtResource( 19 )
+_gold = 37
+_startingItems = [ 2 ]
+_dieOnActivate = true
+_flavourText = "Unclaimed gold. A gift from Ra perhaps."
+_eventText = "Treasure chest plundered."
+
+[node name="Chest3" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( 1140, 880.975 )
+_bodyScn = ExtResource( 19 )
+_gold = 100
+_startingItems = [ 7, 9 ]
+_dieOnActivate = true
+_flavourText = "A crate of treasure – what luck!"
+_eventText = "Treasure chest plundered."
+
+[node name="Pyramid" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( -419.534, 715.698 )
+_bodyScn = ExtResource( 20 )
+_experience = 75.0
+_startingItems = [ 5, 4 ]
+_flavourText = "A thousand battles flash before my eyes."
+_eventText = "Pyramid explored."
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 9 )

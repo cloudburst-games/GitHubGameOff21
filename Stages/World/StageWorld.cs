@@ -244,6 +244,18 @@ public class StageWorld : Stage
                 GetNode<HUD>("HUD").LogEntry(String.Format("The party has picked up {0}.", _itemBuilder.BuildAnyItem(item).Name));
             }
         }
+        if (worldInteractableData.AttributePoints > 0)
+        {
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.AttributePoints += worldInteractableData.AttributePoints;
+            GetNode<HUD>("HUD").LogEntry(String.Format("{0} has gained {1} attribute points.", 
+                GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Name, worldInteractableData.AttributePoints));
+            foreach (UnitData unitData in GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions)
+            {
+                unitData.AttributePoints += worldInteractableData.AttributePoints;
+                GetNode<HUD>("HUD").LogEntry(String.Format("{0} has gained {1} attribute points.", 
+                    unitData.Name, worldInteractableData.AttributePoints));
+            }
+        }
 
         LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
         floatLabel.Text = worldInteractableData.FlavourText;
@@ -264,6 +276,13 @@ public class StageWorld : Stage
     }
     public void OnStartedLevelTransition()
     {
+        foreach (Node n in GetNode<LevelManager>("LevelManager").GetChildren())
+        {
+            if (n is LblFloatScore lblFloatScore)
+            {
+                lblFloatScore.QueueFree();
+            }
+        }
         SetProcessInput(false);
         _transitioningLevel = true;
 

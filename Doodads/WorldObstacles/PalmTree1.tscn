@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SOPHIA/Palm tree variations/treev03.png" type="Texture" id=1]
+
+[node name="PalmTree1" type="StaticBody2D"]
+position = Vector2( -63.5679, 981.063 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -275 )
+
+[node name="Shape" type="CollisionPolygon2D" parent="."]
+position = Vector2( 47.4014, 20.7644 )
+rotation = 1.58042
+polygon = PoolVector2Array( -15.725, 23.1011, -19.9091, 21.8064, -21.6112, 18.3187, -24.3306, 13.1721, -26.7709, 2.34954, -25.2114, -9.01213, -22.6094, -16.0454, -19.9895, -21.2434, -14.1515, -21.4664, -5.11292, -18.5499, 3.87329, -12.1884, 7.96143, -3.98657, 7.4425, 3.02145, 4.01904, 11.3975, -5.56177, 21.5015 )

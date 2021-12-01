@@ -3,7 +3,7 @@
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=3]
-[ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Props/WorldInteractable/Bodies/PyramidBody.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=5]
 [ext_resource path="res://Levels/Level3/TerrainLevel3.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=7]
@@ -13,9 +13,9 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=11]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion2.PNG" type="Texture" id=12]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyGreen.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Props/WorldInteractable/Bodies/ObeliskBody.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Props/WorldInteractable/WorldInteractable.cs" type="Script" id=15]
+[ext_resource path="res://Doodads/WorldObstacles/PalmTreePair1.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Props/WorldInteractable/Bodies/HomeBody.tscn" type="PackedScene" id=17]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 30.5911, 935.545, 5.19263, 1016.5, -155.135, 938.72, -96.401, 910.147, 25.8289, 899.035, 87.7375, 972.056, 29.0037, 873.637, -96.401, 879.986, 22.6541, 849.826, -96.401, 840.301, 89.3249, 778.393, 89.3249, 802.204, 70.2761, 822.84, -96.401, 799.029, -90.0514, 759.344, 16.3044, 743.47, 149.646, 595.842, 155.996, 654.575, 84.5627, 684.736, 32.1785, 700.61, -75.7648, 260.9, -24.968, 246.613, 46.4651, 249.788, -97.9884, 741.882, -290.064, 646.638, -282.127, 589.492, 343.309, 432.339, 349.659, 489.486, 275.051, 364.081, 165.52, 270.424, 206.793, 270.424, 275.051, 298.998, 148.059, 283.124, -121.799, 238.676, -350.385, 556.157, -350.385, 497.423, -183.708, 256.138, 340.134, 395.829, 117.898, 284.711, -396.42, 295.823, -331.336, 264.075, -259.903, 241.851, -415.469, 452.975, -412.294, 375.193, -420.231, 318.046 )
@@ -190,36 +190,51 @@ position = Vector2( -65.4628, 990.256 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="All/Obstacles/InvisibleWall4"]
 polygon = PoolVector2Array( -96.6029, -53.3364, 68.399, 30.2871, 169.421, -21.9074, 176.717, -17.9788, 64.4704, 37.0219, -107.266, -49.4077 )
 
-[node name="Shops" type="YSort" parent="All"]
+[node name="PalmTreePair1" parent="All/Obstacles" instance=ExtResource( 14 )]
+position = Vector2( -95.5219, 390.754 )
 
-[node name="Shop" parent="All/Shops" instance=ExtResource( 4 )]
-position = Vector2( -60.1873, 449.092 )
-_startingItemsStocked = [ 1, 4, 2, 2, 2, 6, 10, 12, 14 ]
-_introText = "Welcome! Please, peruse my humble wares. "
-_shopTitle = "Glittering Goods"
-_buyMessage = "Hmph. Trash. I'll take it off your hands for {0} gold."
-_stinginess = 1.5
+[node name="Shops" type="YSort" parent="All"]
 
 [node name="WorldInteractables" type="YSort" parent="All"]
 
-[node name="WorldInteractable" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( -1122.11, 962.6 )
-script = ExtResource( 15 )
-_experience = 100.0
-_gold = 500
-_startingItems = [ 0 ]
-_dieOnActivate = true
-_flavourText = "TEST FLA asd as das d asd as das sa das d"
-_eventText = "TEST EVENT"
+[node name="Pyramid" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+position = Vector2( -52.9033, 497.065 )
+_bodyScn = ExtResource( 4 )
+_experience = 150.0
+_startingItems = [ 5, 4 ]
+_flavourText = "The wisdom of Ra washes over me."
+_eventText = "Pyramid explored."
 
-[node name="WorldInteractable2" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( -1031.75, 1019.85 )
-script = ExtResource( 15 )
-_bodyScn = ExtResource( 14 )
-_gold = 500
-_startingItems = [ 0 ]
-_flavourText = "Provisions from my loyal subjects! Extra characters!!!"
-_eventText = "TEST EVENT"
+[node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+position = Vector2( -286.431, 280.238 )
+_gold = 75
+_startingItems = [ 2, 3 ]
+_dieOnActivate = true
+_flavourText = "Treasure! My bag grows fat."
+_eventText = "Treasure chest plundered."
+
+[node name="Chest2" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+position = Vector2( 287.23, 454.169 )
+_gold = 90
+_startingItems = [ 6, 7 ]
+_dieOnActivate = true
+_flavourText = "Unclaimed gold. A gift from Ra perhaps."
+_eventText = "Treasure chest plundered."
+
+[node name="Chest3" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+position = Vector2( -28.846, 277.211 )
+_gold = 150
+_startingItems = [ 10 ]
+_dieOnActivate = true
+_flavourText = "A crate of treasure – what luck!"
+_eventText = "Treasure chest plundered."
+
+[node name="Home" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+position = Vector2( 40.9596, 790.212 )
+_bodyScn = ExtResource( 17 )
+_startingItems = [ 1, 1, 1 ]
+_flavourText = "Provisions from my loyal subjects!"
+_eventText = "Loyalist home visited."
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 5 )

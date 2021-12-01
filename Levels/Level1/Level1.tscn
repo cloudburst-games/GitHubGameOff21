@@ -1,10 +1,9 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Levels/Common/LevelLocation/LevelLocation.cs" type="Script" id=4]
-[ext_resource path="res://Props/Buildings/Shop/Shop.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Levels/Common/Navigation/WorldNavigation.cs" type="Script" id=6]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=8]
@@ -14,6 +13,8 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=12]
 [ext_resource path="res://Props/WorldInteractable/Bodies/ChestBody.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Doodads/WorldObstacles/PalmTree1.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Doodads/WorldObstacles/PalmTreePair1.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion1.PNG" type="Texture" id=19]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=20]
 
@@ -36,7 +37,7 @@ LevelName = "Western Lunu"
 script = ExtResource( 8 )
 
 [node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -499.499, 505.094 )
+position = Vector2( -490.519, 558.972 )
 _customBattleText = "A ruffian taps you on the shoulder. 'Give me your gold, \"King\" Khepri', he says.  'You won't need it when you see what your future holds!'"
 _defeatMessage = "An easy scuffle. What has happened to make the citizens of Lunu disrespect their Lord?"
 ID = "bandit1"
@@ -184,7 +185,7 @@ position = Vector2( 311.685, 346.265 )
 [node name="AutosaveAreas" type="YSort" parent="All"]
 
 [node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 3 )]
-position = Vector2( -414.864, 649.985 )
+position = Vector2( -334.047, 690.394 )
 
 [node name="Obstacles" type="YSort" parent="All"]
 
@@ -194,34 +195,33 @@ position = Vector2( 562.354, 289.595 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="All/Obstacles/InvisibleWall"]
 polygon = PoolVector2Array( -89.4269, -53.4377, 115.841, 49.9455, 107.601, 55.9387, -99.915, -51.1902 )
 
-[node name="Shops" type="YSort" parent="All"]
+[node name="PalmTree1" parent="All/Obstacles" instance=ExtResource( 15 )]
+position = Vector2( -174.431, 686.188 )
 
-[node name="Shop" parent="All/Shops" instance=ExtResource( 5 )]
-position = Vector2( -46.8238, 501.21 )
-_startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 6, 7 ]
-_introText = "Welcome! Please, peruse my humble wares. "
-_shopTitle = "Travelling Trifles"
-_buyMessage = "Hmph. Tawdry item. I'll take it off your hands for {0} gold."
-_stinginess = 1.5
+[node name="PalmTree2" parent="All/Obstacles" instance=ExtResource( 15 )]
+position = Vector2( -612.191, 506.594 )
+
+[node name="PalmTreePair1" parent="All/Obstacles" instance=ExtResource( 16 )]
+position = Vector2( -10.8739, 500.97 )
+
+[node name="Shops" type="YSort" parent="All"]
 
 [node name="WorldInteractables" type="YSort" parent="All"]
 
-[node name="WorldInteractable" parent="All/WorldInteractables" instance=ExtResource( 14 )]
-position = Vector2( -1122.11, 962.6 )
-_bodyScn = ExtResource( 13 )
-_experience = 100.0
-_gold = 500
-_startingItems = [ 0 ]
-_dieOnActivate = true
-_flavourText = "TEST FLA asd as das d asd as das sa das d"
-_eventText = "TEST EVENT"
+[node name="Obelisk" parent="All/WorldInteractables" instance=ExtResource( 14 )]
+position = Vector2( 56.1919, 647.646 )
+_attributePoints = 2
+_flavourText = "A mysterious shrine. I feel my power growing!"
+_eventText = "Obelisk activated."
 
-[node name="WorldInteractable2" parent="All/WorldInteractables" instance=ExtResource( 14 )]
-position = Vector2( -1031.75, 1019.85 )
-_gold = 500
-_startingItems = [ 0 ]
-_flavourText = "Provisions from my loyal subjects! Extra characters!!!"
-_eventText = "TEST EVENT"
+[node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 14 )]
+position = Vector2( -358.273, 523.722 )
+_bodyScn = ExtResource( 13 )
+_gold = 50
+_startingItems = [ 5, 4 ]
+_dieOnActivate = true
+_flavourText = "Treasure! My bag grows fat."
+_eventText = "Treasure chest plundered."
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

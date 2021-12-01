@@ -12,7 +12,7 @@ public class PnlInventory : Panel
     public InventoryMode CurrentInventoryMode {get; set;} = InventoryMode.BagInventory;
     
     public enum ItemMode {CharismaPot, HealthPot, IntellectPot, LuckPot, ManaPot, ResiliencePot, SwiftnessPot, VigourPot, Empty,
-        RustedMace, SilverMace, RustedArmour, ObsidianPlate, ScarabAmulet, PhantomArmour}
+        RustedMace, SilverMace, RustedArmour, ObsidianPlate, ScarabAmulet, PhantomArmour, AshenMace}
 
     // we could have also used signal wrapper classes but i forgot
     // EVENTS OR SIGNALS???? WHICH IS BETTER?
