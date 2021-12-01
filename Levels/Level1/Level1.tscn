@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=20]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion2.PNG" type="Texture" id=21]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion2.PNG" type="Texture" id=22]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/spynxPort.png" type="Texture" id=23]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 462.036, 242.536, 671.183, 337.03, 634.645, 349.629, 543.931, 363.488, 528.812, 355.929, 499.834, 348.369, 401.56, 277.814, 99.3315, 667.515, 23.8215, 714.709, -30.9232, 714.709, -27.1477, 695.831, 34.923, 499.56, 138.237, 543.657, 288.167, 347.109, 305.806, 330.73, 406.6, 400.026, 288.167, 381.127, -605.117, 526.018, -608.897, 475.621, -505.583, 481.921, -226.615, 712.665, -852.062, 848.558, -873.48, 793.121, -796.625, 752.804, -230.619, 736.692, 288.167, 412.625, 409.12, 457.982, 344.864, 480.661, -729.849, 660.83, -744.968, 597.834, 233.99, 430.264, 354.943, 549.957, 274.892, 582.566, 232.731, 497.04, -806.704, 696.108, 165.403, 675.066, 173.514, 522.238, 286.219, 631.648, 273.004, 659.964, 180.505, 690.168, -1167.01, 930.911, -1131.76, 919.114, -998.82, 1000.32, -985.472, 1012.34, -994.148, 1043.04, -1045.54, 1063.73, -1087.59, 1075.07, -1129.63, 1069.07, -1165.01, 1055.05, -1215.73, 1027.69, -1222.41, 959.61, -1247.77, 1013, -1259.78, 996.986, -1252.72, 982.11, -1100.94, 908.219, -1054.91, 911.554, -1044.83, 922.893, -993.675, 969.555, -1004.51, 922.893, -974.793, 960.945, -960.415, 895.175, -943.424, 962.28, -873.345, 977.631, -931.41, 974.961, -862.666, 968.954, -851.32, 963.615, -828.729, 959.241, -292.022, 841.477, -281.343, 851.488, -288.685, 878.185, -496.252, 972.959, -65.8708, 514.679, -81.8923, 699.607, -285.097, 402.546, -125.311, 722.26, -192.576, 696.647, -392.19, 418.925, -293.357, 814.78, -536.965, 967.619, -582.621, 961.179, -807.27, 969.622, -654.039, 998.656, -699.815, 1012.34, -758.548, 996.986, -600.299, 965.422, -217.271, 754.713, -224.613, 786.081, -617.055, 976.963 )
@@ -122,8 +123,8 @@ position = Vector2( -20, -162 )
 position = Vector2( -250.673, 683.642 )
 ID = "Skull"
 UnitName = "Spirit in the Sphynx"
-PortraitPath = ExtResource( 12 )
-PortraitPathSmall = ExtResource( 10 )
+PortraitPath = ExtResource( 23 )
+PortraitPathSmall = ExtResource( 23 )
 _body = ExtResource( 9 )
 _startDirection = 5
 _minions = {

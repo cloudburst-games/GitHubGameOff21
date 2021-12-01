@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Props/Buildings/placeholder_tent.png" type="Texture" id=1]
+[ext_resource path="res://Props/Buildings/tet2.png" type="Texture" id=1]
 [ext_resource path="res://Props/Buildings/Shop/Shop.cs" type="Script" id=2]
 [ext_resource path="res://Props/Buildings/Shop/ShopInteractableArea.cs" type="Script" id=3]
 [ext_resource path="res://Interface/Labels/LblInteract/LblInteractInfo.cs" type="Script" id=4]
