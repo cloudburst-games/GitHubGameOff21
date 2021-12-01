@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=2]
@@ -14,8 +14,10 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion2.PNG" type="Texture" id=12]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyGreen.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Doodads/WorldObstacles/PalmTreePair1.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Props/WorldInteractable/Bodies/ChestBody.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Props/WorldInteractable/Bodies/HomeBody.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Doodads/WorldObstacles/PalmTree1.tscn" type="PackedScene" id=18]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 30.5911, 935.545, 5.19263, 1016.5, -155.135, 938.72, -96.401, 910.147, 25.8289, 899.035, 87.7375, 972.056, -346.026, 559.939, -347.361, 533.243, -166.49, 600.652, -282.127, 589.492, 29.0037, 873.637, -96.401, 879.986, 22.6541, 849.826, -96.401, 840.301, -290.064, 646.638, -97.9884, 741.882, 16.3044, 743.47, 19.0529, 520.562, 32.1785, 700.61, 89.3249, 778.393, 89.3249, 802.204, 70.2761, 822.84, -96.401, 799.029, -90.0514, 759.344, -331.336, 264.075, -259.903, 241.851, -183.708, 256.138, -170.494, 443.808, -344.523, 508.562, -350.385, 497.423, -396.42, 295.823, 149.646, 595.842, 155.996, 654.575, 84.5627, 684.736, 343.309, 432.339, 349.659, 489.486, 340.134, 395.829, 275.051, 364.081, 165.52, 270.424, 206.793, 270.424, 275.051, 298.998, 148.059, 283.124, 117.898, 284.711, -24.968, 246.613, 46.4651, 249.788, -75.7648, 260.9, -121.799, 238.676, -415.469, 452.975, -412.294, 375.193, -420.231, 318.046 )
@@ -193,6 +195,12 @@ polygon = PoolVector2Array( -96.6029, -53.3364, 68.399, 30.2871, 169.421, -21.90
 [node name="PalmTreePair1" parent="All/Obstacles" instance=ExtResource( 14 )]
 position = Vector2( -147.436, 244.548 )
 
+[node name="PalmTree1" parent="All/Obstacles" instance=ExtResource( 18 )]
+position = Vector2( -352.741, 515.09 )
+
+[node name="PalmTree2" parent="All/Obstacles" instance=ExtResource( 18 )]
+position = Vector2( 5.35428, 513.591 )
+
 [node name="Shops" type="YSort" parent="All"]
 
 [node name="WorldInteractables" type="YSort" parent="All"]
@@ -206,6 +214,7 @@ _eventText = "Pyramid explored."
 
 [node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -286.431, 280.238 )
+_bodyScn = ExtResource( 15 )
 _gold = 75
 _startingItems = [ 2, 3 ]
 _dieOnActivate = true
@@ -214,6 +223,7 @@ _eventText = "Treasure chest plundered."
 
 [node name="Chest2" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 287.23, 454.169 )
+_bodyScn = ExtResource( 15 )
 _gold = 90
 _startingItems = [ 6, 7 ]
 _dieOnActivate = true
@@ -222,6 +232,7 @@ _eventText = "Treasure chest plundered."
 
 [node name="Chest3" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -28.846, 277.211 )
+_bodyScn = ExtResource( 15 )
 _gold = 150
 _startingItems = [ 10 ]
 _dieOnActivate = true

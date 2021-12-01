@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Level5/TerrainLevel5.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=7]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Khepri.PNG" type="Texture" id=8]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Props/WorldInteractable/Bodies/ChestBody.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyRed.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=12]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=13]
@@ -231,25 +232,26 @@ _flavourText = "You bathe in the light of new knowledge."
 _eventText = "Obelisk activated."
 
 [node name="Obelisk2" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( -581.326, 435.099 )
+position = Vector2( -587.683, 430.861 )
 _attributePoints = 3
 _flavourText = "You bathe in the light of new knowledge."
 _eventText = "Obelisk activated."
 
 [node name="Obelisk3" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( -649.925, 478.753 )
+position = Vector2( -681.709, 498.883 )
 _attributePoints = 3
 _flavourText = "Whispers of the gods fill your mind."
 _eventText = "Obelisk activated."
 
 [node name="Obelisk4" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( -532.326, 492.117 )
+position = Vector2( -537.623, 551.447 )
 _attributePoints = 3
 _flavourText = "Enlightenment seeps into your pores."
 _eventText = "Obelisk activated."
 
 [node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 211.279, 538.018 )
+_bodyScn = ExtResource( 10 )
 _gold = 68
 _startingItems = [ 10, 12 ]
 _dieOnActivate = true
@@ -258,6 +260,7 @@ _eventText = "Treasure chest plundered."
 
 [node name="Chest4" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -594.3, 497.655 )
+_bodyScn = ExtResource( 10 )
 _gold = 68
 _startingItems = [ 10, 12 ]
 _dieOnActivate = true
@@ -266,6 +269,7 @@ _eventText = "Treasure chest plundered."
 
 [node name="Chest2" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -53.6575, 665.804 )
+_bodyScn = ExtResource( 10 )
 _gold = 112
 _startingItems = [ 2, 6, 0 ]
 _dieOnActivate = true
@@ -274,6 +278,7 @@ _eventText = "Treasure chest plundered."
 
 [node name="Chest3" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -475.974, 641.278 )
+_bodyScn = ExtResource( 10 )
 _gold = 142
 _startingItems = [ 11, 3 ]
 _dieOnActivate = true

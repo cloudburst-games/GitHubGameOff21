@@ -159,7 +159,7 @@ position = Vector2( -202.476, -4.69183 )
 position = Vector2( 228.519, 36.9731 )
 
 [node name="Bandit7" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( 590.625, 750.462 )
+position = Vector2( 558.841, 771.651 )
 _customBattleText = "You come upon group of scarabs carrying a box full of gleaming silver. The crate is marked \"Meri's Goods\". You poke one of the scarabs with your antennae, but, upon catching sight of you, the one holding the box runs! Bandits!"
 _defeatMessage = "Though you have defeated these bandits, you sense there are many more. How Lunu has degraded!"
 ID = "Bandit7"
@@ -185,10 +185,10 @@ _potionEquipped3 = 6
 _weaponEquipped = 9
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
-position = Vector2( -202.476, -4.69183 )
+position = Vector2( -249.092, -8.92968 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit7"]
-position = Vector2( 228.519, 36.9731 )
+position = Vector2( 266.66, 41.211 )
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
@@ -307,12 +307,6 @@ _stinginess = 2.5
 
 [node name="WorldInteractables" type="YSort" parent="All"]
 
-[node name="Obelisk" parent="All/WorldInteractables" instance=ExtResource( 17 )]
-position = Vector2( 716.904, 687.289 )
-_attributePoints = 3
-_flavourText = "Enlightenment seeps into your pores."
-_eventText = "Obelisk activated."
-
 [node name="Obelisk2" parent="All/WorldInteractables" instance=ExtResource( 17 )]
 position = Vector2( 60.6455, 921.025 )
 _attributePoints = 1
@@ -324,6 +318,13 @@ position = Vector2( -921.026, 729.667 )
 _bodyScn = ExtResource( 21 )
 _startingItems = [ 1, 4 ]
 _flavourText = "A worthy tribute for their King!"
+_eventText = "Loyalist home visited."
+
+[node name="Home2" parent="All/WorldInteractables" instance=ExtResource( 17 )]
+position = Vector2( -366.661, 588.556 )
+_bodyScn = ExtResource( 21 )
+_startingItems = [ 1, 4 ]
+_flavourText = "A perfect payment for my blessings!"
 _eventText = "Loyalist home visited."
 
 [node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 17 )]
@@ -345,7 +346,7 @@ _flavourText = "Unclaimed gold. A gift from Ra perhaps."
 _eventText = "Treasure chest plundered."
 
 [node name="Chest3" parent="All/WorldInteractables" instance=ExtResource( 17 )]
-position = Vector2( 683.165, 792.251 )
+position = Vector2( 731.9, 688.424 )
 _bodyScn = ExtResource( 19 )
 _gold = 100
 _startingItems = [ 7, 9 ]

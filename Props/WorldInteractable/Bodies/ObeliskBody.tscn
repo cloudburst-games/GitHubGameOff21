@@ -1,9 +1,9 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://SOPHIA/obelisk v02.png" type="Texture" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 41.7537
+radius = 47.2419
 
 [sub_resource type="Animation" id=2]
 resource_name = "Activate"
@@ -24,16 +24,20 @@ tracks/0/keys = {
 [node name="ObeliskBody" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -240 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -14.0051, 11.7787, -3.09175, 8.60389, 5.44054, 9.00074, 14.3697, 14.5566, 10.0043, 21.5015, 3.05943, 25.6685, -6.06812, 25.0732, -9.63978, 20.7078 )
+polygon = PoolVector2Array( -42.2537, 3.60006, -0.381493, -12.6588, 24.341, -3.52713, 42.1589, 4.26823, 41.9362, 16.7408, -0.158768, 36.3406, -41.8083, 16.9635 )
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 0, -2.89542 )
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( -0.175217, 7.00673 )
+position = Vector2( -0.175217, 15.4703 )
+scale = Vector2( 1, 0.6 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
