@@ -168,6 +168,7 @@ public class HUD : CanvasLayer
 
     public void StartDialogue(UnitData unitData, UnitData khepriUnitData)
     {
+        // GetNode<AudioData>("CtrlTheme/DialogueControl/AudioDataInitiateDialogue").StartPlaying = true;
         PauseCommon(true);
         Pausable = false;
         GetNode<DialogueControl>("CtrlTheme/DialogueControl").Visible = true;
