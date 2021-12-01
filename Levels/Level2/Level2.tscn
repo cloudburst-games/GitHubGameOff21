@@ -36,6 +36,7 @@ script = ExtResource( 3 )
 
 [node name="Setna" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -144.135, 992.589 )
+_defeatMessage = "You have defeated your foe! But what will become of his poor daughter?"
 ID = "Father"
 UnitName = "High Priest Setna"
 PortraitPath = ExtResource( 8 )
