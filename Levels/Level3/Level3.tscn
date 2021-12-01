@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Levels/Common/Navigation/LevelNPCManager.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SaveSystem/AutosaveArea.tscn" type="PackedScene" id=2]
@@ -16,7 +16,6 @@
 [ext_resource path="res://Doodads/WorldObstacles/PalmTreePair1.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Props/WorldInteractable/Bodies/ChestBody.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Props/WorldInteractable/Bodies/HomeBody.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Doodads/WorldObstacles/PalmTree1.tscn" type="PackedScene" id=18]
 
 [sub_resource type="NavigationPolygon" id=1]
@@ -238,13 +237,6 @@ _startingItems = [ 10 ]
 _dieOnActivate = true
 _flavourText = "A crate of treasure – what luck!"
 _eventText = "Treasure chest plundered."
-
-[node name="Home" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( 40.9596, 790.212 )
-_bodyScn = ExtResource( 17 )
-_startingItems = [ 1, 1, 1 ]
-_flavourText = "Provisions from my loyal subjects!"
-_eventText = "Loyalist home visited."
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 5 )

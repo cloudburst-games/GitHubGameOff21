@@ -17,7 +17,7 @@ public class PlayerUnitControlState : UnitControlState
 		_unitDetectArea.Connect("body_entered", this, nameof(OnUnitDetectAreaEntered));
 		_unitDetectArea.Connect("body_exited", this, nameof(OnUnitDetectAreaExited));
 		StartPosition = this.Unit.Position;
-		Steering = new Steering(maximumForce:75f, maximumSpeed:this.Unit.Speed, extents:((RectangleShape2D) _shape.Shape).Extents, separationFactor:2f);
+		Steering = new Steering(maximumForce:75f, maximumSpeed:this.Unit.Speed, extents:((RectangleShape2D) _shape.Shape).Extents, separationFactor:1f);
 	}
     
 	public PlayerUnitControlState()

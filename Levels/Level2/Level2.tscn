@@ -266,7 +266,7 @@ position = Vector2( 1422.11, 781.987 )
 polygon = PoolVector2Array( 8.39282, -62.9871, 104.393, -13.4871, -255.107, 164.513, -248.607, 166.513, 113.393, -13.4871, 9.87207, -65.0988 )
 
 [node name="PalmShrub1" parent="All/Obstacles" instance=ExtResource( 16 )]
-position = Vector2( -1012.19, 815.572 )
+position = Vector2( -1043.37, 835.491 )
 
 [node name="PalmTree1" parent="All/Obstacles" instance=ExtResource( 18 )]
 position = Vector2( -373.915, 472.775 )
@@ -280,12 +280,6 @@ position = Vector2( 30.8674, 726.266 )
 [node name="PalmShrub3" parent="All/Obstacles" instance=ExtResource( 23 )]
 position = Vector2( 150.02, 1206.42 )
 
-[node name="PalmShrub4" parent="All/Obstacles" instance=ExtResource( 23 )]
-position = Vector2( -1033.31, 833.127 )
-
-[node name="PalmShrub2" parent="All/Obstacles" instance=ExtResource( 23 )]
-position = Vector2( -993.756, 828.155 )
-
 [node name="PalmShrub5" parent="All/Obstacles" instance=ExtResource( 23 )]
 position = Vector2( 54.0623, 1102.96 )
 
@@ -298,7 +292,7 @@ position = Vector2( 76.0067, 1035.38 )
 [node name="Shops" type="YSort" parent="All"]
 
 [node name="Shop" parent="All/Shops" instance=ExtResource( 10 )]
-position = Vector2( 370.306, 628.662 )
+position = Vector2( 406.368, 593.307 )
 _startingItemsStocked = [ 1, 2, 3, 11, 1, 4, 5, 7, 12, 14, 15, 10, 9, 1, 4 ]
 _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Meri's Shop of Merriments"
@@ -314,18 +308,20 @@ _flavourText = "I bathe in the light of new knowledge."
 _eventText = "Obelisk activated."
 
 [node name="Home" parent="All/WorldInteractables" instance=ExtResource( 17 )]
-position = Vector2( -939.526, 688.463 )
+position = Vector2( -949.634, 681.922 )
 _bodyScn = ExtResource( 21 )
 _startingItems = [ 1, 4 ]
 _flavourText = "A worthy tribute for their King!"
 _eventText = "Loyalist home visited."
 
 [node name="Home2" parent="All/WorldInteractables" instance=ExtResource( 17 )]
-position = Vector2( -359.661, 544.556 )
+position = Vector2( -238.996, 469.912 )
 _bodyScn = ExtResource( 21 )
 _startingItems = [ 1, 4 ]
 _flavourText = "A perfect payment for my blessings!"
 _eventText = "Loyalist home visited."
+
+[node name="HomeBody" parent="All/WorldInteractables/Home2" instance=ExtResource( 21 )]
 
 [node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 17 )]
 position = Vector2( 38.1545, 357.6 )
