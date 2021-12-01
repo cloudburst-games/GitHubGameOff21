@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Actors/NPC/Bodies/shape.tres" type="Shape2D" id=1]
-[ext_resource path="res://Actors/NPC/Bodies/spynx.png" type="Texture" id=2]
+[ext_resource path="res://SOPHIA/Sphynx v0.7.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]
 resource_name = "IdleDown"
@@ -389,7 +389,7 @@ tracks/2/keys = {
 [node name="SphinxBody" type="Node"]
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.24, 0.24 )
+scale = Vector2( 0.2, 0.2 )
 texture = ExtResource( 2 )
 region_rect = Rect2( 2760, 552, 552, 552 )
 
