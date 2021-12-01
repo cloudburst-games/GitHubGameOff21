@@ -269,7 +269,7 @@ public class SpellEffectManager : Reference
             {SpellMode.PerilOfOsiris, new List<SpellEffect>(){ 
                 new SpellEffect(){
                 Name = "Peril of Osiris",
-                RangeSquares = 5,
+                RangeSquares = 4,
                 DurationRounds = 0,
                 Magnitude = -1,
                 AreaSquares = 0,
@@ -282,7 +282,7 @@ public class SpellEffectManager : Reference
             }, 
                 new SpellEffect(){
                 Name = "Peril of Osiris",
-                RangeSquares = 5,
+                RangeSquares = 4,
                 DurationRounds = 4,
                 Magnitude = -3,
                 AreaSquares = 0,

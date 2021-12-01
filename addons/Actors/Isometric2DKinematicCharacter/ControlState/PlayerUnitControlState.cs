@@ -138,10 +138,13 @@ public class PlayerUnitControlState : UnitControlState
                     
                 }
                 if (n.GetParent() is WorldInteractable worldInteractable && n is Node2D node2D)
-                {                        
-                    float distance = ((CircleShape2D)n.GetNode<CollisionShape2D>("CollisionShape2D").Shape).Radius*1.35f;
+                {   
+                                         
+                    float distance = ((CircleShape2D)n.GetNode<CollisionShape2D>("CollisionShape2D").Shape).Radius*1f;
+                    // GD.Print(distance);
                     if (_talkOnArrive && _talkToHere.DistanceTo(node2D.GlobalPosition) < distance && Unit.GlobalPosition.DistanceTo(node2D.GlobalPosition) < distance || !_talkOnArrive)
                     {
+                        // GD.Print(distance);
                         ClearPath();
                         // shopEntranceArea.CurrentShop.Start(Unit.CurrentUnitData);
                         worldInteractable.ClickedToMove();

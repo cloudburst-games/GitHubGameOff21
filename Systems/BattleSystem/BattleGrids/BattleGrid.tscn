@@ -1,16 +1,16 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Shaders/Flash/FlashShader.tres" type="Material" id=1]
-[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_04.png" type="Texture" id=2]
-[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_01.png" type="Texture" id=3]
-[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_02.png" type="Texture" id=4]
+[ext_resource path="res://SOPHIA/Palm tree variations/treev03.png" type="Texture" id=2]
+[ext_resource path="res://SOPHIA/Shrubs/shrubalone.png" type="Texture" id=3]
+[ext_resource path="res://SOPHIA/Shrubs/SHrubredflower.png" type="Texture" id=4]
 [ext_resource path="res://Systems/BattleSystem/BattleGrids/BattleGrid.cs" type="Script" id=5]
-[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_03.png" type="Texture" id=6]
+[ext_resource path="res://SOPHIA/Palm tree variations/2treesv02.png" type="Texture" id=6]
 [ext_resource path="res://Systems/BattleSystem/GridCellTileset.tres" type="TileSet" id=7]
 [ext_resource path="res://Systems/BattleSystem/BattleGridPlaceholder.png" type="Texture" id=8]
-[ext_resource path="res://Systems/BattleSystem/Obstacles/Placeholder/Sprite_05.png" type="Texture" id=9]
+[ext_resource path="res://SOPHIA/Palm tree variations/palmshrubv02.png" type="Texture" id=9]
 
-[sub_resource type="Shader" id=4]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
 uniform float speed : hint_range(0.0, 20.0);
@@ -27,8 +27,8 @@ void fragment()
 	COLOR = vec4(final_color.rgb, clamp(abs(alpha) + sprite_color.a, 0.0, 1.0));
 }"
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
 shader_param/speed = 12.0
 shader_param/flash_colour_original = Color( 0.921569, 1, 0, 1 )
 shader_param/flash_depth = 1.0
@@ -50,13 +50,13 @@ void fragment()
 	COLOR = vec4(final_color.rgb, clamp(abs(alpha) + sprite_color.a, 0.0, 1.0));
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
 shader_param/speed = 9.0
 shader_param/flash_colour_original = Color( 1, 0, 0, 0.403922 )
 shader_param/flash_depth = 2.0
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=5]
 shader = SubResource( 3 )
 shader_param/speed = 15.0
 shader_param/flash_colour_original = Color( 1, 0.960784, 0, 0.403922 )
@@ -78,7 +78,7 @@ __meta__ = {
 }
 
 [node name="TileMapShadedTiles" type="TileMap" parent="."]
-material = SubResource( 5 )
+material = SubResource( 2 )
 mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
@@ -94,7 +94,7 @@ format = 1
 tile_data = PoolIntArray( 65546, 6, 0, 65547, 6, 0, 131083, 6, 0, 196614, 4, 0, 196615, 4, 0 )
 
 [node name="TileMapShadedTilesPath" type="TileMap" parent="."]
-material = SubResource( 6 )
+material = SubResource( 4 )
 mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
@@ -102,7 +102,7 @@ format = 1
 tile_data = PoolIntArray( -196601, 6, 0, -196600, 6, 0, -196599, 6, 0, -131064, 6, 0, -131063, 6, 0, -65532, 4, 0, -65530, 6, 0, -65529, 6, 0, -65528, 6, 0, -65527, 6, 0 )
 
 [node name="TileMapShadedTilesAOE" type="TileMap" parent="."]
-material = SubResource( 7 )
+material = SubResource( 5 )
 mode = 1
 tile_set = ExtResource( 7 )
 cell_size = Vector2( 256, 128 )
@@ -154,30 +154,34 @@ tile_data = PoolIntArray( 65537, 3, 0, 131073, 3, 0, 262147, 3, 0, 262148, 3, 0,
 
 [node name="ObstacleSprites" type="YSort" parent="All"]
 
-[node name="Sprite_01" type="Sprite" parent="All/ObstacleSprites"]
-position = Vector2( 346.894, 136.979 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
-
-[node name="Sprite_02" type="Sprite" parent="All/ObstacleSprites"]
-position = Vector2( 858.178, 522.71 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 4 )
-
-[node name="Sprite_03" type="Sprite" parent="All/ObstacleSprites"]
-position = Vector2( 597.197, 519.099 )
+[node name="Sprite_11" type="Sprite" parent="All/ObstacleSprites"]
+position = Vector2( 576.64, 522.5 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 6 )
+offset = Vector2( 75, -75 )
 
-[node name="Sprite_04" type="Sprite" parent="All/ObstacleSprites"]
-position = Vector2( 341.533, 265.959 )
-scale = Vector2( 0.5, 0.5 )
+[node name="Sprite_12" type="Sprite" parent="All/ObstacleSprites"]
+position = Vector2( 346.593, 146.731 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 9 )
+offset = Vector2( 80, 475 )
+
+[node name="Sprite_19" type="Sprite" parent="All/ObstacleSprites"]
+position = Vector2( 1113.63, 523.223 )
+scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 2 )
 
-[node name="Sprite_05" type="Sprite" parent="All/ObstacleSprites"]
-position = Vector2( 1107.61, 524.427 )
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 9 )
+[node name="Sprite_14" type="Sprite" parent="All/ObstacleSprites"]
+position = Vector2( 845.359, 533.136 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 3 )
+offset = Vector2( 150, 475 )
+
+[node name="Sprite_16" type="Sprite" parent="All/ObstacleSprites"]
+position = Vector2( 328.463, 261.252 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 4 )
+offset = Vector2( 175, 525 )
 
 [node name="BattleUnits" type="YSort" parent="All"]
 

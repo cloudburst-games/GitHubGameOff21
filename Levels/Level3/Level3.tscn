@@ -45,7 +45,7 @@ PortraitPathSmall = ExtResource( 12 )
 _body = ExtResource( 13 )
 _startDirection = 4
 _startingBehaviour = 2
-_combatLevel = 6
+_combatLevel = 7
 _minions = {
 0: 2
 }
@@ -64,7 +64,7 @@ position = Vector2( -174, -32 )
 position = Vector2( 134, 72 )
 
 [node name="Bandit" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
-position = Vector2( 136.558, 534.457 )
+position = Vector2( -32.956, 680.663 )
 _customBattleText = "A scarab rams into you and wails, 'For the Netherworld!'."
 _defeatMessage = "Your enemy lays on his back, his legs wiggling in the air. 'Who sent you?', you ask. 'Look at the sky', he says. 'For it will be the last time you see it this way.'"
 ID = "Bandit3"
@@ -75,7 +75,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 2
-_combatLevel = 4
+_combatLevel = 5
 _minions = {
 0: 1
 }
@@ -85,10 +85,10 @@ _itemsHeld = [ 9, 4 ]
 _weaponEquipped = 9
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit"]
-position = Vector2( -124, 74 )
+position = Vector2( -60.4322, -82.8005 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit"]
-position = Vector2( 142, -46 )
+position = Vector2( -4.20593, 115.038 )
 
 [node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
 position = Vector2( -205.933, 318.022 )
@@ -102,7 +102,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 2
-_combatLevel = 4
+_combatLevel = 6
 _minions = {
 0: 3
 }
@@ -118,7 +118,7 @@ position = Vector2( -140, 6 )
 position = Vector2( 164, -8 )
 
 [node name="Ambush" parent="All/Units/LevelNPCManager" instance=ExtResource( 9 )]
-position = Vector2( -255.88, 503.538 )
+position = Vector2( 1429.88, -311.915 )
 _customBattleText = "AMBUSH! Demons of the Netherworld emerge from the sand dunes. They chant a cursed melody and you are engulfed in smoke. In an instant, the smoke disappears... along with your sun! "
 _defeatMessage = "You have defeated all who remained but too many escaped. And your sun is in the hands of the demons beneath! You must find Mahef in Southern Lunu and travel to the Netherworld at once!"
 ID = "Ambush"
@@ -177,10 +177,10 @@ position = Vector2( -55.0999, 893.424 )
 [node name="AutosaveAreas" type="YSort" parent="All"]
 
 [node name="AutosaveArea" parent="All/AutosaveAreas" instance=ExtResource( 2 )]
-position = Vector2( -52.2069, 648.092 )
+position = Vector2( -37.3744, 798.536 )
 
 [node name="AutosaveArea2" parent="All/AutosaveAreas" instance=ExtResource( 2 )]
-position = Vector2( 170.547, 425.338 )
+position = Vector2( 121.812, 433.814 )
 
 [node name="Obstacles" type="YSort" parent="All"]
 
@@ -191,17 +191,16 @@ position = Vector2( -65.4628, 990.256 )
 polygon = PoolVector2Array( -96.6029, -53.3364, 68.399, 30.2871, 169.421, -21.9074, 176.717, -17.9788, 64.4704, 37.0219, -107.266, -49.4077 )
 
 [node name="PalmTreePair1" parent="All/Obstacles" instance=ExtResource( 14 )]
-position = Vector2( -95.5219, 390.754 )
+position = Vector2( -147.436, 244.548 )
 
 [node name="Shops" type="YSort" parent="All"]
 
 [node name="WorldInteractables" type="YSort" parent="All"]
 
 [node name="Pyramid" parent="All/WorldInteractables" instance=ExtResource( 16 )]
-position = Vector2( -52.9033, 497.065 )
+position = Vector2( -163.593, 517.847 )
 _bodyScn = ExtResource( 4 )
 _experience = 150.0
-_startingItems = [ 5, 4 ]
 _flavourText = "The wisdom of Ra washes over me."
 _eventText = "Pyramid explored."
 

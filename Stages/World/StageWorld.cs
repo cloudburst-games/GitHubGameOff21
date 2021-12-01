@@ -454,6 +454,8 @@ public class StageWorld : Stage
         // divide by number of companions + player
         xpReward /= GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions.Count + 1;
 
+        xpReward = (float) Math.Ceiling(xpReward);
+
         foreach (UnitData unitData in GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions)
         {
             unitData.CurrentBattleUnitData.Experience += xpReward;

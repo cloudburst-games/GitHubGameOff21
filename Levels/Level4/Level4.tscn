@@ -10,11 +10,11 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=8]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=9]
 [ext_resource path="res://Actors/NPC/NPC.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion4.PNG" type="Texture" id=11]
-[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion4.PNG" type="Texture" id=12]
+[ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=11]
+[ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion1.PNG" type="Texture" id=12]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyGreen.tscn" type="PackedScene" id=13]
-[ext_resource path="res://Props/WorldInteractable/Bodies/ObeliskBody.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Props/WorldInteractable/WorldInteractable.cs" type="Script" id=15]
+[ext_resource path="res://Doodads/WorldObstacles/PalmShrub3.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Doodads/WorldObstacles/PalmShrub2.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Doodads/WorldObstacles/PalmShrub1.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Props/WorldInteractable/Bodies/HomeBody.tscn" type="PackedScene" id=18]
@@ -43,8 +43,8 @@ _customBattleText = "My precious potions! Get away! Get away!"
 _defeatMessage = "As you cast the spell that strikes her down, the Ancient Alchemist crumbles into skin and dust. You have gained her potions of charisma! Meri the Merchant will be pleased."
 ID = "AncientCrone"
 UnitName = "Ancient Alchemist"
-PortraitPath = ExtResource( 12 )
-PortraitPathSmall = ExtResource( 11 )
+PortraitPath = ExtResource( 11 )
+PortraitPathSmall = ExtResource( 12 )
 _body = ExtResource( 13 )
 _startDirection = 6
 _startingBools = {
@@ -53,7 +53,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 2
-_combatLevel = 3
+_combatLevel = 4
 _minions = {
 0: 1
 }
@@ -83,7 +83,7 @@ _startingBools = {
 "InitiatesDialogue": false
 }
 _startingBehaviour = 0
-_combatLevel = 3
+_combatLevel = 4
 _minions = {
 0: 0
 }
@@ -145,39 +145,52 @@ position = Vector2( -42.1863, 257.653 )
 [node name="PalmShrub1" parent="All/Obstacles" instance=ExtResource( 17 )]
 position = Vector2( -129.494, 587.286 )
 
+[node name="PalmShrub6" parent="All/Obstacles" instance=ExtResource( 17 )]
+position = Vector2( -157.212, 334.042 )
+
+[node name="PalmShrub4" parent="All/Obstacles" instance=ExtResource( 17 )]
+position = Vector2( 68.4959, 432.43 )
+
+[node name="PalmShrub2" parent="All/Obstacles" instance=ExtResource( 15 )]
+position = Vector2( -122.367, 343.18 )
+
+[node name="PalmShrub7" parent="All/Obstacles" instance=ExtResource( 15 )]
+position = Vector2( -108.78, 563.141 )
+
+[node name="PalmShrub5" parent="All/Obstacles" instance=ExtResource( 15 )]
+position = Vector2( 57.2378, 457.024 )
+
+[node name="PalmShrub3" parent="All/Obstacles" instance=ExtResource( 14 )]
+position = Vector2( 86.1031, 418.015 )
+
 [node name="Shops" type="YSort" parent="All"]
 
 [node name="WorldInteractables" type="YSort" parent="All"]
 
-[node name="Obelisk" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+[node name="Obelisk" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 175.237, 464.564 )
-script = ExtResource( 15 )
-_bodyScn = ExtResource( 14 )
 _attributePoints = 4
-_flavourText = "A mysterious shrine. I feel my power growing!"
+_flavourText = "Whispers of the gods fill your mind."
 _eventText = "Obelisk activated."
 
-[node name="Chest" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+[node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 196.734, 309.492 )
-script = ExtResource( 15 )
 _gold = 15
 _startingItems = [ 12 ]
 _dieOnActivate = true
 _flavourText = "A blessing from my fellow gods."
 _eventText = "Treasure chest plundered."
 
-[node name="Chest2" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+[node name="Chest2" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 293.24, 593.001 )
-script = ExtResource( 15 )
 _gold = 78
 _startingItems = [ 9, 6 ]
 _dieOnActivate = true
 _flavourText = "Unclaimed gold. A gift from Ra perhaps."
 _eventText = "Treasure chest plundered."
 
-[node name="Home" type="StaticBody2D" parent="All/WorldInteractables" instance=ExtResource( 16 )]
+[node name="Home" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -281.361, 335.89 )
-script = ExtResource( 15 )
 _bodyScn = ExtResource( 18 )
 _startingItems = [ 1, 4, 4 ]
 _flavourText = "A gift for hearing their prayers!"

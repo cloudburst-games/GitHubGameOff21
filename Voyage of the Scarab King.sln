@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Github Gameoff 21", "Github Gameoff 21.csproj", "{44D743DF-A72D-4B26-814A-24DB00C37059}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Voyage of the Scarab King", "Voyage of the Scarab King.csproj", "{44D743DF-A72D-4B26-814A-24DB00C37059}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

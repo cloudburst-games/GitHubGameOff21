@@ -125,28 +125,28 @@ public class DialogueControl : Control
 	{
 		if ((string)InkStory.GetVariable("quest_complete") == "AMULET") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ManaPot}, 10);
+			CompleteQuest(3, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.IntellectPot}, 25);
 			InkStory.SetVariable("quest_complete", "");
 			GD.Print("amulet given");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "TRAITOR") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.RustedArmour}, 20);
+			CompleteQuest(4, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ObsidianPlate}, 40);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "SPHYNX") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.IntellectPot}, 10);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.SwiftnessPot}, 10);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "CHARISMA") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 50);
+			CompleteQuest(3, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 35);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "MAHEF") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.HealthPot}, 50);
+			CompleteQuest(6, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.SilverMace}, 50);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((bool)InkStory.GetVariable("ambush")==true)

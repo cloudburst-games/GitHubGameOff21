@@ -19,6 +19,9 @@ public class ExperienceManager
         {
             experienceValueOfDefeated*=1.1f;
         }
+        // divide by num companions + p[layer]
+        experienceValueOfDefeated /= numOfCompanions + 1;
+        
         // divide by 1.2?
         return experienceValueOfDefeated;// (float)Math.Ceiling(experienceValueOfDefeated/1.2f);
     }

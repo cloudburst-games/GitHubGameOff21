@@ -176,7 +176,8 @@ public class WorldInteractable : StaticBody2D
 
     public void ClickedToMove()
     {
-        if (_interactable && CurrentWorldInteractableData.Active)
+        GD.Print("clicked to move");
+        if (CurrentWorldInteractableData.Active)
         {
             Activate();
         }
@@ -189,7 +190,7 @@ public class WorldInteractable : StaticBody2D
         {
             return;
         }
-        if (GetGlobalMousePosition().DistanceTo(GlobalPosition) < 0.5f*(GetNode<Sprite>("Sprite").Texture.GetSize().x*GetNode<Sprite>("Sprite").Scale.x))
+        if (GetGlobalMousePosition().DistanceTo(GlobalPosition) < 0.35f*(GetNode<Sprite>("Sprite").Texture.GetSize().x*GetNode<Sprite>("Sprite").Scale.x))
         {
             SetSpriteShader(true);
         }

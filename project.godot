@@ -14,7 +14,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Github Gameoff 21"
+config/name="Voyage of the Scarab King"
 run/main_scene="res://Stages/MainMenu/StageMainMenu.tscn"
 boot_splash/image="res://Stages/MainMenu/splash.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )

@@ -660,7 +660,7 @@ shape = ExtResource( 2 )
 scale = Vector2( 0.15, 0.15 )
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 3312, 1656, 552, 552 )
+region_rect = Rect2( 0, 1656, 552, 552 )
 
 [node name="KhepriSunParticles" type="Particles2D" parent="Sprite"]
 material = SubResource( 1 )

@@ -40,7 +40,7 @@ public class PnlBattleVictory : Panel
         EmitSignal(nameof(RequestedPause), true);
         Visible = true;
 
-        float xpPerMember = GetExperienceRewardPerMember(npcDefeated, playerData);
+        float xpPerMember = (float)Math.Ceiling(GetExperienceRewardPerMember(npcDefeated, playerData));
 
         int goldReward = npcDefeated.CurrentUnitData.Gold;
         EmitSignal(nameof(FoundGold), goldReward);
@@ -118,9 +118,9 @@ public class PnlBattleVictory : Panel
         float experienceValueOfDefeated = 0;
         foreach (BattleUnitData battleUnitData in npcDefeated.CurrentUnitData.Minions)
         {
-            experienceValueOfDefeated += battleUnitData.Experience/3f;
+            experienceValueOfDefeated += battleUnitData.Experience;
         }
-        experienceValueOfDefeated += npcDefeated.CurrentUnitData.CurrentBattleUnitData.Experience/3f;
+        experienceValueOfDefeated += npcDefeated.CurrentUnitData.CurrentBattleUnitData.Experience/2f;
         return playerData.ExperienceManager.GetTotalExperienceFromVictory(experienceValueOfDefeated, npcDefeated.CurrentUnitData.Minions.Count + 1, playerData.Companions.Count);
     }
 
