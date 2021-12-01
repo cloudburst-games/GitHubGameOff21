@@ -125,8 +125,9 @@ public class DialogueControl : Control
 	{
 		if ((string)InkStory.GetVariable("quest_complete") == "AMULET") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 10);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ManaPot}, 10);
 			InkStory.SetVariable("quest_complete", "");
+			GD.Print("amulet given");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "TRAITOR") //
 		{
@@ -140,7 +141,7 @@ public class DialogueControl : Control
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "CHARISMA") //
 		{
-			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.LuckPot}, 50);
+			CompleteQuest(1, itemRewards:new Godot.Collections.Array<PnlInventory.ItemMode> {PnlInventory.ItemMode.ScarabAmulet}, 50);
 			InkStory.SetVariable("quest_complete", "");
 		}
 		if ((string)InkStory.GetVariable("quest_complete") == "MAHEF") //

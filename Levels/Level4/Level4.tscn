@@ -38,7 +38,7 @@ script = ExtResource( 1 )
 [node name="AncientCrone" parent="All/Units/LevelNPCManager" instance=ExtResource( 10 )]
 position = Vector2( 397.859, 454.344 )
 _customBattleText = "My precious potions! Get away! Get away!"
-_defeatMessage = "As you cast the spell that strikes her down, the Ancient Crone crumbles into skin and dust. You have gained her potions of charisma! Meri the Merchant will be pleased."
+_defeatMessage = "As you cast the spell that strikes her down, the Ancient Alchemist crumbles into skin and dust. You have gained her potions of charisma! Meri the Merchant will be pleased."
 ID = "AncientCrone"
 UnitName = "Ancient Alchemist"
 PortraitPath = ExtResource( 12 )
