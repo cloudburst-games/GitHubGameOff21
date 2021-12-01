@@ -44,7 +44,7 @@ public class HUD : CanvasLayer
         // await ToSignal(GetNode<AnimationPlayer>("CtrlTheme/LblMainQuest/Anim"), "animation_finished");
 
         GetNode<Label>("CtrlTheme/LblMainQuest").Text = mainQuest;
-        GD.Print("main quest: ", mainQuest);
+        // GD.Print("main quest: ", mainQuest);
 
         GetNode<AnimationPlayer>("CtrlTheme/LblMainQuest/Anim").Play("FadeIn");
 

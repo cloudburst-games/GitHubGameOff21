@@ -1,5 +1,23 @@
 Minimum targets
 
+- make a third weapon type
+- integrate sprites - especially adventure map objects and their collision shapes
+- do a once over on level design - from levels 1 to 5
+- ( have shop only in level 2) (add adventure map objects as much as possible)
+- (if needed, divide xp reward further)
+- test the whole game. first test level progression to ensure enemies around same level as you if you get all treasures.
+- then test the combat across the whole game
+- then when happy, remove the auto complete combat button (make invisible and disable)
+- then update the about text, and update the title
+- then do an upload and test web build
+- then placeholder everything missing
+- then do another upload
+
+
+
+****
+
+
 - integrate animations (multiple bodies...) d
 - team colours in battle - red and green d
 - make portraits from bug anims and integrate d

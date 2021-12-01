@@ -118,9 +118,9 @@ public class PnlBattleVictory : Panel
         float experienceValueOfDefeated = 0;
         foreach (BattleUnitData battleUnitData in npcDefeated.CurrentUnitData.Minions)
         {
-            experienceValueOfDefeated += battleUnitData.Experience/2f;
+            experienceValueOfDefeated += battleUnitData.Experience/3f;
         }
-        experienceValueOfDefeated += npcDefeated.CurrentUnitData.CurrentBattleUnitData.Experience/2f;
+        experienceValueOfDefeated += npcDefeated.CurrentUnitData.CurrentBattleUnitData.Experience/3f;
         return playerData.ExperienceManager.GetTotalExperienceFromVictory(experienceValueOfDefeated, npcDefeated.CurrentUnitData.Minions.Count + 1, playerData.Companions.Count);
     }
 

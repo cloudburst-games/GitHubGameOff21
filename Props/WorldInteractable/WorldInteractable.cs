@@ -82,7 +82,7 @@ public class WorldInteractable : StaticBody2D
 
     public void OnAreaPlayerDetectAreaEntered(Godot.Object area)
     {
-        GD.Print("test");
+        // GD.Print("test");
         if (!CurrentWorldInteractableData.Active)
         {
             return;
