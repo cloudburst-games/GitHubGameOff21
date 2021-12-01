@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Props/WorldInteractable/WorldInteractable.cs" type="Script" id=1]
+[ext_resource path="res://Props/WorldInteractable/Bodies/ObeliskBody.tscn" type="PackedScene" id=2]
+
+[node name="WorldInteractable" type="StaticBody2D"]
+position = Vector2( 812, 448 )
+script = ExtResource( 1 )
+_bodyScn = ExtResource( 2 )

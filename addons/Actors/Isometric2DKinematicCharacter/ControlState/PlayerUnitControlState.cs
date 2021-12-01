@@ -137,6 +137,21 @@ public class PlayerUnitControlState : UnitControlState
                     }
                     
                 }
+                if (n.GetParent() is WorldInteractable worldInteractable && n is Node2D node2D)
+                {                        
+                    float distance = ((CircleShape2D)n.GetNode<CollisionShape2D>("CollisionShape2D").Shape).Radius*1.35f;
+                    if (_talkOnArrive && _talkToHere.DistanceTo(node2D.GlobalPosition) < distance && Unit.GlobalPosition.DistanceTo(node2D.GlobalPosition) < distance || !_talkOnArrive)
+                    {
+                        ClearPath();
+                        // shopEntranceArea.CurrentShop.Start(Unit.CurrentUnitData);
+                        worldInteractable.ClickedToMove();
+                        // this.Unit.EmitSignal(nameof(Unit.ShopAccessed), new ShopDataSignalWrapper() {CurrentShopData = shopEntranceArea.CurrentShop.CurrentShopData});
+                        _talkOnArrive = false;
+                        return;
+                    }
+                    
+                }
+
             }
             // foreach (Node n in Unit.GetNode<Area2D>("NPCInteractArea").GetOverlappingBodies())
             // {

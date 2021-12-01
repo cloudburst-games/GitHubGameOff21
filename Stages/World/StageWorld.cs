@@ -131,6 +131,10 @@ public class StageWorld : Stage
     public override void _Ready()
     {
         base._Ready();
+        if (System.IO.File.Exists(ProjectSettings.GlobalizePath("user://RuntimeData")))
+        {
+            System.IO.Directory.Delete(ProjectSettings.GlobalizePath("user://RuntimeData"), true);
+        }
         _difficulty = GetNode<OptionButton>("HUD/CtrlTheme/CanvasLayer/PnlSettings/CntPanels/PnlGame/HBoxContainer/BtnDifficulty").Selected;
         GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Visible = false;
         ConnectSignals();
@@ -173,6 +177,7 @@ public class StageWorld : Stage
     {
         GetNode<PnlSettings>("HUD/CtrlTheme/CanvasLayer/PnlSettings").Connect(nameof(PnlSettings.FinalClosed), this, nameof(OnPnlSettingsFinalClosed));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.AutosaveAreaEntered), this, nameof(OnAutosaveTriggered));
+        GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.WorldInteractableInteracted), this, nameof(OnWorldInteractableInteracted));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.Announced), GetNode<HUD>("HUD"), nameof(HUD.LogEntry));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.LevelGenerated), this, nameof(OnLevelGenerated));
         GetNode<LevelManager>("LevelManager").Connect(nameof(LevelManager.StartedTransition), this, nameof(OnStartedLevelTransition));
@@ -204,6 +209,49 @@ public class StageWorld : Stage
         );
 
 // GetNode<PnlPreBattle>("HUD/CtrlTheme/PnlPreBattle").Connect(nameof(PnlPreBattle.BattleConfirmed), this, nameof(OnBattleConfirmed));
+    }
+
+    public void OnWorldInteractableInteracted(WorldInteractableDataSignalWrapper wrappedWorldInteractableData)
+    {
+
+        PlaySingleSoundEffect(GD.Load<AudioStreamSample>("res://Music/SFX_GHGO/WorldSFX/GivePotion.wav"));
+        WorldInteractableData worldInteractableData = wrappedWorldInteractableData.CurrentWorldInteractableData;
+        GetNode<HUD>("HUD").LogEntry(worldInteractableData.EventText);
+
+        if (worldInteractableData.Experience > 0)
+        {
+            GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData.Experience += worldInteractableData.Experience;
+            GetNode<HUD>("HUD").LogEntry(String.Format("{0} has gained {1} experience.", 
+                GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Name, worldInteractableData.Experience));
+            OnExperienceGained(GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData);
+            foreach (UnitData unitData in GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.Companions)
+            {
+                unitData.CurrentBattleUnitData.Experience += worldInteractableData.Experience;
+                GetNode<HUD>("HUD").LogEntry(String.Format("{0} has gained {1} experience.", 
+                    unitData.Name, worldInteractableData.Experience));
+                OnExperienceGained(unitData);
+            }
+        }
+        if (worldInteractableData.Gold > 0)
+        {
+            OnFoundGold(worldInteractableData.Gold);
+        }
+        if (worldInteractableData.Items.Count > 0)
+        {
+            foreach (PnlInventory.ItemMode item in worldInteractableData.Items)
+            {
+                GetNode<LevelManager>("LevelManager").GetPlayerInTree().CurrentUnitData.CurrentBattleUnitData.ItemsHeld.Add(item);
+                GetNode<HUD>("HUD").LogEntry(String.Format("The party has picked up {0}.", _itemBuilder.BuildAnyItem(item).Name));
+            }
+        }
+
+        LblFloatScore floatLabel = (LblFloatScore) GD.Load<PackedScene>("res://Interface/Labels/FloatScoreLabel/LblFloatScore.tscn").Instance();
+        floatLabel.Text = worldInteractableData.FlavourText;
+        floatLabel.FadeSpeed = 0.1f;
+        floatLabel.Speed = 20f;
+        GetNode<LevelManager>("LevelManager").AddChild(floatLabel);
+        floatLabel.Start(new Vector2(GetNode<LevelManager>("LevelManager").GetPlayerInTree().GlobalPosition.x - floatLabel.RectSize.x/2f, 
+        GetNode<LevelManager>("LevelManager").GetPlayerInTree().GlobalPosition.y - 80), false);
     }
 
     public void OnSunStolen()

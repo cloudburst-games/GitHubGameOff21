@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Levels/Level1/TerrainLevel1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Levels/Common/TransitionMarker/LevelTransitionMarker.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/NPC.PNG" type="Texture" id=10]
 [ext_resource path="res://Actors/NPC/Bodies/NPCBodyGreen.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/NPC.PNG" type="Texture" id=12]
+[ext_resource path="res://Props/WorldInteractable/Bodies/ChestBody.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Props/WorldInteractable/WorldInteractable.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Actors/PortraitPlaceholders/Small/Companion1.PNG" type="Texture" id=19]
 [ext_resource path="res://Actors/PortraitPlaceholders/Big/Companion1.PNG" type="Texture" id=20]
 
@@ -201,6 +203,25 @@ _introText = "Welcome! Please, peruse my humble wares. "
 _shopTitle = "Travelling Trifles"
 _buyMessage = "Hmph. Tawdry item. I'll take it off your hands for {0} gold."
 _stinginess = 1.5
+
+[node name="WorldInteractables" type="YSort" parent="All"]
+
+[node name="WorldInteractable" parent="All/WorldInteractables" instance=ExtResource( 14 )]
+position = Vector2( -1122.11, 962.6 )
+_bodyScn = ExtResource( 13 )
+_experience = 100.0
+_gold = 500
+_startingItems = [ 0 ]
+_dieOnActivate = true
+_flavourText = "TEST FLA asd as das d asd as das sa das d"
+_eventText = "TEST EVENT"
+
+[node name="WorldInteractable2" parent="All/WorldInteractables" instance=ExtResource( 14 )]
+position = Vector2( -1031.75, 1019.85 )
+_gold = 500
+_startingItems = [ 0 ]
+_flavourText = "Provisions from my loyal subjects! Extra characters!!!"
+_eventText = "TEST EVENT"
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]
 script = ExtResource( 6 )

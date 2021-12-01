@@ -4,7 +4,7 @@ using System;
 public class LblFloatScore : Label
 {
 	[Export]
-	private float _speed = 50f;
+	public float Speed {get; set;}= 50f;
 
 	[Export]
 	public float FadeSpeed {get; set;} = 0.8f; //higher is faster
@@ -22,7 +22,7 @@ public class LblFloatScore : Label
 	public override void _Process(float delta)
 	{
         // GD.Print(RectGlobalPosition);
-		this.RectGlobalPosition += new Vector2(0, -_speed*delta);
+		this.RectGlobalPosition += new Vector2(0, -Speed*delta);
 		// distance += _speed * delta;
 
 		Modulate = new Color(1,1,1,Modulate.a-delta/(1/FadeSpeed));
@@ -32,9 +32,9 @@ public class LblFloatScore : Label
 		}
 	}
 
-    public void Start(Vector2 startPos)
+    public void Start(Vector2 startPos, bool clamp = true)
     {
-        float x = Mathf.Clamp(RectGlobalPosition.x - RectSize.x, _edgeBuffer, GetViewportRect().Size.x - RectSize.x - _edgeBuffer);
+        float x = clamp ? Mathf.Clamp(RectGlobalPosition.x - RectSize.x, _edgeBuffer, GetViewportRect().Size.x - RectSize.x - _edgeBuffer) : startPos.x;
         RectGlobalPosition = new Vector2(x, startPos.y);// startPos - new Vector2(RectSize.x/2f, 0);
         
         SetProcess(true);

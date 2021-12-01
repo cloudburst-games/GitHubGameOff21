@@ -9,6 +9,31 @@ Minimum targets
 
 - integrate sfx d1
 
+obelisk -> give +1 attribute point, pyramid -> give +100 experience. i'd have to code it tonight and test it carefully lolol
+treasure chest give +1 random loot and 10-100 gold
+home gives food/water and message "provisions for your journey my lord!"
+
+
+
+WorldInteractable:
+StaticBody2D which collisionshape disable and queuefree if treasure chest upon activation
+floating text upon activation
+export the type
+export xp amount
+export loot
+
+set sprite based on type (with collisionbody and area2d for activation) - need to make separate body scenes
+
+InteractableData
+Active = true -> false when used
+WorldPosition
+if not active and treasure chest, do not generate
+if not active and otherwise, just set to not active
+
+need highlight and E to interact like the other objects (if active)
+
+
+
 - test and tweak levels d1 still need to test ammut fights beyond
 
 increase duration of every spell buff by 2 d

@@ -16,6 +16,9 @@ public class LevelManager : Node2D
     [Signal]
     public delegate void LevelGenerated(Node2D terrainTilemaps);
 
+    [Signal]
+    public delegate void WorldInteractableInteracted(WorldInteractableDataSignalWrapper wrappedWorldInteractableData);
+
     public enum Level {
         Level1, Level2, Level3, Level4, Level5
     }
@@ -126,6 +129,14 @@ public class LevelManager : Node2D
             if (n is AutosaveArea autosaveArea)
             {
                 autosaveArea.Connect(nameof(AutosaveArea.AutosaveAreaPlayerEntered), this, nameof(OnAutosaveAreaPlayerEntered));
+            }
+        }
+
+        foreach (Node n in levelLocation.GetNode<YSort>("All/WorldInteractables").GetChildren())
+        {
+            if (n is WorldInteractable worldInteractable)
+            {
+                worldInteractable.Connect(nameof(WorldInteractable.Interacted), this, nameof(OnWorldInteractableInteracted));
             }
         }
     }
@@ -312,6 +323,15 @@ public class LevelManager : Node2D
             }
         }
 
+        // pack worldinteractable data
+        foreach (Node n in GetLevelInTree().GetNode<YSort>("All/WorldInteractables").GetChildren())
+        {
+            if (n is WorldInteractable worldInteractable)
+            {
+                sourceLevelData.WorldInteractableDatas.Add(worldInteractable.CurrentWorldInteractableData);// GetShopData());
+            }
+        }
+
         CurrentLevelData[((LevelLocation)GetChild(0)).Level] = sourceLevelData;
     }
 
@@ -390,6 +410,14 @@ public class LevelManager : Node2D
         {
             GenerateShop(shopData);
         }
+        foreach (Node n in GetLevelInTree().GetNode<YSort>("All/WorldInteractables").GetChildren())
+        {
+            n.QueueFree();
+        }
+        foreach (WorldInteractableData worldInteractableData in CurrentLevelData[dest].WorldInteractableDatas)
+        {
+            GenerateWorldInteractable(worldInteractableData);
+        }
     }
 
     private void GenerateNPC(UnitData unitData)
@@ -423,6 +451,19 @@ public class LevelManager : Node2D
         shop.LoadStartingData(shopData);        
     }
 
+    private void GenerateWorldInteractable(WorldInteractableData worldInteractableData)
+    {
+        WorldInteractable worldInteractable = (WorldInteractable)GD.Load<PackedScene>("res://Props/WorldInteractable/WorldInteractable.tscn").Instance();
+        worldInteractable.Loaded = true;
+        GetLevelInTree().GetNode<YSort>("All/WorldInteractables").AddChild(worldInteractable);
+        worldInteractable.LoadStartingData(worldInteractableData);
+    }
+
+    public void OnWorldInteractableInteracted(WorldInteractableDataSignalWrapper wrappedWorldInteractableData)
+    {
+        EmitSignal(nameof(WorldInteractableInteracted), wrappedWorldInteractableData);
+    }
+
     public void OnNPCRightClicked(Unit npc)
     {
         EmitSignal(nameof(NPCRightClicked), npc);
@@ -451,6 +492,20 @@ public class LevelManager : Node2D
 			}
 		}		
         foreach (Node n in GetLevelInTree().GetNode("All/Shops").GetChildren())
+		{
+			if (n is StaticBody2D body)
+			{
+				foreach (Node bodyChild in body.GetChildren())
+				{
+					if (bodyChild is CollisionPolygon2D poly)
+					{
+                        collisionPolys.Add(poly);
+						// GetLevelInTree().GetNode<WorldNavigation>("WorldNavigation").SingleUse(poly, CurrentLevel);
+					}
+				}
+			}
+		}
+        foreach (Node n in GetLevelInTree().GetNode("All/WorldInteractables").GetChildren())
 		{
 			if (n is StaticBody2D body)
 			{
