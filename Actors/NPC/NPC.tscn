@@ -92,7 +92,7 @@
 extents = Vector2( 7.61682, 9.41382 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 112.306
+radius = 89.5664
 
 [sub_resource type="Animation" id=3]
 tracks/0/type = "value"
@@ -360,7 +360,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=13]
-radius = 75.1426
+radius = 64.6337
 
 [sub_resource type="Animation" id=14]
 resource_name = "default"
@@ -422,6 +422,7 @@ anims/WalkUpRight = SubResource( 12 )
 shape = SubResource( 13 )
 
 [node name="PnlInfo" type="Panel" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 0.5
 anchor_right = 0.5

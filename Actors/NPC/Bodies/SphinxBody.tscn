@@ -1,6 +1,5 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Actors/NPC/Bodies/shape.tres" type="Shape2D" id=1]
 [ext_resource path="res://SOPHIA/Sphynx v0.7.png" type="Texture" id=2]
 
 [sub_resource type="Animation" id=1]
@@ -386,6 +385,9 @@ tracks/2/keys = {
 "values": [ Vector2( 0.15, 0.15 ) ]
 }
 
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 43.3667, 15.7853 )
+
 [node name="SphinxBody" type="Node"]
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -409,4 +411,4 @@ anims/WalkUpRight = SubResource( 10 )
 [node name="Shape" type="CollisionShape2D" parent="."]
 position = Vector2( -11.0931, 14.94 )
 rotation = 0.514918
-shape = ExtResource( 1 )
+shape = SubResource( 11 )

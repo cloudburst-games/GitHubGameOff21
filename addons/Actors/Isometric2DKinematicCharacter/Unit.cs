@@ -397,7 +397,6 @@ public class Unit : KinematicBody2D
         
         if (CurrentUnitData.BodyPath == "res://Actors/NPC/Bodies/SphinxBody.tscn")
         {
-            GD.Print("spjyn");
             GetNode<Panel>("PnlInfo").RectPosition = new Vector2(-69, -75);
             ((CircleShape2D) GetNode<CollisionShape2D>("NPCInteractArea/Shape").Shape).Radius = 100;
         }

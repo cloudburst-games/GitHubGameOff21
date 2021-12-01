@@ -132,13 +132,13 @@ _minions = {
 }
 
 [node name="Thoth" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -864.141, 906.344 )
+position = Vector2( -904.458, 907.604 )
 ID = "Thoth"
 UnitName = "Thoth the Scribe"
 PortraitPath = ExtResource( 20 )
 PortraitPathSmall = ExtResource( 19 )
 _body = ExtResource( 11 )
-_startDirection = 4
+_startDirection = 5
 _startingBehaviour = 2
 _minions = {
 0: 0
@@ -153,10 +153,10 @@ _weaponEquipped = 9
 _armourEquipped = 11
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Thoth"]
-position = Vector2( 193, -51 )
+position = Vector2( 140.083, -33.3611 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Thoth"]
-position = Vector2( -137, 36 )
+position = Vector2( -176.058, 63.7183 )
 
 [node name="TransitionMarkers" type="YSort" parent="All"]
 
