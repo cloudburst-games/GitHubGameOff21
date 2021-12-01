@@ -570,9 +570,9 @@ custom_colors/file_icon_modulate = Color( 0.94902, 0.67451, 0.341176, 1 )
 access = 1
 filters = PoolStringArray( "*.ksav; KSAV Files" )
 show_hidden_files = true
-current_dir = "user://home/hussain/Dev/ghgameoff21"
+current_dir = "user://home/sarah/Desktop/GHGO_0.7/GitHubGameOff21"
 current_file = "AUTOSAVE1.ksav"
-current_path = "user://home/hussain/Dev/ghgameoff21/AUTOSAVE1.ksav"
+current_path = "user://home/sarah/Desktop/GHGO_0.7/GitHubGameOff21/AUTOSAVE1.ksav"
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
