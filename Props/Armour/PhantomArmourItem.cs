@@ -13,6 +13,6 @@ public class PhantomArmourItem : ArmourItem
         IconTexture = GD.Load<Texture>("res://Props/GHGO21Plceholders/PhantomArmour.PNG");
         Name = "Phantom Plate";
         Tooltip = String.Format("This magical piece from the Underworld is constantly shifting and changing.  Provides {0} armour bonus.", ArmourBonus);
-        Cost = 60;
+        Cost = 90;
     }
 }

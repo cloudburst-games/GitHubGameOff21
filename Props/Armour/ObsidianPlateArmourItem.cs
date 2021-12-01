@@ -13,6 +13,6 @@ public class ObsidianPlateArmourItem : ArmourItem
         IconTexture = GD.Load<Texture>("res://Props/GHGO21Plceholders/ObsidianArmour.PNG");
         Name = "Obsidian Plate";
         Tooltip = String.Format("This midnight black armour gleams with an unnatural glow. Provides {0} armour bonus.", ArmourBonus);
-        Cost = 30;
+        Cost = 50;
     }
 }

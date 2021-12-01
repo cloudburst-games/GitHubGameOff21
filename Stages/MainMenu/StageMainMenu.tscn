@@ -463,6 +463,7 @@ margin_right = 1380.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = ExtResource( 18 )
 text = "MUTE"
 
 [node name="PopAbout" type="Panel" parent="."]

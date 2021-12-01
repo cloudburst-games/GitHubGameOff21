@@ -5,18 +5,18 @@
 [ext_resource path="res://Effects/SpellEffects/Art/WhiteSphericalParticle2.png" type="Texture" id=4]
 [ext_resource path="res://Actors/Player/Light2.png" type="Texture" id=5]
 
-[sub_resource type="CanvasItemMaterial" id=1]
+[sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
 
-[sub_resource type="Curve" id=2]
+[sub_resource type="Curve" id=3]
 min_value = -200.0
 max_value = 200.0
 _data = [ Vector2( 0, -69.5468 ), 0.0, 2397.58, 0, 0, Vector2( 1, -4.09088 ), 1900.84, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=3]
-curve = SubResource( 2 )
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=4]
+[sub_resource type="ParticlesMaterial" id=5]
 emission_shape = 1
 emission_sphere_radius = 50.0
 flag_disable_z = true
@@ -30,13 +30,12 @@ radial_accel = 1.0
 radial_accel_random = 1.0
 tangential_accel = 20.0
 tangential_accel_random = 1.0
-tangential_accel_curve = SubResource( 3 )
+tangential_accel_curve = SubResource( 4 )
 scale = 2.5
 hue_variation = 0.25
 hue_variation_random = 0.5
 
-[sub_resource type="Animation" id=5]
-resource_name = "default"
+[sub_resource type="Animation" id=6]
 length = 1.8
 loop = true
 tracks/0/type = "value"
@@ -76,8 +75,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "default (copy)"
+[sub_resource type="Animation" id=7]
 length = 1.6
 loop = true
 tracks/0/type = "value"
@@ -105,8 +103,7 @@ tracks/1/keys = {
 "values": [ false, true, false ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "default (copy)"
+[sub_resource type="Animation" id=8]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -139,10 +136,11 @@ __meta__ = {
 }
 
 [node name="kehpri" type="Sprite" parent="TextureRect"]
-position = Vector2( 1231.84, 540 )
+position = Vector2( 960, 540 )
 texture = ExtResource( 1 )
+flip_h = true
 region_enabled = true
-region_rect = Rect2( 1104, 1656, 552, 552 )
+region_rect = Rect2( 0, 1656, 552, 552 )
 
 [node name="Light2D" type="Light2D" parent="TextureRect/kehpri"]
 position = Vector2( 10.7178, 29.231 )
@@ -152,24 +150,24 @@ energy = 1.1
 mode = 2
 
 [node name="KhepriSunParticles" type="Particles2D" parent="TextureRect/kehpri"]
-material = SubResource( 1 )
+material = SubResource( 2 )
 position = Vector2( 0, -80.8015 )
 scale = Vector2( 0.8, 0.8 )
 amount = 75
 randomness = 1.0
-process_material = SubResource( 4 )
+process_material = SubResource( 5 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TextureRect/kehpri"]
 autoplay = "default (copy)"
 playback_speed = 0.35
-anims/default = SubResource( 5 )
-"anims/default (copy)" = SubResource( 6 )
+anims/default = SubResource( 6 )
+"anims/default (copy)" = SubResource( 7 )
 
 [node name="AnimationPlayer2" type="AnimationPlayer" parent="TextureRect/kehpri"]
 autoplay = "default (copy)"
 playback_speed = 1.2
-"anims/default (copy)" = SubResource( 7 )
+"anims/default (copy)" = SubResource( 8 )
 
 [node name="CanvasModulate2" type="CanvasModulate" parent="."]
 color = Color( 0.235294, 0.235294, 0.235294, 1 )

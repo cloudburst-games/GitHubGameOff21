@@ -270,7 +270,7 @@ public class PnlShopScreen : Panel
         if (source == GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell"))
         {
             buyFor = _shopData.BuyMessage;
-            cost = Convert.ToInt32(Math.Floor(cost/_shopData.Stinginess));
+            cost = Convert.ToInt32(Math.Max(Math.Floor(cost/_shopData.Stinginess), 1));
         }
         else
         {
@@ -299,7 +299,7 @@ public class PnlShopScreen : Panel
         // selling items
         if (source == GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell"))
         {
-            cost = Convert.ToInt32(Math.Min(Math.Floor(cost/_shopData.Stinginess), 1));
+            cost = Convert.ToInt32(Math.Max(Math.Floor(cost/_shopData.Stinginess), 1));
             GetNode<PnlInventory>("TabContainer/Sell/PnlInventorySell").RemoveItem(item);
             _shopData.ItemsStocked.Add(item.CurrentItemMode);
             _currentBuyersUnitData[0].Gold += cost;

@@ -42,7 +42,7 @@ LevelName = "Western Lunu"
 script = ExtResource( 8 )
 
 [node name="Bandit1" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
-position = Vector2( -490.519, 558.972 )
+position = Vector2( -492.106, 643.104 )
 _customBattleText = "A ruffian taps you on the shoulder. 'Give me your gold, \"King\" Khepri', he says.  'You won't need it when you see what your future holds!'"
 _defeatMessage = "An easy scuffle. What has happened to make the citizens of Lunu disrespect their Lord?"
 ID = "bandit1"
@@ -65,10 +65,10 @@ _itemsHeld = [ 1, 9 ]
 _weak = true
 
 [node name="Position2D" type="Position2D" parent="All/Units/LevelNPCManager/Bandit1"]
-position = Vector2( 212.928, -52.4198 )
+position = Vector2( 308.172, -112.741 )
 
 [node name="Position2D2" type="Position2D" parent="All/Units/LevelNPCManager/Bandit1"]
-position = Vector2( -187.642, 143.002 )
+position = Vector2( -233.677, 96.9675 )
 
 [node name="Bandit0" parent="All/Units/LevelNPCManager" instance=ExtResource( 7 )]
 position = Vector2( -528.444, 757.465 )

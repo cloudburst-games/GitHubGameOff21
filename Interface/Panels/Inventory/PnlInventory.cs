@@ -195,7 +195,7 @@ public class PnlInventory : Panel
         if (newItem.IconTexture != null)
         {
             TextureRect texRect = new TextureRect();
-            texRect.StretchMode = TextureRect.StretchModeEnum.Scale;
+            texRect.StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered;
             texRect.RectSize = new Vector2(128,128);
             texRect.Expand = true;
             texRect.Texture = newItem.IconTexture;

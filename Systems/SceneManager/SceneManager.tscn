@@ -1,12 +1,34 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Systems/SceneManager/SceneManager.cs" type="Script" id=1]
 [ext_resource path="res://Systems/SceneManager/LoadingBG.png" type="Texture" id=2]
 [ext_resource path="res://Systems/SceneManager/ball_green.png" type="Texture" id=3]
 [ext_resource path="res://Systems/SceneManager/rect_black.png" type="Texture" id=4]
+[ext_resource path="res://Interface/Fonts/Oldenburg/Oldenburg-Regular.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Interface/Themes/1BattleHUDTheme.tres" type="Theme" id=6]
 
-[sub_resource type="Animation" id=1]
-resource_name = "FadeFromBlack"
+[sub_resource type="DynamicFont" id=6]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=7]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1749.32, 1015.31 ), Vector2( 1749.32, 1020 ), Vector2( 1749.32, 1015.31 ) ]
+}
+
+[sub_resource type="Animation" id=8]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("TexBlack:modulate")
@@ -20,9 +42,32 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Panel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
-[sub_resource type="Animation" id=2]
-resource_name = "FadeToBlack"
+[sub_resource type="Animation" id=4]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("TexBlack:modulate")
@@ -36,9 +81,32 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 0, 0, 0, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Panel:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Panel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="Animation" id=3]
-resource_name = "Loading"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("TexLoad/Sprite:position")
 tracks/0/interp = 1
@@ -71,13 +139,49 @@ texture = ExtResource( 3 )
 
 [node name="TexBlack" type="TextureRect" parent="."]
 visible = false
-modulate = Color( 1, 1, 1, 0 )
 margin_right = 1920.0
 margin_bottom = 1080.0
 texture = ExtResource( 4 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+pause_mode = 2
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -170.68
+margin_top = -64.6887
+margin_right = -4.68005
+margin_bottom = -15.6886
+theme = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 4.69666
+margin_top = 3.57318
+margin_right = 157.697
+margin_bottom = 44.5732
+rect_pivot_offset = Vector2( 30, 7 )
+custom_fonts/font = SubResource( 6 )
+text = "Loading..."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel"]
+autoplay = "default"
+anims/default = SubResource( 7 )
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/FadeFromBlack = SubResource( 1 )
-anims/FadeToBlack = SubResource( 2 )
-anims/Loading = SubResource( 3 )
+anims/FadeFromBlack = SubResource( 8 )
+anims/FadeToBlack = SubResource( 4 )
+anims/Loading = SubResource( 5 )

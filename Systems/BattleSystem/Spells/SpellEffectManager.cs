@@ -887,8 +887,11 @@ public class SpellEffectManager : Reference
         // do the spell effect
         if (target.CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
         {
-            ReverseEffect(target, spell, target.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2);
-            target.CurrentBattleUnitData.CurrentStatusEffects.Remove(spell);
+            if (spell != SpellMode.GazeOfTheDead)
+            {
+                ReverseEffect(target, spell, target.CurrentBattleUnitData.CurrentStatusEffects[spell].Item2);
+                target.CurrentBattleUnitData.CurrentStatusEffects.Remove(spell);
+            }
         }
         bool casterIsAlly = origin.CurrentBattleUnitData.PlayerFaction == target.CurrentBattleUnitData.PlayerFaction;
         float finalMagnitude = effect.Magnitude + 
@@ -905,12 +908,30 @@ public class SpellEffectManager : Reference
         // GD.Print("finalMagnitude magnitude ", finalMagnitude);
         foreach (BattleUnitData.DerivedStat stat in effect.TargetStats)
         {
+            if (spell == SpellMode.GazeOfTheDead)
+            {
+                if (target.CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
+                {
+                    continue;
+                }
+            }
             target.CurrentBattleUnitData.Stats[stat] = target.CurrentBattleUnitData.Stats[stat] + finalMagnitude;// += finalMagnitude;
         }
         if (effect.DurationRounds > 0)
         {
-            target.CurrentBattleUnitData.CurrentStatusEffects.Add(spell, 
+            if (spell == SpellMode.GazeOfTheDead)
+            {
+                if (!target.CurrentBattleUnitData.CurrentStatusEffects.ContainsKey(spell))
+                {
+                    target.CurrentBattleUnitData.CurrentStatusEffects.Add(spell, 
+                        new Tuple<int,float>(effect.DurationRounds,finalMagnitude));
+                }
+            }
+            else
+            {
+                target.CurrentBattleUnitData.CurrentStatusEffects.Add(spell, 
                 new Tuple<int,float>(effect.DurationRounds,finalMagnitude));
+            }
         }
         
         target.UpdateHealthManaBars();
