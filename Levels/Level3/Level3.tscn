@@ -209,7 +209,7 @@ position = Vector2( -286.431, 280.238 )
 _gold = 75
 _startingItems = [ 2, 3 ]
 _dieOnActivate = true
-_flavourText = "Treasure! My bag grows fat."
+_flavourText = "Treasure! My satchel grows heavy."
 _eventText = "Treasure chest plundered."
 
 [node name="Chest2" parent="All/WorldInteractables" instance=ExtResource( 16 )]

@@ -288,7 +288,7 @@ _bodyScn = ExtResource( 13 )
 _gold = 50
 _startingItems = [ 5, 4 ]
 _dieOnActivate = true
-_flavourText = "Treasure! My bag grows fat."
+_flavourText = "Treasure! My satchel grows heavy."
 _eventText = "Treasure chest plundered."
 
 [node name="WorldNavigation" type="Navigation2D" parent="."]

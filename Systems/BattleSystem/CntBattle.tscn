@@ -435,10 +435,12 @@ custom_fonts/font = SubResource( 20 )
 text = "5"
 
 [node name="BtnEndTest" type="Button" parent="Panel/BattleHUD/CtrlTheme"]
+visible = false
 margin_left = 748.0
 margin_top = 8.89026
 margin_right = 1187.0
 margin_bottom = 70.8903
+disabled = true
 text = "END BATTLE"
 __meta__ = {
 "_edit_use_anchors_": false

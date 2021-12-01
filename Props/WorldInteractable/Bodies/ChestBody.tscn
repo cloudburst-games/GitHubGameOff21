@@ -26,9 +26,10 @@ tracks/0/keys = {
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, 37 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 35.7298, 19.414, -2.47699, 38.8919, -36.938, 21.2868, 5.57641, 1.62156 )
+polygon = PoolVector2Array( 33.5009, 20.5578, -1.85669, 38.3067, -33.2856, 22.6624, 4.98828, 4.64042 )
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
