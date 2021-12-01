@@ -228,25 +228,25 @@ position = Vector2( 124.182, 439.8 )
 [node name="Obelisk" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 339.196, 305.466 )
 _attributePoints = 6
-_flavourText = "You bathe in the light of new knowledge."
+_flavourText = "Enlightenment seeps into my pores."
 _eventText = "Obelisk activated."
 
 [node name="Obelisk2" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -587.683, 430.861 )
 _attributePoints = 3
-_flavourText = "You bathe in the light of new knowledge."
+_flavourText = "Enlightenment seeps into my pores."
 _eventText = "Obelisk activated."
 
 [node name="Obelisk3" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -681.709, 498.883 )
 _attributePoints = 3
-_flavourText = "Whispers of the gods fill your mind."
+_flavourText = "I bathe in the light of new knowledge."
 _eventText = "Obelisk activated."
 
 [node name="Obelisk4" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( -537.623, 551.447 )
 _attributePoints = 3
-_flavourText = "Enlightenment seeps into your pores."
+_flavourText = "Whispers of the gods fill my mind."
 _eventText = "Obelisk activated."
 
 [node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 16 )]

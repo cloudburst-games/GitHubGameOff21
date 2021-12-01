@@ -171,7 +171,7 @@ position = Vector2( 86.1031, 418.015 )
 [node name="Obelisk" parent="All/WorldInteractables" instance=ExtResource( 16 )]
 position = Vector2( 175.237, 464.564 )
 _attributePoints = 4
-_flavourText = "Whispers of the gods fill your mind."
+_flavourText = "Whispers of the gods fill my mind."
 _eventText = "Obelisk activated."
 
 [node name="Chest" parent="All/WorldInteractables" instance=ExtResource( 16 )]
